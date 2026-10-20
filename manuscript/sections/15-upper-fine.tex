@@ -88,6 +88,10 @@ We then transport its defining left sums to the source row space and
 compute the mean in the source natural filtration.
 
 \paragraph{Normalization.}
+This is the conditional stochastic-exponential normalization used in
+\cite[Section~4, proof of Proposition~5]{oai-typical-upper}; the
+bounded-integrand change of measure is Girsanov's theorem
+\cite[Theorem~3.5.1]{karatzas-shreve-1991}.
 Fix the static data and a deterministic grid for the left sums. The last
 increment of $D$ is Gaussian and independent of the earlier ones, and
 integrating it out shows that its factor in the exponential, together with
@@ -194,6 +198,8 @@ For the output $Q_V$ of \cref{u:def:laws},
 \end{equation}
 \end{lemma}
 \begin{proof}
+We use the lifted-reference and entropy-contraction argument of
+\cite[Section~4, proof of Proposition~5]{oai-typical-upper}.
 On the replay space, we define
 $\dd\widehat P=2^n e^{\beta H^c_g(x)-F^c(g)}\dd R_D$.
 Its total mass is one, since $R_D$ projects to $\gamma_n\otimes\Unif_n$;
@@ -210,13 +216,19 @@ of the linked law is the GOE law. In particular, with $H_*(W)=\max_x|x^{\mathsf 
 \end{equation}
 Also $|F^c|\le n\log2+|\beta|H_*$. These bounds and \cref{u:lem:reference}
 justify the finite KL calculation. The data processing inequality for the output
-map and \eqref{u:eq:reference-mean} imply \eqref{u:eq:forward-kl}.
+map \cite[Chapter~4, Exercise~4.10]{boucheron-lugosi-massart-2013}
+and \eqref{u:eq:reference-mean} imply \eqref{u:eq:forward-kl}.
 \end{proof}
 
 \section{Fine energy}
 \label{u:sec:fine-energy}
 
 We now estimate the expected energy, one query at a time.
+The decomposition into queried columns, diagonal innovations and an
+unrevealed GOE block is the energy decomposition in
+\cite[Section~4, proof of Proposition~5]{oai-typical-upper}. The
+conditional expectation calculation below also controls the fallback
+outcomes and the unequal cell durations.
 Let $\mathcal F_{t_j}^{\rm paths}$ be the natural filtration of the
 spin-free pair of drivers in the source, through time $t_j$.
 Under the linked law, the marginal law of these paths is unchanged. The

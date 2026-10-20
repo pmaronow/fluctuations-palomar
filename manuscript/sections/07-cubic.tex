@@ -872,7 +872,8 @@ arguing as in (b), we obtain (e) for every symmetric $\Sigma$.
 \end{proof}
 
 The identity \eqref{b:eq:os-gauge} is the Cameron--Martin formula for a
-Gaussian shift.
+finite-dimensional Gaussian shift, obtained by completing the square as in
+\cite[Section~A.3, (A.6)]{talagrand-2011}.
 
 \subsection{The coefficient matrices}
 
@@ -1082,6 +1083,8 @@ $\E M_{j+1}^2$ come from the three products that we now compute. Let
 $\Omega=\varepsilon\Sigma_{\le j}$, and let
 $\Omega'=\varepsilon(\Sigma_{\le2}-\Sigma_{\le j})$, so that
 $\Omega_{ii}+\Omega'_{ii}=\varepsilon(\Sigma_{\le2})_{ii}$.
+The Gaussian moments in the following three computations are evaluated by
+the Wick--Isserlis pairing formula \cite{isserlis-1918}.
 \begin{itemize}
 \item For $\psi_2$, we have $M_{j+1}=\frac\chi2\abs{\mathbf S_j}^2+{}$const and
  $\Var\abs{\mathbf S_j}^2=2\norm\Omega_F^2$. The means $\E M_j$ do not depend on
@@ -1110,7 +1113,11 @@ $\Omega_{ii}+\Omega'_{ii}=\varepsilon(\Sigma_{\le2})_{ii}$.
 \end{itemize}
 
 \paragraph{Step 3: the term cubic in $\psi$.} It remains to compute $\mathsf c_7$, and
-we may take $\psi(y)=\chi y^2/2$. We compute with the formal steps directly, for
+we may take $\psi(y)=\chi y^2/2$. For positive semidefinite covariances and
+sufficiently small positive $\varepsilon$, the
+logarithmic determinant below is the Gaussian quadratic-exponential integral,
+obtained by diagonalizing and applying \cite[(A.11)]{talagrand-2011} in each
+coordinate. We derive its formal extension by computing with the steps directly, for
 symmetric $\Sigma_0,\Sigma_1,\Sigma_2$. Let $\Sigma$ and $H$ be symmetric,
 $c\in\R$, and $m\in(0,1]$. For a quadratic function
 $F=c(\varepsilon)+\frac12\mathbf y\cdot H(\varepsilon)\mathbf y$, we have

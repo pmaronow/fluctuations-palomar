@@ -158,7 +158,10 @@ and at every $t$ at which $\alpha$ is continuous.
 We first recall why, for a fixed step distribution function, all spatial
 derivatives exist and are bounded, with bounds that may depend on the steps.
 We then write the equation for $f_j$ as a linear equation and use its
-Feynman--Kac representation to obtain bounds independent of the steps.
+Feynman--Kac representation (\cite[Theorem~5.7.6]{karatzas-shreve-1991}, after
+an exponential rescaling for a bounded potential) to obtain bounds independent
+of the steps, extending the third-derivative argument in
+\cite[proof of Lemma~3.1]{oai-barriers}.
 Finally, we pass to general distribution functions by a forward difference
 argument and prove \eqref{eq:sc-integrated-pde}.
 
@@ -386,7 +389,7 @@ started from any $(t,z)\in[0,1]\times\R$, on the time interval $[t,1]$.
 We prove (i) first for step distribution functions, for which the equation
 holds classically between the breakpoints, and then pass to the limit along
 a coupling of the diffusions. Parts (ii) and (iii) then follow from It\^o's
-formula.
+formula \cite[Theorem~3.3.6]{karatzas-shreve-1991}.
 
 \paragraph{Step 1: step distribution functions.}
 Let $\alpha$ be a step distribution function. By Step~1 of the proof of

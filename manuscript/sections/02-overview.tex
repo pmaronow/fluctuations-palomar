@@ -238,7 +238,9 @@ pressure $p_{3,n}(D)=n^{-1}\E\log Z_{3,n}(D)$ by the trial value
 (\cref{def:inp-trial,inp:ob-matrix}). The last term is the cost of an endpoint
 $Q_N$ that differs from $D$.
 
-The baseline is the path of \cref{lem:inp-blocks}, built from the Parisi
+The baseline is the block hierarchy of
+\cite[Section~4.2 and Section~7, Step~1]{oai-barriers}, described in
+\cref{lem:inp-blocks} and built from the Parisi
 distribution function $\alpha=\alpha_\beta$. Below the level $r$, the three
 fields share their increments, at mass $\alpha/3$. Between $r$ and $q$, the
 fields of $x$ and $y$ share their increments, at mass $\alpha/2$, while the
@@ -436,7 +438,9 @@ centers in the interior of the support, the terms of order at most two in the
 width parameter $h$ of the window cancel exactly. The reason is the first stationarity identity
 $\beta^2\E\chi(t,Y_t)^2=1$, where $\chi$ is the second spatial derivative of
 the Parisi solution. This identity is the derivative of $\Gamma(t)=t$, and it
-expresses the marginal stability of the Parisi solution. The deficit is then of
+expresses the marginal stability of the Parisi solution
+\cite[(22)--(23)]{crisanti-rizzo-2002}; its stochastic form is recorded in
+\cite[Lemma~2.5]{full-rsb}. The deficit is then of
 third order in $h$. To find it, we need a perturbed path whose endpoint
 is exactly $D(r,q,\delta)$, so that we incur no mismatch cost, and an expansion of
 its trial value to third order with a remainder of fourth order.
@@ -1014,7 +1018,7 @@ The terms of \eqref{eq:ov-forward-kl} are related by the scalar identity
  j(V)-\log2+P_\beta-\beta e(V)=\frac{\beta^2}4p(V)^2,
  \qquad e(V)=\beta\int_0^Vr(v)p(v)\dd v
 \end{equation}
-(\cref{u:prop:scalar}). Here $e(V)$ is the energy per spin of the proposal,
+(\cref{u:prop:scalar}). Here $e(V)$ is the scalar reference for the energy per spin of the proposal,
 and the identity balances the information paid through the matrix against the
 energy gained. By Guerra's bound and \cref{lem:model-completion}, we have
 $\E F^c(g)\le nP_\beta$ (\cref{inp:parisi}). The expected energy satisfies
@@ -1095,9 +1099,11 @@ independent rows: it equals $n^{-1}\sum_i\zeta_{h,i}$, where
  \zeta_h=\sum_jw_j(A_{t_j}-A_{t_{j-1}})+\sum_js_j(x-m_{t_j})e_j-\frac{e_h}2,
  \qquad A_v=xm_v-\frac{m_v^2}2,
 \]
-for a row with spin $x$, magnetization $m$, and query endpoints $e_j$, with
-deterministic weights $w_j$ and $e_h=\E\zeta_h$
-(\cref{u:lem:telescope}). The remainder of the linearization is quadratic in a
+for a row with spin $x$, magnetization $m$, and query endpoints $e_j$. The
+deterministic weights are
+$b_j=h_j^{-1/2}\int_{t_j}^{t_{j+1}}\rho(v)p(v)\dd v$ and $w_j=b_j/s_j$,
+and $e_h=\sum_js_jb_j$ is the discrete scalar energy. With these
+normalizations, $\E\zeta_h=e_h$ (\cref{u:lem:telescope}). The remainder of the linearization is quadratic in a
 weighted measure $W_{\rm wt}$ of the errors (\cref{u:lem:weighted-energy}).
 This gives
 \[

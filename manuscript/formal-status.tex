@@ -35,9 +35,8 @@ For the formal statement corresponding to \cref{thm:upper}, see
 \newcommand{\statusIntroFormal}{
 \ifupperformal
 \Cref{thm:upper} is also formalized, as the statement described in
-\cref{sec:formal-upper}, and it passed the same three checks at commit
-\path{352426b9007b6bbb31a3c8cfe6887caa0badf3fd}
-(19 October 2026).
+\cref{sec:formal-upper}, and is included in the combined five-claim
+verification described in \cref{sec:formal}.
 \Cref{cor:upper-discrete,cor:two-sided} are not separately formalized.
 \else
 \Cref{sec:formal-upper} gives the formal statement corresponding to
@@ -88,8 +87,8 @@ at sizes zero and one, which does not affect the limit.
 \ifupperformal
 The theorem
 \path{SKConstants.Completion.Main.optimizedSKTypicalStartStatement_holds}
-proves this proposition without additional hypotheses. The release at
-commit \path{352426b9007b6bbb31a3c8cfe6887caa0badf3fd}
+proves this proposition without additional hypotheses. The original
+upper-bound package at commit \path{352426b9007b6bbb31a3c8cfe6887caa0badf3fd}
 was checked on 19 October 2026, using
 Lean version \texttt{v4.35.0-rc2} and Mathlib at commit
 \path{065356127b1dc0016f66b7283ce0ce2c4055aa55}.
@@ -103,7 +102,9 @@ all 20,281 exported development declarations in 1,605 modules found only
 \path{propext}, \path{Classical.choice}, and \path{Quot.sound}; the main
 theorem has exactly these three axiom dependencies. The same Comparator
 run checked all 47 claims and their proof dependencies with Lean's kernel,
-NanoDa, and con-ron. All three accepted them.
+NanoDa, and con-ron. All three accepted them. The upper-bound theorem
+is also one of the five final statements checked in the combined package
+described at the start of \cref{sec:formal}.
 
 The formal proof follows the route of \cref{part:upper}. It constructs
 Brownian motion, proves the scalar and Gaussian-query laws, establishes

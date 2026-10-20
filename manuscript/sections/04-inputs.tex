@@ -34,7 +34,11 @@ in which it is used.
 
 \paragraph{Imported results and their normalization.}
 Apart from standard tools of probability, such as Gaussian integration by
-parts, It\^o's formula, and the inequalities of Markov and Chebyshev, the
+parts \cite[Section~A.4, (A.17)]{talagrand-2011}, It\^o's formula
+\cite[Theorem~3.3.6]{karatzas-shreve-1991}, Gronwall's inequality
+\cite[Section~A.13]{talagrand-2011}, and the inequalities of Markov and
+Chebyshev (apply \cite[(A.7)]{talagrand-2011} to a nonnegative variable and to
+a squared centered variable, respectively), the
 results stated in this section with a citation are the only mathematical inputs
 from the literature in the proof of \cref{thm:barrier-730}. The
 inputs used only in \cref{part:fluct} are stated in \cref{sec:fluct,sec:bias}.
@@ -974,6 +978,8 @@ X$ of a random vector $\mathbf X$ with this density is at most $\abs{\mathbf a}^
 
 The bounds \eqref{eq:inp-concentration} are the Gaussian concentration
 inequality of Tsirelson, Ibragimov, and Sudakov \cite{tsirelson-ibragimov-sudakov-1976},
+in the logarithmic-moment and tail forms of
+\cite[Section~5.4, Theorems~5.5--5.6]{boucheron-lugosi-massart-2013},
 and the variance bound is the case $\nabla^2V\succeq I$ of the Brascamp--Lieb
 inequality \cite[Theorem~4.1]{brascamp-lieb-1976}. The proof in
 \cite{oai-barriers} covers \eqref{eq:inp-concentration} and the case of linear

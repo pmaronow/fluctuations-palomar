@@ -45,7 +45,10 @@ This is the transport inequality for measures with a strongly convex potential; 
 \cite[Corollary~3.10]{bogachev-kolesnikov-medvedev-2005} and its use in
 \cite[Section~5]{oai-typical-upper}. We recall the finite-dimensional
 argument. For a smooth positive density $\eta$, let $T$ be the optimal
-transport map from $p_x$ to $\eta$, which is the gradient of a convex function, and let $V_x$ be the
+transport map from $p_x$ to $\eta$, which is the gradient of a convex function
+by the convex-gradient transport theorem of Brenier~\cite{brenier-1991}
+in the full Euclidean generality of \cite[Main Theorem]{mccann-1995},
+and let $V_x$ be the
 negative logarithm of $p_x$. By the change-of-variables formula, we have
 \[
  \KL(\eta\Vert p_x)
@@ -62,7 +65,8 @@ truncation and regularization, followed by lower semicontinuity. If the
 entropy is infinite, there is nothing to prove.
 \end{proof}
 
-For every $L$-Lipschitz linear function $f$ and every $t\in\R$, the variational formula for relative entropy and \cref{u:lem:transport} imply that
+For every $L$-Lipschitz linear function $f$ and every $t\in\R$, the variational formula for relative entropy
+\cite[Corollary~4.14]{boucheron-lugosi-massart-2013} and \cref{u:lem:transport} imply that
 \begin{equation}\label{u:eq:conditional-linear-mgf}
  \E_{p_x}\exp\{t(f-\E_{p_x}f)\}\le e^{t^2L^2/2}.
 \end{equation}
@@ -123,7 +127,9 @@ This comparison for Gaussian convolutions also appears in
 marginal $\gamma_n$. By Gaussian reversibility, we identify the
 conditional spin law of $Q_F^{\rm sm}$ with \eqref{u:eq:smoothed-kernel},
 and we denote that of $\Pi_n^{\rm sm}$ by $\bar\pi_g$. Under the joint law of $(g_\star,g_{\rm base})$, expanding the logarithms
-of the probabilities on the finite spin space gives
+of the probabilities on the finite spin space gives the entropy chain
+rule \cite[Chapter~4]{boucheron-lugosi-massart-2013}, in the form used in
+\cite[Section~5, proof of Proposition~6]{oai-typical-upper}:
 \begin{equation}\label{u:eq:entropy-decomposition}
  \begin{split}
  \E\KL(\pi_{g_\star}\Vert\nu^{\rm sm}_{g_{\rm base}})
@@ -180,6 +186,9 @@ eventually.
 \end{lemma}
 
 \begin{proof}
+This is the two-point entropy-contraction argument of
+\cite[Section~5, Proposition~6]{oai-typical-upper}; the partition bound
+is \cite[Theorem~4.20]{boucheron-lugosi-massart-2013}.
 Finite relative entropy and the strict positivity of $\pi_{g_\star}(x)$
 imply that $\nu^{\rm sm}_{g_{\rm base}}(x)>0$ for every spin. We pass to the partition $\{S,S^c\}$, which does not increase relative
 entropy. If $a=\pi_{g_\star}(S)$ and
@@ -195,10 +204,14 @@ fixed, including a cut selected from this pair.
 \section{The witness event and the enlarged boundary}\label{u:sec:witness}
 
 We now select a balanced cut with small flow, whenever one exists, and
-bound the Gibbs mass of its enlarged boundary. The selection follows
-\cite[Section~6, Proposition~7]{oai-typical-upper}. The estimate below uses
-the conditional disorder law to control sums of local fields over small
-sets of sites.
+bound the Gibbs mass of its enlarged boundary. The selection and the
+comparison of boundary weights follow
+\cite[Section~6, Proposition~7]{oai-typical-upper}. Here the enlargement
+cost is controlled by concentration of sums of local fields over small
+sets of sites under the conditional disorder law. We derive this
+sparse-field estimate below from \cref{u:lem:transport} and its
+linear-function MGF consequence; the transport input is
+\cite[Corollary~3.10]{bogachev-kolesnikov-medvedev-2005}.
 
 For $\epsilon>0$ and $\phi>0$, we define the witness event
 \begin{equation}\label{u:eq:witness-event}
@@ -362,7 +375,10 @@ proposal is not restricted by $\mathcal H_n$.
 We construct the sequence on one product space, following
 \cite[Section~6, Proposition~7]{oai-typical-upper}. At the two endpoints
 we continue the coarse proposal to the fine horizon. At every other
-vertex we use only the coarse proposal.
+vertex we use only the coarse proposal. The simultaneous Gaussian
+rotation, continuity of the query recursion, and pinning of spins to
+their magnetizations are the connecting-sequence method of that proof;
+we retain the source and replay histories on the growing mesh.
 
 For the common fine schedule, let $\mu^{\rm aux}_n$ be the independent
 product law of all $D_i$ Wiener paths to $V_{\ex{f}}$, auxiliary $B_i^0$
@@ -436,6 +452,11 @@ grid angle, eventually,
 \end{lemma}
 
 \begin{proof}
+We refine the target-to-proposal comparison in
+\cite[Section~6, proof of Proposition~7]{oai-typical-upper} by integrating
+the conditional Gaussian energy at each fixed spin. The calculation
+below gives an $O_\beta(n\delta)$ regression cost while retaining the
+target Gibbs normalization.
 We condition only on $g_\star$. From \eqref{u:eq:coupled-rotation}, we have
 \begin{equation}\label{u:eq:gaussian-regression}
  \begin{split}
@@ -496,6 +517,10 @@ eventually, provided $\ex{a}<\ex{g}_{\rm rot}$.
 \end{lemma}
 
 \begin{proof}
+This is the input-cap and recursive-continuity argument of
+\cite[Section~6, proof of Proposition~7]{oai-typical-upper}, with the
+number of steps and the inverse scalar profiles controlled by the
+growing schedule.
 We first bound the primitive inputs uniformly in the angle. We then
 compare the two coarse recursions at neighboring grid points.
 
@@ -562,6 +587,8 @@ eventually.
 \end{lemma}
 
 \begin{proof}
+We use posterior projection and the independent-row pinning argument of
+\cite[Section~6, proof of Proposition~7]{oai-typical-upper}.
 Under the unconditioned law at a single angle, the source identification
 in \cref{u:sec:proposal} gives the law of the complete coordinate rows,
 which are independent under this law.

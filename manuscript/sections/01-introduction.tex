@@ -334,9 +334,10 @@ the early 1980s. Sompolinsky and Zippelius developed the dynamical mean-field
 theory of the spin-glass
 phase~\cite{sompolinsky-zippelius-1981,sompolinsky-zippelius-1982}, in which
 the relaxation times of a finite system diverge with its size $n$. In
-simulations of the Ising SK model, Mackenzie and Young found two families of
+simulations of the Ising SK model, Mackenzie and Young reported two families of
 time scales $\tau_n$. For observables invariant under global spin reversal,
-$\log\tau_n$ grew like $n^{1/4}$, and for the reversal itself like
+the behavior of $\log\tau_n$ was consistent with $n^{1/4}$; for the reversal
+itself, the disorder average of $\log\tau_n$ was consistent with
 $n^{1/2}$~\cite{mackenzie-young-1982,mackenzie-young-1983}. Later work
 revised this picture. Vertechi and Virasoro computed energy barriers between
 metastable states numerically and found growth like $n^\alpha$ with
@@ -380,7 +381,9 @@ and deduced a polynomial bound on the mixing time from every initial
 configuration~\cite[Theorems~1 and~11]{eldan-koehler-zeitouni-2022}. Anari,
 Jain, Koehler, Pham, and Vuong obtained mixing in $O(n\log n)$ updates in the
 same range through entropic
-independence~\cite[Theorem~12]{anari-jain-koehler-pham-vuong-2022}. Wang
+independence~\cite[Theorem~12]{anari-jain-koehler-pham-vuong-2022}.
+Anari, Koehler, and Vuong extended this range to a threshold of approximately
+$0.295$ using localization schemes~\cite[Theorem~1 and Section~1.3]{anari-koehler-vuong-2024}. Wang
 extended mixing in $O(n\log n)$ updates to every $\beta<1/2$
 \cite[Theorem~1.1]{wang-2026}, and Boban, Li, and Oveis Gharan proved
 polynomial mixing for $\beta<1/2+\varepsilon_0$, for an absolute constant
@@ -460,6 +463,10 @@ parameter.
 
 \section{The fluctuation scale and the mean bias}\label{sec:intro-fluct}
 
+For a survey of free-energy fluctuations in the SK and spherical SK models,
+including their multi-species variants and the effects of an external field,
+see Collins-Woodfin and Le~\cite{collins-woodfin-le-survey-2025}.
+
 \paragraph{Physics.}
 The prediction of the fluctuation scale of $F_n$ has a separate history in
 physics. In a truncated replica theory near the critical temperature, Kondor
@@ -505,10 +512,12 @@ proved that $\Var(F_n)=(\log n)/6+O(1)$ and that the fluctuations have a
 Gaussian limit~\cite[Theorem~1.3]{du-huang-2026}. Dey and Kang obtained the
 variance asymptotics and a Gaussian limit along sequences $\beta_n\uparrow1$
 for which $n^{1/3}(1-\beta_n^2)$ converges to a limit in
-$(0,\infty]$~\cite[Theorem~1.1]{dey-kang-2026}. With a nonzero external field,
+$(0,\infty]$~\cite[Theorem~1.1]{dey-kang-2026}. With a fixed nonzero external field,
 Chen, Dey, and Panchenko proved that the variance is of order $n$ and that a
 central limit theorem
-holds~\cite[Theorems~1 and~2]{chen-dey-panchenko-2017}. The spin space also
+holds~\cite[Theorems~1 and~2]{chen-dey-panchenko-2017}. Dey and Wu identify
+a crossover at field strength $n^{-1/4}$ in the high-temperature
+regime~\cite[Theorem~1.3]{dey-wu-2023}. The spin space also
 matters: for the spherical SK model at low temperature, Baik and Lee proved
 that the free energy per spin has Tracy--Widom fluctuations of order
 $n^{-2/3}$~\cite[Theorems~2.10 and~2.11]{baik-lee-2016}, so that the total
@@ -517,7 +526,10 @@ free energy fluctuates on the scale $n^{1/3}$ rather than $n^{1/6}$.
 For fixed $\beta>1$ at zero field, the Gaussian Poincar\'e inequality implies
 that $\Var(F_n)\le C_\beta n$. Chatterjee improved this to $O_\beta(n/\log n)$ and
 related this superconcentration to disorder
-chaos~\cite[Theorem~1.5]{chatterjee-2009}. Aronow and Lopatto proved
+chaos~\cite[Theorem~1.5]{chatterjee-2009}. He also proved that the fluctuations
+of $F_n$ are at least of constant order at every fixed $\beta>0$ and zero
+field, in the sense of nonconcentration on sufficiently short
+intervals~\cite[Theorem~2.4]{chatterjee-lower-2019}. Aronow and Lopatto proved
 $c_\beta n^{4/15}\le\Var(F_n)\le C_v n^{7/15}$ for all sufficiently large
 $n$~\cite[Theorem~1.4]{quantitative-parisi}, using quantitative comparisons
 between positive fractional moments of $Z_n$ and constrained Parisi
@@ -620,7 +632,7 @@ a weaker form of the local expansion of \cref{b:prop:os-expansion}, which
 suffices for the same exponent. \Cref{thm:barrier-strong} is not
 formalized.
 
-Each of these four formal theorems was compared with a separately written
+In their source packages, each of these four formal theorems was compared with a separately written
 statement of the same result that depends only on Mathlib, and its proof was
 checked to use only the standard axioms \texttt{propext},
 \texttt{Classical.choice}, and \texttt{Quot.sound}. The declarations on
@@ -963,6 +975,9 @@ small probability, the law of the pair is dominated by $e^{o(n)}$ times this
 joint law.
 
 \paragraph{Coverage and the connecting sequence.}
+The information inequalities used in these comparisons---the chain rule,
+data processing, and the variational formula for relative entropy---are
+recalled in \cite[Chapter~4]{boucheron-lugosi-massart-2013}.
 Forward relative entropy alone does not show that the proposal reaches a
 prescribed set of positive Gibbs mass. Under the joint law of the disorder
 and a Gibbs sample, the conditional law of the disorder given the spin is

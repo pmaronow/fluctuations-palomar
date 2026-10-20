@@ -101,7 +101,7 @@ We make no attempt to optimize the admissible coefficient in \eqref{b:dyn:coeffi
 
 \section{Stationarity, the clocks, and total variation}\label{b:sec:dyn-TV}
 
-The following lemma turns a sign obstruction for paths into a bound on the Gibbs mass of the initial states from which the dynamics is close to equilibrium. It is stated for a general kernel and uses only stationarity at deterministic times, spin-flip symmetry, and the Poisson representation of the continuous-time semigroup.
+The following lemma turns a sign obstruction for paths into a bound on the Gibbs mass of the initial states from which the dynamics is close to equilibrium. It abstracts the sign-passage reduction of \cite[Section~8.1, (8.1)--(8.3)]{oai-barriers}. It is stated for a general kernel and uses only stationarity at deterministic times, spin-flip symmetry, and the Poisson representation of the continuous-time semigroup; for the latter representation, see \cite[Section~20.1, (20.5)--(20.6)]{levin-peres-2017}.
 
 \begin{lemma}[From a sign obstruction to total variation]\label{lem:bp-sign-test}
 Let $Q$ be a Markov kernel on $\Sigma_n$ with stationary law $\pi$, and assume that $\pi(-x)=\pi(x)$ for every $x\in\Sigma_n$. Let $v\colon\Sigma_n\to\Sigma_n$ be a map, let $V\subseteq\Sigma_n$, and let $m\ge0$ be an integer. Assume that every sequence $x_0,\dots,x_k$ with $k\le m$, with $Q(x_{a-1},x_a)>0$ for $1\le a\le k$, and with $x_a\notin V$ for $0\le a\le k$, satisfies $R(v(x_0),x_k)>0$. Then for every $\tau\in[0,1/2)$ and every integer $0\le k\le m$,
@@ -397,6 +397,11 @@ For part~(a), we have $\sum_x\pi(x)\phi(x)=\PP_\pi\{X_a\in V\text{ for some }a\l
 which gives the first inequality as in part~(b). Multiplying by $\pi(x)$, summing over $x$, and using part~(a), we obtain the second.
 \end{proof}
 
+The next lemma combines the standard continuous-time $L^2$ spectral-gap
+contraction \cite[Lemma~20.5]{levin-peres-2017} with a partition of the
+initial states according to their chosen reference. This grouping gives a
+bound in terms of the number of references.
+
 \begin{lemma}[Relaxation time and a sign test with few references]\label{lem:bp-gap}
 Let $\mathcal L$ be a generator on $\Sigma_n$ that is reversible with respect to a probability measure $\pi$ with $\pi(-x)=\pi(x)$, and let $\operatorname{gap}(\mathcal L)$ be its spectral gap. Let $v\colon\Sigma_n\to\Sigma_n$ take at most $N_v$ values, and let $G_x=\{y:R(v(x),y)\le0\}$. If $t>0$ and
 \[
@@ -434,7 +439,7 @@ which is \eqref{b:dyn:coefficient} with $E'=1/1000$, since $4(E+E')=11/250$. Let
 
 \paragraph{The obstruction.} Fix $n\ge n_0$ and $J\in\mathcal G_n^*$, and fix a family as in \cref{lem:bp-strong-event}(ii). The scales satisfy \eqref{eq:ind-scales} with $E'=1/1000$. By \cref{lem:ind-margins}, the margins \eqref{b:dyn:finite-margins} hold, and by \cref{lem:bp-coefficient}, $C_n(m)<1$ for every $m\le m_*$. By \cref{prop:bp-obstruction}, every path $x_0,\dots,x_m$ with $m\le m_*$ that avoids $V$ satisfies $R(v(x_0),x_m)>0$.
 
-\paragraph{Parts (b) and (c).} Let $\mathcal L\in\mathfrak L^J(C_{\rm rate})$ and set $Q_{\mathcal L}=I+\mathcal L/(C_{\rm rate}n)$. Its off-diagonal entries are $Q_{\mathcal L}(x,x^{(i)})=c_i(x)/(C_{\rm rate}n)\ge0$, its diagonal entries are $1-\sum_ic_i(x)/(C_{\rm rate}n)\ge0$, and $Q_{\mathcal L}(x,y)=0$ unless $y=x$ or $y=x^{(i)}$ for some $i$. We see that $Q_{\mathcal L}$ is a Markov kernel, $\pi^J$ is stationary for it, every sequence with $Q_{\mathcal L}(x_{a-1},x_a)>0$ is a path in the sense of \eqref{eq:ind-jump}, and $e^{t\mathcal L}=e^{C_{\rm rate}nt(Q_{\mathcal L}-I)}$. For the heat-bath and Metropolis generators with $C_{\rm rate}=1$, we have $Q_{\mathcal L}=K^J$ and $Q_{\mathcal L}=K^J_{\rm M}$, respectively. Since $\pi^J(-x)=\pi^J(x)$, the obstruction shows that the hypotheses of \cref{lem:bp-sign-test} hold for $Q=Q_{\mathcal L}$, $\pi=\pi^J$, the map $v$, the set $V$ of the family, and $m=m_*$. Let $\phi_{\mathcal L}$ be the function $\phi$ of \cref{lem:bp-per-start} for this kernel, and let
+\paragraph{Parts (b) and (c).} We use the uniformization of a bounded-rate generator into a discrete kernel and a Poisson clock \cite[Section~20.1]{levin-peres-2017}. Let $\mathcal L\in\mathfrak L^J(C_{\rm rate})$ and set $Q_{\mathcal L}=I+\mathcal L/(C_{\rm rate}n)$. Its off-diagonal entries are $Q_{\mathcal L}(x,x^{(i)})=c_i(x)/(C_{\rm rate}n)\ge0$, its diagonal entries are $1-\sum_ic_i(x)/(C_{\rm rate}n)\ge0$, and $Q_{\mathcal L}(x,y)=0$ unless $y=x$ or $y=x^{(i)}$ for some $i$. We see that $Q_{\mathcal L}$ is a Markov kernel, $\pi^J$ is stationary for it, every sequence with $Q_{\mathcal L}(x_{a-1},x_a)>0$ is a path in the sense of \eqref{eq:ind-jump}, and $e^{t\mathcal L}=e^{C_{\rm rate}nt(Q_{\mathcal L}-I)}$. For the heat-bath and Metropolis generators with $C_{\rm rate}=1$, we have $Q_{\mathcal L}=K^J$ and $Q_{\mathcal L}=K^J_{\rm M}$, respectively. Since $\pi^J(-x)=\pi^J(x)$, the obstruction shows that the hypotheses of \cref{lem:bp-sign-test} hold for $Q=Q_{\mathcal L}$, $\pi=\pi^J$, the map $v$, the set $V$ of the family, and $m=m_*$. Let $\phi_{\mathcal L}$ be the function $\phi$ of \cref{lem:bp-per-start} for this kernel, and let
 \[
  S_{\mathcal L}=\{x:\phi_{\mathcal L}(x)\le e^{-L_n}\}.
 \]

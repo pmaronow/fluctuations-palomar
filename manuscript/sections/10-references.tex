@@ -45,8 +45,8 @@ a $k$-tuple in $\mathcal U$; we also write
 $\pi^{\otimes2}(|R|\ge q)$ for
 $\pi^{\otimes2}(\{(x,y):|R(x,y)|\ge q\})$. The Gibbs measure is invariant
 under the spin flip $x\mapsto-x$, because $H_n^J(-x)=H_n^J(x)$, and $\pi^{\otimes k}$
-is invariant under spin flips of single coordinates and under permutations of
-the coordinates. All constants depend on $\beta$ and on the fixed parameters
+is invariant under independently reversing whole replicas and under permutations of
+the replicas. All constants depend on $\beta$ and on the fixed parameters
 listed in \cref{tab:ref-parameters}, and never on $n$ or on the disorder.
 
 \section{Overlap neighborhoods at sublinear scales}\label{sec:ref-neighborhoods}
@@ -61,8 +61,10 @@ extension and write out the proof. The ingredients are those of
 tail of the energy of a Gibbs sample (\cref{inp:ob-energy-tail}, whose proof
 in \cite[Lemma~5.1]{oai-barriers} uses the Brascamp--Lieb inequality
 \cite{brascamp-lieb-1976} in the form of \cite[Lemma~2.1]{oai-barriers}), the
-disorder rotation estimate (\cref{inp:ob-rotation}), Gaussian concentration
-for Lipschitz functions (\cref{inp:ob-concentration}), and the
+disorder rotation estimate (\cref{inp:ob-rotation};
+\cite[Lemma~5.2]{oai-barriers}), Gaussian concentration
+for Lipschitz functions (\cref{inp:ob-concentration};
+\cite[Lemma~2.1]{oai-barriers}), and the
 Paley--Zygmund inequality.
 
 \begin{lemma}[Overlap-neighborhood mass bound at sublinear scales]
@@ -736,7 +738,7 @@ is an entry of $\mathcal F_i$ for each $i\in\mathcal I$. The cell of $T$ is
 The empty tuple has cell $S_\emptyset=\Sigma_n$, and it is the only element
 of $\mathcal T_j$ when $s(j)=0$. Spin flips of the entries do not change the
 cells. The references selected in \cref{sec:induction} at the levels of a
-block that precede $j$ form a tuple in $\mathcal T_j$, and the cells used
+block that precede $j$, after removing their signs, form a tuple in $\mathcal T_j$, and the cells used
 there are among the cells $S_T$.
 
 The list sizes are chosen by the following schedule over positions
@@ -820,6 +822,9 @@ the lemma is applied with $L_n=An^\lambda$ and the number of levels fixed
 there, which is at most a constant times $n^\lambda$.
 
 \begin{proof}
+We adapt the independent-list construction of
+\cite[Section~8.3]{oai-barriers} by estimating exceptional Gibbs mass at
+each fixed disorder in $\mathcal G_n$, before considering any path.
 The proof is an expectation argument over independent samples of the lists.
 We bound the expected Gibbs mass of the targets missed by the lists, that is,
 of the configurations $x$ such that, at some level $j$, some cell $S_T$

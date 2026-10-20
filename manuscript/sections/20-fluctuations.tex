@@ -217,7 +217,7 @@ where we used $e^{2c_1}=\sqrt3$. The variable $-Z$ satisfies the same hypotheses
 \]
 In the last inequality, we used $c_1/\sigma-\ell\ge c_1/(2\sigma)\ge\ell$. This proves \eqref{f:small-mgf}.
 
-\paragraph{Step 3: positive tilts.} Let $\hat Z=(Z-\mu)/\sigma$, so that $\E\hat Z=0$ and $\E\hat Z^2=1$. By \eqref{eq:fl-tail},
+\paragraph{Step 3: positive tilts.} We use the fourth-moment and positive-part argument of \cite[Lemma~7.7, proof]{oai-fluctuations}. Let $\hat Z=(Z-\mu)/\sigma$, so that $\E\hat Z=0$ and $\E\hat Z^2=1$. By \eqref{eq:fl-tail},
 \[
  \E\hat Z^4=\int_0^\infty4u^3\,\PP(|\hat Z|\ge u)\,\dd u\le8\int_0^\infty u^3e^{-c_1u}\,\dd u=\frac{48}{c_1^4}=C_2.
 \]
@@ -227,7 +227,7 @@ By H\"older's inequality with exponents $3/2$ and $3$, we have $1=\E\bigl[|\hat 
 \]
 Rearranging, we find $\PP(\hat Z\ge c_2)\ge c_2^2=p_*$. For $t\ge0$, restricting the expectation to $\{\hat Z\ge c_2\}$, we obtain $\E e^{t(Z-\mu)}=\E e^{t\sigma\hat Z}\ge e^{tc_2\sigma}p_*$, which is \eqref{f:large-mgf}.
 
-\paragraph{Step 4: the density.} Fix $z\in\R$, and set $\ell=4/\varrho(z)$. Suppose that $\varrho(z+\ell)\ge\varrho(z)/2$. Since $\log\varrho$ is concave, for $0\le y\le\ell$ we have
+\paragraph{Step 4: the density.} We adapt the log-density secant argument of \cite[Lemma~7.7, proof]{oai-fluctuations}, using an arbitrary point in place of a mode. Fix $z\in\R$, and set $\ell=4/\varrho(z)$. Suppose that $\varrho(z+\ell)\ge\varrho(z)/2$. Since $\log\varrho$ is concave, for $0\le y\le\ell$ we have
 \[
  \log\varrho(z+y)\ge\Bigl(1-\frac y\ell\Bigr)\log\varrho(z)+\frac y\ell\log\varrho(z+\ell)\ge\log\frac{\varrho(z)}2,
 \]

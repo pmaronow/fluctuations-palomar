@@ -2,8 +2,9 @@ We study the heat-bath (Glauber) dynamics of the Sherrington--Kirkpatrick
 model at zero external field and fixed inverse temperature $\beta>1$. We
 sample the disorder $J$ and then a configuration $X_0$ from the Gibbs
 measure, and run the continuous-time dynamics with rate one per site from
-$X_0$. Let $T^J(X_0)$ be the first time at which the law of the configuration
-is within total-variation distance $1/4$ of the Gibbs measure. We prove lower
+$X_0$. Let $T^J(X_0)$ be the first time at which the law of the configuration,
+conditional on $J$ and the realized $X_0$, is within total-variation distance
+$1/4$ of the Gibbs measure. We prove lower
 and upper bounds: for every fixed $\omega\in(0,1/4)$, with probability tending
 to one,
 \[
@@ -15,7 +16,7 @@ literature suggests $\zeta=1/3$. Both bounds also hold for the discrete-time
 chain.
 
 These results improve on OpenAI's work in the same setting in two ways.
-First, OpenAI proved a lower bound with exponent $1/10000$ and an upper bound
+First, OpenAI proved a lower bound with exponent $1/10000$~\cite[Theorem~1.1]{oai-barriers} and an upper bound
 with exponent $1-1/40000000$~\cite[Theorem~1]{oai-typical-upper}. We follow
 the architecture of both proofs. The lower bound adds a three-replica
 comparison whose pressure deficit is cubic in the width of the overlap window,

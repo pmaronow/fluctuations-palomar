@@ -146,7 +146,10 @@ they apply.
 
 We record the Gaussian facts needed for the adaptive construction of
 the matrix in \cref{u:lem:assembly} and for the exceptional events of
-the disorder in \cref{u:sec:connections,u:sec:proof}.
+the disorder in \cref{u:sec:connections,u:sec:proof}. The successive
+conditioning on orthogonal queries is the Gaussian-revelation method
+used in \cite[Sections~2--3]{bolthausen-2014} and in the proposal of
+\cite[Section~4.1]{oai-typical-upper}.
 
 \begin{lemma}[Gaussian conditioning]\label{u:lem:goe-conditioning}
 Let $W\sim\mathcal G_n$. Its law is invariant under orthogonal
@@ -187,6 +190,8 @@ For every $n\ge2$,
 \end{lemma}
 
 \begin{proof}
+We use the sphere-net argument of
+\cite[Corollary~4.2.13 and Exercise~4.4.3(b)]{vershynin-2018}.
 Let $\mathcal N$ be a $1/4$ net of the Euclidean unit sphere with
 $|\mathcal N|\le9^n$, obtained by comparing the volumes of disjoint
 balls. For a symmetric matrix, approximating a unit vector at which

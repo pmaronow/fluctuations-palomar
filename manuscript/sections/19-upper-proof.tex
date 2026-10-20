@@ -17,9 +17,9 @@ $n$ tends to infinity.
 
 The next lemma is \cite[Lemma~8]{oai-typical-upper}, specialized to the
 heat-bath chain. Its proof uses the coarea argument for the reversible
-Cheeger inequality of Lawler and Sokal~\cite{lawler-sokal-1988} and
+Cheeger inequality of Lawler and Sokal~\cite[Theorem~3.5]{lawler-sokal-1988} and
 entropy dissipation as in Diaconis and Saloff-Coste
-\cite{diaconis-saloff-coste-1996}. We keep track of the estimates on
+\cite[Lemmas~2.5 and~2.7]{diaconis-saloff-coste-1996}. We keep track of the estimates on
 the Dirichlet form, since they are also used in
 \cref{u:sec:proof-discrete}.
 
@@ -65,6 +65,8 @@ For disjoint sets $A,B\subseteq\Sigma_n$, we write
 This agrees with \eqref{u:eq:cut-flow} when $B=A^c$.
 
 \paragraph{Removing sets.}
+We use the pruning procedure of
+\cite[Section~7, proof of Lemma~8]{oai-typical-upper}.
 We start with $C=\Sigma_n$. Whenever a nonempty set $U\subset C$ satisfies
 \[
  \pi(U)\le\pi(C)/2,
@@ -91,6 +93,9 @@ the terminal set satisfies $\pi(C)>1-\epsilon$ and
 \end{equation}
 
 \paragraph{A Poincar\'e inequality on $C$.}
+We apply the coarea proof of the reversible Cheeger bound
+\cite[Theorem~3.5]{lawler-sokal-1988}, with unnormalized weights on the
+retained set as in \cite[Section~7, proof of Lemma~8]{oai-typical-upper}.
 We claim that, for every real function $u$ on $\Sigma_n$,
 \begin{equation}\label{u:eq:retained-poincare}
  \sum_{y\in C}\pi(y)(u(y)-\bar u_C)^2
@@ -119,6 +124,9 @@ $\mathfrak D(u)$. Since the weighted mean minimizes the squared error,
 \eqref{u:eq:retained-poincare} follows.
 
 \paragraph{Entropy dissipation.}
+The derivative formula and square-root Dirichlet bound are
+\cite[Lemmas~2.5 and~2.7]{diaconis-saloff-coste-1996}, with the rates
+of \cref{u:sec:primitive}.
 For a fixed starting configuration $x$, define
 $f_s^x(y)=P_s^g(x,y)/\pi(y)$. We write
 \[

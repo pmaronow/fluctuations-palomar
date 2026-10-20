@@ -9,9 +9,9 @@ Throughout, we use the scalar inputs of \cref{u:sec:scalar}.
 We follow the Gaussian-conditioning construction of
 \cite[Section~4]{oai-typical-upper}. Successive Gaussian revelations along
 orthogonalized directions occur in the iterative construction of
-Bolthausen~\cite{bolthausen-2014}. Montanari used related increments guided by the Parisi process in an
+Bolthausen~\cite[Sections~2--3]{bolthausen-2014}. Montanari used related increments guided by the Parisi process in an
 incremental algorithm for approximate message
-passing~\cite{montanari-2021}. Here the durations of the cells grow with
+passing~\cite[Sections~2 and~3.1]{montanari-2021}. Here the durations of the cells grow with
 time, and the source and replay constructions retain all the auxiliary
 coordinates needed for the row identities.
 
@@ -234,6 +234,10 @@ the Picard solution map are Borel,
 and the frame rule uses finitely many measurable zero tests and
 normalizations.
 
+The fixed-matrix experiment and its independent coordinate-path law are
+those of \cite[Section~4.1]{oai-typical-upper}. The source and replay
+maps below retain the full histories and completion variables on the
+growing mesh, making their equality of laws explicit.
 We record the laws in the following diagram, in which every arrow except the
 density arrow denotes an equality of laws under a measurable pushforward. The same
 top arrows, applied before linking, identify the unlinked laws. The map $F$
@@ -357,6 +361,9 @@ null sets at fixed $n$ or for integral versions, as in \cref{u:sec:setup}.
 
 \section{Population entries}\label{u:sec:proposal-entries}
 
+These are the martingale and posterior-projection identities used in
+\cite[Section~4, proof of Proposition~5]{oai-typical-upper}; we record
+their form for the unequal neighboring cell durations.
 For a single linked row, let
 $e_j=(B(t_{j+1})-B(t_j))/\sqrt{h_j}$ and
 $\mathcal T=(\mathcal T_j)_{j=1}^N$, $e=(e_j)_{j=1}^N$.

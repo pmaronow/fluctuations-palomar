@@ -1,5 +1,25 @@
 \chapter{Formal verification}\label{sec:formal}
 
+The assembled Palomar submission
+\url{https://github.com/pmaronow/fluctuations-palomar-temp} exposes five
+claims through \path{Solution.lean}, selected by \path{comparator.json}; its
+independent \path{Challenge.lean} contains those five claims. The combined
+package passed the recorded checks on 19 October 2026 (20 October UTC),
+for proof-source commit
+\path{5551e62264a270fd5dcd396f36389eaf77eddebc}.
+The default build succeeded using unchanged compiled objects, and a
+strict axiom audit accepted all five exports with only
+\path{propext}, \path{Quot.sound}, and \path{Classical.choice}.
+A fresh protected Comparator run compiled the independent Challenge,
+compared the five statements and their complete reachable helper
+dependencies, and replayed the Solution export through Lean's kernel,
+NanoDa, and con-ron. All three accepted it. The records are published at
+\url{https://github.com/pmaronow/fluctuations-palomar-temp/tree/351cc102439ff1d741d240391dfb62258605b4d2/verification}.
+All Lean sources and build/comparison controls are unchanged from the
+verified proof-source commit. These checks concern the combined
+five-claim package; the source-package checks below, including the
+historical 47-claim upper-bound check, retain their original scope.
+
 In this section, we describe formal proofs of the four results
 \cref{thm:barrier-730,b:cor:subcritical,f:main,cor:mean-bias} of the lower bound
 and the fluctuation part in the Lean~4 proof assistant \cite{lean4}, built on the Mathlib library \cite{mathlib}. No argument elsewhere in the paper depends on this section. In \cref{sec:formal-oai}, we recall what OpenAI's public formalization proves. In \cref{sec:formal-statements}, we state the four formal theorems, explain how they correspond to the statements of this paper, and describe how they were checked. \Cref{sec:formal-barrier} compares the formal proof of \cref{thm:barrier-730} with the proof in this paper, and \cref{sec:formal-window} describes the mathematics that the formal proof of \cref{f:main} had to supply beyond OpenAI's formalization. \Cref{sec:formal-upper} describes the upper-bound formalization, and
@@ -13,7 +33,7 @@ For the fluctuations, the theorem \path{main_of_positiveLaplaceWindow}, at line~
 
 \section{Statements of the formal results}\label{sec:formal-statements}
 
-We formalized the four results in two Lean packages, one for \cref{thm:barrier-730,b:cor:subcritical} and one for \cref{f:main,cor:mean-bias}. Both use Lean version \texttt{v4.35.0-rc2} and Mathlib at commit \path{065356127b1dc0016f66b7283ce0ce2c4055aa55}. Both include OpenAI's Lean sources at commit \path{fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb} as a dependency, adapted to the module system of this version of Lean. The second package also depends on the first, which contains the formal proof of the variance--bias inequality.
+We originally formalized the four results in two source packages, one for \cref{thm:barrier-730,b:cor:subcritical} and one for \cref{f:main,cor:mean-bias}. Both use Lean version \texttt{v4.35.0-rc2} and Mathlib at commit \path{065356127b1dc0016f66b7283ce0ce2c4055aa55}. Both include OpenAI's Lean sources at commit \path{fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb} as a dependency, adapted to the module system of this version of Lean. The second package also depends on the first, which contains the formal proof of the variance--bias inequality.
 
 \paragraph{The barrier theorem.} The theorem \path{SKBarriers2.mainStatementSevenThirty} has type \path{OAI.SK.Strengthened.MainStatementAt (7 / 30)}. This proposition states that for every $\beta>1$ there exists $A>0$ with the following property: for every $\tau\in(0,1/2)$, the two quantities
 \[
@@ -42,11 +62,11 @@ for every $n\ge1$ and every $\beta\ge\beta_0$. Since $\Var(F_n/\beta)+1/2=\beta^
 
 \paragraph{Axioms and the independent check.} The four theorems use only the three standard axioms \path{propext}, \path{Classical.choice}, and \path{Quot.sound} of Lean's logic. Since they also have no hypotheses, every result that their proofs use is proved in Lean, in the two packages or in their dependencies. The upper bounds on the mean bias and on the variance in \cref{inp:hb-rate,inp:qp-rate} and the variance--bias inequality enter the formal proofs as Lean theorems. The first and the last of these come from \cite{hexagon-bias-lean}.
 
-The four theorems also passed an independent check, which has three parts. First, we wrote out their statements a second time, with every definition that they involve, in separate files that import only Mathlib and none of our proofs. For the barrier, these are the definitions of the disorder law, the Hamiltonian, the Gibbs measure, the heat-bath kernels, the total variation distances, and the two quantities displayed above. For the fluctuations and the mean bias, they are the definitions on which \path{MainFluctuationStatement} rests, copied from OpenAI's sources at the commit cited above, and the definitions of the pressures $p_n(\beta)$ and of their limit. A comparison confirmed that each proved theorem has exactly the statement written out in this way. Second, the same comparison confirmed that the proofs use no axioms other than the three above. Third, the statements and proofs of the theorems were exported from the compiled packages, with every declaration on which they depend, including the proofs of all lemmas that they use. This export was checked again by three type checkers for Lean's logic: Lean's own kernel and the external checkers nanoda and con-ron. All three accepted the barrier statements and, in a separate comparison, both the fluctuation theorem and the mean-bias corollary. Declarations of the packages that these proofs do not use are not part of the check.
+In their source packages, the four theorems also passed an independent check, which has three parts. First, we wrote out their statements a second time, with every definition that they involve, in separate files that import only Mathlib and none of our proofs. For the barrier, these are the definitions of the disorder law, the Hamiltonian, the Gibbs measure, the heat-bath kernels, the total variation distances, and the two quantities displayed above. For the fluctuations and the mean bias, they are the definitions on which \path{MainFluctuationStatement} rests, copied from OpenAI's sources at the commit cited above, and the definitions of the pressures $p_n(\beta)$ and of their limit. A comparison confirmed that each proved theorem has exactly the statement written out in this way. Second, the same comparison confirmed that the proofs use no axioms other than the three above. Third, the statements and proofs of the theorems were exported from the compiled packages, with every declaration on which they depend, including the proofs of all lemmas that they use. This export was checked again by three type checkers for Lean's logic: Lean's own kernel and the external checkers nanoda and con-ron. All three accepted the barrier statements and, in a separate comparison, both the fluctuation theorem and the mean-bias corollary. Declarations of the packages that these proofs do not use are not part of the check.
 
 \section{The formal and the written barrier proofs}\label{sec:formal-barrier}
 
-The formal proof of \cref{thm:barrier-730} does not follow the proof in this paper in every step. The paper proves the local three-replica expansion of \cref{b:prop:os-expansion} with a remainder $O(h^4k^2)$, where $h$ is the width parameter and $k$ the relative imbalance of \eqref{b:eq:os-parameters}, by estimates for smooth limiting flows. The formal proof instead works with finite chains of Gaussian integrations. It proves the upper bound contained in \eqref{b:eq:finiteE-polynomial} for these chains, at the ratio $\vartheta=1/2$ used in the dynamical argument and on a smaller range of the relative imbalance $k$. Its remainder is of order $h^{7/2}k^2+h^3|k|^3$ instead of $h^4k^2$, up to an additional error that tends to zero as the length of the chains tends to infinity. Only this upper bound enters the proof of the uniform cubic deficit in \cref{prop:cub-band}, where the remainder must be small compared with $h^3k^2$. The weaker remainder has this property when $h$ and $|k|$ are small. Either estimate suffices for \cref{thm:barrier-730}; they lead to different constants, not to a different exponent.
+The formal proof of \cref{thm:barrier-730} does not follow the proof in this paper in every step. The paper proves the local three-replica expansion of \cref{b:prop:os-expansion} with a remainder $O(h^4k^2)$, where $h$ is the width parameter and $k$ the relative imbalance of \eqref{b:eq:os-parameters}, by estimates for smooth limiting flows. The formal proof instead works with finite chains of Gaussian integrations, using the hierarchical recursion of \cite[Section~2]{oai-barriers} and its accompanying Lean development \cite{oai-math-lean}. It proves the upper bound contained in \eqref{b:eq:finiteE-polynomial} for these chains, at the ratio $\vartheta=1/2$ used in the dynamical argument and on a smaller range of the relative imbalance $k$. Its remainder is of order $h^{7/2}k^2+h^3|k|^3$ instead of $h^4k^2$, up to an additional error that tends to zero as the length of the chains tends to infinity. Only this upper bound enters the proof of the uniform cubic deficit in \cref{prop:cub-band}, where the remainder must be small compared with $h^3k^2$. The weaker remainder has this property when $h$ and $|k|$ are small. Either estimate suffices for \cref{thm:barrier-730}; they lead to different constants, not to a different exponent.
 
 In the final counting step, the formal proof and \cref{sec:barrier-proof} use the same kind of count. Only the first reference configuration of each block is counted, and the sign obstruction follows, as in \cref{prop:bp-obstruction}, once a count of the form \eqref{b:dyn:prefix-count} is less than one. The formal proof passes through finite grids of threshold values, while \cref{sec:barrier-proof} uses the uniform law of the thresholds directly. We conclude that the formal proof certifies \cref{thm:barrier-730} and \cref{b:cor:subcritical}, not every intermediate estimate in the paper's proof of them.
 
@@ -83,11 +103,18 @@ The successive comparisons follow one of the two covariance alternatives of \cit
 
 \section{Scope and availability}\label{sec:formal-scope}
 
-The independent check of \cref{sec:formal-statements} concerns the statements of the four theorems described there. Intermediate results in their proofs, such as \cref{f:window}, are checked only as parts of these proofs. The quantitative and almost-sure forms in \cref{thm:barrier-strong} are not formally verified. These are the bounds on the probability of the exceptional disorders and on the Gibbs mass of the exceptional initial states, the lower bounds on the distance that tend to $1/2$, the extension to the Metropolis dynamics and to other single-site dynamics with bounded rates, the bound on the relaxation time, and the almost-sure statements for arbitrary couplings of the disorders across system sizes. The sharper local expansion of \cref{b:prop:os-expansion} is not formally verified either; see \cref{sec:formal-barrier}. The proposition \path{MainFluctuationStatement} concerns exponents only, and the limit law and the positive variance prefactor claimed in \cite{oai-limiting-law} are not part of it. The proposition \path{LowerBoundStatement} contains the loss $n^{-\eps}$ for an arbitrary $\eps>0$, and the bound \eqref{eq:mean-bias-prefactor-target}, which would follow from a positive variance prefactor, is not part of it.
+The combined check concerns the five final statements described above; the source-package checks of \cref{sec:formal-statements} concern the four lower-bound and fluctuation results described there. Intermediate results in their proofs, such as \cref{f:window}, are checked only as parts of these proofs. The quantitative and almost-sure forms in \cref{thm:barrier-strong} are not formally verified. These are the bounds on the probability of the exceptional disorders and on the Gibbs mass of the exceptional initial states, the lower bounds on the distance that tend to $1/2$, the extension to the Metropolis dynamics and to other single-site dynamics with bounded rates, the bound on the relaxation time, and the almost-sure statements for arbitrary couplings of the disorders across system sizes. The sharper local expansion of \cref{b:prop:os-expansion} is not formally verified either; see \cref{sec:formal-barrier}. The proposition \path{MainFluctuationStatement} concerns exponents only, and the limit law and the positive variance prefactor claimed in \cite{oai-limiting-law} are not part of it. The proposition \path{LowerBoundStatement} contains the loss $n^{-\eps}$ for an arbitrary $\eps>0$, and the bound \eqref{eq:mean-bias-prefactor-target}, which would follow from a positive variance prefactor, is not part of it.
 
 \statusFormalUpperScope
 
-OpenAI's Lean sources \cite{oai-math-lean} and the development \cite{hexagon-bias-lean} are public. The Lean sources of our two packages, the independently stated theorems, and the records of the checks described in \cref{sec:formal-statements} are maintained in the private repository \url{https://github.com/pmaronow/fluctuations-temp}. The records identify the source revision used for each check and the precise scope of its conclusion. The sources for the upper bound are in the
-\path{glauber/lean} directory of the same private repository, at commit
-\url{https://github.com/pmaronow/fluctuations-temp/commit/352426b9007b6bbb31a3c8cfe6887caa0badf3fd}.
-Access to the repository and the verification records is available from the authors.
+OpenAI's Lean sources \cite{oai-math-lean} and the development
+\cite{hexagon-bias-lean} are public. The combined sources, independent
+\path{Challenge.lean}, and verification records are available in
+\url{https://github.com/pmaronow/fluctuations-palomar-temp}; the records
+identify the checked proof-source revision and the scope of each check.
+The original two source packages and the historical upper-bound package
+are maintained in the private repository
+\url{https://github.com/pmaronow/fluctuations-temp}. The latter was checked
+at commit \path{352426b9007b6bbb31a3c8cfe6887caa0badf3fd}, in its
+\path{glauber/lean} directory. The historical records remain available
+from the authors.

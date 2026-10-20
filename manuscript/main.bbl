@@ -1,4 +1,4 @@
-\begin{thebibliography}{108}
+\begin{thebibliography}{116}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -31,6 +31,15 @@ Nima Anari, Vishesh Jain, Frederic Koehler, Huy~Tuan Pham, and Thuy-Duong
   Theory of Computing}, pages 1418--1430. ACM, 2022.
 \newblock \doi{10.1145/3519935.3520048}.
 \newblock Theorem locators refer to the preprint arXiv:2106.04105v2.
+
+\bibitem[Anari et~al.(2024)Anari, Koehler, and Vuong]{anari-koehler-vuong-2024}
+Nima Anari, Frederic Koehler, and Thuy-Duong Vuong.
+\newblock Trickle-down in localization schemes and applications.
+\newblock In \emph{Proceedings of the 56th Annual ACM Symposium on Theory of
+  Computing}, pages 1094--1105. ACM, 2024.
+\newblock \doi{10.1145/3618260.3649622}.
+\newblock URL \url{https://arxiv.org/abs/2407.16104v1}.
+\newblock Statement locators use \url{https://arxiv.org/abs/2407.16104v1}.
 
 \bibitem[Aronow and Lopatto(2026{\natexlab{a}})]{al-overlap-structure}
 P.~M. Aronow and Patrick Lopatto.
@@ -230,6 +239,7 @@ St\'ephane Boucheron, G\'abor Lugosi, and Pascal Massart.
   Independence}.
 \newblock Oxford University Press, 2013.
 \newblock \doi{10.1093/acprof:oso/9780199535255.001.0001}.
+\newblock URL \url{https://academic.oup.com/book/26549}.
 
 \bibitem[Bovier and Klimovsky(2009)]{bovier-klimovsky-2009}
 Anton Bovier and Anton Klimovsky.
@@ -258,12 +268,31 @@ A.~J. Bray and M.~A. Moore.
   (9):\penalty0 L377--L383, 1981.
 \newblock \doi{10.1088/0305-4470/14/9/012}.
 
+\bibitem[Brenier(1991)]{brenier-1991}
+Yann Brenier.
+\newblock Polar factorization and monotone rearrangement of vector-valued
+  functions.
+\newblock \emph{Communications on Pure and Applied Mathematics}, 44\penalty0
+  (4):\penalty0 375--417, 1991.
+\newblock \doi{10.1002/cpa.3160440402}.
+\newblock URL \url{https://www.ceremade.dauphine.fr/~carlier/Brenier91.pdf}.
+
 \bibitem[Chatterjee(2009)]{chatterjee-2009}
 Sourav Chatterjee.
 \newblock Disorder chaos and multiple valleys in spin glasses.
 \newblock \url{https://arxiv.org/abs/0907.3381v4}, 2009.
 \newblock URL \url{https://arxiv.org/abs/0907.3381v4}.
 \newblock Version 4, 23 November 2009.
+
+\bibitem[Chatterjee(2019)]{chatterjee-lower-2019}
+Sourav Chatterjee.
+\newblock A general method for lower bounds on fluctuations of random
+  variables.
+\newblock \emph{Annals of Probability}, 47\penalty0 (4):\penalty0 2140--2171,
+  2019.
+\newblock \doi{10.1214/18-AOP1304}.
+\newblock URL \url{https://arxiv.org/abs/1706.04290v3}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1706.04290v3}.
 
 \bibitem[Chen et~al.(2026)Chen, Guionnet, Ko, Lacroix-A-Chez-Toine, and
   Mourrat]{chen-guionnet-ko-lacroix-mourrat-2026}
@@ -321,6 +350,14 @@ S.~G.~W. Colborne.
 \newblock \emph{Journal of Physics A: Mathematical and General}, 23\penalty0
   (17):\penalty0 4013--4023, 1990.
 \newblock \doi{10.1088/0305-4470/23/17/030}.
+
+\bibitem[Collins-Woodfin and Le(2025)]{collins-woodfin-le-survey-2025}
+Elizabeth~W. Collins-Woodfin and Han~Gia Le.
+\newblock Free energy fluctuations in {SK} and related spin glass models: A
+  literature survey.
+\newblock \url{https://arxiv.org/abs/2510.26960v3}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2510.26960v3}.
+\newblock Version 3, November 7, 2025.
 
 \bibitem[Comets and Neveu(1995)]{comets-neveu-1995}
 Francis Comets and Jacques Neveu.
@@ -387,6 +424,15 @@ Partha~S. Dey and Taegu Kang.
 \newblock \url{https://arxiv.org/abs/2603.05636v1}, 2026.
 \newblock URL \url{https://arxiv.org/abs/2603.05636v1}.
 \newblock Version 1, March 5, 2026.
+
+\bibitem[Dey and Wu(2023)]{dey-wu-2023}
+Partha~S. Dey and Qiang Wu.
+\newblock Mean field spin glass models under weak external field.
+\newblock \emph{Communications in Mathematical Physics}, 402\penalty0
+  (2):\penalty0 1205--1258, 2023.
+\newblock \doi{10.1007/s00220-023-04742-5}.
+\newblock URL \url{https://arxiv.org/abs/2112.11349v3}.
+\newblock Statement locators use \url{https://arxiv.org/abs/2112.11349v3}.
 
 \bibitem[Diaconis and Saloff-Coste(1996)]{diaconis-saloff-coste-1996}
 Persi Diaconis and Laurent Saloff-Coste.
@@ -481,6 +527,15 @@ Francesco Guerra and Fabio~L. Toninelli.
 \newblock Statement locators use
   \url{https://arxiv.org/abs/cond-mat/0204280v1}.
 
+\bibitem[Isserlis(1918)]{isserlis-1918}
+L.~Isserlis.
+\newblock On a formula for the product-moment coefficient of any order of a
+  normal frequency distribution in any number of variables.
+\newblock \emph{Biometrika}, 12\penalty0 (1--2):\penalty0 134--139, 1918.
+\newblock \doi{10.1093/biomet/12.1-2.134}.
+\newblock URL
+  \url{https://academic.oup.com/biomet/article-abstract/12/1-2/134/193428}.
+
 \bibitem[Jagannath and Tobasco(2016)]{jagannath-tobasco-2016}
 Aukosh Jagannath and Ian Tobasco.
 \newblock A dynamic programming approach to the {Parisi} functional.
@@ -564,8 +619,16 @@ N.~D. Mackenzie and A.~P. Young.
 N.~D. Mackenzie and A.~P. Young.
 \newblock Statics and dynamics of the infinite-range {Ising} spin glass model.
 \newblock \emph{Journal of Physics C: Solid State Physics}, 16\penalty0
-  (27):\penalty0 5321, 1983.
+  (27):\penalty0 5321--5337, 1983.
 \newblock \doi{10.1088/0022-3719/16/27/015}.
+
+\bibitem[McCann(1995)]{mccann-1995}
+Robert~J. McCann.
+\newblock Existence and uniqueness of monotone measure-preserving maps.
+\newblock \emph{Duke Mathematical Journal}, 80\penalty0 (2):\penalty0 309--323,
+  1995.
+\newblock \doi{10.1215/S0012-7094-95-08013-2}.
+\newblock URL \url{https://www.math.toronto.edu/~mccann/papers/monotone.pdf}.
 
 \bibitem[M{\'e}zard et~al.(1986)M{\'e}zard, Parisi, and
   Virasoro]{mezard-parisi-virasoro-1986}
@@ -911,6 +974,17 @@ B.~S. Tsirel'son, I.~A. Ibragimov, and V.~N. Sudakov.
 \newblock In \emph{Proceedings of the {Third Japan--USSR} Symposium on
   Probability Theory ({Tashkent}, 1975)}, volume 550 of \emph{Lecture Notes in
   Mathematics}, pages 20--41. Springer, Berlin, 1976.
+
+\bibitem[Vershynin(2018)]{vershynin-2018}
+Roman Vershynin.
+\newblock \emph{High-Dimensional Probability: An Introduction with Applications
+  in Data Science}, volume~47 of \emph{Cambridge Series in Statistical and
+  Probabilistic Mathematics}.
+\newblock Cambridge University Press, 2018.
+\newblock \doi{10.1017/9781108231596}.
+\newblock URL
+  \url{https://webapps.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf}.
+\newblock First edition; numbered locators refer to this edition.
 
 \bibitem[Vertechi and Virasoro(1989)]{vertechi-virasoro-1989}
 D.~Vertechi and M.~A. Virasoro.

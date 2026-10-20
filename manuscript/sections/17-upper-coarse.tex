@@ -162,6 +162,12 @@ The first and third terms combine into $\sum_jw_j\Delta A_j$, and the other pair
 \section{The joint information--energy cancellation}\label{u:sec:joint}
 
 We next compare the row telescope with the continuous scalar energy. The It\^o identities below and the information integral of \cref{u:lem:reference} imply an identity at the terminal time. We estimate its terminal fluctuation and its mesh residual separately.
+The scalar entropy--energy balance is
+\cite[Lemma~4]{oai-typical-upper}, and the auxiliary-reference
+likelihood is from \cite[Section~4, proof of Proposition~5]{oai-typical-upper}.
+The joint terminal identity below compares the fluctuations of these
+quantities on the same row history. Its terminal correction and the
+growing-mesh residual are derived here.
 
 \begin{lemma}[It\^o formula for the time-dependent field]\label{u:lem:ito}
 On every finite horizon, under the original scalar Wiener law,
@@ -353,7 +359,8 @@ Indeed, the inequality $|e^x-1|\le e^L|x|$ for $|x|\le L$ proves this with $L=33
 In detail, the integral of $C^2$ over the interior cells is bounded by $C_\beta h^2\int e^{t/2}p(t)^2\dd t=O_\beta(h^2)$, and the final cell contributes at most $C_\beta h_Ne^{-t_N}\le C_\beta h$. For $G^2$, the auxiliary cell zero contributes $O_\beta(h)$; elsewhere we use $h_j^2\le h_j\le he^{t/4}$ and integrate $e^{t/4}r$. To bound $\mathcal Q$, we integrate $|C|$, using $h\int e^{t/4}p$ and the bound $h_Np(t_N)\le C_\beta h$ on the final cell. All constants are uniform in the horizon. Since $|\chi|,|m|,|m_{\lfloor t\rfloor}|\le1$ and $|\rho|\le1$, both path martingales $\mathcal M,\mathcal N$ have deterministic bracket at most $C_\beta h$.
 
 \paragraph{The lag integrals.}
-For cell $j$ of length $h_j$, we condition only on the past $\mathcal F_{t_j}^{\rm path}$ of the original spin-free Brownian pair. The increment $m_t-m_{t_j}$ has bracket at most $h_j$. We stop it at its first crossing of $\sqrt{uh_j}$. The outer lag integral, stopped at this time, has bracket at most $uh_j^2r(t_j)$, since $r$ is nonincreasing. By the maximal inequality for exponential martingales and a union bound, we have, for $u>0$,
+For cell $j$ of length $h_j$, we condition only on the past $\mathcal F_{t_j}^{\rm path}$ of the original spin-free Brownian pair. The increment $m_t-m_{t_j}$ has bracket at most $h_j$. We stop it at its first crossing of $\sqrt{uh_j}$. The outer lag integral, stopped at this time, has bracket at most $uh_j^2r(t_j)$, since $r$ is nonincreasing. By the stopped exponential-martingale argument
+\cite[Section~3.5]{karatzas-shreve-1991} and a union bound, we have, for $u>0$,
 \begin{equation}\label{u:eq:lag-cell-tail}
 \begin{aligned}
  \PP\bigl\{|\mathscr L_j|>uh_j\sqrt{r(t_j)}
@@ -372,7 +379,9 @@ Iterating over cells and using \eqref{u:eq:mesh-summability}, we find that the c
 The tail and MGF estimates above are conditional on the past of the original pair; this variance identity is unconditional.
 
 \paragraph{The centered MGF and the mean.}
-Linking does not change the law of the paths. In particular, $\mathcal N$ has its usual sub-Gaussian bound under $\nu_V$. Multiplying $\mathcal M$ by $x$ preserves its absolute tail, but the product need not be a martingale. To obtain a centered MGF without a prefactor, let $X'$ be an independent copy of $X=x\mathcal M$. By Jensen's inequality, $\E e^{\theta(X-\E X)}\le\E e^{\theta(X-X')}$.
+Linking does not change the law of the paths. In particular, $\mathcal N$ has its usual sub-Gaussian bound under $\nu_V$. Multiplying $\mathcal M$ by $x$ preserves its absolute tail, but the product need not be a martingale. We use the standard centering principle for sub-Gaussian variables
+\cite[Lemma~2.6.8]{vershynin-2018}, verifying an MGF constant by symmetrization.
+To obtain a centered MGF without a prefactor, let $X'$ be an independent copy of $X=x\mathcal M$. By Jensen's inequality, $\E e^{\theta(X-\E X)}\le\E e^{\theta(X-X')}$.
 If $X$ has tail $2e^{-u^2/(2v)}$, the symmetric difference has tail $4e^{-u^2/(8v)}$ and even moments at most $4(8v)^ll!$. Since $(2l)!\ge(l!)^2$, its series is at most $4e^{8v\theta^2}-3\le e^{32v\theta^2}$.
 This applies with $v=C_\beta h$. By Hoeffding's lemma \cite[Lemma~2.2]{boucheron-lugosi-massart-2013}, we have a centered log MGF bounded by $C_\beta\theta^2h^2$ for $\mathcal Q$, using \eqref{u:eq:residual-bracket-bounds}. We combine these bounds and \eqref{u:eq:lag-cell-mgf} in \eqref{u:eq:residual-decomposition} by H\"older's inequality with four factors. Since the number of factors is fixed, this proves the MGF bound in \eqref{u:eq:residual-mgf}.
 
@@ -422,7 +431,9 @@ and its centered random part is $T_V+\beta(R_h-\E R_h)$, with variance at most $
 By \eqref{u:eq:continuous-row-energy} and the definition of $R_h$, we have $\zeta_h=\zeta_\infty-R_h+(e(V)-e_h)/2$.
 Inserting this into \eqref{u:eq:joint-cancellation} yields \eqref{u:eq:finite-grid-cancellation}. Using \eqref{u:eq:residual-mgf} and $\E(x-m_V)^2=p(V)$, we obtain \eqref{u:eq:finite-grid-mean}. This also agrees with the information mean of \cref{u:lem:reference} and with \eqref{u:eq:row-telescope}. Combining the centered decomposition with \eqref{u:eq:terminal-variance} and \eqref{u:eq:residual-mgf}, we conclude that the variance has the stated bound; this does not require the two terms to be independent.
 
-The terminal correction is deterministically at most $2\beta^2p(V)=O_\beta(n^{-\ex b/2})=o(n^{-\ex z})$. Its mean and the deterministic mesh error $O_\beta(h)$ fit within the same accuracy. By \eqref{u:eq:residual-average-tail} with $\eta=n^{-\ex z}$, absorbing the fixed coefficient $\beta$ into its constants, we obtain \eqref{u:eq:row-concentration}. The terminal variance remains $O(p(V)^3)$. Bernstein's inequality for bounded variables would give it the rate $n\min(\eta^2/p(V)^3,\eta/p(V))$; here we use only its deterministic amplitude.
+The terminal correction is deterministically at most $2\beta^2p(V)=O_\beta(n^{-\ex b/2})=o(n^{-\ex z})$. Its mean and the deterministic mesh error $O_\beta(h)$ fit within the same accuracy. By \eqref{u:eq:residual-average-tail} with $\eta=n^{-\ex z}$, absorbing the fixed coefficient $\beta$ into its constants, we obtain \eqref{u:eq:row-concentration}. The terminal variance remains $O(p(V)^3)$. Bernstein's inequality for bounded variables
+\cite[Theorem~2.10 and Corollary~2.11]{boucheron-lugosi-massart-2013}
+would give it the rate $n\min(\eta^2/p(V)^3,\eta/p(V))$; here we use only its deterministic amplitude.
 \end{proof}
 
 \begin{proposition}[Intrinsic coarse domination]\label{u:prop:coarse}

@@ -57,7 +57,10 @@ $\widehat\Sigma_n-\Sigma$.
 \begin{proof}
 We bound the fourth moment of a row projection using its second moment
 and its sub-Gaussian tail. We then use a net to control the empirical
-covariance matrix.
+covariance matrix, following the empirical-Gram argument of
+\cite[Section~4, proof of Proposition~5]{oai-typical-upper}. The
+variance-sensitive estimates below keep the dependence on $R$ needed
+on the growing mesh.
 
 Let $a=(a_{\mathcal T},a_e,a_x)$ be a deterministic unit vector, and
 write $F=a^{\mathsf T}Z$. By the martingale representation, the
@@ -112,7 +115,8 @@ $n\varepsilon_0^2/[40320R\log(2+R)]$.
 A deterministic $1/4$ net of the unit sphere in dimension $2N+1$ has
 size at most $9^{2N+1}$. The operator norm of a symmetric matrix is at
 most twice the largest absolute value of its quadratic form on this
-net. Since $40320\cdot256<2^{24}$, we obtain \eqref{u:eq:fixed-gram}
+net \cite[Corollary~4.2.13 and Exercise~4.4.3(b)]{vershynin-2018}.
+Since $40320\cdot256<2^{24}$, we obtain \eqref{u:eq:fixed-gram}
 from the union bound over the net. Here we used that the rows have the
 product law of \cref{u:def:laws}, and that coordinate inclusions and
 projections have norm one.
@@ -124,6 +128,9 @@ We next prove the weighted estimate. Four elementary estimates will
 control products, stochastic integrals with random brackets, weighted
 squares, and empirical means. We use them in \cref{u:lem:weighted},
 first for each dyadic node and then for the sum over the tree.
+The dyadic triangular decomposition is used in
+\cite[Section~4, proof of Proposition~5]{oai-typical-upper}. Here the
+node estimates retain their durations before they are summed.
 
 We write $\operatorname{SG}(s^2)$ for the centered bound
 $\E e^{\theta X}\le e^{s^2\theta^2/2}$ for every real $\theta$, and let
@@ -132,7 +139,7 @@ $\E e^{\theta X}\le e^{s^2\theta^2/2}$ for every real $\theta$, and let
  =\inf\{s>0:\E e^{|X|/s}\le2\}.
 \]
 The latter is a norm, so its triangle inequality holds also for
-dependent random variables.
+dependent random variables; see \cite[Section~2.7.1]{vershynin-2018}.
 
 \begin{lemma}[Products of sub-Gaussian variables]
 \label{u:lem:subgaussian-products}
@@ -149,6 +156,9 @@ The variables $Y$ and $Z$ may be dependent.
 \end{lemma}
 
 \begin{proof}
+The sub-exponential product estimate is standard
+\cite[Lemma~2.7.7]{vershynin-2018}. We additionally retain the second
+moment of $Y$ in the variance estimate.
 If $us=0$, the assertions are immediate. Otherwise, we normalize to
 $u=s=1$. By a union bound, we have that
 $\PP(|YZ|>t)\le4e^{-t/(2\sqrt R)}$. Integrating this tail yields
@@ -182,7 +192,8 @@ Then, for $t,u>0$,
 
 \begin{proof}
 We stop at bracket level $u$ and use the exponential supermartingale
-with parameters $t/u$ and $-t/u$. On
+with parameters $t/u$ and $-t/u$, the stopped stochastic-exponential
+argument of \cite[Section~3.5]{karatzas-shreve-1991}. On
 $\{\langle\widetilde M\rangle_V\le u\}$, we have the first inequality.
 For the second, we take $u=t\sqrt{A/2}$ so that the resulting tail is
 bounded by $4e^{-t/\sqrt{2A}}$. Integrating it, we find that
@@ -200,6 +211,9 @@ The variables $Y_j$ may be dependent.
 \end{lemma}
 
 \begin{proof}
+We use the sub-Gaussian-square estimate
+\cite[Lemma~2.7.6]{vershynin-2018} and Jensen's inequality, keeping the
+constants explicit.
 For a single $Y_j$, we integrate its Gaussian tail and bound the
 expectation by $1+2\int_1^\infty t^{-3}\dd t=2$. By Jensen's inequality, with the
 unused weight assigned to zero, we obtain \eqref{u:eq:jensen-weights}.
@@ -227,7 +241,7 @@ If $X_1,\ldots,X_n$ are independent copies of $X$, then
 
 \begin{proof}
 This is the Bernstein inequality in the form of
-\cite[Theorem~2.10]{boucheron-lugosi-massart-2013}; we include the
+\cite[Theorem~2.10 and Corollary~2.11]{boucheron-lugosi-massart-2013}; we include the
 calculation to record the constants needed here. In passing from the
 tail to the factorial moments, we keep the variance.
 
@@ -495,7 +509,8 @@ before this normalization.
 Fix a deterministic $1/2$ net of the unit sphere of size at most
 $5^{m_0}$. For every vector $z$, we have
 $\|z\|\le2\max|\alpha^{\mathsf T}z|$, where the maximum is over
-this net. There are $2+5(2m_0-1)=10m_0-3$ vectors to control.
+this net \cite[Corollary~4.2.13 and Exercise~4.4.2]{vershynin-2018}.
+There are $2+5(2m_0-1)=10m_0-3$ vectors to control.
 Using \eqref{u:eq:bernstein} and the union bound, we conclude that
 \eqref{u:eq:weighted-node-bounds} holds. At every depth, the durations
 partition $t_N$, so $\sum_Id_I=D_*U_{\rm dur}$. Summing the squared

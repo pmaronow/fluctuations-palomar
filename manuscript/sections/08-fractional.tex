@@ -202,11 +202,16 @@ Then:
 \end{lemma}
 
 The quantity bounded in \eqref{b:eq:prefix-floor-response} is a mixed difference: it vanishes when $V=0$ and when $\gamma=\widetilde\gamma$. A bound on the full difference $\mathcal H_{\widetilde\gamma}(\varphi+V)-\mathcal H_\gamma(\varphi+V)$ would be of order $\norm{\gamma-\widetilde\gamma}_{L^1}$ without the factor $\norm{V'}_\infty$. In the application, that full difference is accounted for by the scalar cost \eqref{b:eq:specific-floor-cost}.
+The proof adapts the scalar profile-stability argument of
+\cite[Section~2.4, Lemma~14]{jagannath-tobasco-2016}: subtract the two Parisi
+equations and represent the resulting linear equation by a diffusion. Here we
+also compare terminal functions, retaining the factor $\norm{V'}_\infty$ in the
+mixed difference; this refinement is proved below.
 
 \begin{proof}
 It suffices to prove (a) and (b) for step functions $\gamma,\widetilde\gamma$, with constants independent of the number of steps. Indeed, let $\gamma$ be general and let $\gamma_k\to\gamma$ in $L^1$ be step functions. The bound of Step~2 below, applied to the whole functions, shows that $\Phi^{\gamma_k}_F(t,\cdot)$ is a Cauchy sequence in the supremum norm for each $t$. The limit exists, it does not depend on the sequence, and the bounds pass to it. We take a common refinement, so that $\gamma$ and $\widetilde\gamma$ are constant on the same intervals. On each such interval the solutions are smooth in $z$, with bounded derivatives of orders one to three, and solve \eqref{eq:fr-prefix-pde} classically; at the finitely many endpoints they are continuous in $t$.
 
-We use the following maximum principle, which is the Feynman--Kac formula for a diffusion with generator $\frac{\beta^2}2\partial_{zz}+a\,\partial_z$. Let $a,c,\mathfrak s$ be bounded continuous functions on $[t_1,t_2]\times\R$, with $a$ Lipschitz in $z$, and let $f$ be bounded and solve $-\partial_tf=\frac{\beta^2}2f_{zz}+af_z+cf+\mathfrak s$. Then
+We use the following maximum principle, which follows from the Feynman--Kac representation \cite[Theorem~5.7.6]{karatzas-shreve-1991} for a diffusion with generator $\frac{\beta^2}2\partial_{zz}+a\,\partial_z$, after an exponential rescaling to make the killing rate nonnegative. Let $a,c,\mathfrak s$ be bounded continuous functions on $[t_1,t_2]\times\R$, with $a$ Lipschitz in $z$, and let $f$ be bounded and solve $-\partial_tf=\frac{\beta^2}2f_{zz}+af_z+cf+\mathfrak s$. Then
 \begin{equation}\label{eq:fr-max-principle}
  \norm{f(t,\cdot)}_\infty\le e^{\norm c_\infty(t_2-t)}\Bigl(\norm{f(t_2,\cdot)}_\infty+\int_t^{t_2}\norm{\mathfrak s(t',\cdot)}_\infty\dd t'\Bigr)\qquad(t_1\le t\le t_2).
 \end{equation}
@@ -214,7 +219,7 @@ Applying \eqref{eq:fr-max-principle} on consecutive intervals, we see that it ho
 
 The functions to which we apply \eqref{eq:fr-max-principle} are bounded. Indeed, fix a step profile, and let $F$ be $L$-Lipschitz. Each integration step $T_{m,v}$ maps $L$-Lipschitz functions to $L$-Lipschitz functions, by \cref{lem:inp-steps}(a), and for $0\le m\le1$ it satisfies $\norm{T_{m,v}f-f}_\infty\le\log\E e^{L\sqrt v\abs\zeta}$ for $L$-Lipschitz $f$, where $\zeta$ is a standard Gaussian variable; the upper bound follows from $f(z+\sqrt v\,\zeta)-f(z)\le L\sqrt v\abs\zeta$ and the monotonicity of $m\mapsto m^{-1}\log\E e^{mX}$, and the lower bound from Jensen's inequality. Summing over the finitely many steps, we find that $\Phi^\gamma_F(t,\cdot)-F$ is bounded. The differences $\Delta$ and $\widetilde{\mathcal D}-\mathcal D$ of Steps~2 and~3 below are bounded, and so are the derivatives to which we apply \eqref{eq:fr-max-principle}, by Step~1. The resulting estimates do not depend on the number of steps.
 
-\paragraph{Step 1: derivative bounds.} Let $F\in\{\varphi,\varphi+V\}$, so that $\norm{F'}_\infty\le4$ and $\norm{F''}_\infty\le4$. We claim that
+\paragraph{Step 1: derivative bounds.} We use the tilted-chain martingale argument of \cite[proof of Lemma~3.1]{oai-barriers}, with terminal function $F$ in place of $\log(2\cosh z)$. Let $F\in\{\varphi,\varphi+V\}$, so that $\norm{F'}_\infty\le4$ and $\norm{F''}_\infty\le4$. We claim that
 \begin{equation}\label{eq:fr-prefix-derivatives}
  \abs{\partial_z\Phi^\gamma_F}\le4,\qquad\abs{\partial_{zz}\Phi^\gamma_F}\le20\qquad\text{on }[0,q_0]\times\R.
 \end{equation}

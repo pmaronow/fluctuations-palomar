@@ -28,7 +28,8 @@ the integration step and the hierarchies of \cref{sec:inputs}
 (\cref{def:inp-step,lem:inp-steps,def:inp-hierarchy}). The regularity and
 stability of the scalar Parisi equation (\cref{inp:ob-scalar}) enter only the
 proof of \cref{cor:flow-prefix}. The remaining tools are the Gaussian
-interpolation formula, It\^o's formula, and Gronwall's inequality.
+interpolation formula, It\^o's formula, and Gronwall's inequality
+\cite[Section~A.13]{talagrand-2011}.
 
 For the scalar Parisi equation, the approximation by step profiles and the
 bounds on spatial derivatives that are uniform in the profile are due to
@@ -461,7 +462,10 @@ and we obtain \eqref{eq:flow-gauss-derivative}. The right side of
 The second tool collects the properties of one integration step
 $T_{m,\Sigma}$ of \cref{def:inp-step} that we need. Recall that monotonicity, the
 translation identity, and the semigroup property are \cref{lem:inp-steps}(a)
-and (b).
+and (b). For constant mass, the exponential change of variables that turns
+the flow into the heat equation is the Cole--Hopf transformation; its scalar
+Parisi form is recorded in \cite[Section~2, (10)--(12)]{auffinger-chen-2015}.
+The next lemma gives the corresponding finite-dimensional Gaussian step.
 
 \begin{lemma}[One integration step]\label{lem:flow-cole-hopf}
 Let $\Sigma\succeq0$, let $m\in[0,1]$, and let $\varphi\in\mathcal C^2$.
@@ -642,6 +646,9 @@ Let $F$ be a step flow with terminal function $f$.
 \end{lemma}
 
 \begin{proof}
+For (a), we use the weighted martingale-variance decomposition in the proof of
+\cite[Lemma~3.1]{oai-barriers}, with a general vector terminal function in place
+of the scalar terminal function $\log(2\cosh z)$.
 The gradient bound in (a) follows from \cref{lem:flow-cole-hopf}(a), applied to
 each step of \eqref{eq:flow-step-solution}. For the Hessian, fix $(\tau,x)$ and a
 unit vector $v$. By \eqref{eq:flow-step-solution}, $F(\tau,x)$ is the root value
@@ -1124,8 +1131,9 @@ The bound does not depend on the number $M$ of levels or on the covariances.
 
 The argument is the martingale argument that the proof of
 \cite[Lemma~3.1]{oai-barriers} uses to show that $\chi\le1-u^2$, and the
-differentiation of a hierarchy behind \cref{inp:ob-hierarchy-derivative}; we apply
-them to the terminal function instead of the field.
+differentiation of a hierarchy behind \cref{inp:ob-hierarchy-derivative}, namely
+\cite[Lemma~2.2]{oai-barriers}; we apply them to the terminal function instead
+of the field.
 
 \begin{proof}
 For $0\le t\le1$, let $\Psi^t_j=\Psi^{f+tV}_j$ be the partial values with

@@ -194,6 +194,9 @@ As a consequence, $\mathbf I(j)$(a) holds.
 \end{lemma}
 
 \begin{proof}
+The final-segment, conflict-count, and block-protection arguments are those
+of \cite[Section~8.4, ``Conflicts occupy a bounded final segment'']{oai-barriers},
+applied here with the bounds of $\mathbf I(j-1)$.
 For part (a), suppose to the contrary that $i<a$ belong to $\mathcal R_{j-1}$, that $i\in \mathcal D_j$ (that is, $|R(v_i,v_j)|>b_1$), and that $a$ is compatible. By \eqref{b:dyn:pair-invariant} at level $j-1$, we have $|R(v_i,v_a)-r_i|\le\Psi_2$, and by \eqref{b:dyn:target-transfer}, we have $|R(v_a,v_j)-r_a|\le\Psi_2$. By the consequences of \eqref{b:dyn:finite-margins} recorded after \cref{lem:ind-margins}, both overlaps are positive and have absolute value less than $b_2$. Since $v_a$, $v_i$, and $v_j$ are signed entries of the three distinct levels $a$, $i$, and $j$, property (P3), applied with $v=v_a$, $y=v_i$, and ${\widetilde v}=v_j$, gives $|R(v_a,v_j)|-|R(v_a,v_i)|\le\zeta$. On the other hand, using \eqref{b:dyn:geometry} and \eqref{b:dyn:finite-margins}, we have
 \[
  |R(v_a,v_j)|-|R(v_a,v_i)|=R(v_a,v_j)-R(v_i,v_a)\ge(r_a-\Psi_2)-(r_i+\Psi_2)\ge2\rho-2\Psi_2>\zeta,
