@@ -3,7 +3,7 @@
   "claim_groups": 5,
   "comparator_theorem_exports": 5,
   "manuscript_pdf": "manuscript/main.pdf",
-  "manuscript_pdf_sha256": "0f9b46734d1d24de31ab06575a1eef0f4ecae36c7cee5b2ba5397c2d3c4a100e",
+  "manuscript_pdf_sha256": "7c23687310e4aee7dbc5879e09fecb44b4d15f9fb4662113b88de35ee9919a3f",
   "claims": [
     {
       "number": "1.1",
@@ -80,10 +80,28 @@
         "LowerUpperBounds.corollary_1_7"
       ],
       "proof_facade_theorems": [
+        "Paper.physicalParisiFormula",
         "OAI.SKFluctuations.LaplaceWindowFormalization.mean_bias_lower_bound_unconditional"
       ],
       "literature_premise": null,
-      "qualification": "The counting-measure mean-pressure bias relative to its actual thermodynamic limit is at least c n^(-5/6-epsilon), with c > 0 and an eventual threshold, for every fixed beta > 1 and epsilon > 0. The displayed extensive form is its algebraic reformulation. The pressure limit and the variance-bias inequality are proved in the retained development. A bound with epsilon = 0 is outside this claim."
+      "qualification": "The compared export conjoins convergence of the finite-volume counting pressures to limitingPressure for every fixed beta > 1 with the unchanged lower-bound predicate: the counting-measure mean-pressure bias is at least c n^(-5/6-epsilon), with c > 0 and an eventual threshold, for every epsilon > 0. The convergence conclusion identifies the defined limUnder with the actual thermodynamic limit. The displayed extensive form is the lower bound's algebraic reformulation. The pressure convergence and variance-bias inequality are proved in the retained development. A bound with epsilon = 0 is outside this claim.",
+      "formal_convergence": {
+        "conclusion": "For every beta > 1, Tendsto (OAI.SKFluctuations.MeanBias.countingPressure beta) atTop (nhds (OAI.SKFluctuations.MeanBias.limitingPressure beta)).",
+        "export_position": "First conjunct of LowerUpperBounds.corollary_1_7; the second conjunct is the unchanged OAI.SKFluctuations.MeanBias.LowerBoundStatement.",
+        "limit_definition": "limitingPressure beta is limUnder atTop (countingPressure beta); convergence is asserted separately as a conclusion, not assumed from this definition.",
+        "proof_endpoint": "Paper.physicalParisiFormula",
+        "identification_theorems": [
+          "OAI.SKFluctuations.MeanBias.countingPressure_eq_pressure",
+          "QuantitativePaper.pressure_eq_finiteSKFreeEnergy",
+          "OAI.SKFluctuations.MeanBias.limitingPressure_eq_parisiPDEValue"
+        ]
+      }
     }
-  ]
+  ],
+  "verification_status": {
+    "current_interface": "PENDING: compilation, strict axiom audit, and full protected three-kernel Comparator replay of the strengthened Corollary 1.7 export.",
+    "current_record": "verification/corollary-1-7-convergence.md",
+    "historical_proof_source_commit": "5551e62264a270fd5dcd396f36389eaf77eddebc",
+    "historical_scope": "The retained verification/README.md receipts concern the original five-claim interface, in which Corollary 1.7 exported only LowerBoundStatement. They do not certify the strengthened convergence-and-bound conjunction. The other four compared statements are unchanged."
+  }
 }

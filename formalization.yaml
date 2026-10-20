@@ -8,7 +8,9 @@ project:
     fixed threshold below one half, with exponent 7/30. The upper bound is the
     continuous-time statement for every fixed exponent saving between zero and
     one quarter. The fluctuation exponents and mean-bias lower bound have their
-    stated positive exponent slack. The manuscript and exact scope are included.
+    stated positive exponent slack. Corollary 1.7 also explicitly concludes
+    convergence of the finite-volume counting pressures to the limiting
+    pressure. The manuscript and exact scope are included.
   authors:
   - P. M. Aronow
   responsible_maintainers:
@@ -146,11 +148,19 @@ status:
     endpoints; none has a literature or unproved analytic premise. Theorem 1.1
     has one coefficient for both clocks and all fixed thresholds below 1/2.
     Theorem 1.3 is continuous time only, at threshold 1/4, with 0 < c < 1/4.
-    Theorem 1.6 proves exponents with arbitrary positive slack; Corollary 1.7
-    proves the n^(-5/6-epsilon) bound. Challenge has five deliberate independent
-    theorem placeholders; these are excluded from the proof-hole counts.
-    The build check, strict Audit, and full protected three-kernel
-    Comparator replay passed for the public content commit recorded in verification/.
+    Theorem 1.6 proves exponents with arbitrary positive slack. Corollary 1.7
+    now conjoins convergence of the counting pressures to limitingPressure
+    for every beta > 1 with the unchanged n^(-5/6-epsilon) lower-bound
+    predicate. Its convergence proof uses the retained physical Parisi
+    formula and pressure-identification theorems. Challenge has five deliberate
+    independent theorem placeholders; these are excluded from the proof-hole
+    counts. The build check, strict Audit, and protected three-kernel replay
+    in verification/README.md passed for the historical proof-source commit
+    5551e62264a270fd5dcd396f36389eaf77eddebc, whose Corollary 1.7 export
+    contained only the lower-bound predicate. Compilation, strict Audit,
+    and full protected three-kernel replay of the strengthened interface are
+    pending; see verification/corollary-1-7-convergence.md. The other four
+    compared statements, retained proof development, and four controls are unchanged.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -191,7 +201,7 @@ fidelity:
     local remainder sufficient for the stated endpoint, rather than the
     manuscript's sharper local expansion. See the manuscript's formal chapter.
 review:
-  status: agent-reviewed; build check, strict audit, and full protected three-kernel replay passed
+  status: agent-reviewed; strengthened Corollary 1.7 pending compilation, strict audit, and full protected three-kernel replay
   reviewers:
   - AI mathematical, statement-correspondence, and source-integration reviewers
   notes: >-
@@ -199,8 +209,12 @@ review:
     their named revisions. Documentation checks verify the five-claim map,
     manuscript source inventory and supplied PDF identity, and official metadata
     loading. Historical manuscript build receipts concern their staged sources.
-    Fresh protected kernel evidence is recorded in verification/README.md. No Palomar
-    registration, acceptance, or independent human proof-review claim is made.
+    Historical protected kernel evidence is recorded in verification/README.md
+    for its named proof-source commit, before the exported Corollary 1.7
+    explicitly included pressure convergence. Current interface verification
+    is pending and tracked in verification/corollary-1-7-convergence.md.
+    No Palomar registration, acceptance, or independent human proof-review
+    claim is made.
 limitations:
 - Corollaries 1.4 and 1.5 are not separately formalized or Comparator claims.
 - The quantitative and almost-sure barrier forms, Metropolis and general bounded-rate dynamics, and relaxation-time bound are not formalized.

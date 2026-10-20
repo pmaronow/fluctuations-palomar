@@ -1,0 +1,60 @@
+{
+  "recorded_at": "2026-10-20T10:21:32.026059+00:00",
+  "base_commit": "77de1ff2421efc9dccb34f3da19cd3ac0bb33250",
+  "scope": "Corollary1.7 explicit convergence and lower bound",
+  "interfaces_sha256": {
+    "Challenge.lean": "dd7f960351cff8ae84a64077d5c84c0681725526b7adaee3f62a256e4da202bf",
+    "Solution.lean": "8206474f2e0c91978758f4341ce061327d371757e93cc97ab9868dc54fcf47a6",
+    "Audit.lean": "423626952fd8636b6ae7d0c2136b26dd78dc446fb2762096d53616ece8e57acc"
+  },
+  "formalization_sha256": "2ba0c43d94d73b76f768f6a2255c230db0b5e85b08551320f847b0a97db90996",
+  "controls_sha256": {
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+    "lake-manifest.json": "e7c0bf11d9514627cd0b14b697a54d5ceda589c50df23ca4ad73c2f4bec02829",
+    "lakefile.toml": "6e2ac5c9cc9f3569ba4754e8905748647b5f710532582d3781840c2639e363bb",
+    "comparator.json": "549b031caa5821153f01571b28d4789a8fb55ae685a69e4b25e02ae764e111bb"
+  },
+  "static_checks": {
+    "passed": true,
+    "unchanged_inherited_sources": 10692,
+    "changed_inherited_sources": [],
+    "other_four_exports_unchanged": true,
+    "written_numbered_statements_and_equations_unchanged": true,
+    "historical_verification_records_unchanged": true,
+    "independent_and_proved_claim_types_match": true,
+    "convergence_is_a_conclusion": true
+  },
+  "challenge_elaboration": {
+    "command": [
+      "lake",
+      "env",
+      "lean",
+      "-j1",
+      "-DautoImplicit=false",
+      "Challenge.lean"
+    ],
+    "exit_code": 0,
+    "toolchain": "leanprover/lean4:v4.35.0-rc2",
+    "intentional_sorry_warnings": 5,
+    "existing_redundant_expose_warnings": 20,
+    "errors": 0
+  },
+  "official_static_requirements": {
+    "passed": true,
+    "verifier_commit": "d4e41c1d5b0d114c4859e6e5831dc6d3ad1d0d44",
+    "files_checked": 10695
+  },
+  "default_build": {
+    "status": "running",
+    "scope": "Fresh custom source build; pinned trusted Mathlib cache reused. No final result yet."
+  },
+  "strict_axiom_audit": {
+    "status": "pending"
+  },
+  "protected_comparator_replay": {
+    "status": "not_run",
+    "namespace_preflight_exit_code": 1,
+    "namespace_preflight_error": "bwrap: setting up uid map: Read-only file system",
+    "historical_acceptance_scope": "5551e62264a270fd5dcd396f36389eaf77eddebc; old Corollary1.7 inequality-only export"
+  }
+}

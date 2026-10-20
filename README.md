@@ -13,7 +13,7 @@ source accompany the formalization.
 | Corollary 1.2 | Both clocks and every fixed threshold 0 < τ < 1/2, with coefficient one for every exponent 0 < κ < 7/30. Coefficient one at 7/30 is not asserted. |
 | Theorem 1.3 | The continuous-time typical-start upper bound for every fixed β > 1 and 0 < ω < 1/4: the joint probability of distance greater than 1/4 at exp(n^(1−ω)) tends to zero. Each site has rate one. The endpoint ω = 1/4 is excluded. |
 | Theorem 1.6 | The standard-deviation and variance exponents 1/6 and 1/3, and the typical centered-fluctuation exponent 1/6, with every positive exponent slack. The positive-Laplace-window input is proved internally. |
-| Corollary 1.7 | The mean-pressure bias is at least cβ,ε n^(−5/6−ε), for every fixed β > 1 and ε > 0, with a positive constant and an eventual size threshold. |
+| Corollary 1.7 | For every fixed β > 1, the finite-volume counting pressures converge to the defined limiting pressure; the mean-pressure bias is at least cβ,ε n^(−5/6−ε) for every ε > 0, with a positive constant and an eventual size threshold. Both conclusions are part of the compared claim. |
 
 In the dynamics statements, the initial configuration is sampled once from
 the Gibbs law and then held fixed when its transition law and total variation
@@ -24,8 +24,11 @@ and cancels from the Gibbs probabilities and transition rates. For Theorem
 1.6 the formal log partition function uses uniform rather than counting
 measure, subtracting the deterministic term n log 2; centered fluctuations
 and variance agree. Corollary 1.7 uses the counting-measure pressure and its
-actual thermodynamic limit. The manuscript's formal-verification chapter
-explains these correspondences.
+actual thermodynamic limit. Its exported statement now explicitly conjoins
+pressure convergence with the unchanged lower-bound predicate. The convergence
+proof uses the retained `Paper.physicalParisiFormula` and pressure-identification
+theorems. The manuscript's formal-verification chapter explains these
+correspondences.
 
 Corollaries 1.4 and 1.5 (the discrete upper bound and the combined two-sided
 statement) are not separately formalized or advertised Comparator claims.
@@ -51,12 +54,18 @@ Licenses and source notices are retained in `NOTICE`, `LICENSES/`, and the
 vendor directories. [Provenance](PROVENANCE.json) records source identities,
 module counts, adaptations, and the status of final file hashes. The
 [claim map](submission/claims.json) connects the manuscript statements to the
-five compared declarations and their proof endpoints. The dated
-[verification record](verification/README.md) records the build check,
-strict audit, and full protected three-kernel replay of the public content commit.
-Historical manuscript
-verification records concern the source revisions they name; they do not
-certify this assembled package. No registry acceptance is asserted.
+five compared declarations and their proof endpoints. The historical
+[verification record](verification/README.md) records the successful build check,
+strict audit, and protected three-kernel replay of proof-source commit
+`5551e62264a270fd5dcd396f36389eaf77eddebc`. That interface exported only the
+lower-bound predicate for Corollary 1.7. The strengthened conjunction in the
+current `Challenge.lean` and `Solution.lean` is **pending compilation, strict
+audit, and a full protected three-kernel replay**; see the
+[Corollary 1.7 verification record](verification/corollary-1-7-convergence.md).
+The other four compared statements and the retained proof development are
+unchanged. Historical receipts remain evidence for their named source
+revisions and do not certify the strengthened interface. No registry
+acceptance is asserted.
 
 ## Build and verify
 
@@ -109,16 +118,18 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -no-shell-escape main.tex
 `manuscript/main.pdf` is the PDF of the accompanying revised manuscript. The
 source includes the bibliography and a `.bbl`; TeX build byproducts are ignored.
 The supplied authors' note and funding acknowledgement are preserved. The
-formal-verification chapter records the completed checks and the current
-repository links.
+formal-verification chapter distinguishes historical completed checks from the
+pending verification of the strengthened Corollary 1.7 interface.
 
 The repository retains the verified proof-source commit
 `5551e62264a270fd5dcd396f36389eaf77eddebc`, verification-records commit
 `351cc102439ff1d741d240391dfb62258605b4d2`, and manuscript-update commit
 `6229df2fda534abfd64eb75027e99e5f83a706ea` in its history. The repository
-transfer and manuscript-link update preserve every Lean source, the four
+transfer and manuscript-link update preserved every Lean source, the four
 build/comparison controls, `formalization.yaml`, and the verification records
-byte for byte. No new Lean compilation or kernel replay is claimed.
+byte for byte. The subsequent Corollary 1.7 strengthening changes only the
+two Lean interfaces; its compilation and replay status is recorded separately
+above. The historical receipts are unchanged.
 
 For Palomar intake, use the immutable release commit with `comparator.json`
 and ensure the repository is public, as required by the

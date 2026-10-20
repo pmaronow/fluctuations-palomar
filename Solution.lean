@@ -27,7 +27,22 @@ theorem theorem_1_3 :
 theorem theorem_1_6 : OAI.SKFluctuations.MainFluctuationStatement :=
   OAI.SKFluctuations.LaplaceWindowFormalization.main_fluctuation_statement_unconditional_original_q
 
-theorem corollary_1_7 : OAI.SKFluctuations.MeanBias.LowerBoundStatement :=
-  OAI.SKFluctuations.LaplaceWindowFormalization.mean_bias_lower_bound_unconditional
+/-- Convergence is a proved conclusion alongside the lower mean-bias bound. -/
+theorem corollary_1_7 :
+    (∀ β : ℝ, 1 < β →
+      Tendsto (OAI.SKFluctuations.MeanBias.countingPressure β) atTop
+        (𝓝 (OAI.SKFluctuations.MeanBias.limitingPressure β))) ∧
+    OAI.SKFluctuations.MeanBias.LowerBoundStatement := by
+  refine ⟨?_,
+    OAI.SKFluctuations.LaplaceWindowFormalization.mean_bias_lower_bound_unconditional⟩
+  intro β hβ
+  have hβp : 0 < β := zero_lt_one.trans hβ
+  have hP : OAI.SKFluctuations.MeanBias.countingPressure β =
+      Paper.finiteSKFreeEnergy β 0 := by
+    funext n
+    rw [OAI.SKFluctuations.MeanBias.countingPressure_eq_pressure]
+    exact QuantitativePaper.pressure_eq_finiteSKFreeEnergy n β
+  rw [OAI.SKFluctuations.MeanBias.limitingPressure_eq_parisiPDEValue β hβp, hP]
+  exact Paper.physicalParisiFormula β 0 hβp
 
 end LowerUpperBounds

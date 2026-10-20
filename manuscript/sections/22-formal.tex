@@ -3,9 +3,9 @@
 The assembled Palomar submission
 \url{https://github.com/pmaronow/fluctuations-palomar} exposes five
 claims through \path{Solution.lean}, selected by \path{comparator.json}; its
-independent \path{Challenge.lean} contains those five claims. The combined
-package passed the recorded checks on 19 October 2026 (20 October UTC),
-for proof-source commit
+independent \path{Challenge.lean} contains those five claims. The original
+combined interface passed the recorded checks on 19 October 2026
+(20 October UTC), for proof-source commit
 \path{5551e62264a270fd5dcd396f36389eaf77eddebc}.
 The default build succeeded using unchanged compiled objects, and a
 strict axiom audit accepted all five exports with only
@@ -15,9 +15,17 @@ compared the five statements and their complete reachable helper
 dependencies, and replayed the Solution export through Lean's kernel,
 NanoDa, and con-ron. All three accepted it. The records are published at
 \url{https://github.com/pmaronow/fluctuations-palomar/tree/351cc102439ff1d741d240391dfb62258605b4d2/verification}.
-All Lean sources and build/comparison controls are unchanged from the
-verified proof-source commit. These checks concern the combined
-five-claim package; the source-package checks below, including the
+In that interface, the export for \cref{cor:mean-bias} contained the
+lower-bound predicate alone. The current export also concludes convergence
+of the finite-volume counting pressures to the defined limiting pressure.
+Only \path{Challenge.lean} and \path{Solution.lean} change in the Lean
+sources; the other four compared statements, the retained proof
+development, and the four build/comparison controls are unchanged.
+Compilation, a strict axiom audit, and a full protected three-kernel replay
+of the strengthened interface are pending; their status is recorded in
+\url{https://github.com/pmaronow/fluctuations-palomar/blob/main/verification/corollary-1-7-convergence.md}.
+The historical receipts certify their named source snapshot, not this
+strengthened interface. The source-package checks below, including the
 historical 47-claim upper-bound check, retain their original scope.
 
 In this section, we describe formal proofs of the four results
@@ -46,13 +54,26 @@ tend to one as $n\to\infty$. These are the two probabilities in \cref{thm:barrie
 \path{OAI.SKFluctuations.LaplaceWindowFormalization.main_fluctuation_statement_unconditional_original_q}
 in the module \path{SKProof.OriginalQUnconditionalMain}. Its type is \path{OAI.SKFluctuations.MainFluctuationStatement}, the definition of OpenAI's development described in \cref{sec:formal-oai}, and it has no hypotheses. The identifier is only a locator; its parts are not used as terminology in this paper. In \path{MainFluctuationStatement}, the bounds on the standard deviation and on the variance come with separate thresholds in $n$, and their maximum serves as the threshold $n_0(\beta,\eta)$ of \cref{f:main}. The proof of the theorem establishes \path{PositiveLaplaceWindow} and then applies OpenAI's theorem \path{main_of_positiveLaplaceWindow}. In other words, our formal proof of \cref{f:main} consists of a formal proof of \cref{f:window} together with OpenAI's formal proof of the deduction.
 
-\paragraph{The mean-bias corollary.} The declaration
+\paragraph{The mean-bias corollary.} The compared export
+\path{LowerUpperBounds.corollary_1_7} now has two conjuncts. The first
+asserts, for every $\beta>1$, convergence of
+\path{MeanBias.countingPressure beta} to
+\path{MeanBias.limitingPressure beta}. Here and below these names are in
+\path{OAI.SKFluctuations}. The limiting-pressure definition uses
+\path{limUnder atTop}; the convergence is an explicit conclusion of the
+export, not part of that definition. The second conjunct is the unchanged
+proposition \path{OAI.SKFluctuations.MeanBias.LowerBoundStatement}.
+
+The lower-bound conjunct is supplied by the library declaration
 \path{OAI.SKFluctuations.LaplaceWindowFormalization.mean_bias_lower_bound_unconditional},
-in the module \path{SKProof.MeanBiasLowerBound}, has type \path{OAI.SKFluctuations.MeanBias.LowerBoundStatement}. This proposition states that for every $\beta>1$ and every $\eps>0$, there exist $c>0$ and $n_0$ such that
+in the module \path{SKProof.MeanBiasLowerBound}, whose type remains
+\path{OAI.SKFluctuations.MeanBias.LowerBoundStatement}. Together with the
+convergence conjunct, it states that for every $\beta>1$ and every
+$\eps>0$, there exist $c>0$ and $n_0$ such that
 \[
  c\,n^{-5/6-\eps}\le\lim_{m\to\infty}p_m(\beta)-p_n(\beta)\qquad(n\ge n_0),
 \]
-where we write $p_n(\beta)=n^{-1}\E\log\sum_{x\in\Sigma_n}e^{\beta H_n(x)}$, with OpenAI's disorder law and Hamiltonian, which are those of \cref{sec:model}. Since $P_\beta=\lim_mp_m(\beta)$ by definition, this is \cref{cor:mean-bias}. The development proves that this limit exists and equals the infimum of the Parisi functional, as in \cref{inp:parisi}.
+where we write $p_n(\beta)=n^{-1}\E\log\sum_{x\in\Sigma_n}e^{\beta H_n(x)}$, with OpenAI's disorder law and Hamiltonian, which are those of \cref{sec:model}. Since $P_\beta=\lim_mp_m(\beta)$ by definition, this is \cref{cor:mean-bias}. To prove the convergence conjunct, \path{Solution.lean} identifies \path{MeanBias.countingPressure beta} with \path{Paper.finiteSKFreeEnergy beta 0} using the pressure identities in \path{SKProof.MeanBiasBridge} and \path{QuantitativePaper.Model}. It then applies \path{Paper.physicalParisiFormula}, in \path{Paper.ParisiPDEFormula}, which proves convergence to the infimum of the Parisi functional for every positive $\beta$. The bridge's theorem \path{MeanBias.limitingPressure_eq_parisiPDEValue} identifies this value with \path{limitingPressure beta}, using that convergence. Thus the compared export includes existence of the actual pressure limit as well as the lower bound; the underlying library lower-bound predicate is unchanged.
 
 To prove this bound, we follow the proof of \cref{cor:mean-bias} in \cref{sec:bias-proof}. We combine our formal proof of \cref{f:main} with the theorem \path{QuantitativePaper.short_variance_mean} of the Lean development \cite{hexagon-bias-lean} accompanying \cite{hexagon-bias}, which is a formal version of \cref{prop:bias-variance-deficit}. That theorem concerns the variable $F_n/\beta$: for every $\beta_0>1$, there exists $c>0$ such that
 \[
@@ -60,7 +81,7 @@ To prove this bound, we follow the proof of \cref{cor:mean-bias} in \cref{sec:bi
 \]
 for every $n\ge1$ and every $\beta\ge\beta_0$. Since $\Var(F_n/\beta)+1/2=\beta^{-2}(\Var(F_n)+\beta^2/2)$, at a fixed $\beta$ this is \eqref{eq:mean-bias-variance-deficit} with $c_\beta=c\beta^{-3/2}$. The module \path{SKProof.MeanBiasBridge} proves the identities that connect the two developments: their disorder laws and Hamiltonians coincide, their expected pressures agree, and OpenAI's log partition function is $F_n-n\log2$, so that its variance is $\Var(F_n)$. As in \cref{sec:bias-proof}, the lower bound on the variance in \cref{f:main}, with $\eta=4\eps/5$, then gives the exponent $-5/6-\eps$.
 
-\paragraph{Axioms and the independent check.} The four theorems use only the three standard axioms \path{propext}, \path{Classical.choice}, and \path{Quot.sound} of Lean's logic. Since they also have no hypotheses, every result that their proofs use is proved in Lean, in the two packages or in their dependencies. The upper bounds on the mean bias and on the variance in \cref{inp:hb-rate,inp:qp-rate} and the variance--bias inequality enter the formal proofs as Lean theorems. The first and the last of these come from \cite{hexagon-bias-lean}.
+\paragraph{Axioms and the independent check.} The four original source-package theorems use only the three standard axioms \path{propext}, \path{Classical.choice}, and \path{Quot.sound} of Lean's logic. Since they also have no hypotheses, every result that their proofs use is proved in Lean, in the two packages or in their dependencies. The upper bounds on the mean bias and on the variance in \cref{inp:hb-rate,inp:qp-rate} and the variance--bias inequality enter the formal proofs as Lean theorems. The first and the last of these come from \cite{hexagon-bias-lean}. The strict audit and protected replay of the strengthened combined interface remain pending as described at the start of this section.
 
 In their source packages, the four theorems also passed an independent check, which has three parts. First, we wrote out their statements a second time, with every definition that they involve, in separate files that import only Mathlib and none of our proofs. For the barrier, these are the definitions of the disorder law, the Hamiltonian, the Gibbs measure, the heat-bath kernels, the total variation distances, and the two quantities displayed above. For the fluctuations and the mean bias, they are the definitions on which \path{MainFluctuationStatement} rests, copied from OpenAI's sources at the commit cited above, and the definitions of the pressures $p_n(\beta)$ and of their limit. A comparison confirmed that each proved theorem has exactly the statement written out in this way. Second, the same comparison confirmed that the proofs use no axioms other than the three above. Third, the statements and proofs of the theorems were exported from the compiled packages, with every declaration on which they depend, including the proofs of all lemmas that they use. This export was checked again by three type checkers for Lean's logic: Lean's own kernel and the external checkers nanoda and con-ron. All three accepted the barrier statements and, in a separate comparison, both the fluctuation theorem and the mean-bias corollary. Declarations of the packages that these proofs do not use are not part of the check.
 
@@ -103,7 +124,7 @@ The successive comparisons follow one of the two covariance alternatives of \cit
 
 \section{Scope and availability}\label{sec:formal-scope}
 
-The combined check concerns the five final statements described above; the source-package checks of \cref{sec:formal-statements} concern the four lower-bound and fluctuation results described there. Intermediate results in their proofs, such as \cref{f:window}, are checked only as parts of these proofs. The quantitative and almost-sure forms in \cref{thm:barrier-strong} are not formally verified. These are the bounds on the probability of the exceptional disorders and on the Gibbs mass of the exceptional initial states, the lower bounds on the distance that tend to $1/2$, the extension to the Metropolis dynamics and to other single-site dynamics with bounded rates, the bound on the relaxation time, and the almost-sure statements for arbitrary couplings of the disorders across system sizes. The sharper local expansion of \cref{b:prop:os-expansion} is not formally verified either; see \cref{sec:formal-barrier}. The proposition \path{MainFluctuationStatement} concerns exponents only, and the limit law and the positive variance prefactor claimed in \cite{oai-limiting-law} are not part of it. The proposition \path{LowerBoundStatement} contains the loss $n^{-\eps}$ for an arbitrary $\eps>0$, and the bound \eqref{eq:mean-bias-prefactor-target}, which would follow from a positive variance prefactor, is not part of it.
+The combined submission selects the five final statements described above, with the strengthened mean-bias export pending verification; the historical source-package checks of \cref{sec:formal-statements} concern the four original lower-bound and fluctuation results described there. Intermediate results in their proofs, such as \cref{f:window}, are checked only as parts of these proofs. The quantitative and almost-sure forms in \cref{thm:barrier-strong} are not formally verified. These are the bounds on the probability of the exceptional disorders and on the Gibbs mass of the exceptional initial states, the lower bounds on the distance that tend to $1/2$, the extension to the Metropolis dynamics and to other single-site dynamics with bounded rates, the bound on the relaxation time, and the almost-sure statements for arbitrary couplings of the disorders across system sizes. The sharper local expansion of \cref{b:prop:os-expansion} is not formally verified either; see \cref{sec:formal-barrier}. The proposition \path{MainFluctuationStatement} concerns exponents only, and the limit law and the positive variance prefactor claimed in \cite{oai-limiting-law} are not part of it. The proposition \path{LowerBoundStatement} contains the loss $n^{-\eps}$ for an arbitrary $\eps>0$, and the bound \eqref{eq:mean-bias-prefactor-target}, which would follow from a positive variance prefactor, is not part of it.
 
 \statusFormalUpperScope
 

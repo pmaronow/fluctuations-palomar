@@ -351,8 +351,12 @@ theorem theorem_1_3 :
 theorem theorem_1_6 : OAI.SKFluctuations.MainFluctuationStatement := by
   sorry
 
-/-- Corollary 1.7: the lower bound on the finite-volume mean bias. -/
-theorem corollary_1_7 : OAI.SKFluctuations.MeanBias.LowerBoundStatement := by
+/-- Corollary 1.7: convergence to the thermodynamic pressure and the lower mean-bias bound. -/
+theorem corollary_1_7 :
+    (∀ β : ℝ, 1 < β →
+      Tendsto (OAI.SKFluctuations.MeanBias.countingPressure β) atTop
+        (𝓝 (OAI.SKFluctuations.MeanBias.limitingPressure β))) ∧
+    OAI.SKFluctuations.MeanBias.LowerBoundStatement := by
   sorry
 
 end LowerUpperBounds
