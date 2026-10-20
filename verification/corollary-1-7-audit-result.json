@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--setup",
+    "/workspace/work/submission-migration/repository/.lake/build/ir/Audit.setup.json",
+    "Audit.lean"
+  ],
+  "started_at": "2026-10-20T15:53:22.468495+00:00",
+  "finished_at": "2026-10-20T15:53:31.489377+00:00",
+  "exit_code": 0,
+  "source_commit": "2fd7036fa3435aaacef2801c35ae95082d3f6806",
+  "setup": "/workspace/work/submission-migration/repository/.lake/build/ir/Audit.setup.json",
+  "setup_sha256": "dffc1212d301c49bf21977cc8da943cb225250b56ee38938e4adf5a842e9e89c",
+  "setup_options": {
+    "autoImplicit": false
+  },
+  "proof_and_control_sha256": {
+    "Challenge.lean": "dd7f960351cff8ae84a64077d5c84c0681725526b7adaee3f62a256e4da202bf",
+    "Solution.lean": "8206474f2e0c91978758f4341ce061327d371757e93cc97ab9868dc54fcf47a6",
+    "Audit.lean": "423626952fd8636b6ae7d0c2136b26dd78dc446fb2762096d53616ece8e57acc",
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+    "lakefile.toml": "6e2ac5c9cc9f3569ba4754e8905748647b5f710532582d3781840c2639e363bb",
+    "lake-manifest.json": "e7c0bf11d9514627cd0b14b697a54d5ceda589c50df23ca4ad73c2f4bec02829",
+    "comparator.json": "549b031caa5821153f01571b28d4789a8fb55ae685a69e4b25e02ae764e111bb"
+  },
+  "source_controls_unchanged": true,
+  "git_status": "",
+  "log": "corollary-1-7-audit.log",
+  "log_sha256": "67e4c80c8546435ba96e165528fd129a3dab7d53df0ef40d307858675c3d9a65",
+  "export_lines": [
+    "Comparator export LowerUpperBounds.theorem_1_1: [propext, Classical.choice, Quot.sound]",
+    "Comparator export LowerUpperBounds.corollary_1_2: [propext, Classical.choice, Quot.sound]",
+    "Comparator export LowerUpperBounds.theorem_1_3: [propext, Classical.choice, Quot.sound]",
+    "Comparator export LowerUpperBounds.theorem_1_6: [propext, Classical.choice, Quot.sound]",
+    "Comparator export LowerUpperBounds.corollary_1_7: [propext, Classical.choice, Quot.sound]",
+    "Audited 5 manuscript exports; only the three standard axioms."
+  ],
+  "original_standalone_audit": "Original strict-audit-result.json remains FAIL; this is a distinct strict invocation using the build-generated Lake artifact manifest.",
+  "scope": "Strict local five-export axiom audit with both strict flags retained; no protected Comparator or three-kernel replay.",
+  "reproduction_command": [
+    "lake",
+    "env",
+    "lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--setup",
+    ".lake/build/ir/Audit.setup.json",
+    "Audit.lean"
+  ],
+  "setup_origin": "Lake-generated import-artifact manifest from the successful fresh build; not a committed source or added proof premise.",
+  "warnings": 0,
+  "errors": 0,
+  "export_count": 5,
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55"
+}

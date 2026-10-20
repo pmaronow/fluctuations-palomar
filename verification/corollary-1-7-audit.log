@@ -1,0 +1,6 @@
+Comparator export LowerUpperBounds.theorem_1_1: [propext, Classical.choice, Quot.sound]
+Comparator export LowerUpperBounds.corollary_1_2: [propext, Classical.choice, Quot.sound]
+Comparator export LowerUpperBounds.theorem_1_3: [propext, Classical.choice, Quot.sound]
+Comparator export LowerUpperBounds.theorem_1_6: [propext, Classical.choice, Quot.sound]
+Comparator export LowerUpperBounds.corollary_1_7: [propext, Classical.choice, Quot.sound]
+Audited 5 manuscript exports; only the three standard axioms.

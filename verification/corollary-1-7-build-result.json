@@ -1,0 +1,32 @@
+{
+  "status": "COMPLETED_SUCCESSFULLY_BY_LAKE_MARKER",
+  "observed_at": "2026-10-20T15:28:45.506836+00:00",
+  "monitor_started_at": "2026-10-20T12:26:55.059656+00:00",
+  "completion_marker": "Build completed successfully (19626 jobs).",
+  "log": "corollary-1-7-build.log",
+  "actual_exit_code": null,
+  "source_commit": "2fd7036fa3435aaacef2801c35ae95082d3f6806",
+  "proof_and_control_sha256": {
+    "Challenge.lean": "dd7f960351cff8ae84a64077d5c84c0681725526b7adaee3f62a256e4da202bf",
+    "Solution.lean": "8206474f2e0c91978758f4341ce061327d371757e93cc97ab9868dc54fcf47a6",
+    "Audit.lean": "423626952fd8636b6ae7d0c2136b26dd78dc446fb2762096d53616ece8e57acc",
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+    "lakefile.toml": "6e2ac5c9cc9f3569ba4754e8905748647b5f710532582d3781840c2639e363bb",
+    "lake-manifest.json": "e7c0bf11d9514627cd0b14b697a54d5ceda589c50df23ca4ad73c2f4bec02829",
+    "comparator.json": "549b031caa5821153f01571b28d4789a8fb55ae685a69e4b25e02ae764e111bb"
+  },
+  "scope": "Fresh default build observed to completion; official protected replay not run.",
+  "command": [
+    "lake",
+    "build"
+  ],
+  "exit_code_limitation": "The original parent exec session was no longer accessible; no real process exit code is claimed.",
+  "custom_modules_compiled": 10694,
+  "lake_jobs": 19626,
+  "log_scope": "Final 25 lines of the complete external build log.",
+  "excerpt_sha256": "fe2e9bd15e8f848e5d1d90d5dfedc19fb90afc7d974db01751286f774ebb0c05",
+  "full_log_sha256": "f02ccd6753f9953ad7cff6ec624252b1ca5aa2f547db3d119542aa36e9105e51",
+  "complete_external_log": "/workspace/work/cor17-validation-env/default-build.log",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55"
+}

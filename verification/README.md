@@ -1,5 +1,10 @@
 # Verification record
 
+> This is the historical record for proof-source commit `5551e62264a270fd5dcd396f36389eaf77eddebc`.
+> For the strengthened Corollary 1.7 interface, its fresh build, strict audit,
+> and still-pending protected replay, see the [current record](corollary-1-7-convergence.md).
+> Historical receipts below remain unchanged.
+
 Local checks of this five-claim package completed on October 20, 2026. The verified public
 root content commit is `5551e62264a270fd5dcd396f36389eaf77eddebc`. The records commit preserves all
 10,695 Lean sources and all four build/comparison controls byte for byte.

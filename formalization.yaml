@@ -157,10 +157,16 @@ status:
     counts. The build check, strict Audit, and protected three-kernel replay
     in verification/README.md passed for the historical proof-source commit
     5551e62264a270fd5dcd396f36389eaf77eddebc, whose Corollary 1.7 export
-    contained only the lower-bound predicate. Compilation, strict Audit,
-    and full protected three-kernel replay of the strengthened interface are
-    pending; see verification/corollary-1-7-convergence.md. The other four
-    compared statements, retained proof development, and four controls are unchanged.
+    contained only the lower-bound predicate. At proof-source commit
+    2fd7036fa3435aaacef2801c35ae95082d3f6806, the fresh default build reported
+    successful completion of 19,626 jobs; its original process exit code was
+    not recovered. The strict five-export Audit passed with exit zero using
+    Lake's generated artifact setup and both strict flags. The original
+    standalone invocation failed during compiled-module loading and is retained
+    as a separate result. Fresh protected canonical Comparator and three-kernel
+    replay remain pending; see verification/corollary-1-7-convergence.md.
+    The other four compared statements, retained proof development, and four
+    controls are unchanged.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -201,7 +207,7 @@ fidelity:
     local remainder sufficient for the stated endpoint, rather than the
     manuscript's sharper local expansion. See the manuscript's formal chapter.
 review:
-  status: agent-reviewed; strengthened Corollary 1.7 pending compilation, strict audit, and full protected three-kernel replay
+  status: agent-reviewed; strengthened Corollary 1.7 local build completed and strict Lake-setup audit passed; protected three-kernel replay pending
   reviewers:
   - AI mathematical, statement-correspondence, and source-integration reviewers
   notes: >-
@@ -211,8 +217,12 @@ review:
     loading. Historical manuscript build receipts concern their staged sources.
     Historical protected kernel evidence is recorded in verification/README.md
     for its named proof-source commit, before the exported Corollary 1.7
-    explicitly included pressure convergence. Current interface verification
-    is pending and tracked in verification/corollary-1-7-convergence.md.
+    explicitly included pressure convergence. The strengthened interface has
+    a fresh successful build completion marker and a strict five-export audit
+    with Lake's generated setup, exit zero. The original standalone audit
+    failed during module loading; both results are retained. Fresh protected
+    comparison and external-kernel replay remain pending, as recorded in
+    verification/corollary-1-7-convergence.md.
     No Palomar registration, acceptance, or independent human proof-review
     claim is made.
 limitations:

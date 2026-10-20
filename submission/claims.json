@@ -3,7 +3,7 @@
   "claim_groups": 5,
   "comparator_theorem_exports": 5,
   "manuscript_pdf": "manuscript/main.pdf",
-  "manuscript_pdf_sha256": "7c23687310e4aee7dbc5879e09fecb44b4d15f9fb4662113b88de35ee9919a3f",
+  "manuscript_pdf_sha256": "02660a566f83f17800b4fd53c911de4ecc1fda0d4afa46467f5e981cc2bb4598",
   "claims": [
     {
       "number": "1.1",
@@ -99,9 +99,16 @@
     }
   ],
   "verification_status": {
-    "current_interface": "PENDING: compilation, strict axiom audit, and full protected three-kernel Comparator replay of the strengthened Corollary 1.7 export.",
+    "current_interface": "Fresh default build reported successful completion of 19,626 jobs at 2fd7036fa3435aaacef2801c35ae95082d3f6806; strict five-export axiom audit with Lake-generated setup PASS, exit 0. Original standalone strict audit FAIL during compiled-module loading. Fresh protected canonical Comparator and three-kernel replay PENDING.",
     "current_record": "verification/corollary-1-7-convergence.md",
     "historical_proof_source_commit": "5551e62264a270fd5dcd396f36389eaf77eddebc",
-    "historical_scope": "The retained verification/README.md receipts concern the original five-claim interface, in which Corollary 1.7 exported only LowerBoundStatement. They do not certify the strengthened convergence-and-bound conjunction. The other four compared statements are unchanged."
+    "historical_scope": "The retained verification/README.md receipts concern the original five-claim interface, in which Corollary 1.7 exported only LowerBoundStatement. They do not certify the strengthened convergence-and-bound conjunction. The other four compared statements are unchanged.",
+    "local_validation": {
+      "proof_source_commit": "2fd7036fa3435aaacef2801c35ae95082d3f6806",
+      "default_build": "PASS_BY_COMPLETION_MARKER: Build completed successfully (19626 jobs). Original process exit code not recovered.",
+      "strict_axiom_audit": "PASS, exit 0, with -j1 -DautoImplicit=false -DwarningAsError=true and --setup .lake/build/ir/Audit.setup.json. All five exports use only propext, Classical.choice, and Quot.sound.",
+      "original_standalone_audit": "FAIL, exit 1 during compiled-module loading; preserved separately.",
+      "protected_comparator_replay": "PENDING; no fresh protected comparison or three-kernel acceptance is asserted."
+    }
   }
 }

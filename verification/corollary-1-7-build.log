@@ -1,0 +1,25 @@
+✔ [19607/19626] Built SKProof.Port.ComparisonActualOriginalQCavityResidualInterfaces (4.9s)
+✔ [19608/19626] Built SKProof.Port.ComparisonActualOriginalQActualInitialDeletedSiteOnCutsAlong (5.1s)
+✔ [19609/19626] Built SKProof.Port.ComparisonActualOriginalQHistoryInitialJointLowOnCutsAlong (5.1s)
+✔ [19610/19626] Built SKProof.RegularBaseEq7 (6.8s)
+✔ [19611/19626] Built SKProof.OriginalQStoppingOnly (5.1s)
+✔ [19612/19626] Built SKProof.OriginalQPhysicalExclusionsMain (6.0s)
+✔ [19613/19626] Built SKProof.OriginalQStrongOnlyMain (11s)
+✔ [19614/19626] Built SKProof.Port.ComparisonActualOriginalQComparableBandCavityBackend (34s)
+✔ [19615/19626] Built SKProof.Port.ComparisonActualOriginalQComparableBandShrinkingResponse (6.0s)
+✔ [19616/19626] Built SKProof.Port.ComparisonActualOriginalQComparableBandShrinkingJointFactory (7.7s)
+✔ [19617/19626] Built SKProof.Port.ComparisonActualOriginalQComparableBandShrinkingDirectProfile (11s)
+✔ [19618/19626] Built SKProof.Port.ComparisonActualOriginalQCompleteComparableProfile (4.0s)
+✔ [19619/19626] Built SKProof.Port.ComparisonActualOriginalQCompleteComparableStrictTest (4.7s)
+✔ [19620/19626] Built SKProof.OriginalQStrongExclusion (4.4s)
+✔ [19621/19626] Built SKProof.OriginalQUnconditionalMain (3.8s)
+✔ [19622/19626] Built SKProof.MeanBiasLowerBound (4.1s)
+✔ [19623/19626] Built Solution (4.4s)
+ℹ [19625/19626] Built Audit (6.8s)
+info: Audit.lean:8:0: Comparator export LowerUpperBounds.theorem_1_1: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:8:0: Comparator export LowerUpperBounds.corollary_1_2: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:8:0: Comparator export LowerUpperBounds.theorem_1_3: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:8:0: Comparator export LowerUpperBounds.theorem_1_6: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:8:0: Comparator export LowerUpperBounds.corollary_1_7: [propext, Classical.choice, Quot.sound]
+info: Audit.lean:8:0: Audited 5 manuscript exports; only the three standard axioms.
+Build completed successfully (19626 jobs).
