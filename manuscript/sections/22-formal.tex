@@ -1,7 +1,7 @@
 \chapter{Formal verification}\label{sec:formal}
 
 The assembled Palomar submission
-\url{https://github.com/pmaronow/fluctuations-palomar-temp} exposes five
+\url{https://github.com/pmaronow/fluctuations-palomar} exposes five
 claims through \path{Solution.lean}, selected by \path{comparator.json}; its
 independent \path{Challenge.lean} contains those five claims. The combined
 package passed the recorded checks on 19 October 2026 (20 October UTC),
@@ -14,7 +14,7 @@ A fresh protected Comparator run compiled the independent Challenge,
 compared the five statements and their complete reachable helper
 dependencies, and replayed the Solution export through Lean's kernel,
 NanoDa, and con-ron. All three accepted it. The records are published at
-\url{https://github.com/pmaronow/fluctuations-palomar-temp/tree/351cc102439ff1d741d240391dfb62258605b4d2/verification}.
+\url{https://github.com/pmaronow/fluctuations-palomar/tree/351cc102439ff1d741d240391dfb62258605b4d2/verification}.
 All Lean sources and build/comparison controls are unchanged from the
 verified proof-source commit. These checks concern the combined
 five-claim package; the source-package checks below, including the
@@ -110,7 +110,7 @@ The combined check concerns the five final statements described above; the sourc
 OpenAI's Lean sources \cite{oai-math-lean} and the development
 \cite{hexagon-bias-lean} are public. The combined sources, independent
 \path{Challenge.lean}, and verification records are available in
-\url{https://github.com/pmaronow/fluctuations-palomar-temp}; the records
+\url{https://github.com/pmaronow/fluctuations-palomar}; the records
 identify the checked proof-source revision and the scope of each check.
 The original two source packages and the historical upper-bound package
 are maintained in the private repository

@@ -1,7 +1,8 @@
 # Lower and Upper Bounds for Glauber Dynamics from Typical States of the Low-Temperature Sherrington–Kirkpatrick Model
 
-This repository contains the manuscript and a Palomar submission package for
-five result groups. The independent statements are in `Challenge.lean`, their
+The [`fluctuations-palomar`](https://github.com/pmaronow/fluctuations-palomar)
+repository contains the manuscript and a Palomar submission package for five
+result groups. The independent statements are in `Challenge.lean`, their
 proofs are in `Solution.lean`, and `comparator.json` selects exactly the five
 advertised claims. The [manuscript](manuscript/main.pdf) and its buildable
 source accompany the formalization.
@@ -105,7 +106,22 @@ cd manuscript
 latexmk -pdf -interaction=nonstopmode -halt-on-error -no-shell-escape main.tex
 ```
 
-`manuscript/main.pdf` is the supplied manuscript PDF. The source includes the
-bibliography and a `.bbl`; TeX build byproducts are ignored. The supplied
-authors' note, funding acknowledgement, and source-revision verification
-discussion are preserved verbatim.
+`manuscript/main.pdf` is the PDF of the accompanying revised manuscript. The
+source includes the bibliography and a `.bbl`; TeX build byproducts are ignored.
+The supplied authors' note and funding acknowledgement are preserved. The
+formal-verification chapter records the completed checks and the current
+repository links.
+
+The repository retains the verified proof-source commit
+`5551e62264a270fd5dcd396f36389eaf77eddebc`, verification-records commit
+`351cc102439ff1d741d240391dfb62258605b4d2`, and manuscript-update commit
+`6229df2fda534abfd64eb75027e99e5f83a706ea` in its history. The repository
+transfer and manuscript-link update preserve every Lean source, the four
+build/comparison controls, `formalization.yaml`, and the verification records
+byte for byte. No new Lean compilation or kernel replay is claimed.
+
+For Palomar intake, use the immutable release commit with `comparator.json`
+and ensure the repository is public, as required by the
+[pinned submission instructions](https://github.com/PalomarRegistry/PalomarSubmission/blob/d4e41c1d5b0d114c4859e6e5831dc6d3ad1d0d44/README.md).
+The retained verification records do not constitute registry submission or
+acceptance.

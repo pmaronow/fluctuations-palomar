@@ -3,7 +3,7 @@
   "claim_groups": 5,
   "comparator_theorem_exports": 5,
   "manuscript_pdf": "manuscript/main.pdf",
-  "manuscript_pdf_sha256": "783f123d6587790842a335cb1d6e31100f80d900f24f76522e9d8971dc3afa26",
+  "manuscript_pdf_sha256": "0f9b46734d1d24de31ab06575a1eef0f4ecae36c7cee5b2ba5397c2d3c4a100e",
   "claims": [
     {
       "number": "1.1",
