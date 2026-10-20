@@ -1,0 +1,210 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/v0.4.schema.json
+version: v0.4
+project:
+  name: Lower and Upper Bounds for Glauber Dynamics from Typical States of the Low-Temperature Sherrington–Kirkpatrick Model
+  description: >-
+    Lean formalization of five manuscript result groups: Theorems 1.1, 1.3, and
+    1.6, and Corollaries 1.2 and 1.7. The barrier covers both clocks and every
+    fixed threshold below one half, with exponent 7/30. The upper bound is the
+    continuous-time statement for every fixed exponent saving between zero and
+    one quarter. The fluctuation exponents and mean-bias lower bound have their
+    stated positive exponent slack. The manuscript and exact scope are included.
+  authors:
+  - P. M. Aronow
+  responsible_maintainers:
+  - P. M. Aronow
+  license: Apache-2.0
+classification:
+  arxiv:
+  - math.PR
+  - math.LO
+  msc2020:
+  - 60K35
+  - 82B44
+  - 03B35
+sources:
+- title: Lower and Upper Bounds for Glauber Dynamics from Typical States of the Low-Temperature Sherrington–Kirkpatrick Model
+  authors:
+  - P. M. Aronow
+  - Patrick Lopatto
+  type: paper
+  relationship: formalizes
+  location: manuscript/main.tex and manuscript/main.pdf
+  note: >-
+    Exactly Theorems 1.1, 1.3, and 1.6 and Corollaries 1.2 and 1.7, with the
+    qualifications in submission/claims.json. The supplied authors' note,
+    funding acknowledgement, and historical verification discussion are preserved.
+- title: Stretched-exponential barriers for typical SK initial states
+  authors:
+  - OpenAI
+  id: https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+  type: paper
+  relationship: adapts
+  location: https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Stretched-exponential-barriers-for-typical-SK-initial-states-September-24-2026/paper.pdf
+  note: >-
+    The manuscript's oai-barriers entry. Theorem 1.1 of that source gives the
+    exponent 1/10000 at threshold 1/4. The package adapts its strategy and Lean
+    model to exponent 7/30, both clocks, and every fixed threshold in (0,1/2).
+    This improvement is not attributed to the source theorem itself.
+- title: A typical-start upper bound for low-temperature SK Glauber dynamics
+  authors:
+  - OpenAI
+  id: https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+  type: paper
+  relationship: adapts
+  location: https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-typical-start-upper-bound-for-low-temperature-SK-Glauber-dynamics-September-24-2026/paper.pdf
+  note: >-
+    The manuscript's oai-typical-upper entry, including its exact source location.
+    Theorem 1 of that source has exponent saving 1/40000000. The development
+    adapts its framework and equilibrium inputs to prove every fixed saving
+    0 < c < 1/4. Only the continuous-time upper bound is an advertised formal claim.
+- title: The low-temperature Sherrington–Kirkpatrick fluctuation scale
+  authors:
+  - OpenAI
+  id: https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+  type: paper
+  relationship: formalizes
+  location: https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-low-temperature-Sherrington-Kirkpatrick-fluctuation-scale-September-24-2026/The-low-temperature-Sherrington-Kirkpatrick-fluctuation-scale-September-24-2026.pdf
+  note: >-
+    The manuscript's oai-fluctuations entry. Theorem 1.6 restates this source's
+    Theorem 1.1 with attribution. The proof retains OpenAI's formal implication
+    from PositiveLaplaceWindow and supplies a Lean proof of that input, which
+    is proved on paper in the source's Proposition 7.5. This is not a claim
+    of a new mathematical fluctuation theorem or a new paper proof.
+- title: OpenAI mathematics Lean sources
+  authors:
+  - OpenAI
+  id: https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean
+  type: software
+  relationship: other
+  location: vendor/openai-math/, vendor/openai-fluctuations/, and SKConstants/Upstream/
+  license: Apache-2.0
+  note: >-
+    Adapted upstream models, fluctuation implication, barriers, Gaussian, and
+    analysis libraries. Source headers identify paths and revisions, including
+    donor modules from 1581d4cbdd69a0faf34b2089614fe2a814316a6a. Glauber's
+    OAI declaration namespace is isolated as SKConstantsOAI; fluctuations
+    retains its SKFluctuationsOAI physical-module prefix. Required licenses
+    are retained in the vendor trees and LICENSES/.
+- title: all-lean foundations and quantitative spin-glass developments
+  authors:
+  - P. M. Aronow
+  type: software
+  relationship: other
+  id: https://github.com/pmaronow/all-lean
+  location: vendor/all-lean/ and LICENSES/all-lean/
+  license: MIT and retained third-party Apache-2.0 terms
+  note: >-
+    Selected from barriers/vendor/all-lean in the source repository. This is
+    a consolidated tree with multiple origins, including the additive
+    sk-mean-bias-palomar overlay at 7601a9d5ade08066632bc68b9a615e163f2dd02c;
+    no single all-lean revision is asserted for the entire selected tree.
+    It supplies Gaussian, probability, Parisi, and quantitative mean-bias
+    infrastructure. Original third-party licenses and notices are preserved.
+- title: StochasticCalculus
+  authors:
+  - Ezzeri Esa
+  id: https://github.com/savarin/lean-stochastic-calculus
+  type: software
+  relationship: other
+  location: vendor/all-lean/StochasticCalculus/; vendor-licenses/StochasticCalculus/; LICENSES/StochasticCalculus/
+  license: Apache-2.0
+  note: >-
+    The 57 selected all-lean stochastic-calculus modules, with original notices
+    retained. Their source metadata identifies historical distribution
+    through pmaronow/all-lean at 91b0f7aece4af24622757e7fbf7b967a84d14a6a.
+    The shared Brownian and Kolmogorov foundations are reused from all-lean.
+- title: SKOptimized supporting components and the fluctuation proof development
+  type: software
+  relationship: other
+  id: https://github.com/pmaronow/fluctuations-temp
+  location: vendor/packet/ and vendor/fluctuations/
+  license: Apache-2.0 with retained third-party terms
+  note: >-
+    Selected supporting components from barriers/vendor/packet and the
+    fluctuation development. The latter establishes the positive Laplace
+    window and the mean-bias bridge. Retained legacy MIT, Apache-2.0, and
+    RSAT notices remain under LICENSES/fluctuations/ and the vendor tree.
+related_formalizations:
+- id: https://github.com/pmaronow/fluctuations-temp/tree/b124b86fac33622be83156c57a0b494534e54798
+  relationship: builds-on
+  note: >-
+    Source of the barrier, optimized upper-bound, and fluctuation developments
+    and the manuscript. The package selects their joint import closure and
+    adds independent submission interfaces. PROVENANCE.json records the
+    final source inventory, adaptations, and file hashes.
+- id: https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean/OAI/Probability/SKFluctuations
+  relationship: builds-on
+  note: Retains the concrete model, fluctuation statement, and window-to-fluctuation implication.
+- id: https://github.com/openai/math/tree/1581d4cbdd69a0faf34b2089614fe2a814316a6a/lean
+  relationship: adapts
+  note: Additional donor modules identified by retained source headers in the upper-bound development.
+status:
+  scope: >-
+    Five theorem exports, named LowerUpperBounds.theorem_1_1, corollary_1_2,
+    theorem_1_3, theorem_1_6, and corollary_1_7. Solution connects them to proved
+    endpoints; none has a literature or unproved analytic premise. Theorem 1.1
+    has one coefficient for both clocks and all fixed thresholds below 1/2.
+    Theorem 1.3 is continuous time only, at threshold 1/4, with 0 < c < 1/4.
+    Theorem 1.6 proves exponents with arbitrary positive slack; Corollary 1.7
+    proves the n^(-5/6-epsilon) bound. Challenge has five deliberate independent
+    theorem placeholders; these are excluded from the proof-hole counts.
+    Verification of this content snapshot is pending. A reused-build check,
+    strict Audit, and full protected three-kernel Comparator replay are required.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - GPT-6.1-Sol
+    framework: OpenAI Codex
+    tool_setup: >-
+      Lean 4.35.0-rc2, pinned Mathlib, Lean Beam, lake builds, mathematical
+      correspondence audits, axiom audits, and toolchain-bundled Comparator,
+      Lean checker, NanoDa, and con-ron in the source development. Package
+      preparation includes documentation, manuscript builds, and metadata checks.
+  - method: autonomous multi-agent completion campaign
+    models:
+    - Claude Opus 5.5
+    - Claude Sonnet 5.5
+    framework: Claude Code
+    notes: >-
+      The source glauber/lean/formalization.yaml records Claude Code and
+      OpenAI Codex agents working on paper proofs, referee audits, Lean
+      blueprints, per-node proofs, repairs, and integration. These are AI
+      automation credits, separate from human authors and maintainers.
+  notes: >-
+    Model and framework names follow the existing source automation metadata.
+    Historical agent collaboration and verification records are not new
+    certificates for this assembled submission surface. Exact compute cost
+    was not tracked.
+fidelity:
+  divergences: >-
+    The upper-bound model uses a completed GOE Hamiltonian; its independent
+    diagonal cancels from Gibbs probabilities and heat-bath rates. Fluctuation
+    statements subtract n log 2 from the counting log partition function,
+    preserving centered fluctuations and variance. The standard-deviation
+    and variance bounds use separate eventual thresholds whose maximum gives
+    the manuscript threshold. The barrier proof uses a weaker finite-chain
+    local remainder sufficient for the stated endpoint, rather than the
+    manuscript's sharper local expansion. See the manuscript's formal chapter.
+review:
+  status: agent-reviewed; verification of this content snapshot pending
+  reviewers:
+  - AI mathematical, statement-correspondence, and source-integration reviewers
+  notes: >-
+    Source developments record AI audits and independent kernel checks at
+    their named revisions. Documentation checks verify the five-claim map,
+    manuscript source inventory and supplied PDF identity, and official metadata
+    loading. Historical manuscript build receipts concern their staged sources.
+    Fresh package kernel evidence will be recorded after the pending replay. No Palomar
+    registration, acceptance, or independent human proof-review claim is made.
+limitations:
+- Corollaries 1.4 and 1.5 are not separately formalized or Comparator claims.
+- The quantitative and almost-sure barrier forms, Metropolis and general bounded-rate dynamics, and relaxation-time bound are not formalized.
+- The sharper local expansion is not a formal claim; the formal proof establishes a sufficient weaker remainder.
+- Theorem 1.6 supplies fluctuation exponents, not a limiting law or positive variance prefactor. The Laplace-window input is proved internally.
+- Corollary 1.7 retains arbitrary positive exponent slack; the bound without that slack is not formalized.
+- The upper-bound saving is strictly below one quarter; neither endpoint attainment nor a global optimality theorem is asserted.

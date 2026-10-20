@@ -1,0 +1,26 @@
+Primary source: https://github.com/openai/math
+Pinned commit: fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+Primary source license: Apache-2.0 (full text in OPENAI-MATH-LICENSE).
+
+The retained Lean source extracts in work/sk-audit, work/sk-barriers and
+work/sk-barriers-all and manuscript extracts in work/spin-manuscripts,
+work/sk-companions, work/manuscript-audit and work/law-increment-audit were
+consulted during the audit. Some audit directories also contain our notes.
+Upstream-authored text is reference evidence, not a claim of new authorship.
+Sources elsewhere under work/adversarial can also include manuscript extracts.
+The canonical version of every upstream claim remains the pinned repository.
+
+External research reference retained in work/adversarial/root/lopatto.pdf and
+its text extractions: Patrick Lopatto, Full Replica Symmetry Breaking in the
+Sherrington-Kirkpatrick Model, arXiv:2607.11756v3, 16 July 2026.
+https://arxiv.org/abs/2607.11756
+Its attribution and terms are separate from the OpenAI repository license.
+
+New formalization work is under work/positive-laplace-window. Broader audit
+notes and numerical probes are preserved under their historical work paths.
+SOURCE_MANIFEST.json records exact saved bytes by SHA-256, with dependency pins.
+
+Not copied: the complete upstream checkout, Mathlib and other dependency
+checkouts, downloaded Lean distribution/archive, .lake caches, compiled Lean
+objects, Python bytecode, and the empty sk-audit.tar download placeholder.
+These are dependencies or generated artifacts rather than authored research.

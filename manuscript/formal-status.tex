@@ -1,0 +1,142 @@
+\newif\ifupperformal
+\upperformaltrue
+
+\newcommand{\statusAuthorsNote}{
+\ifupperformal
+The formal proofs of the five results
+\cref{thm:barrier-730,b:cor:subcritical,thm:upper,f:main,cor:mean-bias}
+have completed the independent checks described in \cref{sec:formal}.
+That section gives their precise statements and distinguishes them from
+the stronger conclusions proved only in the written argument.
+\else
+The formal proofs of the four results
+\cref{thm:barrier-730,b:cor:subcritical,f:main,cor:mean-bias}
+have completed the independent checks described in \cref{sec:formal}.
+The upper-bound statement and its verification record are described in
+\cref{sec:formal-upper}.
+\fi}
+
+\newcommand{\statusAbstract}{
+\ifupperformal
+We have also formalized the upper bound in continuous time.
+\else
+The formal treatment of the upper bound is described in
+\cref{sec:formal-upper}.
+\fi}
+
+\newcommand{\statusIntroShort}{
+\ifupperformal
+We have formalized \cref{thm:upper}; see \cref{sec:formal-upper}.
+\else
+For the formal statement corresponding to \cref{thm:upper}, see
+\cref{sec:formal-upper}.
+\fi}
+
+\newcommand{\statusIntroFormal}{
+\ifupperformal
+\Cref{thm:upper} is also formalized, as the statement described in
+\cref{sec:formal-upper}, and it passed the same three checks at commit
+\path{352426b9007b6bbb31a3c8cfe6887caa0badf3fd}
+(19 October 2026).
+\Cref{cor:upper-discrete,cor:two-sided} are not separately formalized.
+\else
+\Cref{sec:formal-upper} gives the formal statement corresponding to
+\cref{thm:upper}, the proof declaration, and the verification record.
+\fi}
+
+\newcommand{\statusFormalUpper}{
+The proposition
+\path{SKConstants.OptimizedSKTypicalStartStatement}, defined in
+\path{SKConstants/SKModel.lean}, states that, for every $\beta>1$ and
+every $\omega\in(0,1/4)$,
+\[
+ \PP_{J,X_0\sim\pi^J}
+ \bigl\{d^J\bigl(X_0,\exp(n^{1-\omega})\bigr)>1/4\bigr\}
+ \longrightarrow0.
+\]
+The declaration uses $c$ for the parameter denoted $\omega$ here, with
+both $\beta$ and $c$ fixed before $n\to\infty$.
+
+In the formal model, the variables $g_{ij}$ are independent standard
+Gaussians, and the completed matrix and Hamiltonian are
+\[
+ W_{ij}=\frac{g_{ij}+g_{ji}}{\sqrt{2n}},\qquad
+ H_g^c(x)=\frac12x^{\mathsf T}Wx,
+\]
+including its diagonal, with $\beta$ outside the Hamiltonian.
+For $i<j$, we define $J_{ij}=\sqrt n\,W_{ij}$. These couplings are
+independent standard Gaussians, and
+\[
+ H_g^c(x)=H_n^J(x)+\frac12\tr W,\qquad
+ Z_n^c=e^{\beta\tr W/2}Z_n.
+\]
+The trace term is independent of $x$ and cancels in the Gibbs
+normalization, as in \cref{lem:model-completion}(b), and in every energy
+difference. The Gibbs probabilities and flip rates coincide with those
+of \cref{sec:model}. The same holds for the semigroup and the event
+defined by the total variation distance from a fixed initial spin.
+The formal generator is $n(K^J-I)$, so each site has rate one, as in
+\eqref{eq:common-semigroup}. Its joint law samples the completed matrix
+and then a Gibbs spin. By integrating out the independent diagonal, we
+obtain the joint law of \cref{def:model-joint}. The primitive representation
+in \cref{u:sec:primitive} uses the same completed matrix law. The initial
+spin is fixed before its transition law and total variation distance
+are formed. By the complementary form of \cref{lem:model-joint}, the
+displayed limit is \cref{thm:upper}. The formal sequence is also defined
+at sizes zero and one, which does not affect the limit.
+
+\ifupperformal
+The theorem
+\path{SKConstants.Completion.Main.optimizedSKTypicalStartStatement_holds}
+proves this proposition without additional hypotheses. The release at
+commit \path{352426b9007b6bbb31a3c8cfe6887caa0badf3fd}
+was checked on 19 October 2026, using
+Lean version \texttt{v4.35.0-rc2} and Mathlib at commit
+\path{065356127b1dc0016f66b7283ce0ce2c4055aa55}.
+A fresh build succeeded at this revision. The package's \path{Challenge.lean}
+contains 47 independently stated claims and imports only Mathlib. Its
+definitions explicitly include the completed disorder law, Gibbs kernel,
+semigroup, total variation distance, and joint probability. The official
+Comparator confirmed equality of the proved statements and these
+independent statements, including their definitions. The axiom audit of
+all 20,281 exported development declarations in 1,605 modules found only
+\path{propext}, \path{Classical.choice}, and \path{Quot.sound}; the main
+theorem has exactly these three axiom dependencies. The same Comparator
+run checked all 47 claims and their proof dependencies with Lean's kernel,
+NanoDa, and con-ron. All three accepted them.
+
+The formal proof follows the route of \cref{part:upper}. It constructs
+Brownian motion, proves the scalar and Gaussian-query laws, establishes
+the fine entropy and sharp coarse estimates, and combines coverage and
+the connecting sequence with the finite-chain mixing reduction. The
+steps are organized as separately proved statements and assembly
+theorems, whose hypotheses are supplied by the final proof. The
+parameter choice used by that proof is described in
+\cref{sec:formal-scope}. The development includes Ezzeri Esa's
+StochasticCalculus library and adapted OpenAI Lean modules, both under
+the Apache-2.0 license. Intermediate estimates of the written proof are
+checked only insofar as they enter the formal proof or are separately
+stated formal results.
+\else
+The proof declaration and verification records are available with the
+sources described in \cref{sec:formal-scope}.
+\fi}
+
+\newcommand{\statusFormalUpperScope}{
+\ifupperformal
+\Cref{cor:upper-discrete,cor:two-sided} are not separately formalized.
+The development proves admissibility of the affine family in
+\cref{u:prop:range} throughout
+$0<\varepsilon_\omega<1/80$, including the choice
+$\varepsilon_\omega=(1/4-\omega)/20$. The final proof of
+\cref{thm:upper} instead uses the same affine family at
+$\min\{1/2000,(1/4-\omega)/20\}$ and proves the target for every
+$\omega\in(0,1/4)$. A separate formal result characterizes the open
+range of the development's strict estimate system, and another checks
+an explicit rational instance. The ancillary calculation described
+after \cref{u:prop:range}, including every identity for
+\cref{u:tab:budget}, is not a separately certified formal statement.
+\else
+The scope of the upper-bound verification is recorded with the sources
+described below.
+\fi}

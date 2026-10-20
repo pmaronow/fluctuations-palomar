@@ -1,0 +1,286 @@
+{
+  "source_repository": "https://github.com/pmaronow/fluctuations-temp",
+  "files": [
+    {
+      "path": "LICENSES/all-lean/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSE",
+      "sha256": "d84dc2411ecd101a50c142b9fda9ee91cf0b46b5fbe60b58e323be17372f46f3"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/NOTICE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/NOTICE",
+      "sha256": "8a74b497c53de56980f5e320f9354d64c40eb1764c3e98ee8857979770aca5e9"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/vendor/AbsorptionCutoff/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/vendor/AbsorptionCutoff/LICENSE",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/vendor/AbsorptionCutoff/NOTICE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/vendor/AbsorptionCutoff/NOTICE",
+      "sha256": "1bd73f1466a29517089da0cda3b81c3d4ff8f181646ef190b26e6945a850a87c"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/vendor/OAI-Gaussian-Comparison/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/vendor/OAI-Gaussian-Comparison/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/vendor/OAI-Tensor-Adaptation/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/vendor/OAI-Tensor-Adaptation/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/aging-temp/vendor/hard-sphere-foundations/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/aging-temp/vendor/hard-sphere-foundations/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/docs/LICENSES.json",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/docs/LICENSES.json",
+      "sha256": "e16df6a2c658636f014ec1ad8ca2cfbd842bc96862dde6ed86449c86119ea06d"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/docs/LICENSES.md",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/docs/LICENSES.md",
+      "sha256": "17373a741f4b2fac5c1fcf075e940f22cb8accd5a7ca553ad7df1cad3e5fa958"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/brownian-foundations/LICENSE.BrownianMotion",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/brownian-foundations/LICENSE.BrownianMotion",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/brownian-foundations/LICENSE.KolmogorovExtension4",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/brownian-foundations/LICENSE.KolmogorovExtension4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/cole-hopf-foundations/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/cole-hopf-foundations/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/lean-stochastic-calculus/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/lean-stochastic-calculus/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/spin-glass-foundations/LICENSE-ParisiFormula",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/spin-glass-foundations/LICENSE-ParisiFormula",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/spin-glass-foundations/LICENSE-RSAT",
+      "source_path": "barriers/vendor/all-lean/LICENSES/arbitrary-rsb-palomar/vendor/spin-glass-foundations/LICENSE-RSAT",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/vendor/brownian-foundations/LICENSE.BrownianMotion",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/vendor/brownian-foundations/LICENSE.BrownianMotion",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/vendor/brownian-foundations/LICENSE.KolmogorovExtension4",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/vendor/brownian-foundations/LICENSE.KolmogorovExtension4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/vendor/cole-hopf-foundations/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/vendor/cole-hopf-foundations/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/vendor/lean-stochastic-calculus/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/vendor/lean-stochastic-calculus/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/vendor/spin-glass-foundations/LICENSE-ParisiFormula",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/vendor/spin-glass-foundations/LICENSE-ParisiFormula",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/at-palomar/vendor/spin-glass-foundations/LICENSE-RSAT",
+      "source_path": "barriers/vendor/all-lean/LICENSES/at-palomar/vendor/spin-glass-foundations/LICENSE-RSAT",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/codex-sk-barriers/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/codex-sk-barriers/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/codex-sk-glauber/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/codex-sk-glauber/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/brownian-foundations/LICENSE.BrownianMotion",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/brownian-foundations/LICENSE.BrownianMotion",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/brownian-foundations/LICENSE.KolmogorovExtension4",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/brownian-foundations/LICENSE.KolmogorovExtension4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/cole-hopf-foundations/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/cole-hopf-foundations/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/lean-stochastic-calculus/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/lean-stochastic-calculus/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/spin-glass-foundations/LICENSE-ParisiFormula",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/spin-glass-foundations/LICENSE-ParisiFormula",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/spin-glass-foundations/LICENSE-RSAT",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/spin-glass-foundations/LICENSE-RSAT",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/frsb-palomar/vendor/verification-metadata/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/frsb-palomar/vendor/verification-metadata/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/palomar-7601a9d/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/palomar-7601a9d/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/palomar-7601a9d/LICENSES/Apache-2.0.txt",
+      "source_path": "barriers/vendor/all-lean/LICENSES/palomar-7601a9d/LICENSES/Apache-2.0.txt",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/palomar-7601a9d/LICENSES/RSAT-NOTICE.txt",
+      "source_path": "barriers/vendor/all-lean/LICENSES/palomar-7601a9d/LICENSES/RSAT-NOTICE.txt",
+      "sha256": "6df21abf9a7aa85a795aa4e198722c338183a4ad8158994cfc18517230305323"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/palomar-7601a9d/THIRD_PARTY_NOTICES.md",
+      "source_path": "barriers/vendor/all-lean/LICENSES/palomar-7601a9d/THIRD_PARTY_NOTICES.md",
+      "sha256": "a06bbcbdef5ea8aec65cc31b3a2d3a14fd4c6f6030fd507c665977642e18e3d7"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/sk-mean-bias-palomar/LICENSE",
+      "source_path": "barriers/vendor/all-lean/LICENSES/sk-mean-bias-palomar/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/sk-mean-bias-palomar/LICENSES/RSAT-NOTICE.txt",
+      "source_path": "barriers/vendor/all-lean/LICENSES/sk-mean-bias-palomar/LICENSES/RSAT-NOTICE.txt",
+      "sha256": "6df21abf9a7aa85a795aa4e198722c338183a4ad8158994cfc18517230305323"
+    },
+    {
+      "path": "LICENSES/all-lean/LICENSES/sk-mean-bias-palomar/THIRD_PARTY_NOTICES.md",
+      "source_path": "barriers/vendor/all-lean/LICENSES/sk-mean-bias-palomar/THIRD_PARTY_NOTICES.md",
+      "sha256": "a06bbcbdef5ea8aec65cc31b3a2d3a14fd4c6f6030fd507c665977642e18e3d7"
+    },
+    {
+      "path": "LICENSES/fluctuations/OPENAI-MATH-LICENSE",
+      "source_path": "fluctuations/LICENSES/OPENAI-MATH-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/fluctuations/UPSTREAM-PROVENANCE.txt",
+      "source_path": "fluctuations/LICENSES/UPSTREAM-PROVENANCE.txt",
+      "sha256": "f4ebad249b91d2630c05887ed6c814ad2dbf7656597d9d2f67ba947a57d7fb68"
+    },
+    {
+      "path": "LICENSES/fluctuations/retained-legacy-source/Apache-2.0.txt",
+      "source_path": "fluctuations/LICENSES/retained-legacy-source/Apache-2.0.txt",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/fluctuations/retained-legacy-source/LICENSE",
+      "source_path": "fluctuations/LICENSES/retained-legacy-source/LICENSE",
+      "sha256": "ce221d569aa2395b6b65c2cae86a1da3896e835c9d0710f100faf1b4fd35f6e4"
+    },
+    {
+      "path": "LICENSES/fluctuations/retained-legacy-source/RSAT-NOTICE.txt",
+      "source_path": "fluctuations/LICENSES/retained-legacy-source/RSAT-NOTICE.txt",
+      "sha256": "6df21abf9a7aa85a795aa4e198722c338183a4ad8158994cfc18517230305323"
+    },
+    {
+      "path": "LICENSES/fluctuations/retained-legacy-source/THIRD_PARTY_NOTICES.md",
+      "source_path": "fluctuations/LICENSES/retained-legacy-source/THIRD_PARTY_NOTICES.md",
+      "sha256": "a06bbcbdef5ea8aec65cc31b3a2d3a14fd4c6f6030fd507c665977642e18e3d7"
+    },
+    {
+      "path": "LICENSES/StochasticCalculus/LICENSE-Apache-2.0",
+      "source_path": "glauber/lean/vendor-licenses/StochasticCalculus/LICENSE-Apache-2.0",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    {
+      "path": "LICENSES/StochasticCalculus/NOTICE",
+      "source_path": "glauber/lean/vendor-licenses/StochasticCalculus/NOTICE",
+      "sha256": "75ec016c10b12d56be8e4bfca00c1ba7d26d6a94da305b43cc6922ef2eb73590"
+    },
+    {
+      "path": "LICENSES/openai-math-barriers/LICENSE",
+      "source_path": "barriers/vendor/openai-math/lean/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/openai-math-fluctuations/LICENSE",
+      "source_path": "fluctuations/vendor/openai-math/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/openai-math-glauber/LICENSE",
+      "source_path": "glauber/lean/SKConstants/Upstream/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/packet/LICENSE",
+      "source_path": "barriers/vendor/packet/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/glauber/LICENSE",
+      "source_path": "glauber/lean/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/source-release/LICENSE",
+      "source_path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "LICENSES/source-release/NOTICE.md",
+      "source_path": "NOTICE.md",
+      "sha256": "287621e03dd838269e6a1683cda20c811a94d30daf0e0750b70cdde4070e0226"
+    }
+  ],
+  "notes": "Verbatim license and notice copies from the three source developments. Historical path references in original notices refer to their original distributions; the local manifest identifies the actual copied artifacts."
+}

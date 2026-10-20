@@ -1,0 +1,45 @@
+Lower and Upper Bounds for Glauber Dynamics from Typical States of the
+Low-Temperature Sherrington–Kirkpatrick Model
+
+Project Lean code and documentation retain the Apache License, Version 2.0.
+Imported material retains its original licenses, copyright, author, and
+adaptation notices. The root license does not relicense cited papers or
+third-party code.
+
+The package selects the joint proof closure of the barrier, upper-bound,
+and fluctuation developments in pmaronow/fluctuations-temp. Source paths,
+revisions, module counts, adaptations, and final-hash status are recorded
+in PROVENANCE.json. Independent Challenge, Solution, and Audit interfaces
+select exactly five manuscript result groups. Source-revision verification
+records preserved in the manuscript do not certify a later package revision.
+
+OpenAI mathematics Lean sources are adapted under Apache-2.0. Their licenses
+are retained in vendor/openai-math/, vendor/openai-fluctuations/, and
+SKConstants/Upstream/, with verbatim copies under LICENSES/openai-math-*/.
+The source developments identify upstream commits and original paths in
+their headers. The package isolates the upper-bound OAI declaration
+namespace as SKConstantsOAI and retains the fluctuation development's
+SKFluctuationsOAI physical-module prefix.
+
+The consolidated all-lean foundations include MIT-licensed original code
+and separately licensed imports. Their licenses and third-party notices,
+including Apache-2.0 stochastic calculus, Brownian and Kolmogorov foundations,
+spin-glass sources, quantitative developments, and RSAT attribution, are
+retained under vendor/all-lean/ and LICENSES/all-lean/.
+
+Ezzeri Esa's StochasticCalculus modules retain their Apache-2.0 license and
+notice in vendor-licenses/StochasticCalculus/ and LICENSES/StochasticCalculus/.
+The supporting packet retains its license in vendor/packet/ and LICENSES/packet/.
+The fluctuation development's retained legacy-source licenses and notices
+remain under vendor/fluctuations/LICENSES/ and LICENSES/fluctuations/.
+LICENSES/manifest.json records the source paths and SHA-256 hashes of the
+verbatim license/notice copies collected from all three developments.
+
+Modified source files retain the applicable original notices. Module,
+namespace, import, and comment adaptations are distinguished from inherited
+bytes in the provenance records. The original source-release notice and
+license are retained under LICENSES/source-release/.
+
+The manuscript's authors' note and funding acknowledgement are preserved
+verbatim. AI automation credits are recorded separately in formalization.yaml.
+No registry acceptance or endorsement by upstream authors is asserted.

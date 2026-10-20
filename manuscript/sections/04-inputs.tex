@@ -1,0 +1,1238 @@
+\chapter{Gaussian hierarchies and imported results}\label{sec:inputs}
+
+This section fixes the scalar and matrix objects used in
+\cref{part:static,part:dynamics}, and it states, once, the results from the
+literature on which the proof of \cref{thm:barrier-730} relies. In
+\cref{sec:inp-steps} we define the Gaussian integration step and record its
+elementary properties. In \cref{b:sec:scalar} we define the Parisi functional,
+the scalar diffusion and the response $\Gamma$, and we state the Parisi formula,
+the uniqueness of its minimizer, the scalar estimates and stationarity
+identities of OpenAI's barrier preprint \cite{oai-barriers}, and the fact that the support
+of the Parisi measure is an interval. Together these imply that $\Gamma(t)=t$ on
+$[0,q_\beta]$ (\cref{cor:inp-identity}). \Cref{sec:inp-finite} states the
+finite-size estimates of \cite{quantitative-parisi,hexagon-bias}. In
+\cref{sec:inp-hierarchies} we define Gaussian hierarchies, their trial values
+and the constrained partition functions, we prove the block factorization of
+the unperturbed three-replica path (\cref{lem:inp-blocks}), and we state the
+matrix comparison and two Gaussian tools of \cite{oai-barriers}.
+\Cref{sec:inp-three} states the two- and three-replica pressure bounds of
+\cite{oai-barriers}, and \cref{sec:inp-coverage} its energy and rotation
+estimates and its bound on the masses of overlap neighborhoods.
+
+We use the scalar objects from \cref{sec:scalar} on. The hierarchies and the
+matrix comparison enter \cref{sec:flow,sec:cubic,sec:fractional,sec:static},
+the finite-size estimates enter
+\cref{sec:fractional,sec:static,sec:references,sec:barrier-proof},
+and the bounds on the masses of overlap neighborhoods enter
+\cref{sec:references}. We prove
+\cref{lem:inp-steps,lem:inp-blocks,cor:inp-identity} and the elementary facts
+recorded in the remarks. Every theorem and proposition of this section is
+quoted, without proof, from the source named in its heading, or is a consequence
+of a proof given there; in the latter case we say so and explain how it is
+obtained (\cref{inp:ob-remote}). A note after each result lists the sections
+in which it is used.
+
+\paragraph{Imported results and their normalization.}
+Apart from standard tools of probability, such as Gaussian integration by
+parts, It\^o's formula, and the inequalities of Markov and Chebyshev, the
+results stated in this section with a citation are the only mathematical inputs
+from the literature in the proof of \cref{thm:barrier-730}. The
+inputs used only in \cref{part:fluct} are stated in \cref{sec:fluct,sec:bias}.
+The inputs to \cref{part:upper} are listed in \cref{u:sec:scalar}.
+The barrier preprint \cite{oai-barriers} uses our normalization
+(\cref{tab:model-dictionary}), and it defines constrained pressures as
+$n^{-1}\E\log$ of unnormalized constrained sums. Every statement of
+\cite{oai-barriers} quoted below holds after the changes of letters listed in
+\cref{tab:inp-ob}, apart from the explicitly described consequences of proofs
+in \cref{inp:ob-remote}. For each of the other sources, we state, where it is
+quoted, only the change of normalization that the quoted result needs;
+\cref{sec:model-dictionary} compares all of them with ours.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Notation of \cite{oai-barriers} and of this paper.}\label{tab:inp-ob}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.33\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}@{}}
+\toprule
+Object & In \cite{oai-barriers} & Here\\
+\midrule
+number of replicas & $d$ & $\ell$\\
+constrained pressure & $F_{d,n}(D)$ & $p_{\ell,n}(D)$ (\cref{def:inp-constrained})\\
+hierarchy masses & $x_{-1}=0$, $x_k=1$, and $x_{j-1}\le x_j$; the $j$th field is
+  integrated at mass $x_{j-1}$ & $0\le m_1\le\dots\le m_N\le1$; the $j$th
+  increment is integrated at mass $m_j$ (\cref{def:inp-hierarchy})\\
+squared norm, penalty & $|U|^2$, $\int x\,\dd|Q|^2$ & $\norm{U}_F^2$,
+  $\int m\,\dd\norm{Q}_F^2$ \eqref{eq:inp-penalty}\\
+minimizer & a minimizer $\mu$ & $\mu_\beta$, unique by \cref{inp:unique}\\
+scalar diffusion & $X_s$ & $Y_t$\\
+scalar quantities & $A(s)$, $d_*(s)$ & $\int_s^1\alpha(t)\dd t$,
+  $s\alpha(s)+\int_s^1\alpha(t)\dd t$\\
+large-overlap cutoff in \cite[Lemma~4.1 and (4.20)]{oai-barriers} & $h$ & $b_*$\\
+scales in \cite[Sections~6--7]{oai-barriers} & $L=n^{1/10000}$, $\rho=L^{-1}$
+  & $L_{\rm OB}$, $\rho_{\rm OB}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Conventions.}
+Throughout, we fix $\beta>0$. Every statement that involves the
+Parisi measure $\mu_\beta$, its support $[0,q_\beta]$, or the response $\Gamma$ of
+the minimizer assumes $\beta>1$. Constants $C,c$ and thresholds $n_0$ depend only
+on $\beta$ and on the parameters named in the statement where they appear.
+
+\section{Gaussian integration steps}\label{sec:inp-steps}
+
+In this section, $\ell\ge1$ is an integer. We write vectors of $\R^\ell$ in bold,
+$\mathbf z\cdot\mathbf y$ and $\abs{\mathbf z}$ for the Euclidean inner product
+and norm, and $\mathbf g$ for a standard Gaussian vector in $\R^\ell$. The notation
+$\Sigma\succeq0$ means that the symmetric $\ell\times\ell$ matrix $\Sigma$ is
+positive semidefinite, and $\Sigma^{1/2}$ denotes its positive semidefinite
+square root. A function $f\colon\R^\ell\to\R$ has \emph{linear growth} if it is
+measurable and there exists $C<\infty$ such that $\abs{f(\mathbf z)}\le
+C(1+\abs{\mathbf z})$ for all $\mathbf z$.
+
+\begin{definition}[Gaussian integration step]\label{def:inp-step}
+Let $m\in[0,1]$, let $\Sigma\succeq0$ be an $\ell\times\ell$ matrix, and let $f$
+have linear growth. The \emph{Gaussian integration step} at mass $m$ with
+covariance $\Sigma$ is
+\begin{equation}\label{eq:inp-step}
+ T_{m,\Sigma}f(\mathbf z)=
+ \begin{cases}
+  m^{-1}\log\E\exp\bigl(mf(\mathbf z+\Sigma^{1/2}\mathbf g)\bigr), & m>0,\\
+  \E f(\mathbf z+\Sigma^{1/2}\mathbf g), & m=0.
+ \end{cases}
+\end{equation}
+The \emph{tilted Gaussian kernel} is the probability kernel
+\begin{equation}\label{eq:inp-kernel}
+ \mathcal K_{m,\Sigma,f}(\mathbf z,\dd\mathbf y)
+ =\exp\bigl\{m\bigl[f(\mathbf y)-T_{m,\Sigma}f(\mathbf z)\bigr]\bigr\}\,
+  N(\mathbf z,\Sigma)(\dd\mathbf y),
+\end{equation}
+where $N(\mathbf z,\Sigma)$ is the law of $\mathbf z+\Sigma^{1/2}\mathbf g$. For
+$m=0$ the exponential factor equals one.
+\end{definition}
+
+Note that $T_{m,\Sigma}f$ is the normalization that makes
+$\mathcal K_{m,\Sigma,f}(\mathbf z,\cdot)$ a probability measure. A singular
+$\Sigma$ is allowed. In that case, $N(\mathbf z,\Sigma)$ is carried by $\mathbf
+z+\operatorname{range}\Sigma$, and no inverse of $\Sigma$ is used. A rank-one
+covariance $\Sigma=\mathbf v\mathbf v^{\mathsf T}$ integrates a single Gaussian
+variable in the direction $\mathbf v$, and $T_{m,0}f=f$.
+
+\begin{lemma}[Elementary properties of the integration step]\label{lem:inp-steps}
+Let $m\in[0,1]$, let $\Sigma,\Sigma'\succeq0$ be $\ell\times\ell$ matrices, and
+let $f,f'$ have linear growth.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The function $T_{m,\Sigma}f$ has linear growth. If $f\le f'$, then
+ $T_{m,\Sigma}f\le T_{m,\Sigma}f'$, and $T_{m,\Sigma}(f+c)=T_{m,\Sigma}f+c$ for
+ every $c\in\R$.
+\item $T_{m,\Sigma}T_{m,\Sigma'}f=T_{m,\Sigma+\Sigma'}f$.
+\item Let $\ell=\ell_1+\ell_2$, write $\mathbf z=(\mathbf z_1,\mathbf z_2)$
+ accordingly, and suppose that $f(\mathbf z)=f_1(\mathbf z_1)+f_2(\mathbf z_2)$,
+ with $f_1,f_2$ of linear growth,
+ and that $\Sigma$ is block diagonal with blocks $\Sigma_1,\Sigma_2$. Then
+ $T_{m,\Sigma}f(\mathbf z)=T_{m,\Sigma_1}f_1(\mathbf z_1)+T_{m,\Sigma_2}f_2(\mathbf z_2)$.
+\item For every integer $k\ge1$, we have $T_{m/k,\Sigma}(kf)=k\,T_{m,\Sigma}f$.
+\item The value $T_{m,\Sigma}f(\mathbf z)$ depends only on the restriction of
+ $f$ to $\mathbf z+\operatorname{range}\Sigma$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (a), suppose that $\abs{f(\mathbf z)}\le C(1+\abs{\mathbf z})$, and set
+$M=C\norm{\Sigma^{1/2}}\abs{\mathbf g}$, where $\norm{\cdot}$ is the operator
+norm. Then $\abs{f(\mathbf z+\Sigma^{1/2}\mathbf g)}\le C(1+\abs{\mathbf
+z})+M$. For $m>0$, by Jensen's inequality we have $T_{m,\Sigma}f(\mathbf z)\ge
+\E f(\mathbf z+\Sigma^{1/2}\mathbf g)\ge -C(1+\abs{\mathbf z})-\E M$. By H\"older's
+inequality, the map $m\mapsto m^{-1}\log\E e^{mM}$ is nondecreasing on $(0,1]$,
+which implies that $T_{m,\Sigma}f(\mathbf z)\le C(1+\abs{\mathbf z})+\log\E
+e^{M}$. The case $m=0$ is the same with expectations, and the monotonicity and
+the translation identity are immediate from \eqref{eq:inp-step}.
+
+For (b) with $m>0$, we have $\exp(mT_{m,\Sigma'}f(\mathbf y))=\E\exp(mf(\mathbf
+y+\Sigma'^{1/2}\mathbf g'))$ for an independent standard Gaussian vector $\mathbf
+g'$. Applying $T_{m,\Sigma}$, we find
+\[
+ \exp\bigl(mT_{m,\Sigma}T_{m,\Sigma'}f(\mathbf z)\bigr)
+ =\E\exp\bigl(mf(\mathbf z+\Sigma^{1/2}\mathbf g+\Sigma'^{1/2}\mathbf g')\bigr),
+\]
+and $\Sigma^{1/2}\mathbf g+\Sigma'^{1/2}\mathbf g'$ is centered Gaussian with
+covariance $\Sigma+\Sigma'$. The case $m=0$ is the same computation without
+exponentials. For (c), if $\Sigma$ is block diagonal, then the two blocks of
+$\Sigma^{1/2}\mathbf g$ are independent, and the expectation of
+$e^{mf_1}e^{mf_2}$ factorizes (for $m=0$, the expectation of $f_1+f_2$ splits).
+Part (d) follows from \eqref{eq:inp-step}, since $(k/m)\log\E e^{(m/k)kf}
+=k\,m^{-1}\log\E e^{mf}$ for $m>0$. Part (e) holds because $\mathbf
+z+\Sigma^{1/2}\mathbf g\in\mathbf z+\operatorname{range}\Sigma$ almost surely.
+\end{proof}
+\usedin{\cref{lem:inp-blocks} below, and \cref{sec:flow,sec:cubic,sec:fractional},
+in the computations with Gaussian hierarchies.}
+
+\section{The Parisi functional and the scalar diffusion}\label{b:sec:scalar}
+
+A \emph{distribution function} is a right-continuous nondecreasing function
+$\alpha\colon[0,1]\to[0,1]$ such that $\alpha(1)=1$. Equivalently,
+$\alpha(t)=\mu([0,t])$ for a probability measure $\mu$ on $[0,1]$. We pass
+freely between $\alpha$ and $\mu$. We say that $\alpha$ is a \emph{step}
+distribution function if there exist $0=t_0<t_1<\dots<t_p=1$ such that $\alpha$
+is constant on each interval $[t_{i-1},t_i)$. We call such points
+\emph{breakpoints} of $\alpha$, and $m_i=\alpha(t_{i-1})$ denotes the value of
+$\alpha$ on $[t_{i-1},t_i)$.
+
+For a step distribution function $\alpha$, we define
+$\Phi_\alpha\colon[0,1]\times\R\to\R$ by $\Phi_\alpha(1,z)=\log(2\cosh z)$ and,
+for $i=p,p-1,\dots,1$ and $t_{i-1}\le t<t_i$,
+\begin{equation}\label{eq:inp-scalar-recursion}
+ \Phi_\alpha(t,\cdot)=T_{m_i,\beta^2(t_i-t)}\Phi_\alpha(t_i,\cdot),
+\end{equation}
+with the scalar integration step of \cref{def:inp-step} ($\ell=1$). On each
+interval $(t_{i-1},t_i)$, the function $e^{m_i\Phi_\alpha}$ (or $\Phi_\alpha$
+itself, if $m_i=0$) solves the backward heat equation
+$-\partial_t\psi=(\beta^2/2)\partial_{zz}\psi$. It follows that $\Phi_\alpha$ is
+smooth there and solves the Parisi equation
+\begin{equation}\label{b:eq:Parisi-PDE}
+ -\partial_t\Phi_\alpha(t,z)=\frac{\beta^2}{2}
+ \Bigl(\partial_{zz}\Phi_\alpha(t,z)+\alpha(t)\bigl(\partial_z\Phi_\alpha(t,z)\bigr)^2\Bigr),
+ \qquad \Phi_\alpha(1,z)=\log(2\cosh z).
+\end{equation}
+For a general distribution function $\alpha$, we define $\Phi_\alpha$ as the
+uniform limit of $\Phi_{\alpha_k}$ along any sequence of step distribution
+functions $\alpha_k$ such that $\int_0^1\abs{\alpha_k-\alpha}\dd t\to0$. By
+\cref{inp:ob-scalar} below, the limit exists and does not depend on the
+sequence, and \eqref{b:eq:Parisi-PDE} holds in time-integrated form, with the
+time derivative existing for almost every $t$. The \emph{Parisi functional} is
+\begin{equation}\label{b:eq:Parisi-functional}
+ \mathcal P_\beta(\alpha)=\Phi_\alpha(0,0)-\frac{\beta^2}{2}\int_0^1t\alpha(t)\dd t.
+\end{equation}
+We write $u_\alpha=\partial_z\Phi_\alpha$ and $\chi_\alpha=\partial_{zz}\Phi_\alpha$,
+and we define the scalar diffusion and the response by
+\begin{equation}\label{b:eq:scalar-diffusion}
+ \dd Y_t=\beta\dd B_t+\beta^2\alpha(t)u_\alpha(t,Y_t)\dd t,\qquad Y_0=0,\qquad
+ \Gamma_\alpha(t)=\E u_\alpha(t,Y_t)^2,
+\end{equation}
+where $B$ is a standard Brownian motion. These are the scalar conventions of
+\cite[Section~3]{oai-barriers}, where the diffusion is denoted $X$.
+
+\begin{proposition}[{Regularity, stability, and scalar evolution \cite[Lemma~3.1]{oai-barriers}}]\label{inp:ob-scalar}
+Let $\beta>0$. There exists $C_\beta<\infty$ such that the following holds for
+all distribution functions $\alpha$ and $\widetilde\alpha$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item The limit defining $\Phi_\alpha$ exists and does not depend on the
+ approximating sequence. The functions $\Phi_\alpha$, $u_\alpha$ and
+ $\chi_\alpha$ are continuous on $[0,1]\times\R$, $\Phi_\alpha(t,\cdot)$ is
+ even, and
+ \[
+  \abs{u_\alpha}\le1,\qquad 0<\chi_\alpha\le1,\qquad
+  \abs{\chi_\alpha(t,z)-\chi_\alpha(t,z')}\le C_\beta\abs{z-z'}.
+ \]
+\item We have
+ \[
+  \sup_{t,z}\Bigl(\abs{\Phi_\alpha-\Phi_{\widetilde\alpha}}
+  +\abs{u_\alpha-u_{\widetilde\alpha}}+\abs{\chi_\alpha-\chi_{\widetilde\alpha}}\Bigr)
+  \le C_\beta\int_0^1\abs{\alpha(t)-\widetilde\alpha(t)}\dd t.
+ \]
+\item The equation \eqref{b:eq:scalar-diffusion} has a unique strong solution. If
+ $\alpha$ is a step distribution function with breakpoints $t_0<\dots<t_p$, then
+ $(Y_{t_i})_{0\le i\le p}$ is a Markov chain whose transition from $t_{i-1}$ to
+ $t_i$ is the tilted Gaussian kernel
+ $\mathcal K_{m_i,\beta^2(t_i-t_{i-1}),\Phi_\alpha(t_i,\cdot)}$.
+\item For $0\le s\le t\le1$,
+ \begin{align*}
+  u_\alpha(t,Y_t)-u_\alpha(s,Y_s)&=\beta\int_s^t\chi_\alpha(r,Y_r)\dd B_r,\\
+  \E\bigl[\chi_\alpha(t,Y_t)\bigm| Y_s\bigr]&=\chi_\alpha(s,Y_s)
+   -\beta^2\int_s^t\alpha(r)\E\bigl[\chi_\alpha(r,Y_r)^2\bigm| Y_s\bigr]\dd r.
+ \end{align*}
+ Moreover, $\Gamma_\alpha$ is continuously differentiable on $[0,1]$, with
+ one-sided derivatives at the endpoints, and
+ $\Gamma_\alpha(0)=0$, $\Gamma_\alpha'(t)=\beta^2\E\chi_\alpha(t,Y_t)^2$.
+\item Let $0\le a\le1$ and $z\in\R$, and let $Y^{a,z}$ solve
+ $\dd Y^{a,z}_t=\beta\dd B_t+\beta^2\alpha(t)u_\alpha(t,Y^{a,z}_t)\dd t$ for
+ $a\le t\le1$, with $Y^{a,z}_a=z$. This equation has a unique strong solution,
+ and the two identities in \textup{(iv)} hold for $Y^{a,z}$ and $a\le s\le t\le1$.
+ If $\alpha$ is a step distribution function, then the transition of $Y^{a,z}$
+ across each interval of constancy of $\alpha$ after $a$, with $a$ added to the
+ breakpoints, is the tilted Gaussian kernel of \textup{(iii)}. The function
+ $\Gamma^{a,z}_\alpha(t)=\E u_\alpha(t,Y^{a,z}_t)^2$ is continuously
+ differentiable on $[a,1]$, with $\Gamma^{a,z}_\alpha(a)=u_\alpha(a,z)^2$ and
+ $(\Gamma^{a,z}_\alpha)'(t)=\beta^2\E\chi_\alpha(t,Y^{a,z}_t)^2$.
+\end{enumerate}
+\end{proposition}
+
+We note that, in \cite{oai-barriers}, part (i) collects (3.2) and the evenness of
+$\Phi_\alpha$ (so $u_\alpha(t,0)=0$), part (ii) is (3.3), part (iii) is the
+statement about (3.4), and part (iv) contains (3.5), (3.7), and (3.8). Taking
+expectations in the second identity of (iv), we obtain the unconditional form
+\cite[(3.6)]{oai-barriers}. The last sentence of \cite[Lemma~3.1]{oai-barriers}
+extends the well-posedness and the identities (3.5)--(3.6) to a diffusion started
+at any deterministic time and position. In part (v), the conditional identity
+then follows from the Markov property. The statement about the transition
+kernels follows from the identification of the kernels on each interval of
+constant mass in the proof of \cite[Lemma~3.1]{oai-barriers}, which starts from
+an arbitrary position. The statement about $\Gamma^{a,z}_\alpha$ follows from the
+martingale identity, It\^o's isometry, and the continuity of $\chi_\alpha$ and
+$Y^{a,z}$. The initial value
+$\Gamma_\alpha(0)=0$ in (iv) uses the start $Y_0=0$. The constant $C_\beta$
+does not depend on $\alpha$.
+The proof in \cite{oai-barriers} also bounds $\abs{\partial_z^3\Phi_\alpha}$ by
+$2e^{3\beta^2}$ for step distribution functions, and it proves continuity in
+$\beta$. We prove bounds on all positive spatial derivatives, for every
+distribution function, in \cref{sec:scalar}. For the step approximation and the
+spatial regularity of the Parisi evolution, \cite{oai-barriers} credits
+Auffinger and Chen \cite[Propositions~1--2]{auffinger-chen-2015}.
+\usedin{\cref{sec:scalar}, for all scalar estimates, and
+\cref{sec:flow,sec:cubic,sec:fractional,sec:static}, for the stability under a
+change of the distribution function and for the passage from step
+approximations to the minimizer, and \cref{part:upper}, for the scalar
+process and its stochastic identities.}
+
+\begin{theorem}[{Guerra's bound and the Parisi formula \cite[Theorem~3]{guerra-2003}, \cite[Theorems~1--2]{guerra-toninelli-2002},
+\cite[Theorem~1.1]{parisi-formula}}]\label{inp:parisi}
+Let $\beta>0$. For every $n\ge2$ and every distribution function $\alpha$, we
+have $p_n(\beta)\le\mathcal P_\beta(\alpha)$. The limit
+$P_\beta=\lim_{n\to\infty}p_n(\beta)$ exists, and
+$P_\beta=\inf_\alpha\mathcal P_\beta(\alpha)$, where the infimum is over all
+distribution functions. In particular, $\Delta_{n,\beta}=P_\beta-p_n(\beta)\ge0$
+for every $n\ge2$.
+\end{theorem}
+
+The bound $p_n(\beta)\le\mathcal P_\beta(\alpha)$ is Guerra's
+replica-symmetry-breaking bound \cite[Theorem~3]{guerra-2003}, whose proof first
+treats step distribution functions and extends to the full class by
+\cite[Theorem~1]{guerra-2003}. In our normalization it is
+\cite[(2.14)]{oai-barriers}, where it is deduced from \cref{inp:ob-matrix} below
+with $\ell=1$ (see \cref{lem:inp-blocks}(a)) and extended to all $\alpha$ by
+\cref{inp:ob-scalar}(ii). The existence of the limit was proved by Guerra and
+Toninelli \cite[Theorems~1--2]{guerra-toninelli-2002} by an interpolation that
+shows superadditivity. The identification of the limit is Talagrand's Parisi
+formula \cite[Theorem~1.1, (1.14)]{parisi-formula}, applied at zero external
+field with counting measure and covariance function $\xi(q)=\beta^2q^2/2$.
+% CHECK: Talagrand (2006) Thm 1.1, eq. (1.14), p. 223; Guerra (2003) Thm 3
+% (arXiv cond-mat/0205123v1, p. 7); Guerra--Toninelli (2002) Thms 1--2, eqs. (17)--(18).
+\usedin{\cref{sec:model}, for the identification of $P_\beta$ with the
+infimum of $\mathcal P_\beta$, and \cref{sec:cubic,sec:fractional,sec:static},
+where $P_\beta$ is the baseline of every pressure comparison, and
+\cref{part:upper}, for the finite-volume pressure bound.}
+
+\begin{theorem}[{Uniqueness of the Parisi measure \cite[Theorem~2 and Corollary~1]{auffinger-chen-uniqueness-2015}}]\label{inp:unique}
+Let $\beta>0$. The functional $\mathcal P_\beta$ has exactly one minimizer among
+distribution functions.
+\end{theorem}
+
+A minimizer exists by an elementary compactness argument. The probability
+measures on $[0,1]$ form a weakly compact set, weak convergence implies $L^1$ convergence of the
+distribution functions, and $\mathcal P_\beta$ is continuous in $L^1$ by
+\cref{inp:ob-scalar}(ii), as in \cite[proof of Proposition~3.2]{oai-barriers}.
+The functional of Auffinger and Chen
+\cite[(7)]{auffinger-chen-uniqueness-2015} is $\mathcal P^{\rm AC}_{\xi,h}(\mu)
+=\Phi^{\rm AC}_\mu(0,h)$, where $\Phi^{\rm AC}_\mu$ solves the Parisi equation
+with coefficient $\xi''$ and terminal value $\log\cosh$. For
+$\xi(q)=\beta^2q^2/2$ and $h=0$, we have $\xi''=\beta^2$, and
+\cref{rem:inp-logcosh} gives
+\[
+ \mathcal P_\beta(\alpha)=\log2+\mathcal P^{\rm AC}_{\xi,0}(\mu)
+ -\frac{\beta^2}{2}\int_0^1t\alpha(t)\dd t,
+\]
+which is their full variational objective \cite[(8)]{auffinger-chen-uniqueness-2015}.
+They prove that $\mathcal P^{\rm AC}_{\xi,0}$ is strictly convex
+\cite[Theorem~2]{auffinger-chen-uniqueness-2015}. Subtracting the linear
+functional displayed above preserves strict convexity, and
+\cite[Corollary~1]{auffinger-chen-uniqueness-2015} gives uniqueness of the
+minimizer. We denote the minimizer by $\alpha_\beta$ and the corresponding
+probability measure, the \emph{Parisi measure}, by $\mu_\beta$. By uniqueness,
+we may speak of the scalar data of the minimizer; the results of
+\cite{oai-barriers} quoted below are stated there for an arbitrary minimizer.
+\usedin{every section of \cref{part:static,part:dynamics,part:upper}.}
+
+\paragraph{Standing notation.}
+Let $\beta>1$. From now on we write $\alpha=\alpha_\beta$ and $\mu=\mu_\beta$
+when no confusion can arise, and $\Phi$, $u$, $\chi$, $Y$, and $\Gamma$ denote
+$\Phi_\alpha$, $u_\alpha$, $\chi_\alpha$, the diffusion
+\eqref{b:eq:scalar-diffusion} of $\alpha$, and $\Gamma_\alpha$. We also write
+$w=\partial_z^3\Phi$; this derivative exists and is bounded by the estimates
+of \cref{sec:scalar}. Some sections of \cref{part:static} abbreviate
+$b=\beta^2$. In this notation, \eqref{b:eq:Parisi-PDE} and
+\eqref{b:eq:scalar-diffusion} read
+\begin{equation}\label{b:eq:os-scalar}
+\begin{gathered}
+ \partial_t\Phi=-\frac b2\bigl(\partial_{zz}\Phi+\alpha(\partial_z\Phi)^2\bigr),\qquad
+ \Phi(1,z)=\log(2\cosh z),\\
+ \dd Y_t=b\alpha(t)u(t,Y_t)\dd t+\sqrt b\dd B_t,\qquad Y_0=0.
+\end{gathered}
+\end{equation}
+
+\begin{proposition}[{Support conditions and the mean of $\chi$ \cite[Proposition~3.2]{oai-barriers}}]\label{inp:ob-stationarity}
+Let $\beta>0$, and let $\alpha$ be a minimizer of $\mathcal P_\beta$, with
+probability measure $\mu$, diffusion $Y$ and response $\Gamma$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item We have $0\in\supp\mu$, and $\supp\mu\subset[0,1-\eps_0]$ for some
+ $\eps_0>0$.
+\item At every $q\in\supp\mu\cap(0,1)$, we have $\Gamma(q)=q$ and
+ $\Gamma'(q)\le1$. Also $\Gamma(0)=0$ and $\Gamma'(0)\le1$.
+\item For every $s\in[0,1]$,
+ \begin{equation}\label{eq:inp-stationarity-identity}
+  \E\bigl[\chi(s,Y_s)+\alpha(s)u(s,Y_s)^2\bigr]=s\alpha(s)+\int_s^1\alpha(t)\dd t,
+ \end{equation}
+ or equivalently
+ \begin{equation}\label{eq:inp-stationarity}
+  \E\chi(s,Y_s)=\int_s^1\alpha(t)\dd t+\alpha(s)\bigl(s-\Gamma(s)\bigr).
+ \end{equation}
+ In particular, $\chi(0,0)=\int_0^1\alpha(t)\dd t$ and
+ $\beta\int_0^1\alpha(t)\dd t\le1$. Moreover, $\alpha(s)>0$ for every $s\in(0,1]$.
+\end{enumerate}
+\end{proposition}
+
+In \cite{oai-barriers}, the right side of \eqref{eq:inp-stationarity-identity}
+is written $d_*(s)=1-\int_{(s,1]}t\,\mu(\dd t)$, which equals
+$s\alpha(s)+\int_s^1\alpha(t)\dd t$ by Fubini's theorem, and
+$\int_s^1\alpha(t)\dd t$ is written $A(s)$. The identities
+\eqref{eq:inp-stationarity-identity} and \eqref{eq:inp-stationarity} are
+\cite[(3.14)--(3.15)]{oai-barriers}, where they are called stationarity
+identities. They hold at every $s$, including atoms of $\mu$. In this paper,
+the name \emph{stationarity identities} refers instead to the two identities
+\eqref{b:eq:contacts} on $(0,q_\beta)$ described after \cref{cor:inp-identity}. The support conditions in (ii) come from the first variation
+\cite[(3.9)]{oai-barriers}. As credited in \cite[Section~3]{oai-barriers}, the
+first-variation characterization appears in Chen
+\cite[Theorem~2 and Proposition~1]{chen-2017} and in Jagannath and Tobasco
+\cite[Proposition~1.1 and Corollary~3.10]{jagannath-tobasco-2017}. Part (ii) does
+not describe the support of $\mu$; for $\beta>1$, \cref{inp:full-rsb}
+describes it.
+\usedin{\cref{cor:inp-identity}, \cref{sec:scalar}, and \cref{sec:static},
+where \eqref{eq:inp-stationarity} bounds $\E\chi(q,Y_q)-\int_q^1\alpha(t)\dd t$
+at overlaps $q$ with $\abs{q-\Gamma(q)}$ small.}
+
+\begin{theorem}[{Full replica symmetry breaking \cite[Theorem~1.1]{full-rsb}}]\label{inp:full-rsb}
+For every $\beta>1$, there exists $q_\beta\in(0,1)$ with the following
+properties. We have $\supp\mu_\beta=[0,q_\beta]$. The restriction of $\mu_\beta$
+to $[0,q_\beta)$ has a nonnegative density with respect to Lebesgue measure that
+is infinitely differentiable on $(0,q_\beta)$ and whose derivatives of every
+order extend continuously to $0$. Finally, $\mu_\beta(\{q_\beta\})\in(0,1)$.
+\end{theorem}
+
+\cite{full-rsb} works with the Hamiltonian $\beta(2n)^{-1/2}\sum_{i,j=1}^n g_{ij}x_ix_j$,
+with $(g_{ij})$ independent standard Gaussians, which equals $\beta H_n$ plus an
+independent centered Gaussian of variance $\beta^2/2$ common to all
+configurations, that is, $\beta H_n^c$ with $H_n^c$ the completed Hamiltonian of
+\cref{sec:model-completion}. The Parisi
+functional there is $\log2+u_\mu(0,0)-(\beta^2/2)\int_0^1s\mu([0,s])\dd s$, where
+$u_\mu$ solves the Parisi equation with terminal value $\log\cosh x$. By
+\cref{rem:inp-logcosh}, this functional equals $\mathcal P_\beta$, and $\mu_\beta$
+is the same measure in both papers. We cite version~3 of \cite{full-rsb}. Its
+version~4 (October 2026) states the same support conclusion, with a density
+that is smooth up to $q_\beta$, and adds a quantitative bound on the atom. We
+use only the statement above.
+% CHECK: arXiv:2607.11756v3, Theorem 1.1, eqs. (1.4)--(1.5), p. 2; normalization (1.1)--(1.3).
+\usedin{\cref{cor:inp-identity}, and through it the stationarity identities of
+\cref{sec:scalar} and the choice of the intervals of overlaps in
+\cref{sec:cubic,sec:static,sec:references}, and \cref{part:upper}, for the
+continuation of the scalar process beyond the support.}
+
+\begin{corollary}[The interval on which $\Gamma(t)=t$]\label{cor:inp-identity}
+Let $\beta>1$. Then
+\begin{equation}\label{b:eq:identity-interval}
+ \Gamma(t)=t\qquad(0\le t\le q_\beta),
+\end{equation}
+and $\beta^2\E\chi(t,Y_t)^2=1$ for $0<t<q_\beta$. Moreover, $\alpha_\beta(0)=0$,
+$\alpha_\beta(t)>0$ for $0<t\le1$, $\alpha_\beta(t)=1$ for $t\ge q_\beta$, and
+$\alpha_\beta$ is infinitely differentiable on $[0,q_\beta)$, with one-sided
+derivatives at $0$.
+\end{corollary}
+
+\begin{proof}
+By \cref{inp:full-rsb}, we have $\supp\mu_\beta=[0,q_\beta]$ with $q_\beta<1$.
+Then $\supp\mu_\beta\cap(0,1)=(0,q_\beta]$, and \cref{inp:ob-stationarity}(ii)
+implies that $\Gamma(q)=q$ for $0<q\le q_\beta$. Also $\Gamma(0)=0$ by
+\cref{inp:ob-scalar}(iv), which proves \eqref{b:eq:identity-interval}. Recall
+that $\Gamma$ is continuously differentiable with
+$\Gamma'(t)=\beta^2\E\chi(t,Y_t)^2$. Differentiating
+\eqref{b:eq:identity-interval} on $(0,q_\beta)$, we obtain the second claim. For
+$t<q_\beta$, \cref{inp:full-rsb} implies that $\alpha_\beta(t)=\mu_\beta([0,t])$ is
+the integral from $0$ to $t$ of a density that is smooth on $[0,q_\beta)$; in
+particular $\alpha_\beta(0)=0$. For $t\ge q_\beta$ we have $\alpha_\beta(t)=1$.
+Finally, $\alpha_\beta(t)>0$ for $t>0$ because $0\in\supp\mu_\beta$.
+\end{proof}
+
+In \cref{sec:scalar}, we prove that the identity $\beta^2\E\chi(t,Y_t)^2=1$ and
+its companion $\E w(t,Y_t)^2=2\alpha(t)\E\chi(t,Y_t)^3$ hold on $(0,q_\beta)$
+with the regularity needed later. These are the stationarity identities
+\eqref{b:eq:contacts}.
+\usedin{\cref{sec:scalar}, for the stationarity identities, and
+\cref{sec:cubic,sec:static}, for the local comparisons, which take place in
+$(0,q_\beta)$, and \cref{part:upper}, for the pre-support scalar identities.}
+
+\begin{remark}[Terminal value $\log\cosh$]\label{rem:inp-logcosh}
+Some of the sources quoted here and in \cref{part:fluct}, among them
+OpenAI's fluctuation preprint \cite{oai-fluctuations} and \cite{full-rsb}, use
+the terminal value $\log\cosh z$ in \eqref{b:eq:Parisi-PDE}. Since
+$\log(2\cosh z)=\log2+\log\cosh z$, the two solutions differ by the constant
+$\log2$ (by \cref{lem:inp-steps}(a) for step distribution functions, and by
+approximation in general). They have the same spatial derivatives, the same
+diffusion \eqref{b:eq:scalar-diffusion} and the same response $\Gamma$. Adding
+$\log2$ to the functional with terminal value $\log\cosh$ recovers
+\eqref{b:eq:Parisi-functional}, and the minimizer does not change. The papers
+\cite{quantitative-parisi,hexagon-bias} use exactly
+\eqref{b:eq:Parisi-PDE} and \eqref{b:eq:Parisi-functional}.
+\end{remark}
+
+\section{Finite-size estimates}\label{sec:inp-finite}
+
+We use three estimates of Aronow and Lopatto on the convergence in the Parisi
+formula at a fixed temperature $\beta>1$: an upper bound on the variance of
+$F_n$, an upper bound on the mean bias $\Delta_{n,\beta}=P_\beta-p_n(\beta)$,
+and a bound on the increase of the Parisi functional when a lower bound is
+imposed on the distribution function.
+
+\begin{theorem}[{Upper bound on the variance \cite[Theorem~1.4, (1.11)]{quantitative-parisi}}]\label{inp:qp-rate}
+For every fixed $\beta>1$, there exist $C_v<\infty$ and $n_0(\beta)$ such that,
+for every $n\ge n_0(\beta)$,
+\begin{equation}\label{b:eq:external-rate}
+ \Var(F_n)\le C_vn^{7/15}.
+\end{equation}
+\end{theorem}
+
+The normalization of \cite[(1.1)--(1.2)]{quantitative-parisi} is ours
+(\cref{tab:model-dictionary}). The theorem in \cite{quantitative-parisi} also
+contains the lower bound $\Var(F_n)\ge c_\beta n^{4/15}$ and the bounds
+$c_\beta n^{-11/12}\le P_\beta-p_n(\beta)\le C_\beta n^{-2/3}$ on the mean bias,
+which we do not use. The upper bound on the mean bias that we use is
+\cref{inp:hb-rate}.
+% CHECK: arXiv:2609.09103v1 (v1, 8 Sep 2026), Theorem 1.4, eq. (1.11), p. 5; normalization (1.1), p. 4.
+\usedin{\cref{sec:static}, for the lower bound on $Z_n$ in the disorder event
+of \cref{b:lem:static-event}; and \cref{sec:bp-strong}, for the same lower
+bound in \cref{lem:bp-strong-event}.}
+
+\begin{theorem}[{Upper bound on the mean bias with exponent $7/10$ \cite[Theorem~1.1]{hexagon-bias}}]\label{inp:hb-rate}
+For every fixed $\beta>1$, there exists $C_b<\infty$ such that
+\[
+ 0\le P_\beta-p_n(\beta)\le C_b n^{-7/10}\qquad(n\ge2).
+\]
+\end{theorem}
+
+The normalization of \cite[Section~1.1]{hexagon-bias} is ours, and the lower
+bound $0\le P_\beta-p_n(\beta)$ is \cref{inp:parisi}.
+% CHECK: hexagon:2610.00177v1, Theorem 1.1, p. 2; model and functional in Section 1.1, (1.1).
+\usedin{\cref{sec:static}, for the lower bound on $Z_n$ in the disorder event
+of \cref{b:lem:static-event}, together with \cref{inp:qp-rate};
+\cref{sec:references}, where it is the input \eqref{eq:ref-mean-input} for
+\cref{thm:barrier-730}, and its constant enters the choice of the scale
+coefficient in \eqref{b:dyn:R-condition}; and \cref{sec:barrier-proof},
+through these choices.}
+
+\begin{proposition}[{The profile $\max\{\alpha,3s\}$ \cite[Lemma~7.2, (7.3), and
+Proposition~7.12]{quantitative-parisi}}]\label{inp:qp-floor}
+Fix $\beta>1$ and let $\alpha=\alpha_\beta$. There exist constants $T_*>0$,
+$0<c_1\le c_2<\infty$, $s_0\in(0,1/3]$, and $C<\infty$, depending only on
+$\beta$, such that the following holds.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For $0\le t\le T_*$, we have $c_1t\le\alpha(t)\le c_2t$.
+\item For $0<s\le s_0$, the function $\max\{\alpha,3s\}$ is a distribution
+ function, and
+ \begin{equation}\label{b:eq:external-floor}
+  0\le\mathcal P_\beta(\max\{\alpha,3s\})-P_\beta\le Cs^5.
+ \end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}[Translation and consequences of \cref{inp:qp-floor}]\label{rem:inp-floor}
+In \cite[Section~7.1]{quantitative-parisi}, the scalar problem is rescaled by
+$\gamma=\beta\alpha$ and $x_{\rm old}=\beta x$, with rescaled functional
+$\mathcal P^{\rm en}_\beta(\gamma)=\beta^{-1}\mathcal P_\beta(\gamma/\beta)$.
+By Lemma~7.2 there, applied with temperature threshold $\beta_0=\beta$ to the
+rescaled minimizer $\gamma_\beta=\beta\alpha_\beta$, we have
+$kq\le\gamma_\beta(q)\le C_0q$ on $[0,T_*]$, which is (i) with $c_1=k/\beta$
+and $c_2=C_0/\beta$. For a lower bound $a>0$ on the rescaled profile
+(denoted $\lambda$ there), its estimate (7.3) bounds the value of the particular
+trial profile $\max\{a,\gamma_\beta\}$ by $\mathcal
+P^{\rm en}_\beta(\gamma_\beta)+C_1a^5$ for $0<a\le a_*$, where $a_*>0$ depends
+only on $\beta$ (denoted $\lambda_*$ there). With $a=3\beta s$, we have
+$\max\{a,\gamma_\beta\}=\beta\max\{3s,\alpha\}$, and we find that
+\[
+ \mathcal P_\beta(\max\{\alpha,3s\})
+ =\beta\,\mathcal P^{\rm en}_\beta(\max\{3\beta s,\gamma_\beta\})
+ \le P_\beta+3^5C_1\beta^6s^5\qquad(3\beta s\le a_*),
+\]
+which is (ii). The same estimate, in the original variables, is
+\cite[(7.65)--(7.66)]{quantitative-parisi} with imposed lower bound $3s$. The bound
+\eqref{b:eq:external-floor} concerns this particular profile, not only the
+minimum over profiles with an atom at zero. For the minimizer of that
+constrained problem, Pei \cite[Theorem~1(a) and Proposition~2.3(c)]{pei-fifth-order-2026}
+obtains sharp fifth-order asymptotics, which we do not use.
+
+Part (i) localizes the modification. If in addition $3s\le c_1T_*$, then
+$\max\{\alpha,3s\}=\alpha$ on $[3s/c_1,1]$, since $\alpha(t)\ge c_1t\ge3s$ for
+$3s/c_1\le t\le T_*$ and $\alpha(t)\ge\alpha(T_*)\ge c_1T_*\ge3s$ for $t>T_*$.
+On $[0,3s/c_1)$ we have $0\le\max\{\alpha,3s\}-\alpha\le3s$. We conclude
+that $\int_0^1\abs{\max\{\alpha,3s\}-\alpha}\dd t\le9s^2/c_1$. The lower bound
+$3s$ ensures that the mass $\max\{\alpha,3s\}/3$ of a common block of three
+coordinates is at least $s$ (\cref{lem:inp-blocks}(b)), as required in
+\cref{sec:fractional}.
+\end{remark}
+% CHECK: arXiv:2609.09103v1, Lemma 7.2 and (7.3), p. 60; Section 7.1 rescaling, pp. 53--54;
+% Proposition 7.12, (7.65)--(7.66), pp. 93--94.
+\usedin{\cref{sec:fractional}, for the profile used in the positive fractional
+comparison.}
+
+\section{Gaussian hierarchies and constrained pressures}\label{sec:inp-hierarchies}
+
+We now define the finite Gaussian hierarchies that serve as trials in the
+pressure comparisons of \cref{part:static}. Their scalar case is the recursion
+\eqref{eq:inp-scalar-recursion}. For $\ell\times\ell$ matrices $U,V$ we write
+$U\mathbin{:}V=\sum_{a,b}U_{ab}V_{ab}$ and $\norm{U}_F^2=U\mathbin{:}U$.
+
+\begin{definition}[Gaussian hierarchies]\label{def:inp-hierarchy}
+Fix $\ell\ge1$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item An \emph{admissible path} of length $N\ge1$ is a pair $(Q,m)$, where
+ $Q=(Q_0,\dots,Q_N)$ are symmetric $\ell\times\ell$ matrices with $Q_0=0$ and
+ $\Delta Q_j=Q_j-Q_{j-1}\succeq0$ for $1\le j\le N$, and $m=(m_1,\dots,m_N)$
+ satisfies $0\le m_1\le m_2\le\dots\le m_N\le1$. We call $Q_N$ the
+ \emph{endpoint} of the path and $m_j$ the \emph{mass} of the $j$th increment.
+\item For a terminal function $f$ of linear growth, the \emph{partial values} are
+ $\Psi_N=f$ and
+ \begin{equation}\label{eq:inp-hierarchy-recursion}
+  \Psi_{j-1}=T_{m_j,\beta^2\Delta Q_j}\Psi_j\qquad(j=N,N-1,\dots,1),
+ \end{equation}
+ and we set $\Psi(Q,m;f)=\Psi_0$. For a symmetric $\ell\times\ell$ matrix
+ $\lambda$, we define
+ \[
+  f_\lambda(\mathbf z)=\log\sum_{\epsilon\in\{-1,1\}^\ell}
+  \exp\bigl(\mathbf z\cdot\epsilon+\epsilon^{\mathsf T}\lambda\epsilon\bigr),
+  \qquad
+  \Psi(Q,m,\lambda)=\Psi(Q,m;f_\lambda)(0).
+ \]
+ In particular, $f_0(\mathbf z)=\sum_{a=1}^\ell\log(2\cosh z_a)$.
+\item The \emph{path law} of $(Q,m,\lambda)$ is the law of
+ $(\mathbf z_1,\dots,\mathbf z_N,\epsilon)$ defined as follows. Let $\mathbf
+ z_0=0$. Given $\mathbf z_0,\dots,\mathbf z_{j-1}$, the vector $\mathbf z_j$ has
+ law $\mathcal K_{m_j,\beta^2\Delta Q_j,\Psi_j}(\mathbf z_{j-1},\cdot)$, with
+ the partial values of $f=f_\lambda$. Given $\mathbf z_1,\dots,\mathbf z_N$,
+ the vector $\epsilon\in\{-1,1\}^\ell$ equals $\epsilon'$ with probability
+ $\exp(\mathbf z_N\cdot\epsilon'+\epsilon'^{\mathsf T}\lambda\epsilon'-f_\lambda(\mathbf z_N))$.
+ For $0\le l\le N$, the \emph{pair law} sharing the initial segment through level $l$ is
+ the law of two such sequences that coincide in $(\mathbf z_1,\dots,\mathbf z_l)$
+ and whose continuations, including the terminal draws, are conditionally
+ independent given $(\mathbf z_1,\dots,\mathbf z_l)$, each with the
+ transitions above. We write $\E_l^{(2)}$ for the corresponding expectation.
+\end{enumerate}
+\end{definition}
+
+Note that the $j$th increment is integrated at mass $m_j$, that mass zero means
+an ordinary Gaussian expectation, and that the terminal Gibbs draw of $\epsilon$
+plays the role of a level of mass one. Equivalently, one draws independent increments $\mathbf
+z_j-\mathbf z_{j-1}$ with law $N(0,\beta^2\Delta Q_j)$ and tilts the $j$th by
+the density $\exp\{m_j[\Psi_j(\mathbf z_j)-\Psi_{j-1}(\mathbf z_{j-1})]\}$
+given the past. This is the law of \cite[(2.5)--(2.6)]{oai-barriers}, in which
+the continuations of a common initial segment are conditionally independent. By
+\cref{lem:inp-steps}(a), every partial value has linear growth, and all
+quantities above are finite. The \emph{penalty} of an admissible path is
+\begin{equation}\label{eq:inp-penalty}
+ \int m\dd\norm{Q}_F^2=\sum_{j=1}^Nm_j\bigl(\norm{Q_j}_F^2-\norm{Q_{j-1}}_F^2\bigr).
+\end{equation}
+By \cref{lem:inp-steps}(b), merging two consecutive increments with the same
+mass, or inserting a zero increment whose mass keeps the masses ordered,
+changes neither $\Psi(Q,m,\lambda)$ nor the penalty. \Cref{sec:fractional}
+uses a variant of \cref{def:inp-hierarchy} in which all masses are at least a
+positive number and the disorder is also integrated at positive mass.
+
+\begin{definition}[Trial values]\label{def:inp-trial}
+Let $D$ and $\lambda$ be symmetric $\ell\times\ell$ matrices, and let $(Q,m)$ be
+an admissible path. The \emph{trial value} of $(Q,m,\lambda)$ for $D$ is
+\begin{equation}\label{eq:inp-trial}
+ \mathcal T_D(Q,m,\lambda)=\Psi(Q,m,\lambda)-\lambda\mathbin{:}D
+ +\frac{\beta^2}{4}\Bigl(\norm{D-Q_N}_F^2-\int m\dd\norm{Q}_F^2\Bigr).
+\end{equation}
+If $(Q^{(k)},m^{(k)})$ is a sequence of admissible paths along which the
+endpoints, the values $\Psi(Q^{(k)},m^{(k)},\lambda)$, and the penalties
+converge, we also call the limit of $\mathcal T_D(Q^{(k)},m^{(k)},\lambda)$ a
+trial value for $D$.
+\end{definition}
+
+When the endpoint equals $D$ and $\lambda=0$, the trial value is
+$\Psi(Q,m,0)-(\beta^2/4)\int m\dd\norm{Q}_F^2$. This is the form of the trial
+values in \cref{sec:cubic}. The term $(\beta^2/4)\norm{D-Q_N}_F^2$ is the cost
+of an endpoint that differs from the prescribed overlap matrix, and it is used in
+\cref{sec:static}.
+
+\begin{definition}[Constrained partition functions]\label{def:inp-constrained}
+Let $\ell\ge1$ and $n\ge2$. The \emph{overlap matrix} of
+$x^1,\dots,x^\ell\in\Sigma_n$ is $(R(x^a,x^b))_{a,b=1}^\ell$. A symmetric
+$\ell\times\ell$ matrix $D$ is \emph{feasible} if it is the overlap matrix of at
+least one $\ell$-tuple. For feasible $D$, we define
+\[
+ Z_{\ell,n}(D)=\sum_{\substack{x^1,\dots,x^\ell\in\Sigma_n\\
+ R(x^a,x^b)=D_{ab}\ \forall a,b}}
+ \exp\Bigl(\beta\sum_{a=1}^\ell H_n(x^a)\Bigr),\qquad
+ p_{\ell,n}(D)=\frac1n\E\log Z_{\ell,n}(D).
+\]
+\end{definition}
+
+Note that $Z_{\ell,n}(D)/Z_n^\ell$ is the probability that $\ell$ independent samples
+from $\pi^J$ have overlap matrix $D$. Since this probability is at most one, we have
+$p_{\ell,n}(D)\le\ell p_n(\beta)$. Also $p_{1,n}(1)=p_n(\beta)$. A feasible matrix has unit diagonal
+and off-diagonal entries in $\{-1,-1+2/n,\dots,1\}$, and there are at most
+$(n+1)^{\ell(\ell-1)/2}$ feasible $\ell\times\ell$ matrices. For two and three
+replicas we use the matrices
+\begin{equation}\label{eq:inp-triple}
+ D_2(q)=\begin{pmatrix}1&q\\q&1\end{pmatrix},\qquad
+ D(r,q,\delta)=\begin{pmatrix}1&r+\delta&r-\delta\\r+\delta&1&q\\r-\delta&q&1\end{pmatrix},
+\end{equation}
+the latter in the coordinate order $(v,x,y)$. If $v,x,y\in\Sigma_n$ have overlap
+matrix $D(r,q,\delta)$, then $q=R(x,y)$, $r=(R(v,x)+R(v,y))/2$ and
+$\delta=(R(v,x)-R(v,y))/2$.
+
+\begin{remark}[Spin flips and permutations]\label{rem:inp-orientation}
+Let $\varpi$ be a permutation of $\{1,\dots,\ell\}$ and let
+$\epsilon\in\{-1,1\}^\ell$. For a symmetric $D$, set
+$(\mathsf O D)_{ab}=\epsilon_a\epsilon_bD_{\varpi(a)\varpi(b)}$. If $(x^b)_{b\le\ell}$ has
+overlap matrix $D$, then $(\epsilon_ax^{\varpi(a)})_{a\le\ell}$ has overlap matrix
+$\mathsf OD$,
+and this map is a bijection between the two sets of tuples. Since
+$H_n(-x)=H_n(x)$, it preserves $\sum_aH_n(x^a)$. We conclude that $\mathsf OD$ is
+feasible if and only if $D$ is, and that $Z_{\ell,n}(\mathsf OD)=Z_{\ell,n}(D)$ for every
+realization of the disorder. In particular, $Z_{2,n}(D_2(-q))=Z_{2,n}(D_2(q))$,
+reversing $v$ gives $Z_{3,n}(D(-r,q,-\delta))=Z_{3,n}(D(r,q,\delta))$, and
+exchanging $x$ and $y$ gives $Z_{3,n}(D(r,q,-\delta))=Z_{3,n}(D(r,q,\delta))$.
+\end{remark}
+
+The next two results, from \cite[Section~2]{oai-barriers}, are the tools used
+to compare constrained pressures with trial values. The first is stated for
+a hierarchy with a general terminal function, which is the form used in the
+interpolation proofs.
+
+\begin{proposition}[{Differentiation of a hierarchy \cite[Lemma~2.2]{oai-barriers}}]\label{inp:ob-hierarchy-derivative}
+Let $\mathcal S$ be a nonempty finite set, let $\omega$ be a random element (the
+quenched randomness), let $\mathbf g_1,\dots,\mathbf g_N$ be standard Gaussian
+vectors, independent of each other and of $\omega$, and let $0\le m_1\le\dots\le
+m_N\le1$. For $s\in\mathcal S$, let
+\[
+ U(s)=a(s,\omega)+\sum_{i=1}^N\mathbf a_i(s)\cdot\mathbf g_i,
+ \qquad\E\max_{s\in\mathcal S}\abs{a(s,\omega)}<\infty,
+\]
+with deterministic vectors $\mathbf a_i(s)$. Set $\Psi_N=\log\sum_{s\in\mathcal S}e^{U(s)}$, and for $j=N,\dots,1$ set
+$\Psi_{j-1}=m_j^{-1}\log\E_je^{m_j\Psi_j}$, or $\Psi_{j-1}=\E_j\Psi_j$ if
+$m_j=0$, where $\E_j$ integrates $\mathbf g_j$. Under the path law, given
+$(\omega,\mathbf g_1,\dots,\mathbf g_{j-1})$ the law of $\mathbf g_j$ has
+density $\exp\{m_j(\Psi_j-\Psi_{j-1})\}$ with respect to its Gaussian law, and
+the terminal configuration $S$ has the Gibbs law proportional to $e^{U(S)}$.
+For $0\le l\le N$, let $\E_l^{(2)}$ be the expectation under the pair law of
+$(S^1,S^2)$ sharing $(\omega,\mathbf g_1,\dots,\mathbf g_l)$. Let $m_0=0$,
+$m_{N+1}=1$, and $\Delta m_l=m_{l+1}-m_l$ for $0\le l\le N$. Let $e$ be a fixed vector-valued function on $\mathcal S$, and suppose that
+$U$ depends on a parameter $v>0$ in one of the following two ways: either
+$\mathbf a_j(s)=\sqrt v\,e(s)$
+for some $1\le j\le N$, or $j=0$, $\omega=(\omega',\mathbf g)$ with independent
+components, $\mathbf g$ a standard Gaussian vector, and
+$a(s,\omega)=a_*(s,\omega')+\sqrt v\,\mathbf g\cdot e(s)$ with
+$\E\max_s\abs{a_*(s,\omega')}<\infty$. In both cases $v$ occurs only in the
+displayed coefficient. Then, with all other parameters fixed, for $v>0$,
+\[
+ \frac{\partial}{\partial v}\E\Psi_0
+ =\frac12\Bigl(\E\norm{e(S)}^2-\sum_{l=j}^N\Delta m_l\,\E_l^{(2)}e(S^1)\cdot e(S^2)\Bigr).
+\]
+The identity extends to $v=0$ by integration and continuity.
+\end{proposition}
+
+In \cite{oai-barriers}, the quenched root is level $0$ and the $j$th field is
+integrated at mass $x_{j-1}$; with $x_{j-1}=m_j$, the weights
+$x_l-x_{l-1}$ of \cite{oai-barriers} are our $\Delta m_l$. Under $\E_N^{(2)}$ the two
+copies share all fields and only the terminal draws are independent. The
+hypotheses on $U$ are those of the applications in \cite{oai-barriers}: the
+terminal exponent is affine in the Gaussian variables, and $\mathcal S$ is
+finite, so all coefficients are bounded. Gaussian exponential integrability and
+the integrability of the root term then make every recursion finite and justify
+the differentiation, as in \cite[proof of Lemma~2.2]{oai-barriers}.
+\usedin{\cref{sec:fractional}, in the proof of the positive fractional matrix
+comparison \cref{b:prop:fractional-matrix}, where the first level has positive
+mass.}
+
+\begin{proposition}[{Matrix interpolation bound \cite[Proposition~2.3]{oai-barriers}}]\label{inp:ob-matrix}
+Let $n\ge2$ and $\ell\ge1$, let $D$ be a feasible $\ell\times\ell$ matrix, let
+$(Q,m)$ be an admissible path of $\ell\times\ell$ matrices, and let $\lambda$ be
+a symmetric $\ell\times\ell$ matrix. Then
+\begin{equation}\label{eq:inp-matrix}
+ p_{\ell,n}(D)\le\mathcal T_D(Q,m,\lambda)
+ =\Psi(Q,m,\lambda)-\lambda\mathbin{:}D
+ +\frac{\beta^2}{4}\Bigl(\norm{D-Q_N}_F^2-\int m\dd\norm{Q}_F^2\Bigr).
+\end{equation}
+For fixed $D$ and $\lambda$, the bound passes to every trial value for $D$ in the
+sense of \cref{def:inp-trial}.
+\end{proposition}
+
+This is \cite[(2.11)]{oai-barriers}, with the constrained pressure
+\cite[(2.9)]{oai-barriers} and the path integral \cite[(2.10)]{oai-barriers}. In
+\cite{oai-barriers} the path is indexed from $Q_{-1}=0$; inserting the quenched
+level $Q_0=0$ allowed there and setting $x_{j-1}=m_j$ identifies the two
+conventions, including the penalty. The endpoint $Q_N$ is arbitrary, subject only
+to positive semidefinite increments. Its diagonal need not equal
+one, and the cost of a mismatch with $D$ is
+$(\beta^2/4)\norm{D-Q_N}_F^2$. The proposition belongs to Guerra's interpolation
+framework \cite{guerra-2003}. As \cite[Section~2]{oai-barriers} explains,
+Talagrand's bounds for coupled replicas
+\cite[Propositions~3.4 and~4.4]{talagrand-2007} already retain a cost for an
+endpoint that differs from the prescribed overlaps, and Panchenko's vector-spin
+formulation \cite{panchenko-2018} proves the asymptotic sharpness of such
+bounds. The bound is quenched, and the positive fractional version needed in
+\cref{sec:fractional} is proved there.
+\usedin{\cref{sec:cubic}, for the trial values of the perturbed three-replica
+path, with zero mismatch; \cref{sec:static}, for the comparison at separated
+overlaps, with mismatch cost; and \cref{sec:fractional}, which adapts it to
+positive fractional moments.}
+
+\begin{lemma}[Block factorization]\label{lem:inp-blocks}
+Let $\alpha$ be a step distribution function, and let $0=t_0<t_1<\dots<t_p=1$
+contain the points where $\alpha$ jumps. Write $m_i=\alpha(t_{i-1})$ and
+$\delta_i=t_i-t_{i-1}$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item \textup{(One coordinate.)} The path with $\ell=1$, $Q_i=t_i$ and masses
+ $m_i$ ($1\le i\le p$) is admissible. Its partial values for $f_0$ are
+ $\Psi_i=\Phi_\alpha(t_i,\cdot)$, its trial value for $D=1$ and $\lambda=0$ is
+ $\mathcal P_\beta(\alpha)$, and under its path law $(\mathbf z_1,\dots,\mathbf
+ z_p)$ has the law of $(Y_{t_1},\dots,Y_{t_p})$, where $Y$ is the diffusion
+ \eqref{b:eq:scalar-diffusion} of $\alpha$.
+\item \textup{(Three coordinates.)} Let $0\le r\le q\le1$ belong to
+ $\{t_0,\dots,t_p\}$. In the coordinate order $(v,x,y)$, let
+ $\mathbf e=(1,1,1)$ and let $\mathbf e_v,\mathbf e_x,\mathbf e_y$ be the unit
+ vectors. We use the following increments of $Q$, with their masses:
+ \begin{itemize}
+ \item common increments $\delta_i\mathbf e\mathbf e^{\mathsf T}$ at mass
+  $m_i/3$, for $t_i\le r$;
+ \item $v$-increments $\delta_i\mathbf e_v\mathbf e_v^{\mathsf T}$ at mass $m_i$,
+  and $xy$-increments $\delta_i(\mathbf e_x+\mathbf e_y)(\mathbf e_x+\mathbf
+  e_y)^{\mathsf T}$ at mass $m_i/2$, for $r<t_i\le q$;
+ \item independent increments $\delta_i\mathrm{Id}$ at mass $m_i$, for $t_i>q$.
+ \end{itemize}
+ Let $(Q,m)$ take the common increments in increasing order of $i$, then the
+ $v$- and $xy$-increments in any order that keeps each of these two lists in
+ increasing order of $i$ and has nondecreasing masses, and then the
+ independent increments in increasing order of $i$. Then $(Q,m)$ is admissible,
+ $Q_N=D(r,q,0)$,
+ \[
+  \Psi(Q,m,0)=3\Phi_\alpha(0,0),\qquad
+  \int m\dd\norm{Q}_F^2=6\int_0^1t\alpha(t)\dd t,
+ \]
+ and $\mathcal T_{D(r,q,0)}(Q,m,0)=3\mathcal P_\beta(\alpha)$.
+\item \textup{(Two coordinates.)} Let $q\in\{t_0,\dots,t_p\}$. The path with
+ increments $\delta_i(\mathbf e_1+\mathbf e_2)(\mathbf e_1+\mathbf
+ e_2)^{\mathsf T}$ at mass $m_i/2$ for $t_i\le q$, followed by $\delta_iI$ at
+ mass $m_i$ for $t_i>q$, is admissible, its endpoint is $D_2(q)$, and its trial
+ value for $D_2(q)$ and $\lambda=0$ is $2\mathcal P_\beta(\alpha)$.
+\item \textup{(Path law in (b).)} For $t_i\le q$, let $Y^v_{t_i}$ be the
+ $v$-coordinate of the cumulative field $\mathbf z$ after the common
+ increments and the $v$-increments with index at most $i$, and let $Y^x_{t_i}$
+ be its $x$-coordinate after the common increments and the $xy$-increments with
+ index at most $i$. Under the path law of $(Q,m,0)$, each of
+ $(Y^v_{t_i})_{t_i\le q}$ and $(Y^x_{t_i})_{t_i\le q}$ has the law of
+ $(Y_{t_i})_{t_i\le q}$, the two coincide for $t_i\le r$, and conditionally on
+ $(Y^v_{t_i})_{t_i\le r}$ the families $(Y^v_{t_i})_{r<t_i\le q}$ and
+ $(Y^x_{t_i})_{r<t_i\le q}$ are independent, each with the conditional law of
+ $(Y_{t_i})_{r<t_i\le q}$ given $Y_r=Y^v_r$.
+\end{enumerate}
+\end{lemma}
+
+Part (b) with step approximations of $\alpha_\beta$ is the base path of
+\cite[Section~4.2]{oai-barriers} and \cite[Section~7, Step~1]{oai-barriers},
+and its value is \cite[(7.7)]{oai-barriers}. Part (d) is
+\cite[(4.6)]{oai-barriers}. The comparisons of \cref{part:static} perturb this
+path near $r$ (\cref{sec:cubic,sec:static}) or replace $\alpha$ by
+$\max\{\alpha,3s\}$ (\cref{sec:fractional}).
+
+\begin{proof}
+We prove (a) first and use it for the other parts. In (b), we call the common
+increments, the $v$- and $xy$-increments, and the independent increments the
+first, the middle and the last stage. The proof of (b) has three steps:
+admissibility and the endpoint, the value, and the penalty.
+
+\paragraph{Part (a).} Since $\alpha$ is nondecreasing and $m_p\le1$, the path is
+admissible. By \eqref{eq:inp-scalar-recursion} at $t=t_{i-1}$, we have
+$\Phi_\alpha(t_{i-1},\cdot)=T_{m_i,\beta^2\delta_i}\Phi_\alpha(t_i,\cdot)$, and
+backward induction from $\Psi_p=\log(2\cosh\cdot)=\Phi_\alpha(1,\cdot)$ shows that
+$\Psi_i=\Phi_\alpha(t_i,\cdot)$ for every $i$. Note that the penalty is
+$\sum_im_i(t_i^2-t_{i-1}^2)=2\int_0^1t\alpha(t)\dd t$ and that the endpoint is
+$1=D$. Then the trial value is $\Phi_\alpha(0,0)-(\beta^2/2)\int_0^1t\alpha(t)\dd t
+=\mathcal P_\beta(\alpha)$. Finally, the transition of $\mathbf z_i$ is
+$\mathcal K_{m_i,\beta^2\delta_i,\Phi_\alpha(t_i,\cdot)}$, and
+\cref{inp:ob-scalar}(iii) states that this is the transition of $Y$ from
+$t_{i-1}$ to $t_i$.
+
+\paragraph{Admissibility and the endpoint in part (b).} Every increment is positive
+semidefinite. We check that the masses are nondecreasing. For $t_i\le r$ we
+have $t_{i-1}<r$, so that the common masses satisfy $m_i/3\le\alpha(r)/3$. Since
+$r$ and $q$ are breakpoints, we see that the first $v$- and $xy$-masses are
+$\alpha(r)$ and $\alpha(r)/2$, that the first independent mass is $\alpha(q)$,
+and that every $v$- and $xy$-mass is at most $\alpha(q)$. Two nondecreasing
+lists can always be merged into one nondecreasing list that keeps the order of
+each, and this shows that an order as in (b) exists. The masses of $(Q,m)$ are
+then nondecreasing and at most $m_p\le1$. Summing the increments, we obtain
+\[
+ Q_N=r\,\mathbf e\mathbf e^{\mathsf T}+(q-r)\bigl(\mathbf e_v\mathbf e_v^{\mathsf T}
+ +(\mathbf e_x+\mathbf e_y)(\mathbf e_x+\mathbf e_y)^{\mathsf T}\bigr)+(1-q)\mathrm{Id},
+\]
+which has diagonal entries $1$, entries $r$ in the positions $(v,x)$ and $(v,y)$,
+and entry $q$ in the position $(x,y)$. This is the matrix $D(r,q,0)$.
+
+\paragraph{The value in part (b).} We integrate backward. The independent increments
+are block diagonal with three one-dimensional blocks, and $f_0$ is a sum of
+functions of single coordinates. By \cref{lem:inp-steps}(c) and part (a), after
+the independent increments the partial value is $\sum_{a\in\{v,x,y\}}\Phi_\alpha(q,z_a)$.
+Let $V=\{\mathbf z\in\R^3:z_x=z_y\}$. Note that the common, $v$-, and
+$xy$-increments have ranges in $V$ and that the path starts at $0\in V$. By
+\cref{lem:inp-steps}(e), at points of $V$ these steps depend only on
+restrictions to $V$, which we write as
+functions of $(z_v,z)$, where $z=z_x=z_y$. On $V$, a $v$-increment adds a scalar
+Gaussian of variance $\beta^2\delta_i$ to $z_v$ and leaves $z$ fixed, and an
+$xy$-increment adds a scalar Gaussian of variance $\beta^2\delta_i$ to $z$ and
+leaves $z_v$ fixed. We claim that, during the middle stage, the restriction to
+$V$ of the partial value has the form
+\begin{equation}\label{eq:inp-middle-form}
+ \Phi_\alpha(t_v,z_v)+2\Phi_\alpha(t_{xy},z),
+\end{equation}
+where $t_v$ (respectively $t_{xy}$) is the largest $t_i\le q$ whose $v$-increment
+(respectively $xy$-increment) has not yet been integrated, and $t_v=r$
+(respectively $t_{xy}=r$) if there is none. At the end of the middle stage this is
+the restriction of $\sum_{a\in\{v,x,y\}}\Phi_\alpha(q,z_a)$, with $t_v=t_{xy}=q$. If the next step
+backward is the $v$-increment with $t_i=t_v$, then \cref{lem:inp-steps}(c) and
+\eqref{eq:inp-scalar-recursion} turn \eqref{eq:inp-middle-form} into
+$\Phi_\alpha(t_{i-1},z_v)+2\Phi_\alpha(t_{xy},z)$. If it is the $xy$-increment with
+$t_i=t_{xy}$, then \cref{lem:inp-steps}(c) and (d), with $k=2$, give
+$T_{m_i/2,\beta^2\delta_i}\bigl(2\Phi_\alpha(t_{xy},\cdot)\bigr)=2T_{m_i,\beta^2\delta_i}\Phi_\alpha(t_{xy},\cdot)
+=2\Phi_\alpha(t_{i-1},\cdot)$. This proves the claim. We conclude that, at the start
+of the middle stage, the restriction to $V$ is
+$\Phi_\alpha(r,z_v)+2\Phi_\alpha(r,z)$. The
+common increments have range spanned by $\mathbf e$. On this line, where
+$z_v=z_x=z_y=z$, the function equals $3\Phi_\alpha(r,z)$, and
+\cref{lem:inp-steps}(d), with $k=3$, gives
+$T_{m_i/3,\beta^2\delta_i}\bigl(3\Phi_\alpha(t_i,\cdot)\bigr)=3\Phi_\alpha(t_{i-1},\cdot)$ at each
+common increment. After all common increments, the value at $0$ is
+$3\Phi_\alpha(0,0)$.
+
+\paragraph{The penalty in part (b).} During the first stage we have $Q=t\,\mathbf e\mathbf
+e^{\mathsf T}$ and $\norm{Q}_F^2=9t^2$, so that this stage contributes
+$\sum_{t_i\le r}(m_i/3)\cdot9(t_i^2-t_{i-1}^2)$. During the middle stage, if
+the $v$-clock is $t_v$ and the $xy$-clock is $t_{xy}$, then $\norm{Q}_F^2=t_v^2+4t_{xy}^2+4r^2$.
+A $v$-increment at mass $m_i$ contributes $m_i(t_i^2-t_{i-1}^2)$, and an
+$xy$-increment at mass $m_i/2$ contributes $(m_i/2)\cdot4(t_i^2-t_{i-1}^2)$.
+During the last stage only the diagonal changes, and each increment contributes
+$3m_i(t_i^2-t_{i-1}^2)$. Every index $i$ contributes
+$3m_i(t_i^2-t_{i-1}^2)$ in total, through one increment in the first and last
+stages and through two increments in the middle stage. The penalty is
+$3\sum_{i=1}^pm_i(t_i^2-t_{i-1}^2)=6\int_0^1t\alpha(t)\dd t$. Since the endpoint
+is $D(r,q,0)$, the trial value is
+$3\Phi_\alpha(0,0)-(3\beta^2/2)\int_0^1t\alpha(t)\dd t=3\mathcal P_\beta(\alpha)$.
+
+\paragraph{Part (c).} The proof is the same, with the $v$-coordinate removed and
+the common stage replaced by the $xy$-increments on $[0,q]$.
+
+\paragraph{Part (d).} Under the path law, the $j$th increment has density
+$\exp\{m_j[\Psi_j(\mathbf z_j)-\Psi_{j-1}(\mathbf z_{j-1})]\}$ with respect to its
+Gaussian law. By the computation of the value, we see that for a $v$-increment with
+index $i$ the exponent is $m_i[\Phi_\alpha(t_i,Y^v_{t_i})-\Phi_\alpha(t_{i-1},Y^v_{t_{i-1}})]$:
+the term $2\Phi_\alpha(t_{xy},z)$ of \eqref{eq:inp-middle-form} is the same before and
+after the step and cancels. For an $xy$-increment at mass $m_i/2$ the exponent is
+$(m_i/2)\cdot2[\Phi_\alpha(t_i,Y^x_{t_i})-\Phi_\alpha(t_{i-1},Y^x_{t_{i-1}})]$,
+and for a common increment at mass $m_i/3$ it is
+$(m_i/3)\cdot3[\Phi_\alpha(t_i,z)-\Phi_\alpha(t_{i-1},z')]$ along the diagonal.
+In each case the moving coordinate makes the scalar transition
+$\mathcal K_{m_i,\beta^2\delta_i,\Phi_\alpha(t_i,\cdot)}$, which depends only on its own
+current value, and the increments of different branches are driven by
+independent Gaussian variables. This proves (d), in view of part (a).
+\end{proof}
+
+When $\alpha$ is not a step function, for instance $\alpha=\alpha_\beta$, we
+use \cref{lem:inp-blocks} with step distribution functions $\alpha_k\to\alpha$
+in $L^1$ whose breakpoints contain $r$ and $q$. By \cref{inp:ob-scalar}(ii),
+$\mathcal P_\beta(\alpha_k)\to\mathcal P_\beta(\alpha)$, and the last sentence
+of \cref{inp:ob-matrix} applies to the limit. The path-law statement (d) also
+passes to the limit, in the following sense. Let $Y^{(k)}$ and $Y$ be the scalar
+diffusions of $\alpha_k$ and $\alpha$, driven by the same Brownian motion, and
+let $u_k=u_{\alpha_k}$. Since $\abs{u_k}\le1$ and $u$ is $1$-Lipschitz in space
+($0<\chi\le1$), by Gronwall's inequality we have
+\[
+ \sup_{t\le1}\abs{Y^{(k)}_t-Y_t}
+ \le\beta^2e^{\beta^2}\bigl(\norm{\alpha_k-\alpha}_{L^1}+\norm{u_k-u}_\infty\bigr),
+\]
+which tends to zero by \cref{inp:ob-scalar}(ii). For the two branches, we use the
+same Brownian path up to $r$ and independent Brownian continuations after $r$.
+The branch laws of (d) for $\alpha_k$, evaluated at any fixed finite set of
+common breakpoints, therefore converge to the corresponding laws of two
+diffusions of $\alpha$ that coincide up to $r$ and are conditionally independent
+after $r$ given their common value at $r$.
+\usedin{\cref{sec:cubic,sec:fractional,sec:static}, for the value and the law
+of the unperturbed path.}
+
+\begin{proposition}[{Gaussian tools \cite[Lemma~2.1]{oai-barriers}}]\label{inp:ob-concentration}
+Let $\mathbf g$ be a standard Gaussian vector in $\R^M$, and let
+$f\colon\R^M\to\R$ be $L$-Lipschitz. Then, for $a>0$ and $\theta\in\R$,
+\begin{equation}\label{eq:inp-concentration}
+ \PP\bigl(\abs{f(\mathbf g)-\E f(\mathbf g)}\ge a\bigr)\le2\exp\Bigl(-\frac{a^2}{2L^2}\Bigr),
+ \qquad
+ \log\E\exp\bigl\{\theta\bigl(f(\mathbf g)-\E f(\mathbf g)\bigr)\bigr\}\le\frac{\theta^2L^2}{2}.
+\end{equation}
+If a probability density on $\R^M$ is proportional to $e^{-V}$, where $V$ is twice
+differentiable and $\nabla^2V\succeq I$, then $\Var(f)\le\E\norm{\nabla f}^2$
+under this density for every continuously differentiable $f$ with finite right
+side. In particular, the variance of a linear functional $\mathbf a\cdot\mathbf
+X$ of a random vector $\mathbf X$ with this density is at most $\abs{\mathbf a}^2$.
+\end{proposition}
+
+The bounds \eqref{eq:inp-concentration} are the Gaussian concentration
+inequality of Tsirelson, Ibragimov, and Sudakov \cite{tsirelson-ibragimov-sudakov-1976},
+and the variance bound is the case $\nabla^2V\succeq I$ of the Brascamp--Lieb
+inequality \cite[Theorem~4.1]{brascamp-lieb-1976}. The proof in
+\cite{oai-barriers} covers \eqref{eq:inp-concentration} and the case of linear
+$f$, under an upper bound on $\nabla^2V$ that holds in its applications. The
+linear case enters this paper only through \cref{inp:ob-energy-tail}.
+\usedin{\cref{sec:static}, for the concentration of logarithms of constrained
+partition functions, and \cref{sec:references}, in the proof of
+\cref{b:lem:coverage-extension}.}
+
+\begin{remark}[Lipschitz constants of logarithms of constrained partition functions]\label{rem:inp-lipschitz}
+The Gaussian vector in applications of \eqref{eq:inp-concentration} is
+$J=(J_{ij})_{i<j}\in\R^{n(n-1)/2}$. Let $\mathcal S\subset\Sigma_n^\ell$ be
+nonempty and $F_{\mathcal S}(J)=\log\sum_{(x^a)\in\mathcal
+S}\exp(\beta\sum_{a=1}^\ell H_n^J(x^a))$. Then $\partial F_{\mathcal S}/\partial
+J_{ij}=\beta n^{-1/2}\langle\sum_ax^a_ix^a_j\rangle_{\mathcal S}$, where
+$\langle\cdot\rangle_{\mathcal S}$ is the Gibbs average on $\mathcal S$. Each
+derivative has absolute value at most $\beta\ell/\sqrt n$. This implies that
+$F_{\mathcal S}$ is Lipschitz with constant $\beta\ell\sqrt{(n-1)/2}$; this is the bound used in
+\cite[proof of Lemma~4.2]{oai-barriers}. It applies to $\log Z_{\ell,n}(D)$ and,
+with $\ell=1$ and $\mathcal S=\Sigma_n$, to $F_n$.
+\end{remark}
+
+\section{Two- and three-replica pressure bounds}\label{sec:inp-three}
+
+In this section, we assume that $\beta>1$, we write $\alpha=\alpha_\beta$, and we let $Y$
+and $\Gamma$ be the diffusion and response of $\alpha_\beta$. The three results below are proved in
+\cite[Sections~4 and~7]{oai-barriers} from \cref{inp:ob-matrix}, applied to
+perturbations of the paths of \cref{lem:inp-blocks}, and from the scalar
+identities of \cref{inp:ob-scalar,inp:ob-stationarity}. We import their pressure
+bounds, not the probability bounds that \cite{oai-barriers} derives from them at
+its own scales. We convert them into probability bounds at our scales in
+\cref{sec:static}.
+
+\begin{proposition}[{Pair pressure bound \cite[Lemma~4.3, (4.4)]{oai-barriers}}]\label{inp:ob-pair-gap}
+For every $n\ge2$ and every $q\in[0,1]$ such that $D_2(q)$ is feasible,
+\[
+ p_{2,n}(D_2(q))\le2P_\beta-\frac12\bigl(\Gamma(q)-q\bigr)^2.
+\]
+\end{proposition}
+
+By \cref{rem:inp-orientation}, the same bound holds for $q\in[-1,0]$ with
+$\Gamma(\abs q)-\abs q$ in place of $\Gamma(q)-q$. The proof in
+\cite{oai-barriers} uses the path of \cref{lem:inp-blocks}(c) and the terminal
+multiplier $\lambda_{12}=\lambda_{21}=L/2$ with $L=q-\Gamma(q)$. The lemma in
+\cite{oai-barriers} also contains a probability bound, which we do not use, for
+the overlaps $R$ at which $\abs{\Gamma(\abs{R})-\abs{R}}$ exceeds a fixed
+positive tolerance.
+\usedin{\cref{sec:static}, for the pair overlaps at which $\abs{q-\Gamma(q)}$ is
+not small and for the overlaps near one.}
+
+\begin{proposition}[{Signed fixed-scale pressure bound \cite[(4.20)]{oai-barriers}}]\label{inp:ob-fixed-gap}
+For every $b_*\in(0,1)$, there exist $r_0,\delta_0,\nu,c_0>0$, depending only on
+$\beta$ and $b_*$, with the following property. For every $n\ge2$ and every
+feasible $D(r,q,\delta)$ with
+\[
+ 0\le r\le r_0,\qquad\abs\delta\le\delta_0,\qquad b_*\le q\le1,\qquad
+ \abs{q-\Gamma(q)}\le\nu,
+\]
+we have
+\[
+ p_{3,n}(D(r,q,\delta))\le3P_\beta-c_0\delta^2.
+\]
+\end{proposition}
+
+In \cite{oai-barriers} the cutoff $b_*$ is called $h$ and the tolerance $\nu$ is
+called $\tau$, and (4.20) is proved in
+\cite[Sections~4.2--4.4]{oai-barriers} for nonempty constraints. No condition
+$r\ge\abs\delta$ is imposed, and the two small overlaps $r\pm\delta$ may have
+opposite signs. Reversing $v$ (\cref{rem:inp-orientation}), we obtain the same
+bound for $-r_0\le r\le0$. With the conditions on $q$, the bound holds whenever
+$\abs{r+\delta},\abs{r-\delta}\le\min\{r_0,\delta_0\}$, since then $\abs r$ and
+$\abs\delta$ are at most this minimum. The perturbation in the proof acts on a
+fixed interval $[s_1,s_2]\subset(0,b_*)$, and the gain comes from the strict
+inequality $\beta^2(\int_{b_*}^1\alpha(t)\dd t)(\int_0^1\alpha(t)\dd t)<1$,
+which follows from \cref{inp:ob-stationarity}(iii). The paper \cite{oai-barriers} converts (4.20)
+into the probability bound of its Lemma~4.1, with tolerance $2n^{-1/100}$, using
+its Lemma~4.2 and its upper bound $Cn^{-1/24}$ on the mean bias. We use neither of these
+lemmas.
+% CHECK: OB (4.20), printed p. 30.
+\usedin{\cref{sec:static}, for the fixed-scale bound \eqref{b:eq:fixed-pressure-gap},
+and through it for the signed overlap constraints of
+\cref{sec:references,sec:induction}.}
+
+\begin{proposition}[{Narrow-annulus comparison \cite[Section~7, Steps~1--8, (7.30)--(7.31)]{oai-barriers}}]\label{inp:ob-remote}
+Let $t_0>0$ satisfy $3t_0\le1$ and $\Gamma(t)=t$ for $t_0/2<t<3t_0$. Let
+$\rho_{\rm OB}=n^{-1/10000}$, $h=\rho_{\rm OB}^8$, $\eps=\rho_{\rm OB}^{20}$,
+$\theta=\rho_{\rm OB}^2$, and $W=(2(1-\theta)^2+\theta^2)/h$. There exist $C,c>0$
+and $n_0$, depending only on $\beta$ and $t_0$, with the following properties.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For $n\ge n_0$ and every feasible $D(r,q,\delta)$ with $t_0/2<r<3t_0$,
+ $\mu_\beta([r-h,r+h])\le\rho_{\rm OB}^4$, $q\ge r+\rho_{\rm OB}$ and
+ $\eps\le\abs\delta\le2\eps$,
+ \begin{equation}\label{eq:inp-remote}
+ \begin{split}
+  p_{3,n}(D(r,q,\delta))\le{}&3P_\beta
+  +\delta^2\Bigl\{\beta^2W\Bigl(\E\chi(q,Y_q)-\int_q^1\alpha(t)\dd t\Bigr)\\
+  &+2(1-\theta)\theta\beta^2\alpha(r)\bigl(\beta^2\E[\chi(q,Y_q)\chi(r,Y_r)]-1\bigr)\\
+  &+C(\rho_{\rm OB}^4+\theta^2)\Bigr\}
+  +C\bigl(\abs\delta^3h^{-3/2}+\delta^4h^{-2}\bigr).
+ \end{split}
+ \end{equation}
+\item For every $t_0/2<r<3t_0$ and $r\le q\le1$,
+ \begin{equation}\label{eq:inp-susceptibility-loss}
+  \beta^2\E[\chi(q,Y_q)\chi(r,Y_r)]
+  =1-\beta^4\int_r^q\alpha(t)\E[\chi(t,Y_t)^2\chi(r,Y_r)]\dd t
+  \le1-c(q-r).
+ \end{equation}
+\end{enumerate}
+\end{proposition}
+
+By \cref{cor:inp-identity}, the hypothesis on $t_0$ holds for every $t_0\in(0,q_\beta/3]$,
+and finitely many intervals $(t_0/2,3t_0)$ with such $t_0$ cover any compact
+subset of $(0,q_\beta)$. The estimate \eqref{eq:inp-remote} is
+\cite[(7.30)]{oai-barriers}, obtained there from the step version
+\cite[(7.29)]{oai-barriers} by passing to $\alpha_\beta$ at fixed $n,r,q,\delta$.
+It is proved by applying \cref{inp:ob-matrix} with $\lambda=0$ to the path of
+\cref{lem:inp-blocks}(b), perturbed as follows. With the notation of \cref{lem:inp-blocks}(d), for step
+approximations whose breakpoints contain $r-h$, $r$, $r+h$, and $q$, let
+\[
+ \mathsf Y_0=\frac{(Y^x_r-Y^x_{r-h})-(Y^x_{r+h}-Y^x_r)}{h},\qquad
+ \mathsf Y_1=\frac{Y^v_{r+h}-Y^v_r}{h},\qquad
+ \mathsf Y=(1-\theta)\mathsf Y_0+\theta\mathsf Y_1,
+\]
+as linear combinations of the Gaussian increments \cite[(7.8)]{oai-barriers}.
+The $x$ field receives $+\delta$ times, and the $y$ field $-\delta$ times, the
+contribution of each increment to $\mathsf Y$. The endpoint
+becomes $D(r,q,\delta)+\delta^2W(\mathbf e_x-\mathbf e_y)(\mathbf e_x-\mathbf
+e_y)^{\mathsf T}$, and the mismatch cost $\beta^2\delta^4W^2$
+\cite[(7.13)]{oai-barriers} is part of the last error term. The coefficient $W$
+is denoted $K$ in \cite{oai-barriers}. The identity in
+\eqref{eq:inp-susceptibility-loss} follows from \cref{inp:ob-scalar}(iv) and
+$\Gamma'(r)=1$, and the inequality is \cite[(7.31)]{oai-barriers}.
+
+\Cref{inp:ob-remote} is a consequence of the proof in
+\cite[Section~7]{oai-barriers} rather than a verbatim statement there, and we
+record how it is obtained. The setup of \cite[Section~7]{oai-barriers} also
+imposes $3t_0<q_*$, with $q_*$ the constant of \cref{inp:ob-coverage}, and,
+before Step~1, the restriction $\abs{q-\Gamma(q)}\le\rho_{\rm OB}^{13}$. The
+Gaussian calculations through (7.30) use neither restriction. Their geometric
+requirements are $0<r-h$ and $r+h<q\le1$, which hold under the hypotheses of
+(i) for all sufficiently large $n$, and the pair restriction is needed only to
+obtain (7.32). In \cite[Section~7]{oai-barriers}, (7.31) is stated for the
+pairs $(r,q)$ of Lemma~7.1, but its proof uses only $t_0/2<r<3t_0$ and
+$r\le q\le1$. Indeed, let $M$ be such that the event
+$\{\beta\sup_{t\le1}\abs{B_t}+\beta^2\le M\}$ has probability $p_M>0$; on it
+$\abs{Y_t}\le M$ for all $t\le1$. With $c_M=\min_{0\le t\le1,\,\abs z\le M}
+\chi(t,z)>0$, we have $\E[\chi(t,Y_t)^2\chi(r,Y_r)]\ge p_Mc_M^3$, and
+$\alpha(t)\ge\alpha(t_0/2)>0$ for $t\ge r$. We may take
+$c=\beta^4\alpha(t_0/2)p_Mc_M^3$. After imposing the additional restriction
+$\abs{q-\Gamma(q)}\le\rho_{\rm OB}^{13}$, \cite{oai-barriers} deduces from
+\eqref{eq:inp-remote} and \eqref{eq:inp-susceptibility-loss} the deficit
+$c\delta^2\rho_{\rm OB}^3$ \cite[(7.32)]{oai-barriers} and the probability bound
+of its Lemma~7.1. We use neither.
+% CHECK: OB Section 7, (7.29)--(7.31), printed pp. 42--43.
+\usedin{\cref{sec:static}, for the comparison at separated overlaps in
+\eqref{b:eq:remote-pressure-gap} and \eqref{b:eq:remote-tent-estimate}.}
+
+\begin{remark}[Where the scales enter the proof of \eqref{eq:inp-remote}]\label{rem:inp-remote-scales}
+\Cref{sec:static} needs a version of \eqref{eq:inp-remote} with $h$ and $\theta$
+fixed, and with the oscillation $\alpha(r+h)-\alpha(r-h)$ in place of
+$\rho_{\rm OB}^4$. This version is not stated in \cite{oai-barriers}, and we
+derive it in \cref{sec:static} by following Steps~1--7 of
+\cite[Section~7]{oai-barriers}. In those steps, the specific scales enter only
+at the following places.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Step~1 uses $0<r-h$ and $r+h<q$, so that the triangular function on
+ $[r-h,r+h]$ that defines the triangular covariance perturbation vanishes at
+ $0$ and at $q$.
+\item The errors $O(\rho_{\rm OB}^4)$ in \cite[(7.14), (7.15), (7.20), (7.23)--(7.28)]{oai-barriers}
+ come from the oscillation bound $\alpha(r+h)-\alpha(r-h)\le\rho_{\rm OB}^4$
+ \cite[(7.6)]{oai-barriers}, which follows from the hypothesis on
+ $\mu_\beta([r-h,r+h])$. Each of them is at most a constant times
+ $\alpha(r+h)-\alpha(r-h)$. The ramp error is $O(1)$ and is multiplied by
+ $\theta^2$.
+\item Step~4 uses $\delta^2/h\to0$ only to bound
+ $\E[\mathsf Y^4e^{\delta^2\mathsf Y^2}]$ through Gaussian exponential moments, since
+ $\mathsf Y$ is a centered Gaussian of variance $\beta^2W$ plus a term bounded by
+ a constant depending on $\beta$; a bound $\delta^2/h\le c_\beta$ with $c_\beta>0$
+ small, together with $h\le1$, suffices.
+\item Once the geometric requirements in (a) and the moment restriction in
+ (c) are satisfied, the quantitative lower bound $q-r\ge\rho_{\rm OB}$, the
+ restriction $\abs{q-\Gamma(q)}\le\rho_{\rm OB}^{13}$, and the relations
+ between the powers of $\rho_{\rm OB}$ that define $h$, $\eps$ and $\theta$ are
+ used only in Steps~8 and~9.
+\end{enumerate}
+At fixed $h$ and $\theta$, the last error term of \eqref{eq:inp-remote} is
+absorbed only for small amplitudes, so the fixed-parameter version in
+\cref{sec:static} holds under a condition $\abs\delta\le\delta_0$. It must be
+derived from Steps~1--7 with the oscillation of $\alpha$ kept explicit; it does
+not follow by applying \cref{inp:ob-remote}(i) at fixed $h$ and $\theta$.
+\end{remark}
+
+\section{Energy, disorder rotation, and overlap-neighborhood masses}\label{sec:inp-coverage}
+
+In this section, we assume that $\beta>1$ and that $J,\widetilde J$ are independent
+standard Gaussian vectors in $\R^{n(n-1)/2}$, indexed by pairs $i<j$. We write $Z_n^J$, $\pi^J$, and $H_n^J$
+to indicate the disorder. The three results below, from \cite[Sections~5--6]{oai-barriers},
+use the off-diagonal Hamiltonian without the auxiliary diagonal variables.
+
+\begin{proposition}[{Upper energy tail \cite[Lemma~5.1]{oai-barriers}}]\label{inp:ob-energy-tail}
+There exist constants $e_1\in(0,\beta/2)$ and $c_E>0$ such that, for all
+sufficiently large $n$,
+\[
+ \PP_J\Bigl(\pi^J\{x\in\Sigma_n:H_n^J(x)>ne_1\}>e^{-c_En}\Bigr)\le e^{-c_En}.
+\]
+\end{proposition}
+
+The proof in \cite{oai-barriers} combines the strict bound
+$n^{-1}\E\pi^J(H_n^J)\le e_0<\beta/2$ for all sufficiently large $n$ of
+\cite[Lemma~3.3]{oai-barriers}, which
+uses $\beta>1$, with the linear case of the variance bound in
+\cref{inp:ob-concentration} for the law of $J$ given a Gibbs sample.
+\usedin{\cref{sec:references}, in the proof of \cref{b:lem:coverage-extension}.}
+
+\begin{proposition}[{Disorder rotation \cite[Lemma~5.2 and (5.5)]{oai-barriers}}]\label{inp:ob-rotation}
+For $\theta\in(0,\pi/2)$, let $J_\theta=\cos\theta\,J+\sin\theta\,\widetilde J$. For every
+$n\ge2$, every $s\in\R$ and every $u>0$,
+\[
+ \E\exp\bigl\{s\bigl(\log Z_n^{J_\theta}-\log Z_n^J\bigr)\bigr\}
+ \le\exp\Bigl\{\frac{s^2\theta^2\beta^2(n-1)}4\Bigr\}
+\]
+and
+\[
+ \PP\bigl(\log Z_n^{J_\theta}-\log Z_n^J\ge u\bigr)
+ \le\exp\Bigl\{-\frac{u^2}{\theta^2\beta^2(n-1)}\Bigr\}.
+\]
+If $0<t<1/2$ and $J'=\sqrt{1-t}\,J+\sqrt t\,\widetilde J$, then for every $u>0$,
+\[
+ \PP\bigl(\log Z_n^{J'}-\log Z_n^J\ge u\bigr)\le\exp\Bigl(-\frac{u^2}{2\beta^2nt}\Bigr).
+\]
+\end{proposition}
+
+The first two bounds are \cite[(5.3)--(5.4)]{oai-barriers}. The last is
+\cite[(5.5)]{oai-barriers}, which follows from the second with
+$\theta=\arcsin\sqrt t$, since $\theta^2\le2t$ for $0<t<1/2$. All three bounds
+are uniform in $\theta$ and $t$. They also apply to rotations whose
+size depends on $n$, and they concern the joint law of $(J,\widetilde J)$.
+\usedin{\cref{sec:references}, in the proof of \cref{b:lem:coverage-extension}.}
+
+\begin{proposition}[{Overlap-neighborhood mass bound \cite[Proposition~6.1]{oai-barriers}}]\label{inp:ob-coverage}
+Let $L_{\rm OB}=n^{1/10000}$. There exists $q_*\in(0,1)$, depending only on
+$\beta$, with the following property. For every fixed $D_1>0$ there exist
+$D_3=D_3(\beta,D_1)>0$ and events $\mathcal C_n(D_1)$, measurable with respect to
+$J$, such that $\PP_J(\mathcal C_n(D_1))\to1$ and, on $\mathcal C_n(D_1)$, for
+every $S\subset\Sigma_n$,
+\[
+ \pi^J\Bigl(\Bigl\{x\in S:\pi^J\{z\in S:\abs{R(x,z)}\ge q_*\}<e^{-D_3L_{\rm OB}}\Bigr\}\Bigr)
+ <e^{-D_1L_{\rm OB}}.
+\]
+\end{proposition}
+
+Note that both masses in the display are masses under $\pi^J$ itself, not under
+$\pi^J$ conditioned on $S$. The proposition, titled ``Stretched-exponential coverage'' in
+\cite{oai-barriers}, is stated there at the scale $L_{\rm OB}$ only. Its proof uses this scale only through $L_{\rm
+OB}\to\infty$ and $L_{\rm OB}/n\to0$, and $q_*$ is chosen before $D_1$ from the
+constant $e_1$ of \cref{inp:ob-energy-tail}. \Cref{b:lem:coverage-extension} in
+\cref{sec:references} states and proves the corresponding bound for every
+deterministic sequence $L_n\to\infty$ with $L_n=o(n)$, by the argument of
+\cite[Section~6]{oai-barriers}, using
+\cref{inp:ob-energy-tail,inp:ob-rotation,inp:ob-concentration}.
+\usedin{\cref{sec:references}, as the statement extended in
+\cref{b:lem:coverage-extension}.}

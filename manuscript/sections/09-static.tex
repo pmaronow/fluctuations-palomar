@@ -1,0 +1,410 @@
+\chapter{A simultaneous estimate for overlap constraints}\label{sec:static}
+
+In this section we prove \cref{b:lem:static-event}. For deterministic scales $\rho_n\to0$ and $\eta_n$ satisfying the conditions \eqref{eq:st-S1}--\eqref{eq:st-S5} below, it provides a disorder event $\mathcal A_n$ of probability tending to one on which three families of overlap configurations have small Gibbs probability simultaneously: triples whose overlaps lie in a narrow band around a center $r$, triples violating a small-overlap constraint across a large overlap, and pairs whose absolute overlap $q=\abs{R(x,y)}$ has $\abs{q-\Gamma(q)}$ bounded away from zero. These estimates are the static input of the dynamical argument: \cref{sec:references} uses them to choose families of reference configurations (\cref{lem:ref-single-event}), and \cref{sec:induction,sec:barrier-proof} use them along trajectories of the heat-bath dynamics. The conditions \eqref{eq:st-S1}--\eqref{eq:st-S5} hold at the scales of \cref{thm:barrier-730}, and more generally under \eqref{eq:ref-exponents} and \eqref{eq:ref-mean-input}; see \cref{rem:st-scales}.
+
+The narrow triples split into two regimes. When the larger overlap $q$ is close to the center $r$, we use the local fractional bound \cref{lem:fr-local-gap}, which rests on the cubic deficit of \cref{sec:cubic}. When $q-r$ is bounded below, we use a quadratic pressure deficit, which we derive in \cref{lem:st-remote} from the three-replica comparison of \cite[Section~7]{oai-barriers}, with a fixed width and a fixed tolerance. The pair bound and the fixed-scale bound are the pressure estimates \cref{inp:ob-pair-gap,inp:ob-fixed-gap}, which are \cite[Lemma~4.3]{oai-barriers} and \cite[(4.20)]{oai-barriers}. In all these regimes the mechanisms are those of \cite{oai-barriers}; what changes are the scales at which the pressure deficits are converted into probability bounds. The simultaneous event and its probability estimate are new relative to \cite{oai-barriers}: they replace the conversion \cite[Lemma~4.2]{oai-barriers}, whose finite-size error $n^{-1/24}$ is far too large at the scale $\rho_n^3$.
+
+\paragraph{Two levels of probability.} We keep two kinds of error separate, and the later sections depend on this distinction. The first is the disorder probability $\PP(\mathcal A_n^c)$, for which we obtain the upper bound $O(n^{-2/15})$ at the scales of \cref{thm:barrier-730}; it is paid once. The second is the Gibbs probability of the forbidden configurations at a fixed disorder in $\mathcal A_n$, which for narrow triples is bounded above by $C(n+1)^3e^{-cn^{3/10}}$ at the same scales. Only errors of the second kind are multiplied by the number of reference configurations and paths in \cref{sec:references,sec:induction,sec:barrier-proof}; see \cref{tab:st-errors} and \cref{rem:st-two-levels}.
+
+\paragraph{Upper bound on the mean bias.} The proof of \cref{b:lem:static-event} uses the mean bias $\Delta_{n,\beta}=P_\beta-p_n(\beta)$ only through the hypothesis \eqref{eq:st-S1}. The bound $\Delta_{n,\beta}\le C_bn^{-7/10}$ of \cref{inp:hb-rate} gives the scale $\rho_n\asymp n^{-7/30}$ of \cref{thm:barrier-730}. The variance bound of \cref{inp:qp-rate} is used only for the lower bound (A1) on $F_n$ below, through Chebyshev's inequality and the hypothesis \eqref{eq:st-S2}.
+
+\paragraph{Standing notation.} We keep the notation of \cref{sec:fractional}; in particular we do not abbreviate $\beta^2$. Triples are taken in the order $(v,x,y)$, and for a triple we write
+\[
+ r=\frac{R(v,x)+R(v,y)}2,\qquad\delta=\frac{R(v,x)-R(v,y)}2,\qquad q=R(x,y),
+\]
+so that its overlap matrix is the matrix $D(r,q,\delta)$ of \eqref{eq:inp-triple}. We also write $\chi_t=\chi(t,Y_t)$. Constants $C,c$ depend only on $\beta$ and on the fixed parameters named in each statement; they never depend on $n$, on the overlap parameters $(r,q,\delta)$, or on the scales $\rho_n,\eta_n$.
+
+\section{Orientations, pairs and the fixed scale}\label{sec:st-pair-fixed}
+
+Every overlap takes one of the $n+1$ values $-1,-1+2/n,\dots,1$, so there are at most $n+1$ feasible matrices $D_2(\bar q)$ and at most $(n+1)^3$ feasible matrices $D(r,q,\delta)$. Let $\mathfrak O_\ell$ be the group of maps $\mathsf O\colon(x^a)_{a\le\ell}\mapsto(\epsilon_ax^{\varpi(a)})_{a\le\ell}$ of \cref{rem:inp-orientation}, where $\varpi$ is a permutation of $\{1,\dots,\ell\}$ and $\epsilon\in\{-1,1\}^\ell$; the group $\mathfrak O_3$ has $48$ elements. By \cref{rem:inp-orientation}, $Z_{\ell,n}(\mathsf OD)=Z_{\ell,n}(D)$ for every disorder and every orientation $\mathsf O$. In addition, every $\mathsf O\in\mathfrak O_\ell$ is a bijection of $\Sigma_n^\ell$ that preserves the product measure $(\pi^J)^{\otimes\ell}$, because $\pi^J(-x)=\pi^J(x)$. We have
+\begin{equation}\label{eq:st-orientation}
+ (\pi^J)^{\otimes\ell}(\mathsf OB)=(\pi^J)^{\otimes\ell}(B)\qquad(B\subset\Sigma_n^\ell,\ \mathsf O\in\mathfrak O_\ell).
+\end{equation}
+All statements below are proved for canonical orientations. A disorder bound for $Z_{\ell,n}(D)$ holds verbatim for $Z_{\ell,n}(\mathsf OD)$, a Gibbs bound for a set $B$ holds for $\mathsf OB$, and a union over all orientations of a triple costs at most a factor $48$.
+
+\begin{lemma}[Pair constraints]\label{lem:st-pair}
+For every $n\ge2$ and every feasible $D_2(\bar q)$,
+\begin{equation}\label{b:eq:pair-static-gap}
+ p_{2,n}\bigl(D_2(\bar q)\bigr)\le2P_\beta-\frac12\bigl(\abs{\bar q}-\Gamma(\abs{\bar q})\bigr)^2.
+\end{equation}
+Moreover, there exist $q_{\rm tail}<1$ and $c_{\rm tail}>0$, depending only on $\beta$, such that $q-\Gamma(q)\ge c_{\rm tail}$ for $q_{\rm tail}\le q\le1$.
+\end{lemma}
+
+\begin{proof}
+For $\bar q\ge0$, \eqref{b:eq:pair-static-gap} is \cref{inp:ob-pair-gap}, valid for every $n$ and every feasible pair constraint; for $\bar q<0$ it follows from $Z_{2,n}(D_2(\bar q))=Z_{2,n}(D_2(\abs{\bar q}))$. By \cref{inp:ob-scalar}(iv), $\Gamma$ is continuous, and $\Gamma(1)=\E\tanh^2(Y_1)<1$ because $u(1,z)=\tanh z$. Since $q-\Gamma(q)$ is continuous and positive at $q=1$, there exist $q_{\rm tail}$ and $c_{\rm tail}$ as claimed.
+\end{proof}
+
+\begin{lemma}[The fixed scale]\label{lem:st-fixed}
+For every $b_*\in(0,1)$ there exist $\underline b(b_*),\nu_{\rm fix}(b_*),c_{\rm fix}(b_*)>0$, depending only on $\beta$ and $b_*$, such that
+\begin{equation}\label{b:eq:fixed-pressure-gap}
+ p_{3,n}\bigl(D(r,q,\delta)\bigr)\le3P_\beta-c_{\rm fix}(b_*)\,\delta^2
+\end{equation}
+for every $n\ge2$ and every feasible $D(r,q,\delta)$ with $b_*\le q\le1$, $\abs{r+\delta}\le\underline b(b_*)$, $\abs{r-\delta}\le\underline b(b_*)$ and $\abs{q-\Gamma(q)}\le\nu_{\rm fix}(b_*)$. The same holds after decreasing $\underline b(b_*)$ or $\nu_{\rm fix}(b_*)$.
+\end{lemma}
+
+\begin{proof}
+Let $r_0,\delta_0,\nu,c_0$ be the constants of \cref{inp:ob-fixed-gap} for the cutoff $b_*$, and set $\underline b(b_*)=\min\{r_0,\delta_0\}$, $\nu_{\rm fix}(b_*)=\nu$ and $c_{\rm fix}(b_*)=c_0$. If $\abs{r\pm\delta}\le\underline b(b_*)$, then $\abs r\le\underline b(b_*)$ and $\abs\delta\le\underline b(b_*)$. For $r\ge0$ the bound is \cref{inp:ob-fixed-gap}. For $r<0$, reversing $v$ maps $D(r,q,\delta)$ to $D(-r,q,-\delta)$, and the two constrained partition functions are equal by \cref{rem:inp-orientation}. Decreasing $\underline b(b_*)$ or $\nu_{\rm fix}(b_*)$ shrinks the set of matrices to which the bound is applied.
+\end{proof}
+
+Here we use only the pressure bound \cite[(4.20)]{oai-barriers}. The fixed-scale probability estimate \cite[Lemma~4.1]{oai-barriers}, obtained using the conversion of \cite[Lemma~4.2]{oai-barriers}, concerns overlap imbalances of size $n^{-1/100}$; below we derive the probability bound at overlap imbalances of size $\eta_n$. No restriction $r\ge\abs\delta$ is needed, so the two small overlaps $r\pm\delta$ may have opposite signs.
+
+\section{Separated overlaps}\label{sec:st-remote}
+
+We now treat triples $D(r,q,\delta)$ with $r$ in a compact subinterval of $(0,q_\beta)$ and $q-r$ bounded below. The argument is that of \cite[Section~7, Steps~1--8]{oai-barriers}, recalled in \cref{inp:ob-remote}. There it is carried out with the shrinking parameters $h=\rho_{\rm OB}^8$ and $\theta=\rho_{\rm OB}^2$ and a restriction on the Parisi mass of $[r-h,r+h]$. We need it with fixed parameters, so we write the argument out in this form; \cref{rem:inp-remote-scales} lists the places where the scales enter. The only change in the computation is that the oscillation of $\alpha$ near $r$ is kept as an explicit term instead of being bounded by $\rho_{\rm OB}^4$. We begin with the scalar estimate that produces the deficit.
+
+\begin{lemma}[Decay of the mixed susceptibility]\label{lem:st-susceptibility}
+Let $\mathcal J\subset(0,q_\beta)$ be a compact interval. There exists $c_\chi>0$, depending only on $\beta$ and $\mathcal J$, such that for every $r\in\mathcal J$ and $r\le q\le1$,
+\begin{equation}\label{eq:st-susceptibility}
+ \beta^2\E[\chi_q\chi_r]=1-\beta^4\int_r^q\alpha(t)\,\E[\chi_t^2\chi_r]\,\dd t\le1-c_\chi(q-r).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cref{cor:inp-identity}, the hypotheses of \cref{inp:ob-remote} hold for every $t_0\in(0,q_\beta/3]$; note that then $3t_0\le q_\beta<1$. The intervals $(t_0/2,3t_0)$ with $t_0\in(0,q_\beta/3]$ cover $(0,q_\beta)$, and finitely many of them cover the compact set $\mathcal J$. By part (ii) of \cref{inp:ob-remote}, which is \cite[(7.31)]{oai-barriers}, the bound \eqref{eq:st-susceptibility} holds for $r$ in each of these intervals, with a constant depending on $t_0$, and we take $c_\chi$ to be the smallest of these constants.
+\end{proof}
+
+The identity in \eqref{eq:st-susceptibility} follows from the conditional evolution of $\chi$ in \cref{inp:ob-scalar}(iv), multiplied by $\chi_r$, and from $\beta^2\E\chi_r^2=\Gamma'(r)=1$. The inequality comes from restricting the scalar diffusion to an event of positive probability on which $\abs{Y_t}$ stays bounded, where $\chi$ has a positive minimum; no lower bound on $\chi$ on the whole real line is used. The next lemma is the fixed-parameter form of \cite[(7.29)--(7.30)]{oai-barriers}.
+
+\begin{lemma}[Comparison with a triangular covariance perturbation of fixed width]\label{lem:st-remote-expansion}
+Let $r,q\in(0,1]$, $\bar h\in(0,1]$ and $\bar\theta\in(0,1/2]$ satisfy $\bar h<r$ and $r+\bar h<q$, and set
+\[
+ \bar W=\frac{2(1-\bar\theta)^2+\bar\theta^2}{\bar h},\qquad\operatorname{osc}_r=\alpha(r+\bar h)-\alpha(r-\bar h).
+\]
+There exist $\widetilde C,\widehat C<\infty$, depending only on $\beta$, such that for every $n\ge2$ and every feasible $D(r,q,\delta)$ with $8\beta^2\bar W\delta^2\le1$,
+\begin{equation}\label{eq:st-remote-expansion}
+\begin{split}
+ p_{3,n}\bigl(D(r,q,\delta)\bigr)\le3P_\beta+\delta^2\Bigl\{&\beta^2\bar W\alpha(q)\bigl(q-\Gamma(q)\bigr)
+ +2(1-\bar\theta)\bar\theta\beta^2\alpha(r)\bigl(\beta^2\E[\chi_q\chi_r]-1\bigr)\\
+ &+\widetilde C(\operatorname{osc}_r+\bar\theta^2)\Bigr\}+\widehat C\bigl(\abs\delta^3\bar h^{-3/2}+\delta^4\bar h^{-2}\bigr).
+\end{split}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We perturb the base path of \cref{lem:inp-blocks}(b) for three replicas by a contrast of fixed width $\bar h$ around $r$, keep the resulting endpoint mismatch of order $\delta^2$, and evaluate the change of the one-site value with Gaussian integration by parts. The proof follows \cite[Section~7, Steps~1--7]{oai-barriers} and has seven steps. Steps~1--6 are carried out for step approximations of $\alpha$, and Step~7 passes to the limit and applies \eqref{eq:inp-stationarity}.
+
+\paragraph{Step 1: step data and the base path.} Fix partitions of $[0,1]$ whose mesh tends to zero and which contain $r-\bar h$, $r$, $r+\bar h$ and $q$. On each interval $[t_{i-1},t_i)$ of such a partition let the step function take the value $\alpha(t_{i-1})$, and let it equal $1$ at $t=1$. These step functions are distribution functions, they converge to $\alpha$ in $L^1([0,1])$, they agree with $\alpha$ at $r$ and $q$, and on $[r-\bar h,r+\bar h]$ they take values in $[\alpha(r-\bar h),\alpha(r+\bar h)]$. In Steps~1--6 we fix one of them and denote it, and the scalar objects built from it, again by $\alpha$, $\Phi$, $u$, $\chi$; its oscillation on $[r-\bar h,r+\bar h]$ is at most $\operatorname{osc}_r$. The bounds $\abs u\le1$, $0<\chi\le1$ and $\abs{\chi(t,z)-\chi(t,z')}\le C\abs{z-z'}$ of \cref{inp:ob-scalar}(i) hold uniformly over distribution functions, and all constants below are independent of the partition.
+
+Let $(Q,m)$ be the base path of \cref{lem:inp-blocks}(b) for this step function. On $[0,r]$ the three coordinates share every increment, at mass $\alpha/3$. On $[r,q]$ the coordinate $v$ has its own increments at mass $\alpha$, and the coordinates $x,y$ share increments at mass $\alpha/2$. On $[q,1]$ the three coordinates have independent increments at mass $\alpha$. By \cref{lem:inp-blocks}(b), its endpoint is $D(r,q,0)$ and its trial value for $D(r,q,0)$ is $3\mathcal P_\beta(\alpha)$ \cite[(7.7)]{oai-barriers}. Let $z^x$ and $z^v$ be the raw coordinates of the cumulative fields of $x$ and of $v$, sums of the Gaussian increments, which agree on $[0,r]$. We write $\E_0$ for the path law of the base path. Under the Gaussian law of the increments, $z^x$ and $z^v$ are Brownian motions with variance $\beta^2$ per unit time, observed at the partition points; under $\E_0$, they are the paths $Y^x$ and $Y^v$ of \cref{lem:inp-blocks}(d). Under $\E_0$, each is a scalar diffusion for $\alpha$, they coincide on $[0,r]$, and conditionally on the common path through $r$ their continuations are independent \cite[(4.6)]{oai-barriers}.
+
+\paragraph{Step 2: the perturbation and its endpoint.} We define the Gaussian linear combinations
+\[
+ \mathsf Y_0=\frac{(z^x_r-z^x_{r-\bar h})-(z^x_{r+\bar h}-z^x_r)}{\bar h},\qquad
+ \mathsf Y_1=\frac{z^v_{r+\bar h}-z^v_r}{\bar h},\qquad
+ \mathsf Y=(1-\bar\theta)\mathsf Y_0+\bar\theta\mathsf Y_1,
+\]
+which are \cite[(7.8)]{oai-barriers} with $h=\bar h$ and $\theta=\bar\theta$. At every increment of the first two stages, we add $\delta$ times its contribution to $\mathsf Y$ to the field of $x$ and subtract it from the field of $y$; the field of $v$ is unchanged. Every modified increment is a linear image of the original Gaussian increment, so it is positive semidefinite, increments remain independent, and the masses are unchanged. At the end of the second stage the added fields are $(0,\delta\mathsf Y,-\delta\mathsf Y)$. In units of $\beta^2$, the variance of $\mathsf Y$ is $\bar W$, its covariance with the final field of $v$ is $(1-\bar\theta)+\bar\theta=1$, and its covariance with the final fields of $x$ and of $y$ is $(1-\bar\theta)-(1-\bar\theta)=0$. Let $W_c$, $W_v$ and $W_x$ be the corresponding accumulated quantities along the path, and let
+\[
+ L_1=\begin{pmatrix}0&W_v&-W_v\\ W_v&2W_x&0\\ -W_v&0&-2W_x\end{pmatrix},\qquad
+ L_2=(\mathbf e_x-\mathbf e_y)(\mathbf e_x-\mathbf e_y)^{\mathsf T}.
+\]
+Then the perturbed covariance is $\widetilde Q=Q+\delta L_1+\delta^2W_cL_2$ along the path, and its endpoint is $\widetilde Q_N=D(r,q,\delta)+\delta^2\bar WL_2$ \cite[(7.10), (7.12)]{oai-barriers}. Its diagonal is not equal to one, which the arbitrary-endpoint comparison \cref{inp:ob-matrix} allows; the mismatch cost is
+\begin{equation}\label{eq:st-mismatch}
+ \frac{\beta^2}4\norm{D(r,q,\delta)-\widetilde Q_N}_F^2=\beta^2\delta^4\bar W^2.
+\end{equation}
+
+\paragraph{Step 3: the penalty.} Note that $Q_{vx}=Q_{vy}$ and $Q_{xx}=Q_{yy}$ along the base path, which implies that $Q\mathbin{:}L_1=0$; also $L_1\mathbin{:}L_2=0$, $\norm{L_1}_F^2=4W_v^2+8W_x^2$ and $\norm{L_2}_F^2=4$. Expanding, we have
+\[
+ \norm{\widetilde Q}_F^2-\norm Q_F^2=\delta^2\bigl(4W_v^2+8W_x^2+2W_c\,Q\mathbin{:}L_2\bigr)+4\delta^4W_c^2.
+\]
+In the first two stages the base fields of $x$ and $y$ coincide and $Q\mathbin{:}L_2=0$; in the last stage, $W_c=\bar W$ and $Q\mathbin{:}L_2=2(t-q)$. The last term has nonnegative increments, because $W_c$ is nondecreasing. We conclude that the increase of the penalty is at least
+\begin{equation}\label{eq:st-penalty}
+ \frac{\beta^2}4\Bigl(\int m\dd\norm{\widetilde Q}_F^2-\int m\dd\norm Q_F^2\Bigr)\ge\beta^2\delta^2\Bigl(\bar W\int_q^1\alpha(t)\dd t+\mathcal I\Bigr),\qquad
+ \mathcal I=\int m\,\dd\bigl(W_v^2+2W_x^2\bigr).
+\end{equation}
+The integral $\mathcal I$ has three pieces. On $[r-\bar h,r]$, the common increments carry mass $\alpha/3$ and $W_v=W_x$ grows from $0$ to $1-\bar\theta$; this piece is $\int\frac\alpha3\,\dd(3W_v^2)$. On the $v$-branch over $[r,r+\bar h]$, the mass is $\alpha$ and $W_v$ grows from $1-\bar\theta$ to $1$. On the shared branch of $x,y$ over $[r,r+\bar h]$, the mass is $\alpha/2$ and $W_x$ decreases from $1-\bar\theta$ to $0$, and this piece is $\int\frac\alpha2\,\dd(2W_x^2)$. After cancelling the block-size factors, the three pieces are integrals of $\alpha$ against $\dd(W_v^2)$, $\dd(W_v^2)$ and $\dd(W_x^2)$, respectively. Their integrators are monotone, with total variations $(1-\bar\theta)^2$, $2\bar\theta-\bar\theta^2$ and $(1-\bar\theta)^2$, each at most one, and on these pieces $\alpha$ differs from $\alpha(r)$ by at most $\operatorname{osc}_r$. Replacing $\alpha$ by $\alpha(r)$ therefore changes their sum by at most $3\operatorname{osc}_r$:
+\[
+ \Bigl|\mathcal I-\alpha(r)\bigl\{(1-\bar\theta)^2+(2\bar\theta-\bar\theta^2)-(1-\bar\theta)^2\bigr\}\Bigr|\le3\operatorname{osc}_r,
+\]
+so that $\mathcal I\ge\alpha(r)(2\bar\theta-\bar\theta^2)-3\operatorname{osc}_r$.
+This is \cite[(7.14)--(7.15)]{oai-barriers}, with $3\operatorname{osc}_r$ in place of the error $O(\rho_{\rm OB}^4)$.
+
+\paragraph{Step 4: the one-site value.} Let $\Psi_0$ and $\widetilde\Psi$ be the one-site values of the base and perturbed paths. The last stage is the same for both, and integrating it leaves the sum of $\Phi(q,\cdot)$ over the three fields. With $z=z^x_q$ the common field of $x,y$ at the end of the second stage, the two boundary functions differ by
+\[
+ \Upsilon=\Phi(q,z+\delta\mathsf Y)+\Phi(q,z-\delta\mathsf Y)-2\Phi(q,z),
+\]
+a function of the Gaussian increments of the first two stages. We claim that
+\begin{equation}\label{eq:st-kernel}
+ \widetilde\Psi-\Psi_0\le\log\E_0e^{\Upsilon}.
+\end{equation}
+Indeed, both hierarchies integrate the same Gaussian increments at the same masses. Let $\Delta_i$ be the difference of their partial values after the increments beyond $i$ have been integrated, as a function of the increments through $i$, and let $\mathcal K_i$ be the tilted kernel of the base path at increment $i$. Taking the ratio of the two defining integrals, we find $\Delta_{i-1}=m^{-1}\log\mathcal K_ie^{m\Delta_i}$ if increment $i$ has mass $m>0$, and $\Delta_{i-1}=\mathcal K_i\Delta_i$ if $m=0$. Jensen's inequality, together with the concavity of $x\mapsto x^m$ for $0<m\le1$, implies that $\Delta_{i-1}\le\log\mathcal K_ie^{\Delta_i}$ in both cases. If $\Delta_i\le\log\E_0[e^\Upsilon\mid\text{increments through }i]$, then the tower property gives the same inequality at $i-1$. At the end of the second stage we have $\Delta=\Upsilon$, and induction proves \eqref{eq:st-kernel}. This is the kernel comparison \cite[(4.11), (7.17)]{oai-barriers}; it uses no inverse of the field transformation, and singular increments cause no difficulty.
+
+Using convexity of $\Phi(q,\cdot)$, the bound $\chi\le1$ and the Lipschitz bound on $\chi$, we find by the second-order Taylor formula with integral remainder that
+\begin{equation}\label{eq:st-U-bounds}
+ 0\le\Upsilon\le\delta^2\mathsf Y^2,\qquad\bigl|\Upsilon-\delta^2\chi_q\mathsf Y^2\bigr|\le C\abs{\delta\mathsf Y}^3,\qquad\chi_q=\chi(q,z^x_q).
+\end{equation}
+Under $\E_0$, the diffusion representation gives $\mathsf Y=\mathsf Y^{\rm G}+\mathsf Y^{\rm B}$, where $\mathsf Y^{\rm G}$ is a centered Gaussian variable of variance $\varsigma^2=\beta^2\bar W$ and $\abs{\mathsf Y^{\rm B}}\le2\beta^2$, since every drift is bounded by $\beta^2$, is integrated over an interval of length $\bar h$, and is then divided by $\bar h$. Since $\bar\theta\le1/2$, we have $\varsigma^2\le2\beta^2/\bar h$, and the hypothesis $8\beta^2\bar W\delta^2\le1$ means $4\delta^2\varsigma^2\le\frac12$. Using $\mathsf Y^2\le2(\mathsf Y^{\rm G})^2+8\beta^4$, $\abs\delta\le1$ and the Gaussian identities $\E e^{a(\mathsf Y^{\rm G})^2}=(1-2a\varsigma^2)^{-1/2}$ and $\E(\mathsf Y^{\rm G})^4e^{a(\mathsf Y^{\rm G})^2}=3\varsigma^4(1-2a\varsigma^2)^{-5/2}$ with $a=2\delta^2$, we find
+\[
+ \E_0\abs\mathsf Y^3\le C\bar h^{-3/2},\qquad\E_0\bigl[\mathsf Y^4e^{\delta^2\mathsf Y^2}\bigr]\le C\bar h^{-2}.
+\]
+Using $e^\Upsilon\le1+\Upsilon+\frac12\Upsilon^2e^\Upsilon$ for $\Upsilon\ge0$, $\log(1+z)\le z$, \eqref{eq:st-kernel} and \eqref{eq:st-U-bounds}, we obtain
+\begin{equation}\label{eq:st-exponential-error}
+ \widetilde\Psi-\Psi_0\le\delta^2\E_0\bigl[\chi_q\mathsf Y^2\bigr]+C\bigl(\abs\delta^3\bar h^{-3/2}+\delta^4\bar h^{-2}\bigr),
+\end{equation}
+which is \cite[(7.19)]{oai-barriers}.
+
+\paragraph{Step 5: the triangular function on the first branch.} It remains to estimate $\E_0[\chi_q\mathsf Y^2]$. Let $0=s_0<s_1<\dots<s_M=q$ be the partition points in $[0,q]$. Under the Gaussian law of the increments, $z^x$ is a Brownian motion of variance $\beta^2$ per unit time at these points, and under $\E_0$ its law through $q$ has density $e^{\mathfrak d_x}$ with respect to it, where
+\[
+ \mathfrak d_x=\sum_{j=0}^{M-1}\alpha(s_j)\bigl(\Phi(s_{j+1},z^x_{s_{j+1}})-\Phi(s_j,z^x_{s_j})\bigr)
+\]
+\cite[(7.21)]{oai-barriers}; the masses here are the scalar masses $\alpha(s_j)$, because the block factorization of \cref{lem:inp-blocks} cancels the division of the masses by the block sizes. Let $\psi_0(t)=(1-\abs{t-r}/\bar h)_+$ be the triangular function supported on $[r-\bar h,r+\bar h]$, and let $\partial_0$ denote the derivative in the direction that shifts every coordinate $z^x_t$ by $\psi_0(t)$. Under the Gaussian law, $\Cov(\mathsf Y_0,z^x_t)=\beta^2\psi_0(t)$, $\Var(\mathsf Y_0)=2\beta^2/\bar h$ and $\partial_0\mathsf Y_0=2/\bar h$. Writing $\E_{\rm G}$ for the Gaussian expectation, finite-dimensional Gaussian integration by parts gives
+\begin{equation}\label{eq:st-tent-ibp}
+ \E_{\rm G}[\mathsf Y_0f]=\beta^2\E_{\rm G}[\partial_0f],\qquad
+ \E_{\rm G}[\mathsf Y_0^2f]=\frac{2\beta^2}{\bar h}\E_{\rm G}f+\beta^4\E_{\rm G}[\partial_0^2f]
+\end{equation}
+for every smooth function $f$ of the coordinates with moderate growth. Summing by parts in $\mathfrak d_x$ and using $\psi_0(0)=\psi_0(q)=0$, we have
+\begin{align*}
+ \partial_0\mathfrak d_x&=\sum_{j=1}^{M-1}\bigl(\alpha(s_{j-1})-\alpha(s_j)\bigr)\psi_0(s_j)\,u(s_j,z^x_{s_j}),\\
+ \partial_0^2\mathfrak d_x&=\sum_{j=1}^{M-1}\bigl(\alpha(s_{j-1})-\alpha(s_j)\bigr)\psi_0(s_j)^2\,\chi(s_j,z^x_{s_j}).
+\end{align*}
+Only the points $s_j\in(r-\bar h,r+\bar h)$ contribute. As the partition contains $r-\bar h$ and the step function is nondecreasing, the sum of $\abs{\alpha(s_{j-1})-\alpha(s_j)}$ over these points is at most $\operatorname{osc}_r$. Together with $\abs u\le1$ and $0<\chi\le1$, this implies that $\abs{\partial_0\mathfrak d_x}\le\operatorname{osc}_r$ and $\abs{\partial_0^2\mathfrak d_x}\le\operatorname{osc}_r$ \cite[(7.23)]{oai-barriers}.
+
+Since $\psi_0(q)=0$, we have $\partial_0\chi_q=0$. Applying \eqref{eq:st-tent-ibp} to $f=e^{\mathfrak d_x}\chi_q$, we obtain
+\begin{equation}\label{eq:st-Y0-square}
+ \E_0[\chi_q\mathsf Y_0^2]=\frac{2\beta^2}{\bar h}\E_0\chi_q+\beta^4\E_0\bigl[\chi_q\bigl((\partial_0\mathfrak d_x)^2+\partial_0^2\mathfrak d_x\bigr)\bigr]
+ =\frac{2\beta^2}{\bar h}\E_0\chi_q+\mathcal E_1,\qquad\abs{\mathcal E_1}\le2\beta^4\operatorname{osc}_r.
+\end{equation}
+With $u_r=u(r,z^x_r)$ and $\chi_r=\chi(r,z^x_r)$, we have $\partial_0u_r=\psi_0(r)\chi_r=\chi_r$. Applying the first identity in \eqref{eq:st-tent-ibp} to $f=e^{\mathfrak d_x}\chi_qu_r$, we find
+\begin{equation}\label{eq:st-Y0-linear}
+ \E_0[\chi_q\mathsf Y_0u_r]=\beta^2\E_0[\chi_q\chi_r]+\beta^2\E_0[\chi_qu_r\,\partial_0\mathfrak d_x]
+ =\beta^2\E_0[\chi_q\chi_r]+\mathcal E_2,\qquad\abs{\mathcal E_2}\le\beta^2\operatorname{osc}_r.
+\end{equation}
+These are \cite[(7.24)--(7.25)]{oai-barriers}. The integrations by parts are legitimate for every fixed partition, since the scalar values grow at most linearly, their derivatives are bounded, and the density grows at most exponentially in the Gaussian variables.
+
+\paragraph{Step 6: the ramp on the second branch.} We condition on the whole path $z^x$ through $q$. By the conditional independence in Step~1, the continuation of $v$ after $r$ is the scalar diffusion started from $z^x_r$ at time $r$, as in \cref{inp:ob-scalar}(v). Its law on $[r,r+\bar h]$ has a density $e^{\mathfrak d_v}$ of the same form as $\mathfrak d_x$, over the partition points of $[r,r+\bar h]$. Let $\psi_1(t)=\min\{(t-r)_+/\bar h,1\}$ be the ramp, and $\partial_1$ the corresponding derivative in the coordinates $z^v_t$, $t\ge r$. Under the conditional Gaussian law, $\Cov(\mathsf Y_1,z^v_t)=\beta^2\psi_1(t)$, $\Var(\mathsf Y_1)=\beta^2/\bar h$ and $\partial_1\mathsf Y_1=1/\bar h$. Summing by parts, $\partial_1\mathfrak d_v$ consists of the terminal term $\alpha(s_{\rm last})u(r+\bar h,z^v_{r+\bar h})$ and internal terms whose coefficients have total absolute value at most one, so $\abs{\partial_1\mathfrak d_v}\le2$ and $\abs{\partial_1^2\mathfrak d_v}\le2$. By the second identity of \eqref{eq:st-tent-ibp}, in conditional form, we have $\E_0[\mathsf Y_1^2\mid z^x]=\beta^2/\bar h+\beta^4\E_0[(\partial_1\mathfrak d_v)^2+\partial_1^2\mathfrak d_v\mid z^x]$, and since $\chi_q$ is a function of $z^x$ with $0<\chi_q\le1$,
+\begin{equation}\label{eq:st-Y1-square}
+ \E_0[\chi_q\mathsf Y_1^2]=\frac{\beta^2}{\bar h}\E_0\chi_q+\mathcal E_3,\qquad\abs{\mathcal E_3}\le6\beta^4.
+\end{equation}
+For the mixed moment we need the conditional mean of $\mathsf Y_1$. The Brownian part of $z^v_{r+\bar h}-z^v_r$ has conditional mean zero, and $u(t,Y^v_t)$ is a martingale for the diffusion started at time $r$, by \cref{inp:ob-scalar}(iv)--(v). With $\bar\alpha=\bar h^{-1}\int_r^{r+\bar h}\alpha(t)\dd t$,
+\[
+ \E_0[\mathsf Y_1\mid z^x]=\frac{\beta^2}{\bar h}\int_r^{r+\bar h}\alpha(t)\,\E_0\bigl[u(t,Y^v_t)\mid z^x\bigr]\dd t=\beta^2\bar\alpha\,u_r
+\]
+\cite[(7.27)]{oai-barriers}. The variables $\mathsf Y_0$, $\chi_q$ and $u_r$ are functions of $z^x$. Combining the last display with \eqref{eq:st-Y0-linear} and $\abs{\bar\alpha-\alpha(r)}\le\operatorname{osc}_r$, we find
+\begin{equation}\label{eq:st-mixed}
+ \E_0[\chi_q\mathsf Y_0\mathsf Y_1]=\beta^2\bar\alpha\,\E_0[\chi_q\mathsf Y_0u_r]=\beta^4\alpha(r)\E_0[\chi_q\chi_r]+\mathcal E_4,\qquad\abs{\mathcal E_4}\le2\beta^4\operatorname{osc}_r.
+\end{equation}
+Expanding $\mathsf Y^2=(1-\bar\theta)^2\mathsf Y_0^2+2(1-\bar\theta)\bar\theta\mathsf Y_0\mathsf Y_1+\bar\theta^2\mathsf Y_1^2$ and using \eqref{eq:st-Y0-square}, \eqref{eq:st-Y1-square} and \eqref{eq:st-mixed}, we have
+\begin{equation}\label{eq:st-quadratic}
+ \E_0[\chi_q\mathsf Y^2]\le\beta^2\bar W\E_0\chi_q+2(1-\bar\theta)\bar\theta\beta^4\alpha(r)\E_0[\chi_q\chi_r]+6\beta^4(\operatorname{osc}_r+\bar\theta^2),
+\end{equation}
+where we used $(1-\bar\theta)^2\cdot2\beta^2/\bar h+\bar\theta^2\beta^2/\bar h=\beta^2\bar W$. This is \cite[(7.20)]{oai-barriers}. The triangular function contributes errors of order $\operatorname{osc}_r$, while the error of order one from the ramp is multiplied by $\bar\theta^2$.
+
+\paragraph{Step 7: assembly and the limit.} By \cref{inp:ob-matrix}, applied to the perturbed path with zero multiplier and endpoint $\widetilde Q_N$, the constrained pressure $p_{3,n}(D)$ is at most the trial value of the perturbed path. The base path has trial value $3\mathcal P_\beta(\alpha)$ for $D(r,q,0)$. Combining this with \eqref{eq:st-mismatch}, \eqref{eq:st-penalty}, \eqref{eq:st-exponential-error} and the lower bound on $\mathcal I$, we obtain
+\begin{multline*}
+ p_{3,n}(D)\le3\mathcal P_\beta(\alpha)+\delta^2\E_0[\chi_q\mathsf Y^2]+C\bigl(\abs\delta^3\bar h^{-3/2}+\delta^4\bar h^{-2}\bigr)\\
+ -\beta^2\delta^2\Bigl(\bar W\int_q^1\alpha(t)\dd t+\alpha(r)(2\bar\theta-\bar\theta^2)-3\operatorname{osc}_r\Bigr)+\beta^2\delta^4\bar W^2.
+\end{multline*}
+We insert \eqref{eq:st-quadratic} and note that
+\begin{multline*}
+ 2(1-\bar\theta)\bar\theta\beta^4\alpha(r)\E_0[\chi_q\chi_r]-\beta^2\alpha(r)(2\bar\theta-\bar\theta^2)\\
+ =2(1-\bar\theta)\bar\theta\beta^2\alpha(r)\bigl(\beta^2\E_0[\chi_q\chi_r]-1\bigr)-\beta^2\alpha(r)\bar\theta^2.
+\end{multline*}
+We discard the last term, which is nonpositive, and use $\beta^2\delta^4\bar W^2\le4\beta^2\delta^4\bar h^{-2}$. With $\widetilde C=6\beta^4+3\beta^2$, this proves \eqref{eq:st-remote-expansion} for the step approximation, with $3\mathcal P_\beta(\alpha)$ in place of $3P_\beta$ and with $\E_0\chi_q-\int_q^1\alpha(t)\dd t$ in place of $\alpha(q)(q-\Gamma(q))$; this is \cite[(7.29)]{oai-barriers}. The constants do not depend on the partition.
+
+We now keep $n,r,q,\delta,\bar h,\bar\theta$ fixed and let the mesh tend to zero. The left side does not depend on the approximation. By the stability estimate \cref{inp:ob-scalar}(ii), the scalar values and their first two spatial derivatives converge uniformly. Driving the diffusions by the same Brownian motion, Gronwall's inequality and the uniform Lipschitz bound on the drifts show that the paths converge. The expectations $\E_0\chi_q$ and $\E_0[\chi_q\chi_r]$ converge to $\E\chi_q$ and $\E[\chi_q\chi_r]$ for the scalar diffusion $Y$ of the minimizer, $\int_q^1\alpha$ and $\mathcal P_\beta(\alpha)$ converge to their values for the minimizer, the latter being $P_\beta$, and the values at $r$ and $q$ are unchanged. Finally, by \eqref{eq:inp-stationarity}, we have $\E\chi_q-\int_q^1\alpha(t)\dd t=\alpha(q)(q-\Gamma(q))$. This proves \eqref{eq:st-remote-expansion}.
+\end{proof}
+
+We take the limit in Step~7 at fixed $\bar h$ and $\bar\theta$; no approximation rate uniform in these parameters is needed. Only the values of $\alpha$ at $r\pm \bar h$ enter; no regularity of $\alpha$ at the distant overlap $q$ is used, and $q$ may be close to one. We now choose the parameters.
+
+\begin{lemma}[Separated overlaps]\label{lem:st-remote}
+Let $\mathcal J\subset(0,q_\beta)$ be a compact interval and $d_0>0$. There exist $\nu_{\rm sep},\delta_{\rm sep},c_{\rm sep}>0$, depending only on $\beta$, $\mathcal J$ and $d_0$, such that
+\begin{equation}\label{b:eq:remote-pressure-gap}
+ p_{3,n}\bigl(D(r,q,\delta)\bigr)\le3P_\beta-c_{\rm sep}\delta^2
+\end{equation}
+for every $n\ge2$ and every feasible $D(r,q,\delta)$ with $r\in\mathcal J$, $r+d_0\le q\le1$, $\abs{q-\Gamma(q)}\le\nu_{\rm sep}$ and $\abs\delta\le\delta_{\rm sep}$.
+\end{lemma}
+
+\begin{proof}
+We may assume $d_0\le1$. Let $r_-=\min\mathcal J$ and $r_+=\max\mathcal J$. By \cref{cor:inp-identity}, $\alpha$ is smooth on $[0,q_\beta)$ and in particular Lipschitz, with some constant $L_\alpha$, on the compact interval $\mathcal J'=[r_-/2,(r_++q_\beta)/2]\subset(0,q_\beta)$. Let $c_\chi$ be the constant of \cref{lem:st-susceptibility}, set $c_{\rm mix}=\beta^2\alpha(r_-)c_\chi$, which is positive by \cref{cor:inp-identity}, and let $\widetilde C,\widehat C$ be the constants of \cref{lem:st-remote-expansion}. We choose, in this order,
+\begin{align*}
+ &\bar\theta\in(0,1/2]\ \text{with}\ \widetilde C\bar\theta\le\tfrac18c_{\rm mix}d_0;\\
+ &\bar h\in(0,1]\ \text{with}\ \bar h\le\min\{\tfrac12r_-,\tfrac12(q_\beta-r_+),\tfrac12d_0\}\ \text{and}\ 2\widetilde CL_\alpha\bar h\le\tfrac18c_{\rm mix}\bar\theta d_0;\\
+ &\nu_{\rm sep}>0\ \text{with}\ 2\beta^2\nu_{\rm sep}\le\tfrac18c_{\rm mix}\bar\theta d_0\bar h;\\
+ &\delta_{\rm sep}\in(0,1]\ \text{with}\ 16\beta^2\delta_{\rm sep}^2\le \bar h\ \text{and}\ \widehat C\bigl(\delta_{\rm sep}\bar h^{-3/2}+\delta_{\rm sep}^2\bar h^{-2}\bigr)\le\tfrac18c_{\rm mix}\bar\theta d_0.
+\end{align*}
+Let $D=D(r,q,\delta)$ be as in the lemma. Then $\bar h<r$ and $q-r\ge d_0>\bar h$, and $\bar W\le2/\bar h$ because $\bar\theta\le1/2$. We have $8\beta^2\bar W\delta^2\le16\beta^2\delta^2/\bar h\le1$, and \cref{lem:st-remote-expansion} applies. We bound the terms in the braces of \eqref{eq:st-remote-expansion}. Since $\alpha(q)\le1$ and $\abs{q-\Gamma(q)}\le\nu_{\rm sep}$, the first term is at most $2\beta^2\nu_{\rm sep}/\bar h$. By \cref{lem:st-susceptibility}, $2(1-\bar\theta)\ge1$, $\alpha(r)\ge\alpha(r_-)$ and $q-r\ge d_0$, the second term is at most $-\bar\theta\beta^2\alpha(r_-)c_\chi d_0=-c_{\rm mix}\bar\theta d_0$. Moreover $\operatorname{osc}_r\le2L_\alpha \bar h$, because $[r-\bar h,r+\bar h]\subset\mathcal J'$. Altogether,
+\begin{multline}\label{b:eq:remote-tent-estimate}
+ p_{3,n}(D)\le3P_\beta+\delta^2\Bigl\{\frac{2\beta^2\nu_{\rm sep}}{\bar h}-c_{\rm mix}\bar\theta d_0+\widetilde C\bigl[\alpha(r+\bar h)-\alpha(r-\bar h)+\bar\theta^2\bigr]\Bigr\}\\
+ +\widehat C\bigl(\abs\delta^3\bar h^{-3/2}+\delta^4\bar h^{-2}\bigr).
+\end{multline}
+By the choices above, the first term in the braces, the terms $2\widetilde CL_\alpha\bar h$ and $\widetilde C\bar\theta^2$, and the last term divided by $\delta^2$ are each at most $\frac18c_{\rm mix}\bar\theta d_0$. This proves \eqref{b:eq:remote-pressure-gap} with $c_{\rm sep}=\frac12c_{\rm mix}\bar\theta d_0$.
+\end{proof}
+
+We chose the constants in the order $d_0$, then $\bar\theta$, then $\bar h$, then $\nu_{\rm sep}$, then $\delta_{\rm sep}$. The condition $\abs\delta\le\delta_{\rm sep}$ cannot be dropped: \eqref{b:eq:remote-pressure-gap} is a statement about small overlap imbalances. Decreasing $\nu_{\rm sep}$ later only shrinks the domain of \eqref{b:eq:remote-pressure-gap}.
+
+\section{Families of constraints}\label{sec:st-families}
+
+We now fix the data of the simultaneous estimate. All of the following are chosen before $n\to\infty$, in the order listed.
+\begin{enumerate}
+\item[(F1)] Compact intervals $\mathcal J\subset\operatorname{int}I$ with $I\subset(0,q_\beta)$, and a nonempty finite set $\mathfrak B\subset(0,1)$ of large-overlap cutoffs. In the dynamical argument, $\mathcal J=J_\beta$ and $I=I_\beta$ are the intervals of \eqref{eq:ref-intervals}, and $\mathfrak B=\{q_*,b_1\}$; the fixed-scale exceptional sets of \cref{sec:references} are then subsets of the set $\mathcal W_n$ defined below.
+\item[(F2)] The band ratio $\vartheta$ and amplitude $E$ of \cref{sec:fr-local}, the constant $m_\beta$ for $I$, a coefficient $0<g<m_\beta E^2G(\vartheta,E)$, and the constants $d_0,S,\rho_0$ of \cref{lem:fr-local-gap} for $\mathcal J$, $I$, $\vartheta$, $E$ and $g$.
+\item[(F3)] The constants $\nu_{\rm sep},\delta_{\rm sep},c_{\rm sep}$ of \cref{lem:st-remote} for $\mathcal J$ and $d_0$, and, for each $b_*\in\mathfrak B$, the constants $\underline b(b_*),\nu_{\rm fix}(b_*),c_{\rm fix}(b_*)$ of \cref{lem:st-fixed}.
+\item[(F4)] The tolerance and the two deficits
+\[
+ \nu=\min\Bigl\{\nu_{\rm sep},\tfrac12c_{\rm tail},\min_{b_*\in\mathfrak B}\nu_{\rm fix}(b_*)\Bigr\},\qquad
+ c_{\rm fix}=\min_{b_*\in\mathfrak B}c_{\rm fix}(b_*),\qquad c_{\rm pair}=\tfrac12\nu^2,
+\]
+with $c_{\rm tail}$ from \cref{lem:st-pair}.
+\item[(F5)] The fraction $\varkappa\in(0,1)$ of the local deficit that is retained in the disorder event.
+\end{enumerate}
+Let $(\rho_n)$ and $(\eta_n)$ be deterministic positive sequences with $\rho_n\to0$, and write $\varepsilon_n=E\rho_n$. We define four deterministic families of feasible overlap matrices, the local family, the separated-overlap family, the fixed-scale family, and the excluded pairs:
+\begin{align*}
+ \mathcal D^{\rm loc}_n&=\bigl\{D(r,q,\delta):r\in\mathcal J,\ \rho_n\le q-r\le d_0,\ \varepsilon_n\le\abs\delta\le2\varepsilon_n\bigr\},\\
+ \mathcal D^{\rm sep}_n&=\bigl\{D(r,q,\delta):r\in\mathcal J,\ q-r>d_0,\ \abs{q-\Gamma(q)}\le\nu,\ \varepsilon_n\le\abs\delta\le2\varepsilon_n\bigr\},\\
+ \mathcal D^{\rm fix}_n&=\bigcup_{b_*\in\mathfrak B}\bigl\{D(r,q,\delta):q\ge b_*,\ \abs{r\pm\delta}\le\underline b(b_*),\ \abs{q-\Gamma(q)}\le\nu,\ \abs\delta\ge\eta_n\bigr\},\\
+ \mathcal D^{\rm pair}_n&=\bigl\{D_2(\bar q):\bigl|\abs{\bar q}-\Gamma(\abs{\bar q})\bigr|>\nu\bigr\},
+\end{align*}
+where only feasible matrices are included. There are at most $(n+1)^3$ matrices in $\mathcal D^{\rm loc}_n\cup\mathcal D^{\rm sep}_n$, at most $\abs{\mathfrak B}(n+1)^3$ in $\mathcal D^{\rm fix}_n$, and at most $n+1$ in $\mathcal D^{\rm pair}_n$. Since $\nu<c_{\rm tail}$, the family $\mathcal D^{\rm pair}_n$ contains every feasible $D_2(\bar q)$ with $\abs{\bar q}\ge q_{\rm tail}$. For a family $\mathcal D$ of $\ell\times\ell$ matrices, we write $\{R\in\mathcal D\}$ for the set of $\ell$-tuples whose overlap matrix lies in $\mathcal D$. The corresponding sets of configurations are the narrow triples, the fixed-scale triples and the excluded pairs,
+\begin{align*}
+ \mathcal N_n&=\bigl\{(v,x,y)\in\Sigma_n^3:r\in\mathcal J,\ q-r\ge\rho_n,\ \varepsilon_n\le\abs\delta\le2\varepsilon_n\bigr\},\\
+ \mathcal W_n&=\bigcup_{b_*\in\mathfrak B}\bigl\{(v,x,y)\in\Sigma_n^3:R(x,y)\ge b_*,\ \abs{R(v,x)},\abs{R(v,y)}\le\underline b(b_*),\\
+ &\hspace{14em}\abs{R(v,x)-R(v,y)}\ge2\eta_n\bigr\},\\
+ \mathcal P_n&=\{R\in\mathcal D^{\rm pair}_n\}=\bigl\{(x,y)\in\Sigma_n^2:\bigl|\abs{R(x,y)}-\Gamma(\abs{R(x,y)})\bigr|>\nu\bigr\},
+\end{align*}
+with $r,\delta,q$ the coordinates of the triple.
+
+\begin{lemma}[Covering]\label{lem:st-cover}
+If $(v,x,y)\in\mathcal N_n$, then $(x,y)\in\mathcal P_n$ or the overlap matrix of $(v,x,y)$ lies in $\mathcal D^{\rm loc}_n\cup\mathcal D^{\rm sep}_n$. If $(v,x,y)\in\mathcal W_n$, then $(x,y)\in\mathcal P_n$ or the overlap matrix of $(v,x,y)$ lies in $\mathcal D^{\rm fix}_n$.
+\end{lemma}
+
+\begin{proof}
+Let $(v,x,y)\in\mathcal N_n$. Then $q=R(x,y)\ge r+\rho_n>0$, since $r\in\mathcal J\subset(0,1)$. If $\abs{q-\Gamma(q)}>\nu$, then $(x,y)\in\mathcal P_n$. Otherwise $D(r,q,\delta)$ lies in $\mathcal D^{\rm loc}_n$ if $q-r\le d_0$ and in $\mathcal D^{\rm sep}_n$ if $q-r>d_0$. Next let $(v,x,y)\in\mathcal W_n$, for the cutoff $b_*\in\mathfrak B$. Then $q=R(x,y)\ge b_*>0$, $\abs{r\pm\delta}\le\underline b(b_*)$ and $\abs\delta\ge\eta_n$, so either $(x,y)\in\mathcal P_n$ or $D(r,q,\delta)\in\mathcal D^{\rm fix}_n$.
+\end{proof}
+
+By \cref{lem:st-cover}, every narrow triple is covered by the local regime, the regime of separated overlaps, or the pair regime. The local regime uses the cubic deficit of \cref{sec:cubic} through \cref{lem:fr-local-gap}; the other two use the quadratic deficits of \cref{lem:st-remote,lem:st-pair}. No fractional moment bound at a distant overlap $q$ is needed, and the construction of \cref{sec:cubic} is used only for $q-r\le d_0$.
+
+\section{The simultaneous event}\label{sec:st-event}
+
+We impose the following conditions on the scales. Recall that $\Delta_{n,\beta}=P_\beta-p_n(\beta)$.
+\begin{align}
+ &\limsup_{n\to\infty}\frac{\Delta_{n,\beta}}{\rho_n^3}<\frac{\varkappa g}3,\tag{S1}\label{eq:st-S1}\\
+ &\lim_{n\to\infty}\frac{n^{7/15}}{n^2\rho_n^6}=0,\tag{S2}\label{eq:st-S2}\\
+ &\lim_{n\to\infty}\frac{n\rho_n^4}{\log n}=\infty,\tag{S3}\label{eq:st-S3}\\
+ &\lim_{n\to\infty}\frac{n\eta_n^4}{\log n}=\infty,\tag{S4}\label{eq:st-S4}\\
+ &\lim_{n\to\infty}\frac{\rho_n^3}{\eta_n^2}=0.\tag{S5}\label{eq:st-S5}
+\end{align}
+Condition \eqref{eq:st-S1} says that the mean bias is absorbed by the retained part of the cubic deficit, with a strict constant margin. Given the variance bound $\Var F_n\le C_vn^{7/15}$ of \cref{inp:qp-rate}, \eqref{eq:st-S2} makes the Chebyshev bound for the denominator tend to zero. Conditions \eqref{eq:st-S3} and \eqref{eq:st-S4} make the numerator bounds summable over polynomially many constraints, and \eqref{eq:st-S5} makes the loss in the denominator negligible against the fixed-scale deficit. By \eqref{eq:st-S1}, we may fix $a_0$ and $c_0$ with
+\begin{equation}\label{b:eq:denominator-margin}
+ \limsup_{n\to\infty}\frac{\Delta_{n,\beta}}{\rho_n^3}<a_0<c_0<\frac{\varkappa g}3,
+\end{equation}
+for instance $c_0=\frac12(a_0+\varkappa g/3)$.
+
+We define $\mathcal A_n$ as the set of disorders $J$ for which all of the following hold:
+\begin{enumerate}
+\item[(A1)] $F_n\ge n(P_\beta-c_0\rho_n^3)$;
+\item[(A2)] $n^{-1}\log Z_{3,n}(D)\le3P_\beta-\varkappa g\rho_n^3$ for every $D\in\mathcal D^{\rm loc}_n\cup\mathcal D^{\rm sep}_n$;
+\item[(A3)] $n^{-1}\log Z_{3,n}(D)\le3P_\beta-\frac12c_{\rm fix}\eta_n^2$ for every $D\in\mathcal D^{\rm fix}_n$;
+\item[(A4)] $n^{-1}\log Z_{2,n}(D)\le2P_\beta-\frac12c_{\rm pair}$ for every $D\in\mathcal D^{\rm pair}_n$.
+\end{enumerate}
+The event $\mathcal A_n$ is measurable, since all constrained partition functions are finite sums of continuous functions of the disorder.
+
+\begin{lemma}[Simultaneous static event]\label{b:lem:static-event}
+Fix the data \textup{(F1)--(F5)}, and let $(\rho_n)$, $(\eta_n)$ satisfy \eqref{eq:st-S1}--\eqref{eq:st-S5}. There exist $C,c>0$ and $n_0$, depending only on $\beta$, on the data \textup{(F1)--(F5)} and on the sequences, such that for all $n\ge n_0$,
+\begin{equation}\label{b:eq:static-event-failure}
+ \PP(\mathcal A_n^c)\le C\frac{n^{7/15}}{n^2\rho_n^6}+C(n+1)^3\bigl(e^{-cn\rho_n^4}+e^{-cn\eta_n^4}\bigr)+C(n+1)e^{-cn},
+\end{equation}
+and the right side tends to zero. Moreover, for all $n\ge n_0$ and every disorder $J\in\mathcal A_n$,
+\begin{equation}\label{b:eq:conditional-static-errors}
+\begin{gathered}
+ (\pi^J)^{\otimes3}\bigl(\{R\in\mathcal D^{\rm loc}_n\cup\mathcal D^{\rm sep}_n\}\bigr)\le C(n+1)^3e^{-cn\rho_n^3},\qquad
+ (\pi^J)^{\otimes3}(\mathcal N_n)\le C(n+1)^3e^{-cn\rho_n^3},\\
+ (\pi^J)^{\otimes3}\bigl(\{R\in\mathcal D^{\rm fix}_n\}\bigr)\le C(n+1)^3e^{-cn\eta_n^2},\qquad
+ (\pi^J)^{\otimes3}(\mathcal W_n)\le C(n+1)^3e^{-cn\eta_n^2},\\
+ (\pi^J)^{\otimes2}(\mathcal P_n)\le C(n+1)e^{-cn}.
+\end{gathered}
+\end{equation}
+The same bounds hold for the images of these sets under every element of $\mathfrak O_3$, respectively $\mathfrak O_2$, and the set of triples $(v,x,y)$ with $(x,y)\in\mathcal P_n$ has $(\pi^J)^{\otimes3}$-probability $(\pi^J)^{\otimes2}(\mathcal P_n)$.
+\end{lemma}
+
+\begin{proof}
+We bound the probability that each of (A1)--(A4) fails, take a union bound over the deterministic families, and then divide the bounds on the numerators by the bound on the denominator, on $\mathcal A_n$. Let $n_0$ be so large that, for $n\ge n_0$, we have $\Delta_{n,\beta}\le a_0\rho_n^3$, $\Var F_n\le C_vn^{7/15}$, $\rho_n\le\min\{\rho_0,1\}$, $2\varepsilon_n\le\delta_{\rm sep}$, $\varkappa g\rho_n\le\frac12c_{\rm sep}E^2$, $12c_0\rho_n^3\le c_{\rm fix}\eta_n^2$ and $8c_0\rho_n^3\le c_{\rm pair}$. This is possible by \eqref{b:eq:denominator-margin}, \cref{inp:qp-rate}, $\rho_n\to0$ and \eqref{eq:st-S5}.
+
+\paragraph{Step 1: the denominator.} Since $\E F_n=n(P_\beta-\Delta_{n,\beta})\ge n(P_\beta-a_0\rho_n^3)$, the failure of (A1) implies $F_n-\E F_n<-n(c_0-a_0)\rho_n^3$. By Chebyshev's inequality,
+\[
+ \PP\bigl(F_n<n(P_\beta-c_0\rho_n^3)\bigr)\le\frac{C_vn^{7/15}}{(c_0-a_0)^2n^2\rho_n^6}.
+\]
+
+\paragraph{Step 2: local numerators.} Let $D\in\mathcal D^{\rm loc}_n$ and $s=S\rho_n$. By Markov's inequality applied to $Z_{3,n}(D)^s$ and by \eqref{b:eq:local-fractional-gap},
+\[
+ \PP\bigl(n^{-1}\log Z_{3,n}(D)>3P_\beta-\varkappa g\rho_n^3\bigr)
+ \le\E Z_{3,n}(D)^s\,e^{-ns(3P_\beta-\varkappa g\rho_n^3)}
+ \le e^{-(1-\varkappa)gS\,n\rho_n^4}.
+\]
+This is the only place where a fractional moment enters. A Gaussian concentration bound at a mean deficit of order $\rho_n^3$ would give the exponent $n\rho_n^6$, which is $R^6n^{-2/5}$ at the scale $\rho_n=Rn^{-7/30}$ and tends to zero.
+
+\paragraph{Step 3: the other numerators.} By \cref{rem:inp-lipschitz}, $\log Z_{\ell,n}(D)$ is Lipschitz in $(J_{ij})_{i<j}$ with constant $\beta\ell\sqrt{(n-1)/2}$. By the Gaussian concentration inequality \eqref{eq:inp-concentration} of \cref{inp:ob-concentration}, for every $t>0$,
+\begin{equation}\label{eq:st-concentration}
+ \PP\bigl(\log Z_{\ell,n}(D)-\E\log Z_{\ell,n}(D)\ge nt\bigr)\le2\exp\Bigl(-\frac{n^2t^2}{\beta^2\ell^2(n-1)}\Bigr)\le2\exp\Bigl(-\frac{nt^2}{\beta^2\ell^2}\Bigr).
+\end{equation}
+For $D\in\mathcal D^{\rm sep}_n$, we have $\varepsilon_n\le\abs\delta\le2\varepsilon_n\le\delta_{\rm sep}$, and \cref{lem:st-remote} implies that $p_{3,n}(D)\le3P_\beta-c_{\rm sep}E^2\rho_n^2$. Since $\varkappa g\rho_n^3\le\frac12c_{\rm sep}E^2\rho_n^2$, the threshold in (A2) exceeds the mean $p_{3,n}(D)$ by at least $\frac12c_{\rm sep}E^2\rho_n^2$. For $D\in\mathcal D^{\rm fix}_n$, we see from \cref{lem:st-fixed} and $\abs\delta\ge\eta_n$ that $p_{3,n}(D)\le3P_\beta-c_{\rm fix}\eta_n^2$, and the threshold in (A3) exceeds the mean by at least $\frac12c_{\rm fix}\eta_n^2$. For $D\in\mathcal D^{\rm pair}_n$, we have $p_{2,n}(D)<2P_\beta-\frac12\nu^2=2P_\beta-c_{\rm pair}$ by \cref{lem:st-pair}, and the threshold in (A4) exceeds the mean by at least $\frac12c_{\rm pair}$. Applying \eqref{eq:st-concentration} with $\ell=3,3,2$ and these values of $t$, we obtain, for a single matrix of the respective family, the failure probabilities
+\[
+ 2e^{-c_{\rm sep}^2E^4n\rho_n^4/(36\beta^2)},\qquad
+ 2e^{-c_{\rm fix}^2n\eta_n^4/(36\beta^2)},\qquad
+ 2e^{-c_{\rm pair}^2n/(16\beta^2)}.
+\]
+
+\paragraph{Step 4: the union bound.} Recall that the families are deterministic and that their sizes were bounded in \cref{sec:st-families}. Summing the bounds of Steps~1--3 over them, we have
+\begin{multline*}
+ \PP(\mathcal A_n^c)\le\frac{C_v}{(c_0-a_0)^2}\frac{n^{7/15}}{n^2\rho_n^6}
+ +(n+1)^3\Bigl(e^{-(1-\varkappa)gS n\rho_n^4}+2e^{-c_{\rm sep}^2E^4n\rho_n^4/(36\beta^2)}\Bigr)\\
+ +2\abs{\mathfrak B}(n+1)^3e^{-c_{\rm fix}^2n\eta_n^4/(36\beta^2)}+2(n+1)e^{-c_{\rm pair}^2n/(16\beta^2)},
+\end{multline*}
+which is \eqref{b:eq:static-event-failure}. The first term tends to zero by \eqref{eq:st-S2}, and the others by \eqref{eq:st-S3} and \eqref{eq:st-S4}, since $(n+1)^3e^{-cn\rho_n^4}=\exp\{3\log(n+1)-cn\rho_n^4\}$, and similarly for $\eta_n$.
+
+\paragraph{Step 5: Gibbs probabilities on $\mathcal A_n$.} Fix $J\in\mathcal A_n$. By (A1), $Z_n^\ell\ge\exp\{\ell n(P_\beta-c_0\rho_n^3)\}$. The ratio $Z_{\ell,n}(D)/Z_n^\ell$ is the Gibbs probability of $\{R=D\}$. For $D\in\mathcal D^{\rm loc}_n\cup\mathcal D^{\rm sep}_n$, (A2) gives
+\[
+ \frac{Z_{3,n}(D)}{Z_n^3}\le e^{-n(\varkappa g-3c_0)\rho_n^3},
+\]
+and the coefficient $\varkappa g-3c_0$ is positive by \eqref{b:eq:denominator-margin}. For $D\in\mathcal D^{\rm fix}_n$ and $D\in\mathcal D^{\rm pair}_n$, (A3), (A4) and the choice of $n_0$ give, respectively,
+\[
+ \frac{Z_{3,n}(D)}{Z_n^3}\le e^{-n(c_{\rm fix}\eta_n^2/2-3c_0\rho_n^3)}\le e^{-c_{\rm fix}n\eta_n^2/4},\qquad
+ \frac{Z_{2,n}(D)}{Z_n^2}\le e^{-n(c_{\rm pair}/2-2c_0\rho_n^3)}\le e^{-c_{\rm pair}n/4}.
+\]
+Summing over the families gives the first three bounds of \eqref{b:eq:conditional-static-errors}, with $c=\min\{\varkappa g-3c_0,\frac14c_{\rm fix},\frac14c_{\rm pair}\}$ and $C=\abs{\mathfrak B}$. An event that depends only on $(x,y)$ has the same probability under $(\pi^J)^{\otimes3}$ as under $(\pi^J)^{\otimes2}$, which is the last assertion of the lemma. By \cref{lem:st-cover}, $\mathcal N_n$ is contained in the union of $\{R\in\mathcal D^{\rm loc}_n\cup\mathcal D^{\rm sep}_n\}$ and the set of triples with $(x,y)\in\mathcal P_n$, so
+\[
+ (\pi^J)^{\otimes3}(\mathcal N_n)\le(n+1)^3e^{-n(\varkappa g-3c_0)\rho_n^3}+(n+1)e^{-c_{\rm pair}n/4},
+\]
+and similarly $(\pi^J)^{\otimes3}(\mathcal W_n)\le\abs{\mathfrak B}(n+1)^3e^{-c_{\rm fix}n\eta_n^2/4}+(n+1)e^{-c_{\rm pair}n/4}$. We may assume $\eta_n\le1$, since otherwise $\mathcal D^{\rm fix}_n$ and $\mathcal W_n$ are empty. As also $\rho_n\le1$, the term $e^{-c_{\rm pair}n/4}$ is at most $e^{-c_{\rm pair}n\rho_n^3/4}$ and at most $e^{-c_{\rm pair}n\eta_n^2/4}$. We obtain the last two bounds of \eqref{b:eq:conditional-static-errors} with $C=\abs{\mathfrak B}+1$. The statements for the images under $\mathfrak O_3$ and $\mathfrak O_2$ follow from \eqref{eq:st-orientation}.
+\end{proof}
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Estimate & Bound & Kind & \cref{thm:barrier-730}\\
+\midrule
+(A1), denominator & $n^{7/15}/(n^2\rho_n^6)$ & disorder & $n^{-2/15}$\\
+(A2), local numerators & $(n+1)^3e^{-cn\rho_n^4}$ & disorder & $e^{-cn^{1/15}}$\\
+(A2), separated overlaps & $(n+1)^3e^{-cn\rho_n^4}$ & disorder & $e^{-cn^{1/15}}$\\
+(A3), fixed-scale numerators & $(n+1)^3e^{-cn\eta_n^4}$ & disorder & $e^{-cn^{1/21}}$\\
+(A4), pair numerators & $(n+1)e^{-cn}$ & disorder & $e^{-cn}$\\
+\midrule
+narrow triples & $(n+1)^3e^{-cn\rho_n^3}$ & Gibbs, on $\mathcal A_n$ & $e^{-cn^{3/10}}$\\
+fixed-scale triples & $(n+1)^3e^{-cn\eta_n^2}$ & Gibbs, on $\mathcal A_n$ & $e^{-cn^{11/21}}$\\
+excluded pairs & $(n+1)e^{-cn}$ & Gibbs, on $\mathcal A_n$ & $e^{-cn}$\\
+\bottomrule
+\end{tabular}
+\caption{The error terms of \cref{b:lem:static-event}, up to constant factors, at the scales $\rho_n=Rn^{-7/30}$ and $\eta_n=n^{-5/21}$ of \cref{thm:barrier-730}. The first five rows bound the disorder probability $\PP(\mathcal A_n^c)$; they are paid once. The last three rows are Gibbs probabilities at a fixed disorder in $\mathcal A_n$; only these are multiplied by counts in \cref{sec:references,sec:induction,sec:barrier-proof}. The last column omits polynomial factors.}\label{tab:st-errors}
+\end{table}
+
+\begin{remark}[The scales of the barrier theorem]\label{rem:st-scales}
+Fix the data (F1)--(F5), and write $C_b$ for the constant of the upper bound on the mean bias that is used.
+\begin{enumerate}
+\item[(a)] By \cref{inp:hb-rate}, $0\le\Delta_{n,\beta}\le C_bn^{-7/10}$ for $n\ge2$. We choose
+\begin{equation}\label{b:eq:critical-static-scales}
+ \rho_n=Rn^{-7/30},\qquad\varepsilon_n=E\rho_n,\qquad\eta_n=n^{-5/21},\qquad s_n=S\rho_n,\qquad R^3>\frac{3C_b}{\varkappa g}.
+\end{equation}
+Then $\Delta_{n,\beta}/\rho_n^3\le C_b/R^3<\varkappa g/3$, which is \eqref{eq:st-S1}. Moreover $n^{7/15}/(n^2\rho_n^6)=R^{-6}n^{-2/15}$, $n\rho_n^4=R^4n^{1/15}$, $n\eta_n^4=n^{1/21}$ and $\rho_n^3/\eta_n^2=R^3n^{-47/210}$, which proves \eqref{eq:st-S2}--\eqref{eq:st-S5}. The Gibbs probabilities decay on the scales $n\rho_n^3=R^3n^{3/10}$ and $n\eta_n^2=n^{11/21}$.
+\item[(b)] More generally, let $\rho_n=Rn^{-\lambda}$ and $\eta_n=n^{-\xi}$, where the scale exponents $\lambda$ and $\xi$ satisfy \eqref{eq:ref-exponents}. Suppose the mean-bias bound \eqref{eq:ref-mean-input} and $R^3>3C_b/(\varkappa g)$. Then $\Delta_{n,\beta}/\rho_n^3\le C_b/R^3<\varkappa g/3$ for large $n$, which is \eqref{eq:st-S1}. We have \eqref{eq:st-S2} because $n^{7/15}/(n^2\rho_n^6)=R^{-6}n^{7/15-2+6\lambda}$ and $6\lambda<3/2<23/15$. We have \eqref{eq:st-S3} and \eqref{eq:st-S4} because $1-4\lambda>0$ and $1-4\xi>0$, and \eqref{eq:st-S5} holds because $\rho_n^3/\eta_n^2=R^3n^{2\xi-3\lambda}$. Part (a) is the case $(\lambda,\xi)=(7/30,5/21)$, with \cref{inp:hb-rate} as the bound \eqref{eq:ref-mean-input}.
+\end{enumerate}
+The dynamical argument needs in addition the conditions \eqref{eq:ind-scales}: $\eta_n/\rho_n\to E'$ for a fixed $E'\in[0,E/10]$, and $n^{-1}=o(\varepsilon_n)$. In part (b) we have $E'=0$, since $\eta_n/\varepsilon_n=(ER)^{-1}n^{\lambda-\xi}$ and $\lambda<\xi$; in part (a), this ratio is $(ER)^{-1}n^{-1/210}$. Also $1/(n\varepsilon_n)=(ER)^{-1}n^{\lambda-1}\to0$. The conditions \eqref{eq:st-S1}--\eqref{eq:st-S3} do not involve $\eta_n$. For $\eta_n=\rho_n/1000$, as in \cref{sec:bp-strong}, where $E'=1/1000=E/10$ because $E=1/100$, conditions \eqref{eq:st-S4} and \eqref{eq:st-S5} follow from \eqref{eq:st-S3} and $\rho_n\to0$, since $n\eta_n^4=10^{-12}n\rho_n^4$ and $\rho_n^3/\eta_n^2=10^6\rho_n$. The variance input $n^{7/15}$ of \cref{inp:qp-rate} and the profile cost $s^5$ of \cref{lem:fr-floor} do not depend on the choice of the scales, and $s_n^5/\rho_n^3=S^5R^2n^{-2\lambda}$. Within this argument the exponent $\lambda$ is limited both by one third of the exponent in the upper bound on the mean bias and by $1/4$, the latter through \eqref{eq:st-S3}.
+\end{remark}
+
+\begin{remark}[How the estimate is used]\label{rem:st-two-levels}
+The later sections use \cref{b:lem:static-event} in the following form. If a bad event at a fixed disorder is a union of at most $K_n$ events, each contained in one of the sets of \eqref{b:eq:conditional-static-errors}, in one of their images under $\mathfrak O_3$, or in a lift of $\mathcal P_n$ or of one of its images to more configurations, then its probability under the joint law of the disorder and the Gibbs samples is at most
+\[
+ \PP(\mathcal A_n^c)+K_n\sup_{J\in\mathcal A_n}\bigl\{(\pi^J)^{\otimes3}(\mathcal N_n)+(\pi^J)^{\otimes3}(\mathcal W_n)+(\pi^J)^{\otimes2}(\mathcal P_n)\bigr\}
+\]
+up to a fixed factor for the orientations. The count $K_n$ multiplies only the Gibbs probabilities. For example, with $K_n=e^{CL_n}$ and $L_n=An^{7/30}$, we have $K_n(n+1)^3e^{-cR^3n^{3/10}}\to0$ for every fixed $A$ and $C$. No such count may be applied to the disorder probability $\PP(\mathcal A_n^c)$, for which this section gives only the bound $O(n^{-2/15})$ at the scales of \cref{rem:st-scales}(a). In \cref{sec:references}, $\mathcal A_n$ is intersected with the disorder event of \cref{b:lem:coverage-extension}; the intersection has probability tending to one by a union bound, and no independence between the two events is needed.
+\end{remark}

@@ -1,0 +1,99 @@
+module
+
+public import ComparisonNativeActualWeakLowerShellChildFailure
+public import ComparisonNativeActualSelectedBadChild
+
+@[expose] public section
+
+noncomputable section
+namespace OAI.SKFluctuations.LaplaceWindowFormalization
+open Set Filter MeasureTheory Hierarchy Cavity NativeOverlapMinimum
+open scoped Topology NNReal
+set_option maxHeartbeats 28000000
+set_option linter.unusedVariables false
+namespace NativeOverlapMinimum
+theorem exists_actual_weak_lower_shell_irregular_child_step
+    {beta : ℝ≥0} (hbeta : 0 < beta) (hTemp : 1 < (beta:ℝ)^2) :
+    ∃lower upper : ℝ,0 < lower ∧ 0 < upper ∧
+      ∀m delta cl cu Az C0 Ct D c0 : ℝ,
+      ∀hm : 0 < m,∀hdelta : 0 < delta,delta < 3*m →
+      0 < cl → 0 < cu → 2 ≤ Az → 0 < C0 → 1 ≤ Ct → D ≤ 1 →
+      ∀hc0 : 0 < c0,c0 ≤ 1 → c0 ≤ D →
+      delta/4 < 3*m-99*delta → 100*delta < (1:ℝ)/3+m → 0 < 9*m-298*delta →
+      cl ≤ lower → upper ≤ cu →
+      cl < (beta:ℝ)^2*Real.exp (-12*(beta:ℝ)^2) →
+      (beta:ℝ)^2*(ReplicaTree.attachmentCount 1 3 : ℝ)^2/(2*Real.exp (-12*(beta:ℝ)^2)) < cu →
+      ∀dim : ℕ→ℕ,∀hdim : Tendsto dim atTop atTop,
+      ∀root M : (n:ℕ)→NativeOverlapMinimum (dim n+1) m delta cl cu Az C0 Ct D ((beta:ℝ)^2),
+      ∀shell : ℕ→ℝ,(∀n,shell n∈Icc (0:ℝ) 1) → Tendsto shell atTop (𝓝 0) →
+      (∀ᶠn in atTop,∀u,(root n).b u=
+        initialShellMatrixClock ((beta:ℝ)^2) (((dim n+1:ℕ):ℝ)^(-(1:ℝ)/3)) (shell n) u) →
+      (∀ᶠn in atTop,∀u,(root n).h u=0) →
+      ActualWeakSelectedHistoryChain c0 root M →
+      (∀n,(M n).xs ≤ 1) →
+      (∀ᶠn in atTop,comparisonConditionalScale (M n).context.N delta (M n).context.E (M n).lam ≤ (M n).xs) →
+      (∀ᶠn in atTop,(M n).lam+(c0*(M n).xs)^2 ≤ (M n).b 0) →
+      (∀ᶠn in atTop,¬(cl*(M n).xs ≤ (M n).alpha.val.val (M n).xs ∧
+        (M n).alpha.val.val (M n).xs ≤ cu*(M n).xs)) →
+      Tendsto (fun n=>laplaceComparisonStrength (M n).context.d (M n).lam (M n).xs/(M n).xs^2)
+        atTop (𝓝 0) ∧
+      ∀ᶠn in atTop,∃Q : NativeOverlapMinimum (dim n+1) m delta cl cu Az C0 Ct D ((beta:ℝ)^2),
+        Q.context.d=c0*(M n).xs ∧
+        Q.context.E=actualChildErrorBudget (dim n+1) delta c0 (M n).context.d (M n).lam (M n).xs ∧
+        (M n).context.N^(delta/4)*(M n).context.E ≤ Q.context.E ∧
+        Q.xs∈Icc (comparisonConditionalScale Q.context.N delta Q.context.E Q.lam) 1 ∧
+        Q.z=min (2*Q.xs) 1 ∧
+        ¬(cl*Q.xs ≤ Q.alpha.val.val Q.xs ∧ Q.alpha.val.val Q.xs ≤ cu*Q.xs) ∧
+        (∀u,Q.b u=(M n).b u-laplaceComparisonStrength (M n).context.d (M n).lam ((M n).R u)) ∧
+        (∀u,Q.h u=(M n).h u+laplaceComparisonStrength (M n).context.d (M n).lam ((M n).R u)*(M n).R u)  := by
+  classical
+  obtain ⟨lower,upper,hlower,hupper,Hfailure⟩:=
+    exists_actual_weak_lower_shell_bad_test_child_pressure_failure hbeta hTemp
+  refine ⟨lower,upper,hlower,hupper,?_⟩
+  intro m delta cl cu Az C0 Ct D c0 hm hdelta hroom hcl hcu hAz hC0 hCt hD
+    hc0 hc01 hc0D hmargin hcapmargin hgapmargin hclMacro hcuMacro hclTemp hcuTemp
+    dim hdim root M shell hshell hshelllim hb hh Hhistory hxsunit htarget hroomChild Hbad
+  let T:ℝ:=(beta:ℝ)^2
+  have hAz0 : 0 ≤ Az := (by norm_num : (0:ℝ) ≤ 2).trans hAz
+  have hCt0 : 0 ≤ Ct := zero_le_one.trans hCt
+  obtain ⟨Hweak,Hfail⟩:=Hfailure m delta cl cu Az C0 Ct D T c0 hm hdelta hroom hcl hcu hAz0 hC0 hCt0 hD
+    hc0 hc01 hmargin hcapmargin hgapmargin hclMacro hcuMacro hclTemp hcuTemp
+    dim hdim root M shell hshell hshelllim hb hh Hhistory hxsunit htarget hroomChild Hbad
+  have hcl1 : cl ≤ 1 := by
+    simpa only [mul_one,(M 0).alpha.property.2] using ((M 0).regular 1 ⟨(M 0).hz.2,le_rfl⟩).1
+  have hcu1 : 1 ≤ cu := by
+    simpa only [mul_one,(M 0).alpha.property.2] using ((M 0).regular 1 ⟨(M 0).hz.2,le_rfl⟩).2
+  let epsilon:=fun n=>((dim n+1:ℕ):ℝ)^(-(1:ℝ)/3)
+  obtain ⟨ps,Hps⟩:=Hhistory.literal_readout_varying_shell epsilon shell hb hh
+  have Hweak1:=Hweak.eventually (eventually_le_nhds zero_lt_one)
+  have Hselect:=hdim.eventually (eventually_exists_actual_selected_bad_shell_child_from_target (D:=D) (T:=T)
+    hm hdelta hroom hcl hcl1 hcu1 hAz hCt hC0 hc0 hmargin)
+  refine ⟨Hweak,?_⟩
+  filter_upwards [Hfail,Hps,Hweak1,Hselect,htarget,hroomChild]
+    with n hnFail hnHist hnWeak hnSelect hnTarget hnRoom
+  let ts:=((ps.map (fun P=>P n)).map (fun P=>P.toHistoryTerm))
+  have hlam : ∀t∈ts,0 ≤ t.lam := by
+    intro t ht
+    obtain ⟨P,hP,rfl⟩:=List.mem_map.mp ht
+    exact P.hlam.le
+  have hnD : c0*(M n).xs ≤ D := by
+    have H:=mul_le_mul_of_nonneg_left (hxsunit n) hc0.le
+    simpa only [mul_one] using H.trans (by simpa only [mul_one] using hc0D)
+  have hn1 : c0*(M n).xs ≤ 1 := hnD.trans hD
+  have heweak : laplaceComparisonStrength (M n).context.d (M n).lam (M n).xs ≤ (M n).xs^2 :=
+    (div_le_one₀ (sq_pos_of_pos (M n).hxs)).mp hnWeak
+  obtain ⟨lam,hlam,alpha,hattained,Q,hcontext,hQlam,hAlpha,hbQ,hhQ,hRQ,hdQ,hEQ,
+    hGrow,hXs,hZ,hBad,hbHist,hhHist,hlamHist⟩:=hnSelect (M n) (M n).xs (M n).hxs
+      hn1 hnD hnTarget heweak hnRoom ts (epsilon n) (shell n)
+      hnHist.2.1 hnHist.2.2 hlam (Real.rpow_nonneg (M n).context.hN.le _) hnFail
+  refine ⟨Q,hdQ,hEQ,hGrow,?_,hZ,?_,?_,?_⟩
+  · rw [hcontext,hQlam]
+    exact hXs
+  · rcases hBad with Hlo|Hhi
+    · exact fun H=>not_lt_of_ge H.1 Hlo
+    · exact fun H=>not_lt_of_ge H.2 Hhi
+  · exact fun u=>congrFun hbQ u
+  · exact fun u=>congrFun hhQ u
+
+end NativeOverlapMinimum
+end OAI.SKFluctuations.LaplaceWindowFormalization

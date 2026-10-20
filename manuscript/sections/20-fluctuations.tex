@@ -1,0 +1,292 @@
+\chapter{The fluctuation scale}\label{sec:fluct}
+
+This section concerns \cref{f:main}, the fluctuation theorem of OpenAI \cite[Theorem~1.1]{oai-fluctuations}. Its proof in \cite{oai-fluctuations} has two parts of very different lengths. The main part, which occupies Sections~2--7.4 of that paper, is a two-sided bound on a positive logarithmic moment of the completed log partition function at a tilt slightly larger than $n^{-1/6}$. We state this bound in our normalization as \cref{f:window}, and in \cref{sec:fl-route} we summarize how it is proved in \cite{oai-fluctuations}; we do not reprove it. The second part converts \cref{f:window} into the three assertions of \cref{f:main}. It rests on an exponential augmentation argument of Aronow and Lopatto \cite[Proposition~5.1]{quantitative-parisi}, in the form given in \cite[Lemmas~7.6 and~7.7 and Section~7.6]{oai-fluctuations}. We give complete proofs of this part: the log-concavity lemma (\cref{f:logconcave}) and elementary bounds for one-dimensional log-concave laws (\cref{f:one-dim}) in \cref{sec:fl-logconcave}, and the deduction of \cref{f:main} from \cref{f:window} in \cref{sec:fl-endgame}. \Cref{sec:bias} uses the lower bound on the variance in \cref{f:main}.
+
+As recalled in \cref{sec:intro}, OpenAI's companion preprint \cite{oai-limiting-law} claims more than \cref{f:main}: a positive limit of $n^{-1/3}\Var(F_n)$ and a nondegenerate limit law for $(F_n-\E F_n)/\Var(F_n)^{1/2}$ \cite[Theorems~1.1 and~1.2]{oai-limiting-law}. We do not use these claims; their consequence for the mean bias is recalled in \cref{rem:bias-prefactor}.
+
+Throughout this section, $\beta>1$ is fixed, and constants may depend on $\beta$. Recall from \cref{sec:model} that the completed log partition function is $F_n^c=F_n+\beta G$, where $G$ is a centered Gaussian variable of variance $1/2$, independent of the disorder $J$. For $t\in\R$, we define the logarithmic moment generating function of the centered variable $F_n^c-\E F_n^c$,
+\begin{equation}\label{eq:fl-transform}
+ K_n(t)=\log\E\exp\bigl\{t\bigl(F_n^c-\E F_n^c\bigr)\bigr\}.
+\end{equation}
+By \cref{lem:model-completion}, $K_n(t)$ is finite for every $t\in\R$, $F_n^c$ has mean $\E F_n$ and variance $\Var(F_n)+\beta^2/2$, and $K_n(t)=\log\E e^{t(F_n-\E F_n)}+\beta^2t^2/4$ by \eqref{eq:model-completion-laplace}. The proof of that lemma also shows that $F_n$ has finite exponential moments, so all its moments are finite.
+
+\section{The two-sided bound on positive logarithmic moments}\label{sec:fl-window}
+
+\begin{proposition}[Two-sided bound on positive logarithmic moments]\label{f:window}
+Fix $\beta>1$ and $0<m<1/300$, and set $s_n=n^{-1/6+5m}$. There exist constants $c,C>0$ and $n_0\in\N$, depending only on $\beta$ and $m$, such that
+\begin{equation}\label{f:window-eq}
+ c\,n^{20m}\le K_n(s_n)\le C\,n^{100m}\qquad(n\ge n_0).
+\end{equation}
+\end{proposition}
+
+This is \cite[Proposition~7.5]{oai-fluctuations}. We call it the two-sided bound on positive logarithmic moments; in \cite{oai-fluctuations} it is called a positive Laplace window. The normalization of \cite{oai-fluctuations} differs from ours in two ways, and neither affects \eqref{f:window-eq}. First, the Hamiltonian there is $\beta H_n$ and the partition function carries the factor $2^{-n}$, so that the log partition function there is $F_n-n\log 2$. Second, the completion there adds a common centered Gaussian variable $D$ of variance $\beta^2/2$, which has the law of $\beta G$. The completed log partition function of \cite{oai-fluctuations} therefore has the law of $F_n^c-n\log2$, the centered logarithmic moment in \cite[Proposition~7.5]{oai-fluctuations} is $K_n$, and the tilt $s=n^{-1/6+5m}$, the exponents $20m$ and $100m$, and the range $0<m<1/300$ are the same.
+
+We use only two features of \eqref{f:window-eq} below: for each fixed small $m$, the lower bound tends to infinity, and the upper bound grows at most like a fixed small power of $n$. The particular exponents $20m$ and $100m$ play no further role.
+
+\section{OpenAI's proof of the two-sided bound}\label{sec:fl-route}
+
+We now summarize the proof of \cref{f:window} in \cite{oai-fluctuations}. The summary is a description of that proof, not a proof, and no other part of this paper depends on it. We follow the notation of \cite{oai-fluctuations} where possible, writing $\bar u$, $\widehat\lambda$, and $\widehat h$ for their mass $u$, strength $\lambda$, and field covariance path $h$. Throughout, $m\in(0,1/300)$ is fixed and $\delta=m/10000$, as in \cite[Section~3.1]{oai-fluctuations}, and we abbreviate $s=s_n$.
+
+\paragraph{The two-level pressure.} Let $H^{(0)}$ and $H^{(1)}$ be independent copies of the completed Hamiltonian $H_n^c$, that is, independent centered Gaussian processes indexed by $\Sigma_n$, each with covariance $nR(x,y)^2/2$. For $0\le\eps\le\beta^2$, we set
+\begin{equation}\label{eq:fl-two-level}
+ \Psi_n(\eps)=\frac{1}{ns}\,\E_{(0)}\log\E_{(1)}\exp\Bigl\{s\log\sum_{x\in\Sigma_n}
+ e^{\sqrt{\beta^2-\eps}\,H^{(0)}(x)+\sqrt\eps\,H^{(1)}(x)}\Bigr\},
+\end{equation}
+where $\E_{(i)}$ is the expectation over $H^{(i)}$. At $\eps=0$ the inner expectation is trivial, and $\Psi_n(0)=n^{-1}\E F_n^c$. At $\eps=\beta^2$ the outer expectation is trivial, and $\Psi_n(\beta^2)=(ns)^{-1}\log\E e^{sF_n^c}$. We conclude that
+\begin{equation}\label{eq:fl-two-level-endpoints}
+ K_n(s)=ns\bigl(\Psi_n(\beta^2)-\Psi_n(0)\bigr).
+\end{equation}
+Because $ns=n^{5/6+5m}$, the estimate \eqref{f:window-eq} is equivalent to
+\begin{equation}\label{eq:fl-pressure-window}
+ c\,n^{-5/6+15m}\le\Psi_n(\beta^2)-\Psi_n(0)\le C\,n^{-5/6+95m}.
+\end{equation}
+
+\paragraph{Gaussian hierarchies.} To prove \eqref{eq:fl-pressure-window}, OpenAI compares $\Psi_n$ with the pressures of Gaussian hierarchies \cite[Section~2.1]{oai-fluctuations}. Let $0=m_0<m_1<\dots<m_{L+1}=1$, and let $b$ and ${\widehat h}$ be nonnegative nondecreasing functions of the \emph{mass} ${\bar u}\in[0,1)$ that are constant on each interval $[m_j,m_{j+1})$. We call $b$ and ${\widehat h}$ the matrix and the field covariance paths. Their increments at $m_j$ define independent centered Gaussian processes on $\Sigma_n$, with covariances $(b(m_j)-b(m_j-))\,nR(x,y)^2/2$ and $({\widehat h}(m_j)-{\widehat h}(m_j-))\,nR(x,y)$, where $b(0-)={\widehat h}(0-)=0$. Together they form the stage at mass $m_j$. Let $\Xi$ be the sum of all stages. Starting from $\log(2^{-n}\sum_xe^{\Xi(x)})$, we integrate the stages in the order $j=L,\dots,0$. The stage at mass $m_j$ is integrated by the Gaussian integration step $X\mapsto m_j^{-1}\log\E_je^{m_jX}$ of \cref{def:inp-step}, where $\E_j$ is the expectation over that stage, and by $X\mapsto\E_jX$ if $m_j=0$. The pressure $f_n(b,{\widehat h})$ is the resulting number divided by $n$, with $b(1-)/4$ and ${\widehat h}(1-)/2$ subtracted. It extends to bounded nondecreasing paths by approximation \cite[Proposition~2.14]{oai-fluctuations}. The associated \emph{path law} is the law of the stages and of a configuration $x$ obtained as follows. Given the earlier stages, the stage at mass $m_j$ is drawn from the tilted Gaussian kernel \eqref{eq:inp-kernel} of this recursion; then $x$ is drawn from the Gibbs measure $e^{\Xi(x)}/\sum_ye^{\Xi(y)}$. For ${\bar u}\in[0,1)$, let $x^1$ and $x^2$ be two configurations that share the stages up to mass ${\bar u}$ and are conditionally independent given them. We set $S_{\bar u}=\E R(x^1,x^2)$, $B_{\bar u}=\E R(x^1,x^2)^2$, and $D_{\bar u}^2=B_{\bar u}-S_{\bar u}^2$ \cite[Lemma~2.1]{oai-fluctuations}. By \cite[Lemma~2.2]{oai-fluctuations}, a variation of the paths changes $f_n$ by
+\[
+ \dd f_n=-\frac14\int_0^1B_{\bar u}\,\dd b({\bar u})\,\dd {\bar u}-\frac12\int_0^1S_{\bar u}\,\dd {\widehat h}({\bar u})\,\dd {\bar u}.
+\]
+Such hierarchies descend from the Parisi recursion and Guerra's interpolation \cite{parisi-1979,guerra-2003}. The path law and the variance bound with deterministic weights, on which their moment estimates rest, are from \cite[Section~2 and Proposition~2.2]{quantitative-parisi}. The other basic tools are moment bounds under the path law \cite[Lemma~2.3]{oai-fluctuations} and a differentiation formula for expectations over finite trees of replicas \cite[Proposition~2.5]{oai-fluctuations}.
+
+In this notation, $\Psi_n(\eps)=f_n(\beta^2-\eps\mathbf 1_{[0,s)},0)+\beta^2/4+\log2$: the matrix covariance $\beta^2-\eps$ is integrated at mass zero, and the remaining covariance $\eps$ at mass $s$ \cite[Section~7, opening]{oai-fluctuations}. By the variation formula, the derivative of $\Psi_n$ is $\frac14\int_0^sB_{\bar u}\,\dd {\bar u}\in[0,s/4]$ at each point of differentiability, and $0\le\Psi_n(\eps')-\Psi_n(\eps)\le s(\eps'-\eps)/4$ for $\eps\le\eps'$. The function $\Psi_n$ is nondecreasing.
+
+\paragraph{Comparisons.} A comparison \cite[Section~3.1, (3)--(6)]{oai-fluctuations} has parameters $d$ and $E$ with $n^{-2/3+m}d\lesssim E\le n^{-1/2}d^2$. We write $\underline x=\sqrt nE/d$; this is the smallest scale at which the profile of its minimizers is examined. The comparison acts on a mass interval $[{\bar u}_0,1]$, where ${\bar u}_0=0$ or ${\bar u}_0=o(\underline x)$. It starts from unperturbed paths $(b_0,{\widehat h}_0)$ that are bounded and nondecreasing on $[{\bar u}_0,1]$ and satisfy $b_0({\bar u})=\beta^2+o({\bar u}^2)$ and ${\widehat h}_0({\bar u})=o({\bar u}^3)$ for ${\bar u}\gtrsim\underline x$ \cite[(4)]{oai-fluctuations}. Let $f$ be a fixed smooth positive function that equals $1$ near $0$ and is comparable to $(1+\log t)/t$ for large $t$, with logarithmic slope $-tf'(t)/f(t)$ nondecreasing from $0$ to $1$. We set $e(r)={\widehat\lambda} f({\widehat\lambda} r/d^3)$, where $0\le{\widehat\lambda}\le d^2$ is the \emph{strength}. For a nondecreasing overlap quantile $r$ on $[{\bar u}_0,1]$, the perturbed paths are $b_0-e(r)$ and ${\widehat h}_0+e(r)r$ on $[{\bar u}_0,1]$, and $b_0$ and ${\widehat h}_0$ below ${\bar u}_0$; here $e(r)$ is the function ${\bar u}\mapsto e(r({\bar u}))$. The comparison minimizes
+\[
+ \mathcal F_{\widehat\lambda}(r)=f_n\bigl(b_0-e(r),{\widehat h}_0+e(r)r\bigr)+\frac14\int_{{\bar u}_0}^1e(r({\bar u}))\,r({\bar u})^2\,\dd {\bar u}
+\]
+over a compact class of quantiles \cite[(5)]{oai-fluctuations}. This class is defined by two-sided bounds on the derivative of the inverse function of $r$ and by a prescribed initial value $r({\bar u}_0)=r_{\min}\ge0$, which we call the lower radius; $r_{\min}=0$ when ${\bar u}_0=0$. The minimum $\mathcal M_{\widehat\lambda}$ is attained. The comparison is \emph{admissible} at strength ${\widehat\lambda}$ if the perturbed paths are nonnegative and nondecreasing on $[0,1)$ for every quantile in the class. For a comparison admissible at every ${\widehat\lambda}\in[0,d^2]$, including ${\widehat\lambda}=0$, where the perturbed paths are $(b_0,{\widehat h}_0)$, we have $\mathcal M_0=f_n(b_0,{\widehat h}_0)$, and $\mathcal M_{\widehat\lambda}$ is locally Lipschitz in ${\widehat\lambda}$. At almost every ${\widehat\lambda}>0$, its derivative in $\log{\widehat\lambda}$ is at most
+\[
+ \frac14\int_{{\bar u}_0}^1e(r({\bar u}))\bigl[D_{\bar u}^2+(S_{\bar u}-r({\bar u}))^2\bigr]\,\dd {\bar u}
+\]
+for every minimizer $r$ at strength ${\widehat\lambda}$, where the moments are those of the perturbed paths \cite[Lemma~3.1]{oai-fluctuations}. Now let ${\widehat\lambda}\ge n^{-10}$, and suppose that a minimizer at strength ${\widehat\lambda}$ satisfies the \emph{two-sided linear bound} $c\bar u\le r(\bar u)\le C\bar u$, with fixed constants $c,C>0$, for all masses ${\bar u}$ above $A_{\widehat\lambda}=n^\delta\sqrt nE/\sqrt{\widehat\lambda}$; this assumption is not needed when $A_{\widehat\lambda}$ stays bounded below by a fixed positive constant. The last integral is then at most $n^{10\delta}E$. If the comparison is admissible at every strength and this holds at every strength ${\widehat\lambda}\ge n^{-10}$, integration in $\log{\widehat\lambda}$ gives the comparison bound
+\begin{equation}\label{eq:fl-comparison-bound}
+ 0\le\mathcal M_{d^2}-f_n(b_0,{\widehat h}_0)\le n^{20\delta}E
+\end{equation}
+\cite[Propositions~3.9 and~3.10]{oai-fluctuations}. The next two steps establish the two-sided linear bound for the minimizers.
+
+\paragraph{The one-site cavity estimate and the linear profile.} Consider a minimizer at a positive strength and a scale $x\to0$. Suppose that the minimizer satisfies the two-sided linear bound above a fixed multiple of $x$, and that $x\gtrsim\underline x$, $e(x)x^2\gtrsim nE^2$, and $e(x)\gtrsim x^2$ \cite[Section~4, opening]{oai-fluctuations}. The last condition says that the strength is comparable to the scale. We write $K={\widehat h}+bS$, where $b$ and ${\widehat h}$ are the perturbed paths and $S$ is the function ${\bar u}\mapsto S_{\bar u}$. Let $\Gamma_K({\bar u})$ be the second moment, under the path law, of the conditional mean of the spin given the stages up to mass ${\bar u}$, in the hierarchy with $n=1$, field covariance path $K$, and no matrix covariance. A one-site cavity estimate \cite[Proposition~4.1]{oai-fluctuations} shows that a mass ${\bar u}$ with $r({\bar u})\le Cx$, $cx\le {\bar u}\le Cx$, and $D_{\bar u}=o(x)$ satisfies $S_{\bar u}=\Gamma_K({\bar u})+o(x^3)$. When only $D_{\bar u}=O(x)$ is known, the remainder is $O(x^3)$, uniformly over such masses. The proposition also gives integrated estimates with remainder $o(x^3)$ over these ranges, in mass and in overlap. Its proof removes one spin and controls the resulting susceptibility correction through identities for a fixed number of additional replicas \cite[Sections~4.1--4.5]{oai-fluctuations}. Using this estimate and the first variation of the comparison, OpenAI proves that, under the same hypotheses, along a subsequence
+\[
+ \frac{r(xv)}{x}\longrightarrow\frac v\gamma\qquad\text{locally uniformly in }v>0,
+\]
+where $\gamma$ lies between positive constants that depend only on $\beta$ and on the bounds on the paths \cite[Theorem~5.1]{oai-fluctuations}. The proof identifies the limits of the rescaled scalar and overlap distributions \cite[Lemma~5.4]{oai-fluctuations} and derives a limiting scalar equation \cite[Lemmas~5.3 and~5.5]{oai-fluctuations}. It then excludes gaps in the limiting support by a first-variation argument \cite[Lemma~5.6]{oai-fluctuations}. The scalar diffusion identities used there go back to Auffinger and Chen \cite[Proposition~3]{auffinger-chen-2015} and to Jagannath and Tobasco \cite[Lemma~8.4]{jagannath-tobasco-2017}. At macroscopic scales, let $c_*>0$ be fixed. If $x\ge c_*$, $e(x)/x^2\ge c_*$, and $d^2\le\beta^2-c_*$, then the minimizers converge, in $L^1$ and locally uniformly on $(0,1)$, to the quantile function of the Parisi measure \cite[Proposition~5.9]{oai-fluctuations}. This uses the Parisi formula \cite{parisi-formula}, the uniqueness of the Parisi measure \cite{auffinger-chen-uniqueness-2015}, and the interval support theorem \cite[Theorem~1.1]{full-rsb}, through \cite[Lemma~5.8]{oai-fluctuations}. Both statements allow an omitted interval $[0,{\bar u}_0)$ and a positive lower radius $r_{\min}$, provided that the perturbed paths and the competitors used in the first variation are admissible.
+
+\paragraph{Finite propagation.} The assumption that the linear bound holds above a multiple of $x$ is removed in \cite[Section~6]{oai-fluctuations}. There, in addition, $d^2\le\beta^2-c_*$. Either the comparison acts on all masses and $b_0$ is bounded below by a fixed positive constant, or it acts on $[{\bar u}_0,1]$, where $b_0$ is bounded below by a fixed positive constant, and $b_0$ has a fixed positive jump at ${\bar u}_0$ \cite[Definition~6.1]{oai-fluctuations}. The selected alternative must retain a fixed positive margin after the initial comparison: a lower bound on the matrix covariance on $[{\bar u}_0,1]$ and, when the lower interval is omitted, a positive jump in that covariance from $[0,{\bar u}_0)$ to $[{\bar u}_0,1]$. A comparison on an omitted lower interval may instead be followed by comparisons on all masses if its perturbed matrix path has a global lower bound by a fixed positive constant. Subsequent comparisons on the omitted lower interval have lower radius zero. Suppose that the linear bound fails for some minimizer, at some strength ${\widehat\lambda}$, at some mass at least $A_{\widehat\lambda}$. Let $x$ be such a mass within a factor two of the supremum of these masses, so that the bound holds above $2x$. If $e(x)/x^2$ stays bounded below along a subsequence, \cite[Theorem~5.1]{oai-fluctuations} (when $x\to0$) or \cite[Proposition~5.9]{oai-fluctuations} (when $x$ stays bounded below) contradicts the failure, since $c$ and $C$ are chosen outside the bounds of the limiting profiles. Otherwise $e(x)/x^2\to0$. In this case OpenAI builds a new comparison, whose unperturbed paths are the perturbed paths of this minimizer, with
+\[
+ d'=c_0x,\qquad E'=\min\bigl\{n^{-1/2}(c_0x)^2,\;n^{-100\delta}e(x)x^3\bigr\},\qquad E'\ge n^{\delta/4}E
+\]
+\cite[Lemma~6.2]{oai-fluctuations}. Suppose that the new comparison satisfies its comparison bound \eqref{eq:fl-comparison-bound}, with $E'$ in place of $E$, and let $r'$ be its minimizer at its final strength. The two minimizers are then close at every scale $y\gtrsim x$ \cite[Lemmas~6.3--6.5]{oai-fluctuations}. More precisely, for fixed $[t_1,t_2]\subset(0,\infty)$ and $\eta>0$, with $[t_1y,t_2y]\subset(0,1)$ when $y$ is bounded below, the set of masses ${\bar u}\in[t_1y,t_2y]$ with $\abs{r({\bar u})-r'({\bar u})}>\eta y$ has Lebesgue measure $o(y)$. It follows that $r'$ satisfies the linear bound above a multiple of $x$. We then transfer the linear profile of $r'$ at scale $x$, given by \cite[Theorem~5.1]{oai-fluctuations} or \cite[Proposition~5.9]{oai-fluctuations}, to $r$, contradicting the failure. Hence the new comparison violates its comparison bound. By \cite[Proposition~3.10]{oai-fluctuations}, one of its minimizers then violates the linear bound, and the argument repeats with $E'$ in place of $E$. The parameter range confines $E$ between fixed multiples of $n^{-5/6+2m}$ and $n^{-1/2}$, and each repetition multiplies it by at least $n^{\delta/4}$. Since $N\delta/4\ge5/2>1/3-2m$ for $N=\lceil10/\delta\rceil$, at most $N$ repetitions are possible. Let $\kappa_0>0$ be a fixed lower bound for the residual matrix covariance and, when required, the residual matrix jump after the initial comparison. Before $n\to\infty$, we fix $c_0>0$ so that $Nc_0^2<\min\{1,\kappa_0/2\}$ and $c_0^2\le\beta^2-c_*$. The total matrix covariance removed by the subsequent comparisons is then less than $\kappa_0/2$, and the total field covariance added is less than $1$. Together with the zero lower radius for subsequent comparisons on the omitted lower interval, these bounds preserve nonnegativity, monotonicity, and the fixed bounds on the total covariance throughout the chain \cite[Proposition~6.6, proof]{oai-fluctuations}. The conclusion is \cite[Proposition~6.6]{oai-fluctuations}: every minimizer at a positive strength satisfies the linear bound above $A_{\widehat\lambda}$, and \eqref{eq:fl-comparison-bound} holds when the comparison is admissible at every strength. The linear bound also holds, uniformly in the parameters, for the comparisons with a low-field perturbation used below, which are admissible only at their final strength \cite[Corollary~6.7]{oai-fluctuations}.
+
+\paragraph{The lower bound.} Let $\eps=n^{-1/3}$, $d=s$, and $E=n^{-2/3+2m}s$. OpenAI applies a comparison on all masses whose unperturbed paths $(\beta^2-\eps\mathbf 1_{[0,s)},0)$ are those of $\Psi_n(\eps)$. It combines \eqref{eq:fl-comparison-bound} with the chord inequality
+\[
+ f_n(b',{\widehat h}')\le f_n(b,{\widehat h})+\frac14\int_0^1\frac{({\widehat h}({\bar u})-{\widehat h}'({\bar u}))^2}{b'({\bar u})-b({\bar u})}\,\dd {\bar u},
+\]
+valid for bounded nonnegative nondecreasing paths with $b'\ge b$, ${\widehat h}'={\widehat h}$ wherever $b'=b$, and a finite right side \cite[Lemma~7.1]{oai-fluctuations}, and with \cite[Proposition~6.6]{oai-fluctuations}, which gives $r\asymp s$ on $[s/2,s]$ at a minimizer. The result is
+\[
+ \Psi_n(\eps)-\Psi_n(0)\ge c\,\eps s^3-n^{20\delta}E=c\,n^{-5/6+15m}-n^{-5/6+7m+20\delta}
+\]
+\cite[Section~7.1, (30)]{oai-fluctuations}. The second term is smaller than the first by the factor $n^{-8m+20\delta}$. Since $\Psi_n$ is nondecreasing, we have $\Psi_n(\beta^2)-\Psi_n(0)\ge\Psi_n(\eps)-\Psi_n(0)$, and the lower bound in \eqref{eq:fl-pressure-window} follows.
+
+\paragraph{The upper bound.} An initial comparison on all masses, with $d_N=n^{-1/6+25m}$, bounds $\Psi_n(\eps_0)-\Psi_n(0)$, where $\eps_0=n^{-1/3+40m}$ \cite[Section~7.2]{oai-fluctuations}. Starting at $\eps_0$, OpenAI then iterates
+\[
+ \eps\longmapsto\eps+q_\eps,\qquad q_\eps=\tfrac14\min\{\eps,\beta^2-\eps\},
+\]
+until $\beta^2-\eps\le n^{-5}$. Below $\beta^2/2$ the parameter $\eps$ grows by the factor $5/4$, and above it $\beta^2-\eps$ shrinks by the factor $3/4$, so $O(\log n)$ steps suffice. Each step uses a comparison on $[s,1]$ with $d=n^{-1/6+15m}$ and $E=n^{-2/3+10m}d$. Its lower radius is $r_{\min}={\bar u}_*/(2M(s))\asymp n^{-1/6-55m-\delta}$, where ${\bar u}_*=(nE)^{-1}$ and $M({\bar u})$ is the upper bound on the derivative of the inverse quantile in \cite[(5)]{oai-fluctuations}. The comparison also includes a low-field perturbation of strength $\theta\in[0,1]$ on the lower interval $[0,s)$, which lowers the matrix covariance on that interval by $\theta c_L$ and raises the field covariance by $\theta c_Lr_0\varphi$ \cite[Section~7.3]{oai-fluctuations}. Here $c_L=\frac12\min\{\eps,\beta^2-\eps\}$, $r_0=d^2r_{\min}/(2\eps)$, and $\varphi$ increases from $0$ to $1$ on $[0,s]$. These comparisons are admissible at their final strength $d^2$, and their minimizers satisfy the linear bound above the scale $d$, uniformly in $\eps$ and $\theta$ \cite[Lemma~7.2]{oai-fluctuations}. This uses \cite[Corollary~6.7]{oai-fluctuations} at a fixed positive strength and requires no integration from strength zero. On the lower interval, $S_{\bar u}\le Cd^3/\eps$ for $0\le {\bar u}<s$ \cite[Lemma~7.3]{oai-fluctuations}. Integrating in $\theta$ from $0$ to $1$, and comparing with $\Psi_n(\eps+q_\eps)$ by the chord inequality, OpenAI obtains \cite[Lemma~7.4]{oai-fluctuations}
+\[
+ \Psi_n(\eps+q_\eps)-\Psi_n(\eps)\le n^{20\delta}E
+ +C\Bigl[\frac{sd^6}{\eps_0}+\frac{d}{nsr_{\min}}(\log n)^3+n^{-10}\Bigr].
+\]
+By the bound on the derivative of $\Psi_n$, the last interval, of length at most $n^{-5}$, costs at most $sn^{-5}/4$. Summing over the steps, we have \cite[Section~7.4]{oai-fluctuations}
+\begin{equation}\label{eq:fl-upper-sum}
+ \Psi_n(\beta^2)-\Psi_n(0)\le C\bigl[n^{-5/6+95m}+n^{-5/6+65m+\delta}(\log n)^4
+ +n^{-5/6+27m+20\delta}\log n+n^{-5}s\bigr].
+\end{equation}
+\Cref{t:fl-powers} lists the powers of $n$ that enter the two bounds. In \eqref{eq:fl-upper-sum}, the first term dominates for large $n$, because $65m+\delta$ and $27m+20\delta$ are both smaller than $95m$ when $\delta=m/10000$; the logarithmic factors are absorbed by the remaining powers. Multiplying \eqref{eq:fl-pressure-window} by $ns=n^{5/6+5m}$ turns the exponents $-5/6+15m$ and $-5/6+95m$ into $20m$ and $100m$, and we obtain \eqref{f:window-eq}.
+
+\begin{table}[ht]
+\centering
+\caption{The terms in the proof of \eqref{eq:fl-pressure-window} in \cite[Section~7]{oai-fluctuations}, with logarithmic factors and constants suppressed. Here $s=n^{-1/6+5m}$, $d_N=n^{-1/6+25m}$, $\eps_0=n^{-1/3+40m}$, $d=n^{-1/6+15m}$, $E=n^{-2/3+10m}d$, and $r_{\min}\asymp n^{-1/6-55m-\delta}$. The middle column refers to the sections of \cite{oai-fluctuations}.}
+\label{t:fl-powers}
+\begin{tabular}{@{}llc@{}}
+\toprule
+Term & In \cite{oai-fluctuations} & Power of $n$\\
+\midrule
+main term $\eps s^3$ of the lower bound, $\eps=n^{-1/3}$ & Section~7.1 & $-5/6+15m$\\
+error $n^{20\delta}E$ of the lower comparison & Section~7.1 & $-5/6+7m+20\delta$\\
+chord term $s\eps_0d_N^2$ of the initial comparison & Section~7.2 & $-5/6+95m$\\
+error of the initial comparison & Section~7.2 & $-5/6+27m+20\delta$\\
+error $n^{20\delta}E$ of one step & Section~7.4 & $-5/6+25m+20\delta$\\
+$sd^6/\eps_0$ & Section~7.4 & $-5/6+55m$\\
+$d/(nsr_{\min})$ & Section~7.4 & $-5/6+65m+\delta$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The order in which the parameters are chosen matters. In \cite{oai-fluctuations}, $m$ is fixed first and $\delta=m/10000$. Then the constants in the two-sided linear bound, the depth $N$, and the coefficient $c_0$ are fixed, and only then does $n$ tend to infinity. The resulting threshold in $n$ is uniform in $\eps$, $\theta$, the strength, and the minimizer. This uniformity is needed because the number and the locations of the steps depend on $n$.
+
+\section{Log-concave augmentation}\label{sec:fl-logconcave}
+
+A two-sided bound on $K_n$ at a single tilt does not by itself control $\Var(F_n)$ or the typical size of $F_n-\E F_n$: a rare large positive deviation can dominate an exponential moment, and a rare negative deviation can dominate the variance without changing the positive exponential moment \cite[Section~7.5]{oai-fluctuations}. The additional input is that $F_n^c$ has a log-concave law after an independent exponential variable is added. This observation is due to Aronow and Lopatto \cite[Proposition~5.1, proof, Steps~1 and~2]{quantitative-parisi}, and \cite[Lemma~7.6]{oai-fluctuations} states it in the present setting. Let $\mathcal E$ be an exponential random variable with mean one, independent of $J$ and $G$. We set
+\begin{equation}\label{f:smoothing}
+ U_n=F_n^c+\mathcal E=F_n+\beta G+\mathcal E,\qquad \sigma_n=\bigl(\Var(F_n)+\beta^2/2+1\bigr)^{1/2}.
+\end{equation}
+
+\begin{lemma}[Log-concave augmentation]\label{f:logconcave}
+Let $n\ge2$ and $\beta\ne0$. Then $U_n$ has a density $\varrho_n\colon\R\to(0,\infty)$ such that $\log \varrho_n$ is concave. Moreover, $\E U_n=\E F_n+1$, $\Var(U_n)=\sigma_n^2$, and for $0\le t<1$,
+\begin{equation}\label{f:smooth-transform}
+ \log\E e^{t(U_n-\E U_n)}=K_n(t)-t-\log(1-t).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We follow \cite[Proposition~5.1, proof]{quantitative-parisi} and \cite[Lemma~7.6]{oai-fluctuations}. The proof has three steps: we write $F_n^c$ as a convex function of a standard Gaussian vector, use the gauge symmetry of the model to express $\varrho_n$ through a single configuration, and then apply Pr\'ekopa's theorem.
+
+\paragraph{Step 1: a Gaussian representation.} Let $\bar n=n(n-1)/2+1$, and let $g=((J_{ij})_{i<j},g_0)$ be a standard Gaussian vector in $\R^{\bar n}$ with $G=g_0/\sqrt2$. For $x\in\Sigma_n$, we define $a_x\in\R^{\bar n}$ by $(a_x)_{ij}=\beta x_ix_j/\sqrt n$ for $i<j$ and $(a_x)_0=\beta/\sqrt2$. Then $\beta(H_n(x)+G)=a_x\cdot g$, and
+\[
+ F_n^c=F(g),\qquad F(g)=\log\sum_{x\in\Sigma_n}e^{a_x\cdot g}.
+\]
+The function $F$ is convex, as the logarithm of a sum of exponentials of linear functions.
+
+\paragraph{Step 2: gauge symmetry.} For $y\in\Sigma_n$, let $O_y\colon\R^{\bar n}\to\R^{\bar n}$ be the linear map with $(O_yg)_{ij}=y_iy_jg_{ij}$ for $i<j$ and $(O_yg)_0=g_0$. It is diagonal with entries $\pm1$. It is therefore orthogonal, and it preserves the law of $g$. Writing $yx=(y_ix_i)_{i\le n}$, we have $a_x\cdot O_yg=a_{yx}\cdot g$. Summing over $x$ and using that $x\mapsto yx$ is a bijection of $\Sigma_n$, we obtain $F(O_yg)=F(g)$.
+
+The density of $U_n=F(g)+\mathcal E$ is the convolution of the law of $F(g)$ with the density $e^{-y}\mathbf 1_{\{y\ge0\}}$, namely
+\[
+ \varrho_n(z)=\E\bigl[e^{F(g)-z}\mathbf 1_{\{F(g)\le z\}}\bigr]
+ =e^{-z}\sum_{x\in\Sigma_n}\E\bigl[e^{a_x\cdot g}\mathbf 1_{\{F(g)\le z\}}\bigr],
+ \qquad z\in\R.
+\]
+This expectation is finite, since its integrand is at most $1$. Fix $x_*\in\Sigma_n$ and write $a_*=a_{x_*}$. For $x\in\Sigma_n$, let $y\in\Sigma_n$ be given by $y_i=x_ix_{*,i}$, so that $yx_*=x$. Using $a_x\cdot g=a_*\cdot O_yg$, $F(g)=F(O_yg)$, and the invariance of the law of $g$ under $O_y$, we find that
+\[
+ \E\bigl[e^{a_x\cdot g}\mathbf 1_{\{F(g)\le z\}}\bigr]
+ =\E\bigl[e^{a_*\cdot O_yg}\mathbf 1_{\{F(O_yg)\le z\}}\bigr]
+ =\E\bigl[e^{a_*\cdot g}\mathbf 1_{\{F(g)\le z\}}\bigr].
+\]
+All $2^n$ terms of the sum are therefore equal, and
+\begin{equation}\label{eq:fl-pinned-density}
+ \varrho_n(z)=2^n(2\pi)^{-\bar n/2}\int_{\R^{\bar n}}\Theta(g,z)\,\dd g,\qquad
+ \Theta(g,z)=\exp\Bigl\{-\frac{|g|^2}{2}+a_*\cdot g-z\Bigr\}\mathbf 1_{\{F(g)\le z\}}.
+\end{equation}
+
+\paragraph{Step 3: log-concavity and positivity.} The set $\{(g,z)\in\R^{\bar n+1}:F(g)\le z\}$ is convex, since it is the epigraph of the convex function $F$. On this set, $\log\Theta(g,z)=-|g|^2/2+a_*\cdot g-z$ is concave, and $\Theta$ vanishes off it; that is, $\Theta$ is a log-concave function on $\R^{\bar n+1}$. Since $F(g)\ge a_*\cdot g$, we have $a_*\cdot g-z\le0$ wherever $F(g)\le z$, and hence $0\le\Theta(g,z)\le e^{-|g|^2/2}$ for every $(g,z)$. Moreover,
+\[
+ \int_\R\Theta(g,z)\,\dd z=e^{-|g|^2/2+a_*\cdot g-F(g)}\le e^{-|g|^2/2}.
+\]
+Every slice $g\mapsto\Theta(g,z)$ is therefore integrable, and $\Theta$ is integrable on $\R^{\bar n+1}$ by Tonelli's theorem. By Pr\'ekopa's theorem \cite[Theorems~6 and~8]{prekopa-1973}, the integral of a log-concave function over some of its variables is log-concave in the remaining ones. Then \eqref{eq:fl-pinned-density} implies that $\log \varrho_n$ is concave. To see that $\varrho_n(z)>0$ for every $z$, note that $F(g)=\log Z_n+\beta g_0/\sqrt2$. For fixed $J$, the set of $g_0$ with $F(g)\le z$ is a half-line, since $\beta\ne0$. By Fubini's theorem, $\{g:F(g)\le z\}$ has positive Lebesgue measure, and the integrand in \eqref{eq:fl-pinned-density} is positive on it.
+
+Finally, $J$, $G$, and $\mathcal E$ are independent, $\E G=0$, $\E\mathcal E=\Var(\mathcal E)=1$, and $\Var(\beta G)=\beta^2/2$. It follows that $\E U_n=\E F_n+1$ and $\Var(U_n)=\sigma_n^2$. For $0\le t<1$, we have $\E e^{t(\mathcal E-1)}=e^{-t}/(1-t)$, and \eqref{f:smooth-transform} follows from the independence of $F_n^c$ and $\mathcal E$.
+\end{proof}
+
+The next lemma collects the estimates for one-dimensional log-concave laws that we need. It is a variant of \cite[Lemma~7.7]{oai-fluctuations}; the tail bound in its proof is also in \cite[Proposition~5.1, proof, Step~3]{quantitative-parisi}.
+
+\begin{lemma}[One-dimensional log-concave bounds]\label{f:one-dim}
+There exist universal constants $c_1,c_2,p_*,C_1>0$ with the following property. Let $Z$ be a real random variable with mean $\mu$ and finite variance $\sigma^2>0$, and suppose that $Z$ has a density $\varrho\colon\R\to(0,\infty)$ such that $\log\varrho$ is concave. Then
+\begin{align}
+ \log\E e^{t(Z-\mu)}&\le\log3 &&\Bigl(|t|\le\frac{c_1}{2\sigma}\Bigr),\label{f:small-mgf}\\
+ \log\E e^{t(Z-\mu)}&\ge tc_2\sigma+\log p_* &&(t\ge0),\label{f:large-mgf}\\
+ \PP\{z-r\le Z\le z+r\}&\le\frac{2C_1r}{\sigma} &&(z\in\R,\ r\ge0).\label{f:interval}
+\end{align}
+In \eqref{f:large-mgf}, the left side may be $+\infty$.
+\end{lemma}
+
+\begin{proof}
+We show that the lemma holds with
+\[
+ c_1=\frac{\log3}{4},\qquad C_2=\frac{48}{c_1^4},\qquad c_2=\frac{1}{4\sqrt{C_2}},\qquad p_*=c_2^2,
+\]
+and
+\[
+ C_1=\Bigl(16+\frac{4}{c_3^3}\Bigr)^{1/2},\qquad c_3=\frac{\log 2}{4}.
+\]
+We first prove a tail bound and then the three assertions in order.
+
+\paragraph{Step 1: an exponential tail bound.} The function $(x,y)\mapsto\mathbf 1_{\{y\ge x\}}\varrho(y)$ is log-concave on $\R^2$. By Pr\'ekopa's theorem \cite[Theorems~6 and~8]{prekopa-1973}, the survival function $Q(x)=\PP(Z\ge x)$ is log-concave. It is positive, because $\varrho>0$. By Chebyshev's inequality,
+\[
+ Q(\mu-2\sigma)\ge1-\PP(|Z-\mu|\ge2\sigma)\ge\frac34,\qquad Q(\mu+2\sigma)\le\PP(|Z-\mu|\ge2\sigma)\le\frac14.
+\]
+Let $x\ge\mu+2\sigma$. Since $\log Q$ is concave, the slope of its secant over $[\mu+2\sigma,x]$ is at most its slope over $[\mu-2\sigma,\mu+2\sigma]$, which is at most $(\log\frac14-\log\frac34)/(4\sigma)=-c_1/\sigma$. This gives
+\[
+ Q(x)\le\frac14e^{-c_1(x-\mu-2\sigma)/\sigma}=\frac{\sqrt3}{4}e^{-c_1(x-\mu)/\sigma},
+\]
+where we used $e^{2c_1}=\sqrt3$. The variable $-Z$ satisfies the same hypotheses, with mean $-\mu$. Applying the same bound to it and adding, we find $\PP(|Z-\mu|\ge u)\le(\sqrt3/2)e^{-c_1u/\sigma}$ for $u\ge2\sigma$. For $0\le u<2\sigma$, we have $2e^{-c_1u/\sigma}\ge2/\sqrt3>1$. We conclude that
+\begin{equation}\label{eq:fl-tail}
+ \PP(|Z-\mu|\ge u)\le2e^{-c_1u/\sigma}\qquad(u\ge0).
+\end{equation}
+
+\paragraph{Step 2: small tilts.} Let $|t|\le c_1/(2\sigma)$ and $\ell=|t|$. Writing $e^{\ell|Z-\mu|}=1+\int_0^\infty\ell e^{\ell u}\mathbf 1_{\{|Z-\mu|>u\}}\,\dd u$ and using \eqref{eq:fl-tail}, we obtain
+\[
+ \E e^{t(Z-\mu)}\le\E e^{\ell|Z-\mu|}\le1+2\ell\int_0^\infty e^{(\ell-c_1/\sigma)u}\,\dd u
+ =1+\frac{2\ell}{c_1/\sigma-\ell}\le3.
+\]
+In the last inequality, we used $c_1/\sigma-\ell\ge c_1/(2\sigma)\ge\ell$. This proves \eqref{f:small-mgf}.
+
+\paragraph{Step 3: positive tilts.} Let $\hat Z=(Z-\mu)/\sigma$, so that $\E\hat Z=0$ and $\E\hat Z^2=1$. By \eqref{eq:fl-tail},
+\[
+ \E\hat Z^4=\int_0^\infty4u^3\,\PP(|\hat Z|\ge u)\,\dd u\le8\int_0^\infty u^3e^{-c_1u}\,\dd u=\frac{48}{c_1^4}=C_2.
+\]
+By H\"older's inequality with exponents $3/2$ and $3$, we have $1=\E\bigl[|\hat Z|^{2/3}|\hat Z|^{4/3}\bigr]\le(\E|\hat Z|)^{2/3}(\E\hat Z^4)^{1/3}$, which implies that $\E|\hat Z|\ge C_2^{-1/2}$. The positive part $\hat Z_+$ satisfies $\E\hat Z_+=\E|\hat Z|/2\ge C_2^{-1/2}/2=2c_2$, because $\E\hat Z=0$. We have $\hat Z_+<c_2$ on $\{\hat Z<c_2\}$. Using this, the Cauchy--Schwarz inequality, and $\E\hat Z_+^2\le1$, we obtain
+\[
+ 2c_2\le\E\hat Z_+\le c_2+\E\bigl[\hat Z_+\mathbf 1_{\{\hat Z\ge c_2\}}\bigr]\le c_2+\PP(\hat Z\ge c_2)^{1/2}.
+\]
+Rearranging, we find $\PP(\hat Z\ge c_2)\ge c_2^2=p_*$. For $t\ge0$, restricting the expectation to $\{\hat Z\ge c_2\}$, we obtain $\E e^{t(Z-\mu)}=\E e^{t\sigma\hat Z}\ge e^{tc_2\sigma}p_*$, which is \eqref{f:large-mgf}.
+
+\paragraph{Step 4: the density.} Fix $z\in\R$, and set $\ell=4/\varrho(z)$. Suppose that $\varrho(z+\ell)\ge\varrho(z)/2$. Since $\log\varrho$ is concave, for $0\le y\le\ell$ we have
+\[
+ \log\varrho(z+y)\ge\Bigl(1-\frac y\ell\Bigr)\log\varrho(z)+\frac y\ell\log\varrho(z+\ell)\ge\log\frac{\varrho(z)}2,
+\]
+so that $\int_z^{z+\ell}\varrho\ge\ell\varrho(z)/2=2$, which is impossible. We conclude that $\varrho(z+\ell)<\varrho(z)/2$. For $y\ge\ell$, the slope of the secant of $\log\varrho$ over $[z,z+y]$ is at most its slope over $[z,z+\ell]$, which is less than $-(\log2)/\ell=-c_3\varrho(z)$. Exponentiating, we find that $\varrho(z+y)\le\varrho(z)e^{-c_3\varrho(z)y}$ for $y\ge\ell$, and by the same argument applied to $y\mapsto\varrho(z-y)$, also $\varrho(z-y)\le\varrho(z)e^{-c_3\varrho(z)y}$ for $y\ge\ell$. Since the mean minimizes the mean square distance, we have
+\[
+\begin{aligned}
+ \sigma^2\le\E(Z-z)^2&\le\ell^2\,\PP(|Z-z|<\ell)+2\int_\ell^\infty y^2\varrho(z)e^{-c_3\varrho(z)y}\,\dd y\\
+ &\le\frac{16}{\varrho(z)^2}+\frac{4}{c_3^3\varrho(z)^2}=\frac{C_1^2}{\varrho(z)^2}.
+\end{aligned}
+\]
+In the second inequality, we bounded $(Z-z)^2$ by $\ell^2$ on $\{|Z-z|<\ell\}$ and used the two exponential bounds on the complement. This shows that $\varrho(z)\le C_1/\sigma$ for every $z\in\R$, and integrating over $[z-r,z+r]$ proves \eqref{f:interval}.
+\end{proof}
+
+\section{Proof of the fluctuation theorem}\label{sec:fl-endgame}
+
+The argument below is that of \cite[Section~7.6]{oai-fluctuations}, with two elementary changes: we use the constant bound \eqref{f:small-mgf} for small tilts in place of the quadratic bound of \cite[Lemma~7.7]{oai-fluctuations}, and we remove the added noise through the inequality \eqref{f:transfer} below.
+
+\begin{proof}[Proof of \cref{f:main} from \cref{f:window}]
+The proof has three steps. We first bound $\sigma_n$ above and below, using the two halves of \eqref{f:window-eq} together with \cref{f:logconcave,f:one-dim}. We then subtract the variance of the added noise to obtain the bounds on $\Var(F_n)$. Finally, we use the bound \eqref{f:interval} on the density of $U_n$ to show that $|F_n-\E F_n|$ is rarely smaller than $n^{1/6-\eta}$. Throughout, $c_1,c_2,p_*,C_1$ are the universal constants of \cref{f:one-dim}, and we write
+\[
+ d_\beta=\frac{\beta^2}{2}+1,\qquad\text{so that}\qquad \Var(F_n)=\sigma_n^2-d_\beta.
+\]
+By \cref{f:logconcave}, the variable $Z=U_n$ satisfies the hypotheses of \cref{f:one-dim}, with $\mu=\E U_n$ and $\sigma=\sigma_n\ge1$.
+
+\paragraph{Step 1: bounds on $\sigma_n$.} Fix $0<m<1/300$, and let $c,C,n_0$ be as in \cref{f:window}. Let $\omega(t)=-t-\log(1-t)$ for $0\le t<1$. Since $\omega(t)=\sum_{k\ge2}t^k/k$, we have
+\[
+ 0\le\omega(t)\le\frac{t^2}{2(1-t)}\le t^2\qquad\Bigl(0\le t\le\frac12\Bigr).
+\]
+By \eqref{f:smooth-transform}, $\log\E e^{t(U_n-\E U_n)}=K_n(t)+\omega(t)$. Let $n_1\ge n_0$ be such that $s_n\le1/2$ and $c\,n^{20m}>\log3$ for all $n\ge n_1$, and let $n\ge n_1$. If $s_n\le c_1/(2\sigma_n)$, then \eqref{f:small-mgf} and $\omega\ge0$ imply that $K_n(s_n)\le\log3$, which contradicts the lower bound in \eqref{f:window-eq}. It follows that $\sigma_n>c_1/(2s_n)$. On the other hand, \eqref{f:large-mgf} and the upper bound in \eqref{f:window-eq} give
+\[
+ s_nc_2\sigma_n+\log p_*\le K_n(s_n)+\omega(s_n)\le C\,n^{100m}+1.
+\]
+Using $p_*<1$ and $n^{100m}\ge1$, we find $\sigma_n\le C'n^{100m}/s_n$ with $C'=(C+1+\log(1/p_*))/c_2$. We have shown that
+\begin{equation}\label{f:augmented-sd}
+ \frac{c_1}{2}\,n^{1/6-5m}\le\sigma_n\le C'n^{1/6+95m}\qquad(n\ge n_1).
+\end{equation}
+Now fix $\eta>0$, and let $m=\min\{1/600,\eta/200\}$. Then $0<m<1/300$, $5m<\eta$, and $95m<\eta$. Since $n^{\eta-5m}$ and $n^{\eta-95m}$ tend to infinity, \eqref{f:augmented-sd} implies that there exists $n_2(\beta,\eta)$ such that
+\begin{equation}\label{eq:fl-sigma-eta}
+ n^{1/6-\eta}\le\sigma_n\le n^{1/6+\eta}\qquad(n\ge n_2(\beta,\eta)).
+\end{equation}
+Here $m$ depends only on $\eta$ and is chosen before $n\to\infty$; the threshold $n_2$ depends only on $\beta$ and $\eta$.
+
+\paragraph{Step 2: the standard deviation and the variance.} Fix $\eta>0$. By \eqref{eq:fl-sigma-eta} and $\Var(F_n)\le\sigma_n^2$, we have $\Var(F_n)^{1/2}\le n^{1/6+\eta}$ for $n\ge n_2(\beta,\eta)$. For the lower bound, let $\eta'=\min\{\eta/2,1/12\}$. By \eqref{eq:fl-sigma-eta} with $\eta'$ in place of $\eta$, we have $\sigma_n^2\ge n^{1/3-2\eta'}$ for $n\ge n_2(\beta,\eta')$. Since $1/3-2\eta'\ge1/6>0$, we have $d_\beta\le n^{1/3-2\eta'}/2$ for all sufficiently large $n$, and then
+\[
+ \Var(F_n)=\sigma_n^2-d_\beta\ge\frac12n^{1/3-2\eta'}\ge n^{1/3-2\eta}.
+\]
+The last inequality holds once $n^{2\eta-2\eta'}\ge2$, which is true eventually because $2\eta-2\eta'\ge\eta>0$. Taking square roots, we conclude that $n^{1/6-\eta}\le\Var(F_n)^{1/2}\le n^{1/6+\eta}$ for all sufficiently large $n$, for every fixed $\eta>0$. This is \eqref{f:sd}. Applying it with $\eta/2$ in place of $\eta$ and squaring, we obtain $n^{1/3-\eta}\le\Var(F_n)\le n^{1/3+\eta}$ for all sufficiently large $n$, which is \eqref{f:variance}.
+
+\paragraph{Step 3: the typical magnitude.} We have $U_n-\E U_n=(F_n-\E F_n)+\beta G+(\mathcal E-1)$. Let $r\ge0$ and $v>0$. On the event $\{|F_n-\E F_n|\le r\}\cap\{|\beta G|\le v\}\cap\{|\mathcal E-1|\le v\}$, we have $|U_n-\E U_n|\le r+2v$. A union bound, \eqref{f:interval} with $z=\E U_n$, and Chebyshev's inequality for $\beta G$ and $\mathcal E$, whose variances are $\beta^2/2$ and $1$, give
+\begin{equation}\label{f:transfer}
+ \PP(|F_n-\E F_n|\le r)\le\frac{2C_1(r+2v)}{\sigma_n}+\frac{d_\beta}{v^2}.
+\end{equation}
+Fix $\eta>0$, and set $\eta_1=\min\{\eta/4,1/48\}$, $r=n^{1/6-\eta}$, and $v=n^{\eta_1}$. By \eqref{eq:fl-sigma-eta} with $\eta_1$ in place of $\eta$, we have $\sigma_n\ge n^{1/6-\eta_1}$ for $n\ge n_2(\beta,\eta_1)$, and then \eqref{f:transfer} gives
+\[
+ \PP\bigl(|F_n-\E F_n|\le n^{1/6-\eta}\bigr)\le2C_1\bigl(n^{\eta_1-\eta}+2n^{2\eta_1-1/6}\bigr)+d_\beta n^{-2\eta_1}.
+\]
+Since $\eta_1-\eta\le-3\eta/4$ and $2\eta_1-1/6\le-1/8$, the right side tends to zero. For the upper tail, Chebyshev's inequality and the bound on the variance from Step~2 give
+\[
+ \PP\bigl(|F_n-\E F_n|>n^{1/6+\eta}\bigr)\le\frac{\Var(F_n)}{n^{1/3+2\eta}}\le n^{-\eta}
+\]
+for all sufficiently large $n$. Combining the two bounds, we find that $\PP\{n^{1/6-\eta}\le|F_n-\E F_n|\le n^{1/6+\eta}\}\to1$ for every fixed $\eta>0$, which is \eqref{f:typical}. This completes the proof.
+\end{proof}

@@ -1,0 +1,51 @@
+module
+
+/-
+Adapted from OpenAI math, Apache-2.0, commit fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+Source: lean/OAI/Probability/SKBarriers/SpinGlass/SpinCoefficientVariation.lean
+Changes: public module header and declarations added; import paths moved into SKConstants.Upstream; pinned Lean/Mathlib compatibility changes recorded in the port audit.
+Upstream mathematical declarations retained; their namespace OAI is renamed SKConstantsOAI in this distribution.
+-/
+
+public import Mathlib
+public import SKConstants.Upstream.OAI.Probability.SKBarriers.SpinGlass.SpinTerminalDerivative
+public import SKConstants.Upstream.OAI.Probability.SKBarriers.SpinGlass.SpinCovarianceVariation
+
+@[expose] public section
+
+namespace SKConstantsOAI
+
+section
+
+section
+noncomputable section
+open scoped BigOperators
+open MeasureTheory ProbabilityTheory Filter
+namespace SK.Analytic
+attribute [local instance 2000] parameterNormedGroup parameterNormedSpace
+
+theorem spinPressure_coefficient_variation {N : ℕ} (d : ℕ)
+    (I : Fin d → Finset (Fin N)) (a : Fin d → ℝ) (m : Fin d → ℝ) (i : Fin d) :
+    fderiv ℝ (fun a : Fin d → ℝ =>
+      hierarchyPressure d m (affineLogPartition (fun _ => 0) (spinExponent d a I)) 0) a
+      (Pi.single i 1) =
+      a i*(1-∑ j : Fin (d+1), if i.val < j.val then hierarchyAtom d m 1 j *
+        (∫ z, (hierarchySpinMean d m (spinExponent d a I) (fun s => spinMonomial s (I i)) j z)^2
+          ∂hierarchyPathLaw d m (affineLogPartition (fun _ => 0) (spinExponent d a I)) 0) else 0) := by
+  rw [spinPressure_parameterDerivative_single]
+  apply hierarchyGaussian_coordinate_spin d m (spinExponent d a I) (fun s => spinMonomial s (I i)) (a i) i
+  · intro s
+    simp only [spinExponent,coordinateLinear_coordinateAxis]
+  · intro s
+    rw [Real.norm_eq_abs]
+    exact abs_le_one_iff_mul_self_le_one.mpr (by nlinarith [spinMonomial_sq s (I i)])
+  · intro s
+    exact spinMonomial_sq s (I i)
+end SK.Analytic
+
+end
+end
+
+end
+
+end SKConstantsOAI

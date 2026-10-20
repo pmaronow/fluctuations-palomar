@@ -1,0 +1,9 @@
+module
+
+public import ComparisonActualHighOnlyCavityEarlyNumericConsumers
+public import ComparisonActualHighOnlyCavityTargetReadoutConsumers
+public import ComparisonActualHighOnlyCavityConstantNumericConsumers
+public import ComparisonActualHighOnlyCavityFeedbackNumericConsumers
+public import ComparisonActualHighOnlyCavityInitialNumericConsumers
+
+@[expose] public section

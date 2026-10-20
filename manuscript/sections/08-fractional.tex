@@ -1,0 +1,356 @@
+\chapter{Fractional moments of constrained partition functions}\label{sec:fractional}\label{b:sec:fractional-static}
+
+In this section we bound positive fractional moments of the partition function of three configurations with prescribed overlaps. The main result is \cref{lem:fr-local-gap}. It states that, for every overlap matrix $D$ in the local band of \cref{sec:cubic}, the normalized fractional moment $(ns)^{-1}\log\E Z_{3,n}(D)^s$ of order $s=S\rho$ is at most $3P_\beta-g\rho^3$, uniformly in $n$. In \cref{sec:static} we use this bound and Markov's inequality to obtain a single disorder event on which all these constrained partition functions are small. That event is the static input of the dynamical argument in \cref{sec:references,sec:induction,sec:barrier-proof}.
+
+We first explain why a fractional moment is needed. The cubic deficit of \cref{sec:cubic} bounds the quenched constrained pressure $p_{3,n}(D)=n^{-1}\E\log Z_{3,n}(D)$ by $3P_\beta$ minus a multiple of $\rho^3$. Gaussian concentration turns a mean deficit of order $\rho^3$ into a probability bound $\exp(-cn\rho^6)$, and for $\rho\asymp n^{-7/30}$ the exponent $n\rho^6\asymp n^{-2/5}$ tends to zero. With a bound of the same order on the moment of order $s\asymp\rho$, we obtain instead the probability bound $\exp(-cns\rho^3)=\exp(-cn\rho^4)$, and $n\rho^4\asymp n^{1/15}$. The proof has three ingredients.
+\begin{enumerate}
+\item \Cref{b:prop:fractional-matrix} is a matrix interpolation bound for the moment of order $s$ of a constrained partition function. Its right side is the trial value of the quenched comparison \cref{inp:ob-matrix}, which is \cite[Proposition~2.3]{oai-barriers}. However, the comparison path must have all its masses at least $s$, and the left side carries the correction $\beta^2\ell^2s/(4n)$ produced by the Gaussian completion of \cref{lem:model-completion}.
+\item The three-replica path of \cref{sec:cubic} has masses $\alpha/3$ near the origin, and $\alpha(t)\to0$ as $t\to0$. We replace $\alpha$ by the profile $\max\{\alpha,3s\}$. Its cost is $O(s^5)$ by the estimate of Aronow and Lopatto recalled in \cref{inp:qp-floor}, and \cref{lem:fr-prefix-response} controls the effect of this change on the local covariance perturbation, which starts at a time bounded away from zero.
+\item \Cref{lem:fr-local-gap} combines these estimates with the uniform cubic deficit \eqref{b:eq:os-uniform-corner-gap}.
+\end{enumerate}
+The fractional comparison and the local fractional bound are new relative to \cite{oai-barriers}. The comparison adapts the quenched bound \cite[Proposition~2.3]{oai-barriers}, and the positive-moment mechanism and the profile $\max\{\alpha,3s\}$ come from \cite{quantitative-parisi}; see \cref{rem:fr-history}.
+
+\Cref{sec:fr-hierarchy} defines Gaussian hierarchies whose outermost integration has positive mass and computes their variance derivatives. \Cref{sec:fr-comparison} proves \cref{b:prop:fractional-matrix}. \Cref{sec:fr-floor,sec:fr-prefix} treat the profile $\max\{\alpha,3s\}$, and \cref{sec:fr-local} proves \cref{lem:fr-local-gap}.
+
+\paragraph{Standing notation.} Throughout this section and the next, $\beta>1$ is fixed, and $\alpha=\alpha_\beta$, $\mu_\beta$, $q_\beta$, $\Phi$, $u$, $\chi$, $Y$ and $\Gamma$ are as in \cref{sec:inputs}. Recall that $\Gamma(t)=t$ for $0\le t\le q_\beta$ and that $\alpha$ is smooth on $[0,q_\beta)$, by \cref{cor:inp-identity}. We use the constrained partition functions $Z_{\ell,n}(D)$ and pressures $p_{\ell,n}(D)$ of \cref{def:inp-constrained}, the matrices $D_2(q)$ and $D(r,q,\delta)$ of \eqref{eq:inp-triple}, the integration steps $T_{m,\Sigma}$ of \cref{def:inp-step}, and the admissible paths and trial values $\mathcal T_D(Q,m,\lambda)$ of \cref{def:inp-hierarchy,def:inp-trial}. For real $\ell\times\ell$ matrices $U,U'$, not necessarily symmetric, $U\mathbin{:}U'=\sum_{a,a'}U_{aa'}U'_{aa'}$ and $\norm U_F^2=U\mathbin{:}U$. For a feasible $\ell\times\ell$ matrix $D$ and $0<s\le1$, we define the normalized fractional moment
+\begin{equation}\label{eq:fr-moment}
+ p^{(s)}_{\ell,n}(D)=\frac1{ns}\log\E Z_{\ell,n}(D)^s.
+\end{equation}
+By Jensen's inequality, we have $p_{\ell,n}(D)\le p^{(s)}_{\ell,n}(D)$, so an upper bound on $p^{(s)}_{\ell,n}(D)$ is stronger than the same upper bound on $p_{\ell,n}(D)$. Throughout, $s\in(0,1]$ denotes the order of a fractional moment; in \cref{sec:fr-floor} it is also the parameter of the profile $\max\{\alpha,3s\}$ of \cref{inp:qp-floor}.
+
+\section{Hierarchies with a positive outer mass}\label{sec:fr-hierarchy}
+
+In the hierarchies of \cref{inp:ob-hierarchy-derivative}, the quenched randomness is integrated by an ordinary expectation, which corresponds to mass zero. To control a fractional moment of order $s$, we instead integrate it at mass $s$.
+
+\begin{definition}[Hierarchy with positive outer mass]\label{def:fr-positive-hierarchy}
+Let $\mathcal S$ be a nonempty finite set, let $N\ge1$, let $s\in(0,1]$, and let $s\le m_1\le\dots\le m_N\le1$. Let $\omega,\mathbf g_1,\dots,\mathbf g_N$ be independent standard Gaussian vectors in finite-dimensional spaces, and for $x\in\mathcal S$ let $U(x)=U(x;\omega,\mathbf g_1,\dots,\mathbf g_N)$ be affine in $(\omega,\mathbf g_1,\dots,\mathbf g_N)$. We set
+\[
+ \Psi_N=\log\sum_{x\in\mathcal S}e^{U(x)},\qquad
+ \Psi_{j-1}=\frac1{m_j}\log\E_je^{m_j\Psi_j}\quad(j=N,\dots,1),\qquad
+ \Psi_{-1}=\frac1s\log\E_\omega e^{s\Psi_0},
+\]
+where $\E_j$ integrates $\mathbf g_j$ and $\E_\omega$ integrates $\omega$. Then $\Psi_j$ is a function of $(\omega,\mathbf g_1,\dots,\mathbf g_j)$, and the number $\Psi_{-1}$ is the value of the hierarchy. The path law is the law of $(\omega,\mathbf g_1,\dots,\mathbf g_N,\mathsf x)$ under which $\omega$ has density $e^{s(\Psi_0-\Psi_{-1})}$ with respect to its Gaussian law, given $(\omega,\mathbf g_1,\dots,\mathbf g_{j-1})$ the vector $\mathbf g_j$ has density $e^{m_j(\Psi_j-\Psi_{j-1})}$, and given all Gaussian variables the configuration $\mathsf x\in\mathcal S$ has the Gibbs law proportional to $e^{U(\mathsf x)}$. For $0\le l\le N$, $\E_l^{(2)}$ is the expectation under the pair law of $(\mathsf x^1,\mathsf x^2)$ sharing $(\omega,\mathbf g_1,\dots,\mathbf g_l)$, with conditionally independent continuations. We set $m_0=s$, $m_{N+1}=1$ and $\Delta m_l=m_{l+1}-m_l$ for $0\le l\le N$.
+\end{definition}
+
+Note that the recursion normalizes the densities, and that all integrals are finite since $\Psi_N$ is Lipschitz in the Gaussian variables. As $s\to0$, the outermost step becomes $\Psi_{-1}=\E_\omega\Psi_0$, the quenched root of \cref{inp:ob-hierarchy-derivative}, where $m_0=0$. The next lemma is the analogue of \cref{inp:ob-hierarchy-derivative}, which is \cite[Lemma~2.2]{oai-barriers}; the only change is that the weights now sum to $1-s$.
+
+\begin{lemma}[Variance derivative]\label{lem:fr-derivative}
+In the setting of \cref{def:fr-positive-hierarchy}, suppose that a standard Gaussian vector $\mathbf g$, which is either $\mathbf g_j$ for some $1\le j\le N$ or a component of $\omega$ (in which case $j=0$), enters $U$ only through an additive term $\sqrt v\,\mathbf g\cdot e(x)$, where $e$ is a fixed vector-valued function on $\mathcal S$. Then, with all other parameters fixed, for $v>0$,
+\begin{equation}\label{b:eq:positive-tree-derivative}
+ \frac{\partial\Psi_{-1}}{\partial v}
+ =\frac12\Bigl(\E\norm{e(\mathsf x)}^2-\sum_{l=j}^N\Delta m_l\,\E^{(2)}_l\,e(\mathsf x^1)\cdot e(\mathsf x^2)\Bigr),
+\end{equation}
+where $\E$ is the expectation under the path law. The weights $\Delta m_0,\dots,\Delta m_N$ are nonnegative and sum to $1-s$.
+\end{lemma}
+
+\begin{proof}
+We follow the proof of \cite[Lemma~2.2]{oai-barriers} and write it out, because the outermost level is now integrated at positive mass. The proof has three steps: a recursion for Hessians in an auxiliary deterministic field, the variance derivative at level $j$, and a telescoping sum.
+
+\paragraph{Step 1: the Hessian recursion.} For a deterministic vector $\mathbf y$, let $\Psi_l(\mathbf y)$ be the values of the hierarchy when $\mathbf y\cdot e(x)$ is added to $U(x)$. For $0\le l\le N$, we write $\bar e_l=\E[e(\mathsf x)\mid\omega,\mathbf g_1,\dots,\mathbf g_l]$ under the path law, and let $H_l$ be the Hessian of $\Psi_l$ in $\mathbf y$ at $\mathbf y=0$. Note that $\nabla_{\mathbf y}\Psi_N=\bar e_N$ and that $H_N=\Cov(e(\mathsf x)\mid\omega,\mathbf g_1,\dots,\mathbf g_N)$, the covariance under the Gibbs law. For $1\le l\le N$, differentiating $\Psi_{l-1}=m_l^{-1}\log\E_le^{m_l\Psi_l}$ once and twice, we obtain
+\[
+ \nabla_{\mathbf y}\Psi_{l-1}=\bar e_{l-1},\qquad
+ H_{l-1}=\E[H_l\mid\omega,\mathbf g_1,\dots,\mathbf g_{l-1}]+m_l\Cov(\bar e_l\mid\omega,\mathbf g_1,\dots,\mathbf g_{l-1}),
+\]
+where for the first identity we used the tower property of conditional expectation. Taking traces and expectations, we find
+\begin{equation}\label{eq:fr-hessian-trace}
+ \E\tr H_N=\E\norm{e(\mathsf x)}^2-\E\norm{\bar e_N}^2,\qquad
+ \E\tr H_{l-1}=\E\tr H_l+m_l\bigl(\E\norm{\bar e_l}^2-\E\norm{\bar e_{l-1}}^2\bigr).
+\end{equation}
+
+\paragraph{Step 2: the derivative at level $j$.} The vector $\mathbf g$ enters $\Psi_j$ only through the shift $\mathbf y=\sqrt v\,\mathbf g$. We use the heat equation $\partial_v\E f(\sqrt v\,\mathbf g)=\frac12\E\Delta f(\sqrt v\,\mathbf g)$, valid for smooth $f$ of moderate growth. Applying it to $f=e^{m_j\Psi_j}$ in the step that integrates level $j$, at mass $m_j$ (with $m_0=s$ for $\omega$), we obtain
+\[
+ \partial_v\Psi_{j-1}=\frac12\E\bigl[\tr H_j+m_j\norm{\bar e_j}^2\bigm|\omega,\mathbf g_1,\dots,\mathbf g_{j-1}\bigr],
+\]
+which for $j=0$ is to be read without conditioning. At the earlier levels, differentiating $m^{-1}\log\E e^{m\Psi}$ in $v$ gives the tilted expectation of $\partial_v\Psi$; this holds at every level, including the outermost one at mass $s$. Iterating, we conclude that
+\begin{equation}\label{eq:fr-derivative-step2}
+ 2\,\partial_v\Psi_{-1}=\E\tr H_j+m_j\E\norm{\bar e_j}^2.
+\end{equation}
+
+\paragraph{Step 3: telescoping.} Inserting \eqref{eq:fr-hessian-trace} for $l=N,\dots,j+1$ into \eqref{eq:fr-derivative-step2}, we have
+\[
+ 2\,\partial_v\Psi_{-1}
+ =\E\norm{e(\mathsf x)}^2-\E\norm{\bar e_N}^2+\sum_{l=j+1}^Nm_l\bigl(\E\norm{\bar e_l}^2-\E\norm{\bar e_{l-1}}^2\bigr)+m_j\E\norm{\bar e_j}^2.
+\]
+For $j\le l\le N$, the coefficient of $\E\norm{\bar e_l}^2$ is $m_l-m_{l+1}=-\Delta m_l$, where we used $m_{N+1}=1$. Two paths that share $(\omega,\mathbf g_1,\dots,\mathbf g_l)$ are conditionally independent, which implies that $\E\norm{\bar e_l}^2=\E^{(2)}_le(\mathsf x^1)\cdot e(\mathsf x^2)$. This proves \eqref{b:eq:positive-tree-derivative}. The weights are nonnegative because the masses are ordered, and they sum to $m_{N+1}-m_0=1-s$.
+
+All differentiations under the integral sign are justified by dominated convergence. Indeed, $\mathcal S$ and the number of levels are finite, the gradients of $U$ in the Gaussian variables are bounded, and the values grow at most linearly in these variables.
+\end{proof}
+
+In the quenched case $m_0=0$, the term $m_0\E\norm{\bar e_0}^2$ is absent and the weights sum to one; this is the only difference from \cite[Lemma~2.2]{oai-barriers}. The same term appears in the differentiation of a positive fractional moment of the one-replica partition function by Aronow and Lopatto \cite[Section~2.3, (2.10)--(2.11)]{quantitative-parisi}, where it removes the prescribed mass at zero from the integral against the variational measure.
+
+\section{The fractional matrix comparison}\label{sec:fr-comparison}
+
+\begin{proposition}[Fractional matrix comparison]\label{b:prop:fractional-matrix}
+Let $n\ge2$, $\ell\in\{2,3\}$ and $s\in(0,1]$, let $D$ be a feasible $\ell\times\ell$ matrix, let $(Q,m)$ be an admissible path of $\ell\times\ell$ matrices whose masses satisfy $m_1\ge s$, and let $\lambda$ be a symmetric $\ell\times\ell$ matrix. Then
+\begin{equation}\label{b:eq:fractional-matrix-exact}
+ p^{(s)}_{\ell,n}(D)+\frac{\beta^2\ell^2s}{4n}
+ \le\mathcal T_D(Q,m,\lambda)
+ =\Psi(Q,m,\lambda)-\lambda\mathbin{:}D+\frac{\beta^2}4\Bigl(\norm{D-Q_N}_F^2-\int m\dd\norm{Q}_F^2\Bigr).
+\end{equation}
+The same inequality holds for every trial value for $D$, in the sense of \cref{def:inp-trial}, that is a limit along admissible paths whose masses are all at least $s$.
+\end{proposition}
+
+The right side of \eqref{b:eq:fractional-matrix-exact} is exactly the right side of the quenched comparison \cref{inp:ob-matrix}. Every trial bound for $p_{\ell,n}(D)$ obtained from a path whose masses are all at least $s$ also bounds $p^{(s)}_{\ell,n}(D)+\beta^2\ell^2s/(4n)$.
+
+\begin{proof}
+We interpolate between the completed Hamiltonian and independent fields at the $n$ sites, as in the proof of \cite[Proposition~2.3]{oai-barriers}. The difference is that the Hamiltonian disorder is integrated at the outer mass $s$ instead of by an ordinary expectation. The proof has four steps: the covariances, the derivative of the interpolation, its endpoints, and the effect of the completion.
+
+\paragraph{Step 1: covariances.} Let $J_0$ be a standard Gaussian variable independent of $J$, set $G=J_0/\sqrt2$, and let $H^c_n=H_n+G$ be the completed Hamiltonian of \cref{lem:model-completion}, so that $\E H^c_n(x)H^c_n(y)=nR(x,y)^2/2$. For two tuples $\bm x=(x^1,\dots,x^\ell)$ and $\bm y$ in $\Sigma_n^\ell$, let $R(\bm x,\bm y)$ be the cross-overlap matrix with entries $R(x^a,y^{a'})$; it need not be symmetric. Then
+\begin{equation}\label{eq:fr-hamiltonian-covariance}
+ \E\Bigl[\beta\sum_{a=1}^\ell H^c_n(x^a)\cdot\beta\sum_{a'=1}^\ell H^c_n(y^{a'})\Bigr]
+ =\frac{n\beta^2}2\sum_{a,a'=1}^\ell R(x^a,y^{a'})^2=\frac{n\beta^2}2\norm{R(\bm x,\bm y)}_F^2.
+\end{equation}
+The process $\beta\sum_aH^c_n(x^a)$ is a linear form in the standard Gaussian vector $\omega=((J_{ij})_{i<j},J_0)$, as required in \cref{lem:fr-derivative}. For the site fields, let $\mathbf g_{j,i}$, $1\le j\le N$, $1\le i\le n$, be independent standard Gaussian vectors in $\R^\ell$, let $\mathbf g_j=(\mathbf g_{j,i})_{i\le n}$, and write $\bm x_i=(x^1_i,\dots,x^\ell_i)\in\{-1,1\}^\ell$ for the spins of $\bm x$ at site $i$. With $\Delta Q_j=Q_j-Q_{j-1}$, we have
+\begin{equation}\label{eq:fr-field-covariance}
+ \E\Bigl[\sum_{i=1}^n\beta\Delta Q_j^{1/2}\mathbf g_{j,i}\cdot\bm x_i\sum_{i=1}^n\beta\Delta Q_j^{1/2}\mathbf g_{j,i}\cdot\bm y_i\Bigr]
+ =\beta^2\sum_{i=1}^n\bm x_i^{\mathsf T}\Delta Q_j\bm y_i
+ =n\beta^2\,\Delta Q_j\mathbin{:}R(\bm x,\bm y).
+\end{equation}
+
+\paragraph{Step 2: the interpolation.} For $0\le t\le1$, consider the hierarchy of \cref{def:fr-positive-hierarchy} with $\mathcal S=\Sigma_D=\{\bm x\in\Sigma_n^\ell:R(\bm x,\bm x)=D\}$, the masses $s\le m_1\le\dots\le m_N$, the Gaussian vectors $\omega,\mathbf g_1,\dots,\mathbf g_N$, and
+\[
+ U_t(\bm x)=\sqrt t\,\beta\sum_{a=1}^\ell H^c_n(x^a)
+ +\sqrt{1-t}\sum_{i=1}^n\sum_{j=1}^N\beta\Delta Q_j^{1/2}\mathbf g_{j,i}\cdot\bm x_i
+ +\sum_{i=1}^n\bm x_i^{\mathsf T}\lambda\bm x_i.
+\]
+Let $\Theta(t)$ be its value divided by $n$. The Hamiltonian enters at level $0$ with variance parameter $t$, and the site fields of level $j$ enter with variance parameter $1-t$. For $\bm x\in\Sigma_D$ we have $R(\bm x,\bm x)=D$. Applying \cref{lem:fr-derivative} to each of these Gaussian vectors and using \eqref{eq:fr-hamiltonian-covariance} and \eqref{eq:fr-field-covariance}, we obtain, for $0<t<1$,
+\begin{align*}
+ \Theta'(t)
+ &=\frac1{2n}\Bigl[\frac{n\beta^2}2\Bigl(\norm D_F^2-\sum_{l=0}^N\Delta m_l\E^{(2)}_l\norm R_F^2\Bigr)\\
+ &\qquad\qquad-\sum_{j=1}^Nn\beta^2\Bigl(\Delta Q_j\mathbin{:}D-\sum_{l=j}^N\Delta m_l\E^{(2)}_l\,\Delta Q_j\mathbin{:}R\Bigr)\Bigr]\\
+ &=\frac{\beta^2}4\Bigl[\norm D_F^2-2Q_N\mathbin{:}D-\sum_{l=0}^N\Delta m_l\E^{(2)}_l\bigl(\norm R_F^2-2Q_l\mathbin{:}R\bigr)\Bigr],
+\end{align*}
+where $R=R(\bm x^1,\bm x^2)$ is the cross-overlap matrix of the terminal tuples of the two paths, and in the last line we summed $\Delta Q_j$ over $j\le l$, using $Q_0=0$. For every matrix $R$ we have $\norm R_F^2-2Q_l\mathbin{:}R=\norm{R-Q_l}_F^2-\norm{Q_l}_F^2$. Since $\Delta m_l\ge0$, this implies that
+\begin{equation}\label{eq:fr-phi-prime}
+ \Theta'(t)\le\frac{\beta^2}4\Bigl(\norm D_F^2-2Q_N\mathbin{:}D+\sum_{l=0}^N\Delta m_l\norm{Q_l}_F^2\Bigr)
+ =\frac{\beta^2}4\Bigl(\norm{D-Q_N}_F^2-\int m\dd\norm{Q}_F^2\Bigr).
+\end{equation}
+Here we used that $\Delta m_0=m_1-s\ge0$; this is where the condition $m_1\ge s$ enters. The equality in \eqref{eq:fr-phi-prime} is the summation by parts
+\[
+ \norm{Q_N}_F^2-\sum_{l=0}^N\Delta m_l\norm{Q_l}_F^2
+ =\sum_{l=1}^Nm_l\norm{Q_l}_F^2-\sum_{l=1}^{N}m_l\norm{Q_{l-1}}_F^2
+ =\sum_{j=1}^Nm_j\bigl(\norm{Q_j}_F^2-\norm{Q_{j-1}}_F^2\bigr),
+\]
+where we used $m_{N+1}=1$ and $Q_0=0$; the right side is the penalty \eqref{eq:inp-penalty}. The symmetry of $R$ was not used.
+
+\paragraph{Step 3: the endpoints.} At $t=1$ the site fields do not appear, and $\sum_i\bm x_i^{\mathsf T}\lambda\bm x_i=n\lambda\mathbin{:}D$ on $\Sigma_D$. The integrations of $\mathbf g_N,\dots,\mathbf g_1$ act on a function of $\omega$ only and leave it unchanged, and the outermost integration gives
+\[
+ \Theta(1)=\frac1{ns}\log\E\bigl(Z^c_{\ell,n}(D)\bigr)^s+\lambda\mathbin{:}D,\qquad
+ Z^c_{\ell,n}(D)=\sum_{\bm x\in\Sigma_D}\exp\Bigl(\beta\sum_{a=1}^\ell H^c_n(x^a)\Bigr).
+\]
+At $t=0$ the Hamiltonian does not appear. Replacing $\Sigma_D$ by $\Sigma_n^\ell$ increases $\Psi_N$, and the value increases with it, because every step of the recursion is monotone. For the unconstrained sum, $\Psi_N$ is a sum over $i\le n$ of functions of the independent families $(\mathbf g_{j,i})_{j\le N}$, and each step $m^{-1}\log\E e^{m(\cdot)}$ factorizes over such sums. The contribution of each site is the one-site value $\Psi(Q,m,\lambda)$ of \cref{def:inp-hierarchy}, and the outermost integration at mass $s$ acts on a constant. This shows that $\Theta(0)\le\Psi(Q,m,\lambda)$.
+
+\paragraph{Step 4: the completion.} By \cref{lem:model-completion}, part (d), $Z^c_{\ell,n}(D)=e^{\beta\ell G}Z_{\ell,n}(D)$ and
+\[
+ \frac1{ns}\log\E\bigl(Z^c_{\ell,n}(D)\bigr)^s=p^{(s)}_{\ell,n}(D)+\frac{\beta^2\ell^2s}{4n};
+\]
+indeed $G\sim N(0,1/2)$ is independent of $J$, and $\E e^{s\beta\ell G}=e^{s^2\beta^2\ell^2/4}$. Combining Steps~2--4 with $\Theta(1)\le\Theta(0)+\int_0^1\Theta'(t)\dd t$, we obtain \eqref{b:eq:fractional-matrix-exact}. The function $\Theta$ is continuous on $[0,1]$ and differentiable on $(0,1)$, since all Gaussian integrals are finite-dimensional and $U_t$ is Lipschitz in the Gaussian variables. Singular increments $\Delta Q_j$ cause no difficulty, since only $\Delta Q_j^{1/2}$ is used. Finally, the left side of \eqref{b:eq:fractional-matrix-exact} does not depend on the path, and the inequality passes to limits along which the right side converges.
+\end{proof}
+
+\begin{remark}\label{rem:fr-history}
+Gaussian interpolation for the free energy is due to Guerra \cite{guerra-2003}. Constrained comparisons for several coupled replicas go back to Talagrand \cite{talagrand-2007}, and the vector-spin formulation is due to Panchenko \cite{panchenko-2018}; see the discussion at the start of \cite[Section~2]{oai-barriers}. The quenched arbitrary-endpoint bound used in this paper is \cref{inp:ob-matrix}. Positive fractional moments of the SK partition function were studied by Talagrand \cite{talagrand-2007-large-deviations}. For fixed $0<s<1$, the limiting normalized fractional moment is given by the one-level case of the multiscale formula of Contucci and Mingione \cite[Theorem~2.1]{contucci-mingione-2019}, and by the constrained Parisi formula of Chen, Guionnet, Ko, Lacroix-A-Chez-Toine and Mourrat \cite[Theorem~2.1]{chen-guionnet-ko-lacroix-mourrat-2026}, in which the order of the moment is a lower bound on the mass at zero. The condition $m_1\ge s$ in \cref{b:prop:fractional-matrix} is the finite-volume form of this constraint. Quantitative finite-size versions for the one-replica partition function, with $s$ depending on $n$, are due to Aronow and Lopatto \cite[Section~2.3]{quantitative-parisi}. The replica-matrix version with a free endpoint in \cref{b:prop:fractional-matrix} is a direct adaptation of these arguments and is not stated in \cite{oai-barriers}. The completion correction $\beta^2\ell^2s/(4n)$ is nonnegative, and below we discard it.
+\end{remark}
+
+\section{The profile \texorpdfstring{$\max\{\alpha,3s\}$}{max(alpha, 3s)}}\label{sec:fr-floor}
+
+For $s>0$ we define $\alpha_s(t)=\max\{\alpha(t),3s\}$ for $0\le t\le1$. The factor three ensures that a block of three coordinates sharing a field, which is integrated at mass $\alpha_s/3$ (\cref{lem:inp-blocks}(b)), has mass at least $s$.
+
+\begin{lemma}[Cost of the profile]\label{lem:fr-floor}
+There exist $s_0\in(0,1/3]$ and $C_{\rm fl}<\infty$, depending only on $\beta$, such that for every $0<s\le s_0$ the function $\alpha_s$ is a distribution function and
+\begin{equation}\label{b:eq:specific-floor-cost}
+ 0\le\mathcal P_\beta(\alpha_s)-P_\beta\le C_{\rm fl}s^5,\qquad
+ \alpha_s=\alpha\ \text{on }[C_{\rm fl}s,1],\qquad
+ \int_0^1\abs{\alpha_s(t)-\alpha(t)}\dd t\le C_{\rm fl}s^2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $T_*,c_1,s_0',C$ be the constants of \cref{inp:qp-floor}, and let $s_0=\min\{s_0',c_1T_*/3\}$. For $0<s\le s_0$, part (ii) of \cref{inp:qp-floor} states that $\alpha_s$ is a distribution function whose cost is at most $Cs^5$; this is \cite[Lemma~7.2, (7.3)]{quantitative-parisi} for this particular profile, in the fixed-temperature normalization of \cite[Proposition~7.12]{quantitative-parisi}. Since $3s\le c_1T_*$, \cref{rem:inp-floor} implies that $\alpha_s=\alpha$ on $[3s/c_1,1]$ and that the $L^1$ distance is at most $9s^2/c_1$. The lemma holds with $C_{\rm fl}=\max\{C,3/c_1,9/c_1\}$.
+\end{proof}
+
+The cost bound concerns the explicit profile $\alpha_s$, and not only the infimum of $\mathcal P_\beta$ over profiles with mass at least $3s$ at the origin. We need this distinction below, because we use the same profile in the comparison path for three replicas.
+
+\section{A change of profile before the local window}\label{sec:fr-prefix}
+
+The local covariance perturbation of \cref{sec:cubic} starts at a time $q_0>0$, and on $[0,q_0]$ the three coordinates share their field, integrated at mass $\alpha/3$. For $s$ sufficiently small that $C_{\rm fl}s<q_0$, replacing $\alpha$ by $\alpha_s$ changes only this initial segment, by \cref{lem:fr-floor}. We now control the effect of that change on the perturbation.
+
+Fix $q_0\in(0,1]$. For a nondecreasing $\gamma\colon[0,q_0]\to[0,1]$ and a function $F\colon\R\to\R$ with bounded continuous derivatives of orders one to three, let $\Phi^\gamma_F$ be the solution on $[0,q_0]\times\R$ of
+\begin{equation}\label{eq:fr-prefix-pde}
+ -\partial_t\Phi^\gamma_F=\frac{\beta^2}2\Bigl(\partial_{zz}\Phi^\gamma_F+\frac{\gamma(t)}3(\partial_z\Phi^\gamma_F)^2\Bigr),\qquad
+ \Phi^\gamma_F(q_0,\cdot)=F,
+\end{equation}
+and write $\mathcal H_\gamma(F)=\Phi^\gamma_F(0,0)$. For a step function $\gamma$, we interpret the equation as the recursion $\Phi^\gamma_F(t,\cdot)=T_{m,\beta^2(t_2-t)}\Phi^\gamma_F(t_2,\cdot)$ for $t_1\le t\le t_2$, on every interval $[t_1,t_2)$ where $\gamma=3m$. This is the recursion of three coordinates that share every field increment on $[0,q_0]$: on the line spanned by $(1,1,1)$, such an increment acts on a function of the common value of the three fields (\cref{lem:inp-steps}(e)). For general $\gamma$, $\Phi^\gamma_F$ is the limit along step functions converging to $\gamma$ in $L^1([0,q_0])$; the opening paragraph of the proof of \cref{lem:fr-prefix-response}, using the bound of Step~2 there, shows that this limit exists and does not depend on the approximating sequence. If $\gamma$ is the restriction to $[0,q_0]$ of a distribution function, also denoted $\gamma$, then
+\begin{equation}\label{eq:fr-block}
+ \mathcal H_\gamma\bigl(3\Phi_\gamma(q_0,\cdot)\bigr)=3\Phi_\gamma(0,0).
+\end{equation}
+For step functions this is \cref{lem:inp-steps}(d) with $k=3$, applied at each step as in the proof of \cref{lem:inp-blocks}(b). The general case follows by approximation. Here we use \cref{inp:ob-scalar}(ii) for $\Phi_\gamma$, part (a) of the next lemma, and the bound $\abs{\mathcal H_\gamma(F_1)-\mathcal H_\gamma(F_2)}\le\norm{F_1-F_2}_\infty$, which holds by \cref{lem:inp-steps}(a).
+
+\begin{lemma}[Response to a change of the initial profile]\label{lem:fr-prefix-response}
+There exists $C_{\rm r}<\infty$, depending only on $\beta$, with the following property. Let $\gamma,\widetilde\gamma\colon[0,q_0]\to[0,1]$ be nondecreasing, and let $\varphi,V\colon\R\to\R$ have bounded continuous derivatives of orders one to three, with
+\[
+ \norm{\varphi'}_\infty\le3,\qquad\norm{\varphi''}_\infty\le3,\qquad\norm{V'}_\infty+\norm{V''}_\infty\le1.
+\]
+Then:
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item for $F\in\{\varphi,\varphi+V\}$, $\abs{\mathcal H_\gamma(F)-\mathcal H_{\widetilde\gamma}(F)}\le C_{\rm r}\norm{\gamma-\widetilde\gamma}_{L^1([0,q_0])}$;
+\item the response of $\mathcal H$ to the terminal perturbation $V$ changes by at most
+\begin{equation}\label{b:eq:prefix-floor-response}
+ \Bigl|\bigl[\mathcal H_{\widetilde\gamma}(\varphi+V)-\mathcal H_{\widetilde\gamma}(\varphi)\bigr]-\bigl[\mathcal H_\gamma(\varphi+V)-\mathcal H_\gamma(\varphi)\bigr]\Bigr|
+ \le C_{\rm r}\norm{V'}_\infty\norm{\gamma-\widetilde\gamma}_{L^1([0,q_0])}.
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+The quantity bounded in \eqref{b:eq:prefix-floor-response} is a mixed difference: it vanishes when $V=0$ and when $\gamma=\widetilde\gamma$. A bound on the full difference $\mathcal H_{\widetilde\gamma}(\varphi+V)-\mathcal H_\gamma(\varphi+V)$ would be of order $\norm{\gamma-\widetilde\gamma}_{L^1}$ without the factor $\norm{V'}_\infty$. In the application, that full difference is accounted for by the scalar cost \eqref{b:eq:specific-floor-cost}.
+
+\begin{proof}
+It suffices to prove (a) and (b) for step functions $\gamma,\widetilde\gamma$, with constants independent of the number of steps. Indeed, let $\gamma$ be general and let $\gamma_k\to\gamma$ in $L^1$ be step functions. The bound of Step~2 below, applied to the whole functions, shows that $\Phi^{\gamma_k}_F(t,\cdot)$ is a Cauchy sequence in the supremum norm for each $t$. The limit exists, it does not depend on the sequence, and the bounds pass to it. We take a common refinement, so that $\gamma$ and $\widetilde\gamma$ are constant on the same intervals. On each such interval the solutions are smooth in $z$, with bounded derivatives of orders one to three, and solve \eqref{eq:fr-prefix-pde} classically; at the finitely many endpoints they are continuous in $t$.
+
+We use the following maximum principle, which is the Feynman--Kac formula for a diffusion with generator $\frac{\beta^2}2\partial_{zz}+a\,\partial_z$. Let $a,c,\mathfrak s$ be bounded continuous functions on $[t_1,t_2]\times\R$, with $a$ Lipschitz in $z$, and let $f$ be bounded and solve $-\partial_tf=\frac{\beta^2}2f_{zz}+af_z+cf+\mathfrak s$. Then
+\begin{equation}\label{eq:fr-max-principle}
+ \norm{f(t,\cdot)}_\infty\le e^{\norm c_\infty(t_2-t)}\Bigl(\norm{f(t_2,\cdot)}_\infty+\int_t^{t_2}\norm{\mathfrak s(t',\cdot)}_\infty\dd t'\Bigr)\qquad(t_1\le t\le t_2).
+\end{equation}
+Applying \eqref{eq:fr-max-principle} on consecutive intervals, we see that it holds on $[0,q_0]$ for coefficients that are continuous on each interval where $\gamma$ and $\widetilde\gamma$ are constant.
+
+The functions to which we apply \eqref{eq:fr-max-principle} are bounded. Indeed, fix a step profile, and let $F$ be $L$-Lipschitz. Each integration step $T_{m,v}$ maps $L$-Lipschitz functions to $L$-Lipschitz functions, by \cref{lem:inp-steps}(a), and for $0\le m\le1$ it satisfies $\norm{T_{m,v}f-f}_\infty\le\log\E e^{L\sqrt v\abs\zeta}$ for $L$-Lipschitz $f$, where $\zeta$ is a standard Gaussian variable; the upper bound follows from $f(z+\sqrt v\,\zeta)-f(z)\le L\sqrt v\abs\zeta$ and the monotonicity of $m\mapsto m^{-1}\log\E e^{mX}$, and the lower bound from Jensen's inequality. Summing over the finitely many steps, we find that $\Phi^\gamma_F(t,\cdot)-F$ is bounded. The differences $\Delta$ and $\widetilde{\mathcal D}-\mathcal D$ of Steps~2 and~3 below are bounded, and so are the derivatives to which we apply \eqref{eq:fr-max-principle}, by Step~1. The resulting estimates do not depend on the number of steps.
+
+\paragraph{Step 1: derivative bounds.} Let $F\in\{\varphi,\varphi+V\}$, so that $\norm{F'}_\infty\le4$ and $\norm{F''}_\infty\le4$. We claim that
+\begin{equation}\label{eq:fr-prefix-derivatives}
+ \abs{\partial_z\Phi^\gamma_F}\le4,\qquad\abs{\partial_{zz}\Phi^\gamma_F}\le20\qquad\text{on }[0,q_0]\times\R.
+\end{equation}
+For one step $\psi=T_{m,v}f$ with $m\in[0,1]$, we have $\psi'(z)=\E^Wf'(z+\sqrt v\,\zeta)$ and $\psi''(z)=\E^Wf''(z+\sqrt v\,\zeta)+m\Var^W(f'(z+\sqrt v\,\zeta))$, where $\E^W$ and $\Var^W$ refer to the law of the standard Gaussian $\zeta$ tilted by $e^{mf(z+\sqrt v\,\zeta)}$; this follows by differentiating under the integral. Iterating over the steps, as in Step~1 of the proof of \cref{lem:fr-derivative}, we find that $\partial_z\Phi^\gamma_F(t,z)$ is the expectation of $F'$ at the final time under the tilted chain started from $z$ at time $t$, and that $\partial_{zz}\Phi^\gamma_F(t,z)$ is the expectation of $F''$ at the final time plus $\sum_im_i\E\Var(M_{i+1}\mid\text{steps }1,\dots,i)$, where $M_i$ is the conditional expectation of the final value of $F'$ given the first $i$ steps. The masses $m_i=\gamma/3$ lie in $[0,1]$, and the sum of the expected conditional variances is at most the variance of the final value of $F'$, by orthogonality of martingale increments. We conclude that $-\norm{F''}_\infty\le\partial_{zz}\Phi^\gamma_F\le\norm{F''}_\infty+\norm{F'}_\infty^2$, which implies \eqref{eq:fr-prefix-derivatives}. These bounds do not depend on the number of steps.
+
+\paragraph{Step 2: part (a).} Let $\Delta=\Phi^\gamma_F-\Phi^{\widetilde\gamma}_F$. Subtracting the two equations \eqref{eq:fr-prefix-pde}, we have $\Delta(q_0,\cdot)=0$ and
+\[
+ -\partial_t\Delta=\frac{\beta^2}2\Delta_{zz}+\frac{\beta^2\gamma}6\bigl(\partial_z\Phi^\gamma_F+\partial_z\Phi^{\widetilde\gamma}_F\bigr)\Delta_z+\frac{\beta^2}6(\gamma-\widetilde\gamma)\bigl(\partial_z\Phi^{\widetilde\gamma}_F\bigr)^2.
+\]
+Then \eqref{eq:fr-max-principle} with $c=0$ and \eqref{eq:fr-prefix-derivatives} imply that $\norm{\Delta(t,\cdot)}_\infty\le\frac{8\beta^2}3\int_t^{q_0}\abs{\gamma-\widetilde\gamma}$, which proves (a).
+
+We also need the analogous bound for the first derivatives. Let $\Delta_z=\partial_z\Delta=\partial_z\Phi^\gamma_F-\partial_z\Phi^{\widetilde\gamma}_F$. Differentiating \eqref{eq:fr-prefix-pde} in $z$ and subtracting, we find $\Delta_z(q_0,\cdot)=0$ and
+\[
+ -\partial_t\Delta_z=\frac{\beta^2}2(\Delta_z)_{zz}+\frac{\beta^2\gamma}3\,\partial_z\Phi^\gamma_F\,(\Delta_z)_z+\frac{\beta^2\gamma}3\,\partial_{zz}\Phi^{\widetilde\gamma}_F\,\Delta_z+\frac{\beta^2}3(\gamma-\widetilde\gamma)\,\partial_z\Phi^{\widetilde\gamma}_F\,\partial_{zz}\Phi^{\widetilde\gamma}_F.
+\]
+By \eqref{eq:fr-prefix-derivatives}, the coefficient of $\Delta_z$ is bounded by $20\beta^2/3$ and the last term by $\frac{80\beta^2}3\abs{\gamma-\widetilde\gamma}$. By \eqref{eq:fr-max-principle} and $q_0\le1$, we have
+\begin{equation}\label{eq:fr-gradient-stability}
+ \norm{\Delta_z(t,\cdot)}_\infty\le\frac{80\beta^2}3e^{7\beta^2}\norm{\gamma-\widetilde\gamma}_{L^1([0,q_0])}\qquad(0\le t\le q_0).
+\end{equation}
+
+\paragraph{Step 3: part (b).} We write $\Phi^0=\Phi^\gamma_\varphi$, $\Phi^1=\Phi^\gamma_{\varphi+V}$, $\widetilde\Phi^0=\Phi^{\widetilde\gamma}_\varphi$ and $\widetilde\Phi^1=\Phi^{\widetilde\gamma}_{\varphi+V}$, and let $\mathcal D=\Phi^1-\Phi^0$ and $\widetilde{\mathcal D}=\widetilde\Phi^1-\widetilde\Phi^0$. The left side of \eqref{b:eq:prefix-floor-response} is $\abs{\widetilde{\mathcal D}(0,0)-\mathcal D(0,0)}$. Using $(\Phi^1_z)^2-(\Phi^0_z)^2=(\Phi^1_z+\Phi^0_z)\mathcal D_z$, we find that $\mathcal D$ solves the linear equation
+\[
+ -\partial_t\mathcal D=\frac{\beta^2}2\mathcal D_{zz}+a\,\mathcal D_z,\qquad
+ a=\frac{\beta^2\gamma}6\bigl(\Phi^1_z+\Phi^0_z\bigr),\qquad\mathcal D(q_0,\cdot)=V,
+\]
+and $\widetilde{\mathcal D}$ solves the same equation with $\widetilde a=\frac{\beta^2\widetilde\gamma}6(\widetilde\Phi^1_z+\widetilde\Phi^0_z)$. Differentiating in $z$, the function $\mathcal D_z$ solves $-\partial_t\mathcal D_z=\frac{\beta^2}2(\mathcal D_z)_{zz}+a(\mathcal D_z)_z+a_z\mathcal D_z$ with $\mathcal D_z(q_0,\cdot)=V'$. By \eqref{eq:fr-prefix-derivatives}, we have $\abs{a_z}\le\frac{\beta^2}6\cdot40\le7\beta^2$, and \eqref{eq:fr-max-principle} implies that $\norm{\mathcal D_z(t,\cdot)}_\infty\le e^{7\beta^2}\norm{V'}_\infty$. Next, the difference $\widetilde{\mathcal D}-\mathcal D$ vanishes at $q_0$ and solves
+\[
+ -\partial_t(\widetilde{\mathcal D}-\mathcal D)=\frac{\beta^2}2(\widetilde{\mathcal D}-\mathcal D)_{zz}+\widetilde a\,(\widetilde{\mathcal D}-\mathcal D)_z+(\widetilde a-a)\mathcal D_z.
+\]
+By \eqref{eq:fr-max-principle} with $c=0$, we have
+\[
+ \abs{\widetilde{\mathcal D}(0,0)-\mathcal D(0,0)}\le e^{7\beta^2}\norm{V'}_\infty\int_0^{q_0}\norm{\widetilde a(t,\cdot)-a(t,\cdot)}_\infty\dd t.
+\]
+Finally, $\widetilde a-a=\frac{\beta^2}6(\widetilde\gamma-\gamma)(\widetilde\Phi^1_z+\widetilde\Phi^0_z)+\frac{\beta^2\gamma}6\bigl((\widetilde\Phi^1_z-\Phi^1_z)+(\widetilde\Phi^0_z-\Phi^0_z)\bigr)$. Using \eqref{eq:fr-prefix-derivatives} for the first term and \eqref{eq:fr-gradient-stability} for the second, we find $\int_0^{q_0}\norm{\widetilde a-a}_\infty\dd t\le C\norm{\gamma-\widetilde\gamma}_{L^1([0,q_0])}$ with $C$ depending only on $\beta$. This proves \eqref{b:eq:prefix-floor-response}.
+\end{proof}
+
+\section{The local fractional bound}\label{sec:fr-local}
+
+We now combine \cref{b:prop:fractional-matrix}, \cref{lem:fr-floor} and \cref{lem:fr-prefix-response} with the cubic deficit of \cref{sec:cubic}. We first recall what we use from that section. Fix the ratio $\vartheta\in(0,1/2]$ and the amplitude $E>0$ of \cref{sec:cub-band}, satisfying the two strict inequalities \eqref{b:eq:os-band-checks}; in the dynamical argument, $\vartheta=1/2$ and $E=1/100$. Let $G(\vartheta,E)>0$ be the corner coefficient of \cref{sec:cub-band}. Fix compact intervals $\mathcal J\subset\operatorname{int}I$ with $I\subset(0,q_\beta)$, and let $m_\beta>0$ be a lower bound on $I$ for the scalar factor $M(r)=\alpha(r)^2\beta^6\E\chi(r,Y_r)^3$ of \cref{b:prop:os-expansion}, as in \eqref{b:eq:main-analytic-constants}. For $D=D(r,q,\delta)$ with $d=q-r>0$, we use the parameters of \eqref{b:eq:os-parameters}, namely $h=d/\vartheta$, $q_0=r-h$ and $k=\delta/h$. Let $\mathcal T(q_0,h,k)$ be the trial value \eqref{b:eq:os-trial}, let $V=V(q_0,h,k,\cdot)$ be the boundary perturbation \eqref{eq:cub-V}, and let $\Pi=\Pi(q_0,h,k)$ be the penalty of \cref{lem:cub-trial}. We use the following three facts.
+\begin{enumerate}
+\item[(T1)] By \eqref{b:eq:os-trial} and \cref{lem:cub-trial}, $\mathcal T(q_0,h,k)$ is the limit of the trial values of admissible paths $(Q^{(N)},m^{(N)})$ with endpoint $D$ and multiplier zero. On $[0,q_0]$ these paths have the increments $\mathbf e\mathbf e^{\mathsf T}\dd t$ at the masses $\alpha/3$, evaluated at the left endpoints of a partition; on $[q_0,1]$ their masses are at least $\alpha(q_0)/3$; and all masses are nondecreasing. Moreover
+\[
+ \mathcal T(q_0,h,k)=\mathcal H_\alpha\bigl(3\Phi(q_0,\cdot)+V\bigr)-\frac{\beta^2}4\Pi,
+\]
+where $\mathcal H_\alpha$ is the operator of \cref{sec:fr-prefix} on $[0,q_0]$ with $\gamma=\alpha$. The function $V$ and the penalty $\Pi_+=\Pi-6\int_0^{q_0}t\alpha(t)\dd t$ of the path on $[q_0,1]$ depend on $\alpha$ only through its restriction to $[q_0,1]$.
+\item[(T2)] By the spatial regularity in \cref{b:lem:os-flow}, $V$ has bounded continuous derivatives of orders one to three. By \eqref{b:eq:os-V-bound}, $\norm V_{C^2_b}\le C_Vh^2k^2=C_V\delta^2$ for $h\le h_0$. We use only the consequence $\norm V_{C^2_b}\le C_V\delta^2/h$ for $h\le\min\{h_0,1\}$; no smallness of the third derivative is needed.
+\item[(T3)] By \cref{prop:cub-band}, applied to the interval $\mathcal J$ of centers (note that $m_\beta\le\inf_{\mathcal J}M$), for every $\bar\sigma\in(0,G(\vartheta,E))$ there exists $d_0>0$ such that $\mathcal T(q_0,h,k)\le3P_\beta-m_\beta E^2\{G(\vartheta,E)-\bar\sigma\}\rho^3$, which is \eqref{b:eq:os-uniform-corner-gap}, for every $0<\rho\le d_0$ and every feasible $D(r,q,\delta)$ with $r\in\mathcal J$, $\rho\le q-r\le d_0$ and $E\rho\le\abs\delta\le2E\rho$; for these matrices also $h\le h_0$. The window is $[q_0,T]$ with $T=q_0+h\tau_T$ and $\tau_T=2+4k^2L_\vartheta$, by \eqref{eq:cub-T}. If $\abs\delta\le2Ed$, then $\abs k\le2\vartheta E$, and the window has length $T-q_0\le C_{\rm win}d$ with $C_{\rm win}=(2+16\vartheta^2E^2L_\vartheta)/\vartheta$.
+\end{enumerate}
+By \eqref{eq:fr-block}, $\mathcal H_\alpha(3\Phi(q_0,\cdot))=3\Phi(0,0)$.
+
+Now let $\gamma\colon[0,1]\to[0,1]$ be nondecreasing, with $\gamma=\alpha$ on $[q_0,1]$ and $\gamma\le\alpha(q_0)$ on $[0,q_0]$. We write $\mathcal T_\gamma(q_0,h,k)$ for the limit of the trial values of the paths of (T1) with the masses $\alpha/3$ on $[0,q_0]$ replaced by the left-endpoint values of $\gamma/3$. These paths are admissible, with the same endpoint, and on $[q_0,1]$ nothing changes. The penalty of the segment $[0,q_0]$ converges to $\int_0^{q_0}\frac\gamma3\,\dd(9t^2)=6\int_0^{q_0}t\gamma(t)\dd t$. By \cref{lem:fr-prefix-response}(a) and the bound $\abs{\mathcal H_\gamma(F_1)-\mathcal H_\gamma(F_2)}\le\norm{F_1-F_2}_\infty$, the values converge as well, and with $\varphi=3\Phi(q_0,\cdot)$ we find
+\begin{equation}\label{eq:fr-trial-split}
+ \mathcal T_\gamma(q_0,h,k)=\mathcal H_\gamma(\varphi+V)-\frac{3\beta^2}2\int_0^{q_0}t\gamma(t)\dd t-\frac{\beta^2}4\Pi_+.
+\end{equation}
+For $\gamma=\alpha$, this is the identity of (T1). If $\gamma$ is a distribution function, then by \eqref{eq:fr-block} we have
+\begin{equation}\label{eq:fr-scalar-split}
+ 3\mathcal P_\beta(\gamma)=\mathcal H_\gamma(\varphi)-\frac{3\beta^2}2\int_0^{q_0}t\gamma(t)\dd t-\frac{3\beta^2}2\int_{q_0}^1t\alpha(t)\dd t.
+\end{equation}
+Subtracting \eqref{eq:fr-trial-split} and \eqref{eq:fr-scalar-split} for $\alpha$ from the same identities for $\gamma$, and using $\mathcal P_\beta(\alpha)=P_\beta$, we obtain
+\begin{multline}\label{eq:fr-trial-difference}
+ \mathcal T_\gamma(q_0,h,k)-\mathcal T(q_0,h,k)
+ =3\bigl(\mathcal P_\beta(\gamma)-P_\beta\bigr)\\
+ +\bigl[\mathcal H_\gamma(\varphi+V)-\mathcal H_\gamma(\varphi)\bigr]-\bigl[\mathcal H_\alpha(\varphi+V)-\mathcal H_\alpha(\varphi)\bigr].
+\end{multline}
+
+\begin{lemma}[Local fractional bound]\label{lem:fr-local-gap}
+Let $\mathcal J\subset\operatorname{int}I$ and $I\subset(0,q_\beta)$ be compact intervals, let $\vartheta,E,m_\beta$ be as above, and let $0<g<m_\beta E^2G(\vartheta,E)$. There exist $d_0,S,\rho_0>0$, depending only on $\beta$, $\mathcal J$, $I$, $\vartheta$, $E$ and $g$, such that the following holds. For every $0<\rho\le\rho_0$, every $n\ge2$ and every feasible $D=D(r,q,\delta)$ with
+\[
+ r\in\mathcal J,\qquad\rho\le q-r\le d_0,\qquad E\rho\le\abs\delta\le2E\rho,
+\]
+the window $[q_0,T]$ of the local perturbation lies in $I$, and with $s=S\rho$ we have
+\begin{equation}\label{b:eq:local-fractional-gap}
+ \frac1{ns}\log\E Z_{3,n}(D)^s\le3P_\beta-g\rho^3.
+\end{equation}
+\end{lemma}
+
+The constants $d_0$, $S$ and $\rho_0$ do not depend on $n$, on $\rho$, or on $(r,q,\delta)$ in the stated domain. The order in which they are chosen is recorded in \cref{tab:fr-choices}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Parameter & Chosen in terms of & Purpose\\
+\midrule
+$\mathcal J$, $I$, $\vartheta$, $E$, $m_\beta$ & fixed first & centers; geometry of \cref{sec:cubic}\\
+$g<g'$ & $m_\beta E^2G(\vartheta,E)$ & two strict margins \eqref{b:eq:static-gap-choice}\\
+$d_0$ & $g'$, $\mathcal J$, $I$, $\vartheta$, $E$ & cubic deficit (T3); window in $I$; $h\le1$\\
+$S$ & $g$, $g'$, $\vartheta$, $E$ & profile response at most $\frac12(g'-g)\rho^3$\\
+$\rho_0$ & all of the above & $\alpha_s$ admissible; $V$ small; cost $s^5$\\
+$n\ge2$ & arbitrary & the bound is uniform in $n$\\
+\bottomrule
+\end{tabular}
+\caption{Order of the choices in the proof of \cref{lem:fr-local-gap}.}\label{tab:fr-choices}
+\end{table}
+
+\begin{proof}
+The proof has three steps. We first fix the constants. We then apply \cref{b:prop:fractional-matrix} to the comparison path with the profile $\alpha_s$ on the common segment, and finally we compare its trial value with $\mathcal T(q_0,h,k)$ by \eqref{eq:fr-trial-difference}.
+
+\paragraph{Step 1: choice of constants.} Fix $g'$ with
+\begin{equation}\label{b:eq:static-gap-choice}
+ 0<g<g'<m_\beta E^2G(\vartheta,E).
+\end{equation}
+Let $d_0$ be the constant of (T3) for $\bar\sigma=G(\vartheta,E)-g'/(m_\beta E^2)$, decreased so that also $d_0\le\vartheta$ and $(1/\vartheta+C_{\rm win})d_0\le\operatorname{dist}(\mathcal J,\R\setminus I)$. Then, for every $0<\rho\le d_0$ and every $D$ in the domain of the lemma,
+\begin{equation}\label{b:eq:local-static-input}
+ \mathcal T(q_0,h,k)\le3P_\beta-g'\rho^3,
+\end{equation}
+moreover $h=d/\vartheta\le1$, and the window $[q_0,T]\subset[r-d/\vartheta,r-d/\vartheta+C_{\rm win}d]$ lies in $I$, so that $q_0\ge a_*$ with $a_*=\min I>0$. Let $C_{\rm fl}$, $s_0$ and $C_{\rm r}$ be the constants of \cref{lem:fr-floor,lem:fr-prefix-response}, let $C'=3C_{\rm fl}$ and $C''=C_{\rm r}C_VC_{\rm fl}$, and choose $S\in(0,1/3]$ so small that
+\begin{equation}\label{eq:fr-S}
+ 4\vartheta E^2C''S^2\le\tfrac12(g'-g).
+\end{equation}
+Finally choose $\rho_0\in(0,d_0]$ so small that
+\[
+ S\rho_0\le s_0,\qquad C_{\rm fl}S\rho_0<a_*,\qquad 8\vartheta E^2C_V\rho_0\le1,\qquad C'S^5\rho_0^2\le\tfrac12(g'-g).
+\]
+Now fix $0<\rho\le\rho_0$, $n\ge2$ and $D$ in the domain of the lemma, and set $s=S\rho$.
+
+\paragraph{Step 2: the fractional comparison.} Since $s\le s_0$ and $C_{\rm fl}s<a_*\le q_0$, \cref{lem:fr-floor} shows that $\alpha_s$ is a distribution function with $\alpha_s=\alpha$ on $[q_0,1]$. Moreover $\alpha_s\le\alpha_s(q_0)=\alpha(q_0)$ on $[0,q_0]$, and $\mathcal T_{\alpha_s}(q_0,h,k)$ is defined. By its definition, it is the limit of the trial values of admissible paths with endpoint $D$ and multiplier zero, whose masses are left-endpoint values of $\alpha_s/3$ on $[0,q_0]$ and are at least $\alpha(q_0)/3$ on $[q_0,1]$. All these masses are at least $s$, because $\alpha_s\ge3s$ and $\alpha(q_0)=\alpha_s(q_0)\ge3s$. By \cref{b:prop:fractional-matrix} with $\ell=3$ for these paths, we obtain
+\begin{equation}\label{eq:fr-step2}
+ p^{(s)}_{3,n}(D)+\frac{9\beta^2s}{4n}\le\mathcal T_{\alpha_s}(q_0,h,k).
+\end{equation}
+
+\paragraph{Step 3: comparison with $\mathcal T(q_0,h,k)$.} We apply \eqref{eq:fr-trial-difference} with $\gamma=\alpha_s$. The first term on its right side is at most $3C_{\rm fl}s^5=C's^5$ by \eqref{b:eq:specific-floor-cost}. For the second, note that $\varphi=3\Phi(q_0,\cdot)$ satisfies $\norm{\varphi'}_\infty\le3$ and $\norm{\varphi''}_\infty\le3$, since $\abs u\le1$ and $0<\chi\le1$ by \cref{inp:ob-scalar}(i), and that $\norm{V'}_\infty+\norm{V''}_\infty\le2C_V\delta^2/h\le8\vartheta E^2C_V\rho\le1$ by (T2), since $\abs\delta\le2E\rho$ and $h=d/\vartheta\ge\rho/\vartheta$. \Cref{lem:fr-prefix-response}(b) on $[0,q_0]$, with $\widetilde\gamma=\alpha_s$ and $\gamma=\alpha$, and \eqref{b:eq:specific-floor-cost} then bound the mixed difference by $C_{\rm r}\norm{V'}_\infty\norm{\alpha_s-\alpha}_{L^1}\le C_{\rm r}C_V(\delta^2/h)C_{\rm fl}s^2$. We have shown that the change of profile costs at most
+\begin{equation}\label{b:eq:coarse-floor-error}
+ \mathcal T_{\alpha_s}(q_0,h,k)-\mathcal T(q_0,h,k)\le C's^5+C''\frac{\delta^2s^2}h.
+\end{equation}
+Since $\abs\delta\le2E\rho$, $h=d/\vartheta$ and $d\ge\rho$, we have
+\[
+ \frac{\delta^2s^2}h=\frac{\vartheta\,\delta^2S^2\rho^2}d\le4\vartheta E^2S^2\rho^3.
+\]
+Inserting \eqref{b:eq:local-static-input} and \eqref{b:eq:coarse-floor-error} into \eqref{eq:fr-step2}, and discarding the nonnegative term $9\beta^2s/(4n)$, we obtain
+\[
+ p^{(s)}_{3,n}(D)\le3P_\beta-g'\rho^3+C'S^5\rho^5+4\vartheta E^2C''S^2\rho^3\le3P_\beta-g\rho^3,
+\]
+where in the last step we used \eqref{eq:fr-S} and $C'S^5\rho^2\le\frac12(g'-g)$. This is \eqref{b:eq:local-fractional-gap}.
+\end{proof}
+
+\begin{remark}\label{rem:fr-local-scope}
+The bound \eqref{b:eq:local-fractional-gap} is a deterministic statement about the Gaussian moments $\E Z_{3,n}(D)^s$. It holds for every $n\ge2$ once $\rho\le\rho_0$, and it requires no relation between $\rho$ and $n$. The separation $q_0\ge a_*>0$ between the local window and the origin is what makes the change of profile harmless: since $\alpha_s=\alpha$ on $[q_0,1]$, the local window, its terminal correction and its penalty are identical for the two profiles. The scalar cost of order $s^5$ is much smaller than needed; a cost of order $s^3$ would also suffice, after decreasing $S$. Since $\norm V_{C^2_b}\le C_V\delta^2$ by \eqref{b:eq:os-V-bound}, the response term is in fact of order $\delta^2s^2\le4E^2S^2\rho^4$; we used only the weaker bound $C_V\delta^2/h$, for which the small choice of $S$ is needed. The local bound concerns only $q-r\le d_0$. For $q-r>d_0$ the construction of \cref{sec:cubic} is not used, and \cref{sec:static} uses instead the quenched comparison of \cref{lem:st-remote}, whose deficit is a multiple of $\delta^2$, much larger than $\rho^3$.
+\end{remark}

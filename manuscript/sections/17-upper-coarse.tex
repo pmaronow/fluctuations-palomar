@@ -1,0 +1,511 @@
+\chapter{The joint cancellation and coarse domination}\label{u:sec:coarse}
+
+The goal of this section is to prove \cref{u:prop:coarse}, which bounds the restricted coarse output kernel by an unnormalized Gibbs weight. We use the Gram and weighted concentration estimates of \cref{u:lem:gram,u:lem:weighted}. The deterministic energy expansion and the joint information--energy identity proved below give the accuracy needed for this bound. The resulting kernel estimate is used in \cref{u:sec:connections} to control the connecting sequence. This sharpens the likelihood comparison of \cite[Section~4, Proposition~5, equation~(6)]{oai-typical-upper}, used for the coarse proposals in \cite[Section~6, proof of Proposition~7]{oai-typical-upper}.
+
+Unless stated otherwise, $V=V_{\ex b}$ and $N=N_{\ex b}\ge1$. Throughout, we use the source and replay laws of \cref{u:def:laws}, and the empirical Gram quantities $A_{\mathcal T},q,v,H,E_A,E_q,E_v,E_H$ of \cref{u:sec:concentration}. Here $v$ is an empirical vector, distinct from the scalar time. We recall that $H_0$ is strictly lower triangular, $\|s\|,\|b\|,\|H_0\|\le1$, and $e_h=s^{\mathsf T}b$. Matrix norms are operator norms, and norms of coefficient vectors in $\R^N$ are Euclidean. For the query vectors in $\R^n$, we write $\langle u,v\rangle_n=n^{-1}u^{\mathsf T}v$.
+
+\section{Dyadic algebra and the row telescope}\label{u:sec:dyadic}
+
+We first record the deterministic estimates used in the energy expansion. Let $m_0=2^{\lceil\log_2N\rceil}$ and $D_*=1+\log_2m_0$. As in \cref{u:lem:weighted}, errors and coefficient vectors are padded by zeros to dimension $m_0$, and the Gram matrix is padded by an identity block. For the complete dyadic tree $\mathcal D$ and its coordinate projections $P_I$, we use
+\[
+ \mathcal N_w(X)^2=\sum_{I\in\mathcal D}\|XP_Iw\|^2,
+ \qquad L=\Upt(E_A),
+\]
+where $\Upt$ keeps the strict upper triangle and half of the diagonal, and $\Up$ keeps the full upper triangle. The weighted error $W_{\rm wt}$ is defined in \cref{u:lem:weighted}. In this section $L$ denotes this triangular matrix. The dyadic decomposition of triangular truncations and the analysis of the Cholesky factor by half-diagonal truncation already appear in the proof of \cite[Section~4, Proposition~5]{oai-typical-upper}. Here we retain the weighted projections to obtain a quadratic remainder.
+
+\trilogyneedspace{12\baselineskip}
+\begin{lemma}[Deterministic dyadic estimates]\label{u:lem:dyadic}
+For matrices $X,Y$ and vectors $a,b,w$ of the appropriate dimensions,
+\begin{equation}\label{u:eq:dyadic-estimates}
+\begin{aligned}
+ |a^{\mathsf T}\Upt(X^{\mathsf T}Y)b|,\ 
+ |a^{\mathsf T}\Up(X^{\mathsf T}Y)b|
+ &\le2\mathcal N_a(X)\mathcal N_b(Y),\\
+ \mathcal N_w(\Upt(X^{\mathsf T}Y))
+ &\le2D_*\|X\|\mathcal N_w(Y),\\
+ \mathcal N_w(\Upt(X^{\mathsf T}Y)^{\mathsf T})
+ &\le2D_*\|Y\|\mathcal N_w(X),\\
+ \mathcal N_w(X)&\le\sqrt{D_*}\|X\|\|w\|,\\
+ \|\Upt(X)\|,\ \|\Up(X)\|&\le D_*\|X\|.
+\end{aligned}
+\end{equation}
+Suppose $\|E_A\|\vee\|E_H\|\le\varepsilon_0=(16D_*^2)^{-1}$. Let $C$ be the upper triangular positive-diagonal Cholesky factor of $I+E_A$, and define $U=C-I$, $B=C^{-\mathsf T}$, and $c=B(s+E_q)$. Then
+\begin{equation}\label{u:eq:cholesky-equation}
+ U=L-\Upt(U^{\mathsf T}U),
+\end{equation}
+\begin{equation}\label{u:eq:cholesky-bounds}
+ \|U\|\le2D_*\varepsilon_0,\qquad \|B\|\le2,\qquad
+ 2D_*\|U\|\le1/2,\qquad D_*\|E_H\|\le1.
+\end{equation}
+Further, $\mathcal N_w(U)\le2\mathcal N_w(L)$ for $w=s,b$, $\|U^{\mathsf T}s\|\le2W_{\rm wt}$, and, with $u=c-s$,
+\begin{equation}\label{u:eq:coefficient-remainder}
+\begin{aligned}
+ u&=B(E_q-U^{\mathsf T}s),\qquad \|u\|\le6W_{\rm wt},\\
+ u-E_q+L^{\mathsf T}s
+ &=\Upt(U^{\mathsf T}U)^{\mathsf T}s-U^{\mathsf T}u.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We decompose the strict upper triangle into dyadic rectangles, and then use the Cholesky equation to control the nonlinear term of the Cholesky factor. Each rectangle in the scalar estimates contributes
+$\langle XP_{I_{\rm left}}a,YP_{I_{\rm right}}b\rangle$.
+Cauchy--Schwarz over rectangles and then over singletons gives the factor two in \eqref{u:eq:dyadic-estimates}.
+
+For the vector estimate, fix an input interval $I$. The external output $P_{<I}X^{\mathsf T}YP_Iw$ is orthogonal to the internal output and has squared norm at most $\|X\|^2\|YP_Iw\|^2$. At each internal depth, the outputs of the left children have disjoint supports. Cauchy--Schwarz over depths implies that the squared norm of the internal output is at most $D_*\|X\|^2$ times the sum of the squared norms of the right descendants and the singletons. When we sum over $I$, each descendant is counted at most $D_*$ times. The resulting factor $1+2D_*^2$ in squared norm is at most $(2D_*)^2$. Reversing left and right proves the transpose estimate. Partitioning at each depth gives the generic bound for $\mathcal N_w(X)$. Since the rectangle supports at one depth are disjoint, we also have the truncation bound.
+
+The Cholesky equation $E_A=U+U^{\mathsf T}+U^{\mathsf T}U$ implies \eqref{u:eq:cholesky-equation}. Along $I+tE_A$, $0\le t\le1$, the Cholesky factor is continuous, as follows from the finite recursion that defines it by positive square roots. Writing $x(t)$ for the norm of this factor minus $I$, we have
+\[
+ x(t)\le D_*\varepsilon_0+D_*x(t)^2,\qquad x(0)=0.
+\]
+At $x=2D_*\varepsilon_0$, the right side is strictly smaller than $x$, since $4D_*^2\varepsilon_0=1/4$. By continuity, we have \eqref{u:eq:cholesky-bounds}.
+Applying the first vector estimate in \eqref{u:eq:dyadic-estimates} to \eqref{u:eq:cholesky-equation} and absorbing the nonlinear term, we obtain $\mathcal N_w(U)\le2\mathcal N_w(L)$ for $w=s,b$. The transpose estimate at the root implies that $\|U^{\mathsf T}s\|\le2W_{\rm wt}$. Since $C^{\mathsf T}c=s+E_q$, we obtain both identities in \eqref{u:eq:coefficient-remainder}, and $\|u\|\le2(W_{\rm wt}+2W_{\rm wt})=6W_{\rm wt}$.
+\end{proof}
+
+\begin{lemma}[Weighted energy and discarded Gaussian variances]\label{u:lem:weighted-energy}
+If $\|E_A\|\vee\|E_H\|\le(16D_*^2)^{-1}$, the queried energy is
+\begin{equation}\label{u:eq:queried-energy}
+\begin{aligned}
+ E_{\rm qry}&=c^{\mathsf T}(b+E_v)
+       -c^{\mathsf T}\Up\bigl(B(H_0+E_H)\bigr)c,\\
+ C^{\mathsf T}C&=I+E_A,\qquad B=C^{-\mathsf T},\qquad c=B(s+E_q),
+\end{aligned}
+\end{equation}
+where $C$ is upper triangular with positive diagonal. Define
+\begin{equation}\label{u:eq:linear-energy}
+ \ell(E)=E_q^{\mathsf T}b-s^{\mathsf T}\Upt(E_A)b
+                  +s^{\mathsf T}E_v-s^{\mathsf T}\Up(E_H)s.
+\end{equation}
+Then
+\begin{equation}\label{u:eq:weighted-energy-remainder}
+ \|c-s\|\le6W_{\rm wt},\qquad
+ |E_{\rm qry}-e_h-\ell(E)|\le200D_*W_{\rm wt}^2.
+\end{equation}
+Conditionally on the complete scalar paths and signs, the two unused energy terms in the source reconstruction are independent centered Gaussians with variances
+\begin{equation}\label{u:eq:unused-gaussian-variances}
+ \frac1{2n}\sum_jc_j^4,\qquad
+ \frac{(1-\|c\|^2)^2}{2n}.
+\end{equation}
+If $\|c-s\|\le\tau$ and $t_N\ge v_*$, their sum $Z$ satisfies
+\begin{equation}\label{u:eq:unused-energy-variance}
+ \Var(Z\mid\text{paths, signs})
+ \le\frac{C_\beta}{n}\{h+\tau^2+p(t_N)^2\}.
+\end{equation}
+These conditional assertions are taken before imposing any event that inspects the unused Gaussian variables.
+\end{lemma}
+
+\begin{proof}
+We first expand the queried energy using \cref{u:lem:dyadic}, and then compute the two conditional Gaussian variances. Since the target Gram matrix is positive definite, no query uses the deterministic fallback. We write $\mathcal T^{\rm col}=(\mathcal T_1,\ldots,\mathcal T_N)$ and $\mathcal U=(u_1,\ldots,u_N)$ for the $n\times N$ matrices with these columns, so that $n^{-1}\mathcal U^{\mathsf T}\mathcal U=I_N$. The Gram--Schmidt factorization is $\mathcal T^{\rm col}=\mathcal U C$, with $C^{\mathsf T}C=A_{\mathcal T}$. Then $\mathcal U=\mathcal T^{\rm col}C^{-1}$ and $c=Bq$. The $(i,j)$ entry of $BH$ is $\langle u_i,e_j\rangle_n$. Subtracting the first $j$ query projections of $e_j$ in the energy gives \eqref{u:eq:queried-energy}, with truncation after multiplication. Since $B$ is lower triangular and $H_0$ is strictly lower triangular,
+\begin{equation}\label{u:eq:population-triangle-cancellation}
+ \Up(BH_0)=0.
+\end{equation}
+Indeed, a nonzero summand in an entry of the upper triangle would require $k\le i\le j<k$. Thus the population block cancels. If we pad the errors, $H_0$, and all vectors by zeros, and the Gram matrix by an identity block, then by uniqueness the Cholesky factor becomes $C\oplus I$. The padding preserves the norms, products, truncations, and energy.
+
+Let $u=c-s$ as in \cref{u:lem:dyadic}. The remainder of $c^{\mathsf T}(b+E_v)$ after its linear terms is
+\[
+ s^{\mathsf T}\Upt(U^{\mathsf T}U)b-(Ub)^{\mathsf T}u+u^{\mathsf T}E_v.
+\]
+By \eqref{u:eq:dyadic-estimates}, its absolute value is at most $26W_{\rm wt}^2$. For the $E_H$ term, we first replace $c$ by $s$ on both sides. The three resulting errors are bounded by
+\[
+ 2\sqrt{D_*}\|u\|\mathcal N_s(E_H),\qquad
+ 2\sqrt{D_*}\|u\|\mathcal N_s(E_H^{\mathsf T}),\qquad
+ D_*\|E_H\|\|u\|^2.
+\]
+Their sum is at most $(24\sqrt{D_*}+36)W_{\rm wt}^2$. Finally, let $F_0=B-I$. Since $F_0^{\mathsf T}=-B^{\mathsf T}U$ and $\|F_0\|\le2\|U\|$, \cref{u:lem:dyadic} implies that
+\[
+ \mathcal N_c(F_0^{\mathsf T})\le7W_{\rm wt},\qquad
+ \mathcal N_c(E_H)\le7W_{\rm wt}.
+\]
+By the scalar estimate, we have $|c^{\mathsf T}\Up(F_0E_H)c|\le98W_{\rm wt}^2$. Adding the bounds, we find that the total is
+\[
+ (160+24\sqrt{D_*})W_{\rm wt}^2\le200D_*W_{\rm wt}^2,
+\]
+which proves \eqref{u:eq:weighted-energy-remainder}.
+
+In the source reconstruction of \cref{u:sec:proposal-schedule}, the variables $d_j\sim N(0,2/n)$ and $W_0$ are independent of all complete scalar paths and terminal signs. Neither the scalar update nor the terminal link reads them. The two terms of $Z$ in the energy decomposition of \cref{u:lem:fine-energy} have the conditional variances in \eqref{u:eq:unused-gaussian-variances}. On the scalar event in the statement, we have $\|c\|\le1$ by orthonormality, and
+\[
+ \sum_jc_j^4\le\max_jc_j^2
+ \le2\max_js_j^2+2\tau^2\le C_\beta h+2\tau^2.
+\]
+Here we used that $s_j^2\le h_{j-1}r(t_{j-1})\le C_\beta h$, which follows from the exponential tail envelope and the growing durations. Also, $\|s\|^2=\int_0^{t_N}r=1-p(t_N)$ for $t_N\ge v_*$, so
+\[
+ 1-\|c\|^2\le p(t_N)+2\tau.
+\]
+Adding \eqref{u:eq:unused-gaussian-variances} proves \eqref{u:eq:unused-energy-variance}. Since the unused primitives are independent of the complete scalar paths, these laws hold conditionally on the paths and terminal signs.
+\end{proof}
+
+The linear statistic \eqref{u:eq:linear-energy} can be written as an average over the scalar rows.
+
+\begin{lemma}[Row telescope]\label{u:lem:telescope}
+Let $A_t=xm_t-m_t^2/2$ and $w_j=b_j/s_j$, and define
+\begin{equation}\label{u:eq:row-telescope-definition}
+ \zeta_h=\sum_{j=1}^Nw_j(A_{t_j}-A_{t_{j-1}})
+       +\sum_{j=1}^Ns_j(x-m_{t_j})e_j-\frac12e_h.
+\end{equation}
+Then
+\begin{equation}\label{u:eq:row-telescope}
+ e_h+\ell(E)=\frac1n\sum_{i=1}^n\zeta_{h,i},\qquad
+ \E_{\nu_V}\zeta_h=e_h.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the triangles and using $\sum_{l\le j}s_l\mathcal T_l=m_{t_j}$ gives the first identity. To check the constant, we note that the empirical expression is the row average of
+\begin{align*}
+ &xb^{\mathsf T}\mathcal T+xs^{\mathsf T}e
+ -s^{\mathsf T}\Upt(\mathcal T\mathcal T^{\mathsf T})b\\
+ &\hspace{3em}-s^{\mathsf T}\Up(\mathcal T e^{\mathsf T})s-e_h/2.
+\end{align*}
+The first and third terms combine into $\sum_jw_j\Delta A_j$, and the other pair gives the second sum in \eqref{u:eq:row-telescope-definition}. The population expectation of $\Upt(\mathcal T\mathcal T^{\mathsf T})$ is $I/2$, while that of $\Up(\mathcal T e^{\mathsf T})$ is zero. Since $\E x\mathcal T=s$ and $\E xe=b$, the expectation is $e_h+e_h-e_h/2-e_h/2=e_h$. This verifies \eqref{u:eq:row-telescope}, including the term $-e_h/2$.
+\end{proof}
+
+\section{The joint information--energy cancellation}\label{u:sec:joint}
+
+We next compare the row telescope with the continuous scalar energy. The It\^o identities below and the information integral of \cref{u:lem:reference} imply an identity at the terminal time. We estimate its terminal fluctuation and its mesh residual separately.
+
+\begin{lemma}[It\^o formula for the time-dependent field]\label{u:lem:ito}
+On every finite horizon, under the original scalar Wiener law,
+\begin{equation}\label{u:eq:field-ito}
+ \dd U(t,Y_t)=m_t\dd M_t+\frac12\bar\alpha(t)m_t^2\dd t,
+ \qquad \dd m_t=\chi_t\dd M_t.
+\end{equation}
+The identities hold across CDF atoms and the support endpoint. They continue to hold after adjoining an independent initial sign, and their fixed-horizon almost-sure identities transfer to the linked row law.
+\end{lemma}
+
+\begin{proof}
+By \cref{inp:ob-scalar} and the scalar estimates of \cref{sec:scalar}, the Parisi solution used in \cref{u:prop:scalar} is continuous in time with its spatial derivatives, smooth in space on compact rectangles, and absolutely continuous in time there. Its time derivative is $-(U_{yy}+\bar\alpha U_y^2)/2$ almost everywhere, and its spatial derivative satisfies the differentiated equation.
+
+To justify It\^o's formula directly, we stop $Y$ on leaving $[-A,A]$, extend the time fields slightly at the endpoints, and mollify in time. The fields and spatial derivatives converge uniformly on compact subrectangles. The time derivatives converge at Lebesgue-almost-every time, uniformly on compact spatial sets: the CDF has only countably many discontinuities, and the other factors are continuous. The derivatives are bounded on the stopped rectangle. The classical It\^o formula \cite[Theorem~3.3.6]{karatzas-shreve-1991} holds for the mollifications, and we pass to the limit using dominated convergence for the drift integrals and the isometry for the stochastic integrals. The drift for $U$ is $\bar\alpha m^2/2$, and the drift for $m$ is $-(m_{yy}+2\bar\alpha m\chi)/2+\bar\alpha m\chi+m_{yy}/2=0$.
+Passing to an almost-sure subsequence and then using rational times and continuous versions, we obtain the identities at all times. As $A\to\infty$, every continuous path on a finite horizon is eventually unstopped. Since $m,\chi,\bar\alpha$ are bounded, the integrands displayed above satisfy the required integrability conditions. There is no integral against $\dd\bar\alpha$, so the atoms produce no jump term. By uniqueness, the second identity agrees with \cref{u:lem:cross}. Since the terminal link is positive and bounded, these identities hold under the linked law, with the integrals still defined in the original Brownian filtration.
+\end{proof}
+
+\begin{lemma}[Joint information--energy terminal cancellation]\label{u:lem:joint}
+For a deterministic finite $V\ge v_*$, define
+\begin{equation}\label{u:eq:continuous-row-energy}
+\begin{aligned}
+ A_t&=xm_t-m_t^2/2,\\
+ Z_V&=\beta\int_0^Vp(t)\dd A_t+
+                         \int_0^V\sqrt{r(t)}(x-m_t)\dd B_t,\\
+ \zeta_\infty&=Z_V-e(V)/2.
+\end{aligned}
+\end{equation}
+All stochastic integrals here and in the following lemma are first defined under the unlinked Brownian pair law with an independent initial uniform sign, using the measurable left-sum versions of \cref{u:sec:reference}. Then, under $\nu_V$,
+\begin{equation}\label{u:eq:joint-cancellation}
+ I_V-\beta\zeta_\infty
+ =\log2-P_\beta-\frac{\beta^2p(V)^2}{4}
+                      +\frac{\beta^2p(V)}2(x-m_V)^2.
+\end{equation}
+The centered terminal fluctuation
+\[
+ T_V=\frac{\beta^2p(V)}2\{(x-m_V)^2-p(V)\}
+\]
+satisfies $|T_V|\le2\beta^2p(V)$ and
+\begin{equation}\label{u:eq:terminal-variance}
+\begin{aligned}
+ \Var_{\nu_V}(T_V)
+ &=\frac{\beta^4p(V)^2}{4}\{4p(V)-3r(V)-p(V)^2\}\\
+ &\le\beta^4p(V)^3.
+\end{aligned}
+\end{equation}
+The identity \eqref{u:eq:joint-cancellation} holds at the endpoint $V\ge v_*$.
+\end{lemma}
+
+\begin{proof}
+We first match the information and energy at the support endpoint, and then extend the identity beyond support and compute the terminal variance. Before support, we have $\rho=1$ and $\sigma=0$, so the query driver $B$ equals $M$. By \eqref{u:eq:field-ito}, $\beta^2p'=-\bar\alpha$, and $A_0=Y_0=0$, we have
+\[
+ \dd\{\beta^2pA+xY-U(t,Y)\}
+ =\beta^2p\dd A+(x-m)\dd B=\beta\dd Z.
+\]
+Indeed, the extra drift is $\bar\alpha(-A+xm-m^2/2)=0$. Integrating up to $v_*$ yields
+\[
+ \beta Z_{v_*}=\beta^2p_*A_*+xY_*-U(v_*,Y_*)+U(0,0).
+\]
+At the support endpoint,
+\[
+ m_*=\tanh Y_*,\qquad \beta^2p_*=\beta^2-v_*,\qquad
+ U(v_*,y)=\log(2\cosh y)+(\beta^2-v_*)/2.
+\]
+Since $I_{v_*}=\log(1+xm_*)$, $\log(1+x\tanh y)=xy-\log\cosh y$, and $A+(x-m)^2/2=1/2$, we obtain
+\begin{equation}\label{u:eq:support-cancellation}
+ I_{v_*}-\beta Z_{v_*}
+ =\log2-U(0,0)+\frac12\beta^2p_*(x-m_*)^2.
+\end{equation}
+After support, $\chi=1-m^2$ and $\xi=x-m$. By the information integral of \cref{u:lem:reference}, we have
+\[
+\begin{aligned}
+ \dd(I-\beta Z)
+ &=-\beta^2p\dd A-\frac12\beta^2r(x-m)^2\dd t\\
+ &=\dd\bigl\{\tfrac12\beta^2p(x-m)^2\bigr\},
+\end{aligned}
+\]
+where we used $p'=-r$. This extends \eqref{u:eq:support-cancellation} to every $V\ge v_*$.
+
+With the time change of \cref{u:prop:scalar}, the normalization of the pressure in \eqref{b:eq:Parisi-functional} reads
+\[
+ P_\beta=U(0,0)-\frac1{2\beta^2}
+                  \int_0^{\beta^2}t\bar\alpha(t)\dd t.
+\]
+This implies the identity
+\begin{equation}\label{u:eq:energy-pressure-conversion}
+ \beta e(V)+\frac12\beta^2p(V)^2
+ =2\{U(0,0)-P_\beta\},\qquad V\ge v_*.
+\end{equation}
+To check it, note that the left side is constant after support. At support it equals $\int_0^{v_*}p+\beta^2p_*^2/2$. Using integration by parts and $p'=-\bar\alpha/\beta^2$, we find that
+\[
+ \int_0^{v_*}p=v_*p_*+\beta^{-2}\int_0^{v_*}t\bar\alpha(t)\dd t.
+\]
+The remaining expression is
+\[
+ v_*p_*+\beta^2p_*^2/2
+ =\frac{\beta^4-v_*^2}{2\beta^2}
+ =\beta^{-2}\int_{v_*}^{\beta^2}t\dd t,
+\]
+which proves \eqref{u:eq:energy-pressure-conversion}. Substituting $\zeta_\infty=Z_V-e(V)/2$ proves \eqref{u:eq:joint-cancellation}.
+
+Given the terminal path, the sign has mean $m_V$. Averaging over this sign, we find that
+\[
+\begin{aligned}
+ \E[(x-m_V)^2\mid\text{path}]&=1-m_V^2,\\
+ \E[(x-m_V)^4\mid\text{path}]&=(1-m_V^2)(1+3m_V^2).
+\end{aligned}
+\]
+For $V\ge v_*$, their expectations are $p(V)$ and $4p(V)-3r(V)$. This proves \eqref{u:eq:terminal-variance}, including the centering. At a fixed finite such $V$, the variance is positive: the conditional sign variance of $(x-m_V)^2$ is $4m_V^2(1-m_V^2)$, which is positive with positive probability since the scalar diffusion is nondegenerate. Thus the centered row as a whole cannot have variance $O(h)$ uniformly at fixed $V$ as $h\to0$.
+
+The restriction to the terminal endpoint is necessary. If the identity extended to times before support, then $I_t-\beta Z_t-\beta^2p(t)(x-m_t)^2/2$ would be constant. The coefficient of $\dd B$ in its differential is $\xi_t-(x-m_t)$. At time zero, $\chi_0=p(0)=1/\beta$, which implies that this coefficient is $x(1/\beta-1)\ne0$ and has positive bracket on a short interval. It is the matching at $v_*$ in \eqref{u:eq:support-cancellation} that makes the terminal identity possible.
+\end{proof}
+
+\begin{lemma}[Growing-mesh residual MGF]\label{u:lem:lag}
+On the growing mesh of \cref{u:sec:proposal-schedule}, suppose $0<h\le1$, all used cells are at most one, and $V=t_{N+1}\ge v_*$. Define
+\[
+ R_h=Z_V-(\zeta_h+e_h/2).
+\]
+There exist $C_\beta,c_\beta>0$, independent of $h,N,V$, such that
+\begin{equation}\label{u:eq:residual-mgf}
+\begin{aligned}
+ \log\E_{\nu_V}e^{\theta(R_h-\E R_h)}
+ &\le C_\beta\theta^2h,\qquad |\theta|\le c_\beta/h,\\
+ \E R_h&=\frac32(e(V)-e_h).
+\end{aligned}
+\end{equation}
+For every $n\ge1$ and $0<\eta\le1$, independent identically distributed linked rows obey
+\begin{equation}\label{u:eq:residual-average-tail}
+ \PP\left\{\left|\frac1n\sum_i(R_{h,i}-\E R_h)\right|>\eta\right\}
+ \le2e^{-c_\beta n\eta^2/h}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We decompose the residual into four terms, estimate their centered MGFs, and then compute the mean of the residual. Both omitted endpoint cells are retained in the decomposition.
+
+\paragraph{The residual decomposition.}
+On previous cells $[t_{j-1},t_j)$, $1\le j\le N$, let $C(t)=\beta p(t)-w_j$; on the final cell let $C(t)=\beta p(t)$. On current cells $[t_j,t_{j+1})$, $j\ge1$, let $G(t)=\sqrt{r(t)}-s_j/\sqrt{h_j}$; on the auxiliary cell zero, let $G(t)=\sqrt{r(t)}$. We write $m_{\lfloor t\rfloor}=m_{t_j}$ on cell $j$, including $m_0=0$, and define
+\begin{align*}
+ \mathcal M&=\int_0^VC\chi\dd M+\int_0^VG\dd B,\\
+ \mathcal N&=-\int_0^VCm\chi\dd M-
+                  \int_0^VGm_{\lfloor t\rfloor}\dd B,\\
+ \mathcal Q&=-\frac12\int_0^VC\chi^2\dd t,\qquad
+ \mathscr L_j=\int_{t_j}^{t_{j+1}}\sqrt{r(t)}(m_t-m_{t_j})\dd B_t.
+\end{align*}
+Then
+\begin{equation}\label{u:eq:residual-decomposition}
+ R_h=x\mathcal M+\mathcal N+\mathcal Q-\sum_{j=0}^N\mathscr L_j.
+\end{equation}
+This follows from $\dd A=(x-m)\chi\dd M-\chi^2\dd t/2$ and
+\[
+\begin{aligned}
+ &\sqrt r(x-m_t)-\frac{s_j}{\sqrt{h_j}}(x-m_{t_j})\\
+ &\hspace{2em}=G(t)(x-m_{t_j})-\sqrt r(m_t-m_{t_j}).
+\end{aligned}
+\]
+The initial Brownian cell and the final posterior increment, which is not queried, are two distinct omissions, and both occur in \eqref{u:eq:residual-decomposition}. The current cell of the last query remains included in $e_h$.
+
+\paragraph{Uniform bounds on the growing mesh.}
+By the continuation kernel of \cref{u:lem:tails}, we have the envelope $p(t),r(t)\le C_\beta e^{-t/2}$ for all $t\ge0$, after increasing $C_\beta$. In particular, $\int_0^\infty e^{t/4}(p+r)\dd t<\infty$. For this mesh, we have
+\begin{equation}\label{u:eq:mesh-summability}
+\begin{gathered}
+ (N+1)h\le8,\qquad
+ \max_jh_j\sqrt{r(t_j)}\le\sqrt{C_\beta}h,\\
+ \sum_jh_j^2r(t_j)\le8C_\beta h.
+\end{gathered}
+\end{equation}
+Indeed, $e^{-t_j/4}-e^{-t_{j+1}/4}\ge h/8$ for $h_j\le1$, and $h_j^2e^{-t_j/2}=h^2$. These two facts also bound the number of queries.
+
+The logarithmic profile bounds of \cref{u:prop:scalar}, with $h_j/h_{j-1}=e^{h_{j-1}/4}$, imply, for $t$ in previous cell $j$ and $u$ in current cell $j$, respectively,
+\begin{equation}\label{u:eq:adjacent-profile-ratios}
+\begin{aligned}
+ \left|\log\frac{w_j}{\beta p(t)}\right|&\le(33/8)h_j,\\
+ -h_{j-1}/8\le\log\frac{s_j}{\sqrt{h_jr(u)}}&\le(15/8)h_j.
+\end{aligned}
+\end{equation}
+For the first bound, we compare the integrand $p\sqrt r$ throughout the current cell to its value on the previous cell and use $\sqrt{h_j/h_{j-1}}=e^{h_{j-1}/8}$. Each logarithm varies by at most the elapsed time. For the second, we compare the average of $r$ on the previous cell to $r(u)$ and use the same duration ratio. These comparisons imply that
+\begin{equation}\label{u:eq:residual-coefficient-bounds}
+\begin{aligned}
+ |C(t)|&\le C_\beta h_jp(t),&&t\in[t_{j-1},t_j),\\
+ |G(t)|&\le C_\beta h_j\sqrt{r(t)},&&t\in[t_j,t_{j+1}),\ j\ge1.
+\end{aligned}
+\end{equation}
+Indeed, the inequality $|e^x-1|\le e^L|x|$ for $|x|\le L$ proves this with $L=33/8$ and $15/8$. On a previous cell, $h_j\le e^{1/4}he^{t/4}$, and on a current cell, $h_j\le he^{t/4}$. These bounds imply
+\begin{equation}\label{u:eq:residual-bracket-bounds}
+ \int C^2\dd t\le C_\beta h,\qquad
+ \int G^2\dd t\le C_\beta h,\qquad
+ |\mathcal Q|\le C_\beta h.
+\end{equation}
+In detail, the integral of $C^2$ over the interior cells is bounded by $C_\beta h^2\int e^{t/2}p(t)^2\dd t=O_\beta(h^2)$, and the final cell contributes at most $C_\beta h_Ne^{-t_N}\le C_\beta h$. For $G^2$, the auxiliary cell zero contributes $O_\beta(h)$; elsewhere we use $h_j^2\le h_j\le he^{t/4}$ and integrate $e^{t/4}r$. To bound $\mathcal Q$, we integrate $|C|$, using $h\int e^{t/4}p$ and the bound $h_Np(t_N)\le C_\beta h$ on the final cell. All constants are uniform in the horizon. Since $|\chi|,|m|,|m_{\lfloor t\rfloor}|\le1$ and $|\rho|\le1$, both path martingales $\mathcal M,\mathcal N$ have deterministic bracket at most $C_\beta h$.
+
+\paragraph{The lag integrals.}
+For cell $j$ of length $h_j$, we condition only on the past $\mathcal F_{t_j}^{\rm path}$ of the original spin-free Brownian pair. The increment $m_t-m_{t_j}$ has bracket at most $h_j$. We stop it at its first crossing of $\sqrt{uh_j}$. The outer lag integral, stopped at this time, has bracket at most $uh_j^2r(t_j)$, since $r$ is nonincreasing. By the maximal inequality for exponential martingales and a union bound, we have, for $u>0$,
+\begin{equation}\label{u:eq:lag-cell-tail}
+\begin{aligned}
+ \PP\bigl\{|\mathscr L_j|>uh_j\sqrt{r(t_j)}
+                  \mid\mathcal F_{t_j}^{\rm path}\bigr\}&\le4e^{-u/2},\\
+ \E[\mathscr L_j\mid\mathcal F_{t_j}^{\rm path}]&=0.
+\end{aligned}
+\end{equation}
+Integrating this tail and expanding the centered series, we obtain
+\begin{equation}\label{u:eq:lag-cell-mgf}
+ \E[e^{\theta\mathscr L_j}\mid\mathcal F_{t_j}^{\rm path}]
+ \le e^{32\theta^2h_j^2r(t_j)},\qquad
+ |\theta|\le[4h_j\sqrt{r(t_j)}]^{-1}.
+\end{equation}
+Indeed, for every integer $l\ge2$, the conditional $l$th absolute moment is at most $4l![2h_j\sqrt{r(t_j)}]^l$. Beyond the linear term, which vanishes, the series of the conditional MGF is at most $16\theta^2h_j^2r(t_j)/(1-2|\theta|h_j\sqrt{r(t_j)})$.
+Iterating over cells and using \eqref{u:eq:mesh-summability}, we find that the centered log MGF is bounded by $C_\beta\theta^2h$ on $|\theta|\le c_\beta/h$ for $\sum_j\mathscr L_j$. The iteration uses only the conditional bounds and needs no independence between cells. The isometry also gives the variance identity $\E\mathscr L_j^2=(1/2)(\int_{t_j}^{t_{j+1}}r)^2$.
+The tail and MGF estimates above are conditional on the past of the original pair; this variance identity is unconditional.
+
+\paragraph{The centered MGF and the mean.}
+Linking does not change the law of the paths. In particular, $\mathcal N$ has its usual sub-Gaussian bound under $\nu_V$. Multiplying $\mathcal M$ by $x$ preserves its absolute tail, but the product need not be a martingale. To obtain a centered MGF without a prefactor, let $X'$ be an independent copy of $X=x\mathcal M$. By Jensen's inequality, $\E e^{\theta(X-\E X)}\le\E e^{\theta(X-X')}$.
+If $X$ has tail $2e^{-u^2/(2v)}$, the symmetric difference has tail $4e^{-u^2/(8v)}$ and even moments at most $4(8v)^ll!$. Since $(2l)!\ge(l!)^2$, its series is at most $4e^{8v\theta^2}-3\le e^{32v\theta^2}$.
+This applies with $v=C_\beta h$. By Hoeffding's lemma \cite[Lemma~2.2]{boucheron-lugosi-massart-2013}, we have a centered log MGF bounded by $C_\beta\theta^2h^2$ for $\mathcal Q$, using \eqref{u:eq:residual-bracket-bounds}. We combine these bounds and \eqref{u:eq:lag-cell-mgf} in \eqref{u:eq:residual-decomposition} by H\"older's inequality with four factors. Since the number of factors is fixed, this proves the MGF bound in \eqref{u:eq:residual-mgf}.
+
+For the mean, we have, on every deterministic grid, the identities
+\begin{equation}\label{u:eq:residual-mean-integrals}
+ \int_0^VCr=e(V)-e_h,\qquad
+ \int_0^VG\rho p=e(V)-e_h.
+\end{equation}
+The first uses the previous-cell value $s_j^2$, and the second the current-cell value $\sqrt{h_j}b_j$. By \cref{u:lem:cross} and posterior averaging, $\E[x\mathcal M]=\int Cr+\int G\rho p$, $\E\mathcal N=\E\mathscr L_j=0$, and $\E\mathcal Q=-(1/2)\int Cr$.
+We conclude that $\E R_h=3(e(V)-e_h)/2$. The same integrals of the coefficients show that $|e(V)-e_h|\le C_\beta h$, in agreement with \cref{u:lem:quad}. For independent identically distributed rows, the centered MGFs multiply. The exponential Markov inequality with $\theta=c\eta/h$, for a sufficiently small fixed $c>0$, proves \eqref{u:eq:residual-average-tail} for all $0<\eta\le1$.
+
+\paragraph{Integral versions and replay.}
+At fixed finite $V$ and fixed query cells, we refine within each cell by dyadic left sums, retaining its endpoints. For the lag sums, the isometry and $\E(m_t-m_u)^2\le t-u$ bound the squared error by $8V\omega_{\sqrt r}(\varepsilon')^2+V\varepsilon'\to0$, where $\omega_{\sqrt r}$ is the modulus of continuity of $\sqrt r$ on this fixed horizon. The integrals with deterministic weights and the likelihood integral against $D$ are identified with limits of left sums in the same way. Passing to an almost-sure subsequence and using Fatou's lemma, we obtain the same MGF bound for the limit as for the finite sums. With bounded test functions of the past, we obtain the conditional version of Fatou's lemma in the same way.
+
+The query driver is $B=\int\rho\dd M+\int\sigma\dd\widetilde M$, with the independent orthogonal driver of \cref{u:sec:scalar}. We retain both terms. Freezing $\rho,\sigma$ at the endpoints of the refinement produces a squared error at most $4\int[(\rho_{\varepsilon'}-\rho)^2+(\sigma_{\varepsilon'}-\sigma)^2]\dd t\to0$.
+Before support, we use $\dd m=\chi\dd M$. We do not split a cell that crosses the support endpoint, since splitting it and restarting its lag baseline would omit a term. The identity of the full histories in \cref{u:def:laws} and the uniqueness of these sums identify the replay versions, including the reference of \cref{u:lem:reference}. For fixed $n$, the linking transfers null sets. The MGF and tail estimates follow from the unchanged path law and sign symmetrization, without a factor $2^n$. The conditioning in \eqref{u:eq:lag-cell-tail} and \eqref{u:eq:lag-cell-mgf} never involves the terminal sign, the final matrix, the futures of the other rows, or any crossing event.
+\end{proof}
+
+\section{Coarse domination}\label{u:sec:coarse-domination}
+
+We combine the terminal cancellation and the residual estimate to bound the information minus the queried energy. The weighted remainder and the unused Gaussian energy then give the bound on the restricted kernel in \cref{u:prop:coarse}.
+
+\begin{lemma}[Concentration of the row $I-\beta\zeta_h$]\label{u:lem:row}
+For $V\ge v_*$, we have the exact identity
+\begin{equation}\label{u:eq:finite-grid-cancellation}
+\begin{aligned}
+ I_V-\beta\zeta_h
+ ={}&\log2-P_\beta-\frac{\beta^2p(V)^2}{4}
+       +\frac{\beta^2p(V)}2(x-m_V)^2\\
+ &+\beta R_h+\frac\beta2(e_h-e(V)).
+\end{aligned}
+\end{equation}
+Its mean is
+\begin{equation}\label{u:eq:finite-grid-mean}
+ j(V)-\beta e_h=\log2-P_\beta+\frac{\beta^2p(V)^2}{4}
+                                      +\beta(e(V)-e_h),
+\end{equation}
+and its centered random part is $T_V+\beta(R_h-\E R_h)$, with variance at most $C_\beta\{p(V)^3+h\}$. In particular, for $V=V_{\ex b}$, $h=n^{-\ex a}$, $\ex z<\min(\ex a,\ex b/2)$, and all sufficiently large $n$,
+\begin{equation}\label{u:eq:row-concentration}
+ \PP\left\{\frac1n\sum_i(I_{V,i}-\beta\zeta_{h,i})
+                    >\log2-P_\beta+C_\beta n^{-\ex z}\right\}
+ \le2e^{-c_\beta n^{1+\ex a-2\ex z}}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \eqref{u:eq:continuous-row-energy} and the definition of $R_h$, we have $\zeta_h=\zeta_\infty-R_h+(e(V)-e_h)/2$.
+Inserting this into \eqref{u:eq:joint-cancellation} yields \eqref{u:eq:finite-grid-cancellation}. Using \eqref{u:eq:residual-mgf} and $\E(x-m_V)^2=p(V)$, we obtain \eqref{u:eq:finite-grid-mean}. This also agrees with the information mean of \cref{u:lem:reference} and with \eqref{u:eq:row-telescope}. Combining the centered decomposition with \eqref{u:eq:terminal-variance} and \eqref{u:eq:residual-mgf}, we conclude that the variance has the stated bound; this does not require the two terms to be independent.
+
+The terminal correction is deterministically at most $2\beta^2p(V)=O_\beta(n^{-\ex b/2})=o(n^{-\ex z})$. Its mean and the deterministic mesh error $O_\beta(h)$ fit within the same accuracy. By \eqref{u:eq:residual-average-tail} with $\eta=n^{-\ex z}$, absorbing the fixed coefficient $\beta$ into its constants, we obtain \eqref{u:eq:row-concentration}. The terminal variance remains $O(p(V)^3)$. Bernstein's inequality for bounded variables would give it the rate $n\min(\eta^2/p(V)^3,\eta/p(V))$; here we use only its deterministic amplitude.
+\end{proof}
+
+\begin{proposition}[Intrinsic coarse domination]\label{u:prop:coarse}
+Suppose the fine conditions of \cref{u:prop:fine-kl} hold and, in addition,
+\begin{equation}\label{u:eq:coarse-conditions}
+\begin{gathered}
+ \ex a>\ex b/4,\qquad
+ 0<\ex{k}_{\rm b}<\ex z<\min(\ex a,\ex b/2,2\ex w),\\
+ \max\{2\ex w,\ex w+\ex b/4,\ex b/2,
+       2\ex z-\ex a,2\ex z-2\ex w,2\ex z-\ex b\}<\ex{s}_{\rm b},\\
+ \ex a<1-\ex{s}_{\rm b}.
+\end{gathered}
+\end{equation}
+Let $\mu^{\rm aux}_n$ be the independent product law of the spin-free replay inputs $(D,B^0,\mathrm{br},(C_j)_j)$ from \cref{u:def:laws}, and let $U$ be independent and uniform on $[0,1]^n$. Only the inputs through $V_{\ex b}$ are read here; unused coordinates extending the experiment to the fine horizon may be retained. We write $m_i^{g,a}(V_{\ex b})$ for the resulting replay terminal magnetizations and define
+\[
+ X_B(g,a,U)_i
+ =2\mathbf 1\!\left\{U_i\le
+    \frac{1+m_i^{g,a}(V_{\ex b})}{2}\right\}-1.
+\]
+There exists a Borel replay event $E_B$ such that, eventually,
+\begin{equation}\label{u:eq:coarse-failure}
+ \PP_{\gamma_n\otimes\mu^{\rm aux}_n\otimes\dd U}(E_B^c)
+ \le e^{-n^{1-\ex{s}_{\rm b}}}.
+\end{equation}
+The event includes $\|A_{\mathcal T}-I\|\le3/4$. Its restricted output kernel satisfies, for $\gamma_n$-almost every $g$, simultaneously for all $x\in\Sigma_n$,
+\begin{equation}\label{u:eq:coarse-kernel}
+\begin{aligned}
+ q_B^{\rm good}(g,x)
+ &=\int\mathbf 1_{E_B}\mathbf 1_{\{X_B(g,a,U)=x\}}
+                      \dd\mu^{\rm aux}_n(a)\dd U\\
+ &\le e^{-nP_\beta+n^{1-\ex{k}_{\rm b}}}e^{\beta H^c_g(x)}.
+\end{aligned}
+\end{equation}
+The event $E_B$ contains no pressure event, and \eqref{u:eq:coarse-failure} is an annealed failure bound.
+\end{proposition}
+
+\begin{proof}
+We intersect the weighted and Gram events with bounds on the unused Gaussian energy and the row residual. The row identity gives a likelihood bound on this event, which we then disintegrate over the disorder.
+
+\paragraph{The energy errors.}
+At $V=V_{\ex b}$, we take the simultaneous weighted event of \cref{u:lem:weighted} at $\eta=n^{-\ex w}$ and the fixed Gram event $\|E_A\|\vee\|E_H\|\le(16D_*^2)^{-1}$. On their intersection, by \cref{u:lem:weighted,u:lem:weighted-energy}, we have
+\begin{equation}\label{u:eq:coarse-weighted-errors}
+\begin{aligned}
+ \|c-s\|&\le\tau_n=C_\beta n^{-\ex w}\log^Cn,\\
+ |E_{\rm qry}-e_h-\ell(E)|&\le C_\beta n^{-2\ex w}\log^Cn.
+\end{aligned}
+\end{equation}
+The failure probabilities of the two events have the respective raw rates $n^{1-\max\{2\ex w,\ex w+\ex b/4\}}/\operatorname{polylog}n$ and $n^{1-\ex b/2}/\operatorname{polylog}n$, less the cost $C_\beta n^{\ex a}$ of the net. By the strict inequalities in \eqref{u:eq:coarse-conditions}, these rates eventually dominate both the cost of the net and any fixed multiple of $n^{1-\ex{s}_{\rm b}}$.
+
+For the discarded energy, we use its conditional law before restricting it by its own tail. The endpoint of the last previous cell satisfies $t_N=\ex b\log n+o(1)$, since $V_{\ex b}-t_N=h_N=o(1)$. Thus $p(t_N)^2\le C_\beta n^{-\ex b}$. On the event in \eqref{u:eq:coarse-weighted-errors}, we see from \eqref{u:eq:unused-energy-variance} that its conditional variance is at most
+\[
+ C_\beta n^{-1}\{n^{-\ex a}+n^{-2\ex w}\log^Cn+n^{-\ex b}\}.
+\]
+The conditional probability that $|Z|>n^{-\ex z}$ is at most
+\begin{equation}\label{u:eq:coarse-gaussian-tail}
+ 2\exp\left\{-\frac{c_\beta
+ n^{1-\max\{2\ex z-\ex a,\,2\ex z-2\ex w,\,2\ex z-\ex b\}}}
+ {\log^Cn}\right\}.
+\end{equation}
+If the conditional variance is zero, this probability is zero. Integrating over the event on paths and signs in \eqref{u:eq:coarse-weighted-errors} gives the same bound for the probability of its intersection with this failure. Here we used the sum of the two unused Gaussian terms, with the conditional variance computed above. The coarser bound $1/(2n)$ would not give the required rate at these exponents.
+
+\paragraph{The replay event.}
+We intersect the preceding events with $|Z|\le n^{-\ex z}$ and
+\[
+ \left|\frac1n\sum_i(R_{h,i}-\E R_h)\right|\le n^{-\ex z}.
+\]
+The latter fails with probability at most $2e^{-c_\beta n^{1+\ex a-2\ex z}}$ by \eqref{u:eq:residual-average-tail}, with loss $2\ex z-\ex a$. All these events are replay events: the Gram blocks and scalar histories are replay functions, the residual uses the integral versions of \cref{u:lem:reference}, and $Z=H^c_g(x)/n-E_{\rm qry}$. We use the Borel versions fixed by the conventions of \cref{u:sec:setup}. The identity between the source and replay laws in \cref{u:def:laws} transports their probabilities. The sum of the finitely many failure probabilities is eventually at most $e^{-n^{1-\ex{s}_{\rm b}}}$, because each raw exponent exceeds $1-\ex{s}_{\rm b}$ and the exponent of the net by a strict margin. We denote the resulting event by $E_B$.
+
+On $E_B$, \eqref{u:eq:row-telescope}, \eqref{u:eq:finite-grid-cancellation}, and the mean in \eqref{u:eq:residual-mgf} imply that
+\begin{align*}
+ \frac1nI^{(n)}-\log2-\frac\beta nH^c_g(x)
+ &\le-P_\beta+C_\beta\bigl\{p(V_{\ex b})+p(V_{\ex b})^2+h\\
+ &\hspace{5em}+n^{-\ex z}+n^{-2\ex w}\log^Cn\bigr\}\\
+ &\le-P_\beta+n^{-\ex{k}_{\rm b}}
+\end{align*}
+eventually. Here the terminal correction has amplitude $O_\beta(p(V_{\ex b}))=O_\beta(n^{-\ex b/2})$, the deterministic mean of $R_h$ is $O_\beta(h)$, and the weighted remainder is controlled by \eqref{u:eq:coarse-weighted-errors}. Since $\ex{k}_{\rm b}<\ex z<\min(\ex a,\ex b/2,2\ex w)$, all constants and logarithms are absorbed. The terminal variance \eqref{u:eq:terminal-variance} is controlled here by its deterministic amplitude.
+
+\paragraph{Disintegration.}
+On this replay space, $\Lambda=e^{I^{(n)}}R_D$ and $(g,x)_*R_D=\gamma_n\otimes\Unif_n$. For every Borel set $A$ of primitive matrices and each spin,
+\[
+ \Lambda(E_B,\ g\in A,\ x)
+ \le\int_A e^{-nP_\beta+n^{1-\ex{k}_{\rm b}}+\beta H^c_g(x)}\,
+                   \gamma_n(\dd g).
+\]
+The factor $2^n$ from the logarithmic inequality cancels the factor $2^{-n}$ of the reference law of the spin. Realizing the linked spin by terminal thresholds does not change the restricted law. Disintegration over the disorder, whose marginal is unchanged, gives \eqref{u:eq:coarse-kernel}. Since the spin space is finite, there exists one common measurable null set for all spins. We redefine the restricted kernel to be zero there. This does not affect its later use, since the nondegenerate Gaussian regressions used later are absolutely continuous with respect to $\gamma_n$. This proves the bound on the subprobability kernel and, separately, the annealed failure estimate. In the coupled experiment of \cref{u:sec:sequence}, the auxiliary inputs are independent, and this will justify applying the proposition after the outer target is adjoined.
+\end{proof}

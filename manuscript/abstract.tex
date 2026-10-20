@@ -1,0 +1,36 @@
+We study the heat-bath (Glauber) dynamics of the Sherrington--Kirkpatrick
+model at zero external field and fixed inverse temperature $\beta>1$. We
+sample the disorder $J$ and then a configuration $X_0$ from the Gibbs
+measure, and run the continuous-time dynamics with rate one per site from
+$X_0$. Let $T^J(X_0)$ be the first time at which the law of the configuration
+is within total-variation distance $1/4$ of the Gibbs measure. We prove lower
+and upper bounds: for every fixed $\omega\in(0,1/4)$, with probability tending
+to one,
+\[
+ A_\beta n^{7/30}<\log T^J(X_0)\le n^{1-\omega},
+\]
+where $A_\beta>0$ depends only on $\beta$. Hence, if
+$\log T^J(X_0)=n^{\zeta+o(1)}$, then $7/30\le\zeta\le3/4$; the physics
+literature suggests $\zeta=1/3$. Both bounds also hold for the discrete-time
+chain.
+
+These results improve on OpenAI's work in the same setting in two ways.
+First, OpenAI proved a lower bound with exponent $1/10000$ and an upper bound
+with exponent $1-1/40000000$~\cite[Theorem~1]{oai-typical-upper}. We follow
+the architecture of both proofs. The lower bound adds a three-replica
+comparison whose pressure deficit is cubic in the width of the overlap window,
+together with the $n^{-7/10}$ upper bound of Aronow and
+Lopatto~\cite[Theorem~1.1]{hexagon-bias} on the mean bias. The upper bound adds a pathwise cancellation between information and
+energy, concentration estimates on a growing mesh, and a choice of exponents
+that reaches every saving below $1/4$. Second, OpenAI formalized its lower
+bound in the Lean~4 proof assistant but not its upper bound; we have
+formalized both of our bounds in Lean.
+
+We also formalize two known results that we present. The first is OpenAI's
+theorem that the variance of the logarithm of the partition function is
+$n^{1/3+o(1)}$. OpenAI's own formalization of this theorem assumes a bound on
+positive logarithmic moments that is proved in their paper but not
+formalized; our formal proof establishes this bound. The second is the
+consequence, recorded by Aronow and Lopatto~\cite[Section~1.6]{hexagon-bias},
+that the mean bias of the pressure is at least of order $n^{-5/6-\varepsilon}$ for every fixed
+$\varepsilon>0$.

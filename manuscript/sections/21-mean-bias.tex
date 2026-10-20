@@ -1,0 +1,52 @@
+\chapter{The finite-size mean bias}\label{sec:bias}
+
+In this section, we prove \cref{cor:mean-bias}, the lower bound with exponent $5/6$ on the mean bias $\Delta_{n,\beta}=P_\beta-p_n(\beta)$ stated in the introduction. Combined with the upper bound of Aronow and Lopatto (\cref{inp:hb-rate}), it shows that, for every fixed $\beta>1$ and $\eps>0$, we have $c_{\beta,\eps}n^{-5/6-\eps}\le\Delta_{n,\beta}\le C_b n^{-7/10}$ for all sufficiently large $n$. If $\Delta_{n,\beta}=n^{-a+o(1)}$ for some exponent $a$, then $7/10\le a\le5/6$ (\cref{rem:bias-exponent}). \Cref{cor:mean-bias} follows from the lower bound on the variance in \cref{f:main} and from a variance--bias inequality of Aronow and Lopatto (\cref{prop:bias-variance-deficit}). The deduction itself is not new: Aronow and Lopatto record it in \cite[Section~1.6, p.~11]{hexagon-bias}, as a consequence of the variance exponent stated in \cite[Theorem~1.1]{oai-fluctuations}. Here we formally verify this deduction with a Lean proof that follows the argument of \cref{sec:bias-proof} and composes the formal proof of \cref{f:main} with a formal proof of \cref{prop:bias-variance-deficit} (see \cref{sec:formal-statements}). We include the short written proof for completeness, and in \cref{rem:bias-prefactor,rem:bias-exponent} we discuss what it does not determine. \Cref{sec:open} returns to the exact exponent of the mean bias.
+
+Recall from \cref{sec:model} that $p_n(\beta)=n^{-1}\E F_n$, with $F_n=\log Z_n$, that $P_\beta=\lim_np_n(\beta)$, and that $\Delta_{n,\beta}=P_\beta-p_n(\beta)\ge0$ for every $n\ge2$ (see \eqref{eq:model-bias}).
+
+\section{The variance--bias inequality}\label{sec:bias-inequality}
+
+\begin{proposition}[Variance--bias inequality]\label{prop:bias-variance-deficit}
+Fix $\beta>1$. There exists a constant $c_\beta>0$ such that, for every $n\ge2$,
+\begin{equation}\label{eq:mean-bias-variance-deficit}
+ \Delta_{n,\beta}\ge c_\beta\Bigl(\frac{\Var(F_n)+\beta^2/2}{n}\Bigr)^{5/4}.
+\end{equation}
+\end{proposition}
+
+This is \cite[Remark~7.14, (7.68)]{quantitative-parisi}, which restates \cite[Lemma~7.4]{quantitative-parisi} in the normalization of the log partition function. The normalization of \cite[(1.1)]{quantitative-parisi} is ours: the Hamiltonian is $n^{-1/2}\sum_{i<j}J_{ij}x_ix_j$, the partition function is a sum over $\Sigma_n$ with counting measure, $\beta$ multiplies the Hamiltonian, and the Parisi value has the terminal condition $\log(2\cosh z)$. The inequality \eqref{eq:mean-bias-variance-deficit} is \cite[(7.68)]{quantitative-parisi} verbatim; there it is stated for every $n\ge1$. The term $\beta^2/2$ is the variance of the completion $\beta G$ (\cref{lem:model-completion}), and $\Var(F_n)+\beta^2/2=\Var(F_n^c)$ for the completed log partition function $F_n^c=F_n+\beta G$.
+
+We recall the argument of \cite[Lemma~7.4]{quantitative-parisi}, which works with the variable $F_n^c/\beta$. For $t>0$, let $\Lambda(t)=(nt)^{-1}\log\E e^{tF_n^c/\beta}$, and let $\Lambda(0)=\E F_n^c/(\beta n)=p_n(\beta)/\beta$. Since $F_n^c/\beta$ is a convex Lipschitz function of a standard Gaussian vector, \cite[Lemma~5.2]{quantitative-parisi}, which rests on W.-K.~Chen's convexity theorem for Gaussian logarithmic moments \cite[Theorem~1]{chen-gaussian-convexity}, shows that $\Lambda$ is convex with $\Lambda'(0)=V/2$, where $V=\Var(F_n^c)/(\beta^2n)$. By convexity, $\Lambda(t)\ge\Lambda(0)+tV/2$: a gain linear in $t$ and proportional to the variance. On the other hand, the finite-size comparison \cite[(7.1)]{quantitative-parisi} and the fifth-order bound for a scalar trial profile \cite[Lemma~7.2, (7.3)]{quantitative-parisi} give $\Lambda(t)\le P_\beta/\beta+Ct^5$ for small $t>0$. Here $C$ and the range $0<t\le t_*$ of the trial bound depend only on $\beta$. Subtracting, we see that $\Delta_{n,\beta}/\beta$ is at least $tV/2-Ct^5$. The gradient of $F_n^c/\beta$ is a convex combination of vectors of squared norm $n/2$, and the Gaussian Poincar\'e inequality gives $\Var(F_n^c)\le\beta^2n/2$; also $\Var(F_n^c)\ge\Var(\beta G)=\beta^2/2$. We conclude that $0<V\le1/2$. With $c'=\min\{1,t_*,(4C)^{-1/4}\}$ and $t=c'V^{1/4}$, we have $t\le t_*$ and
+\[
+ \frac{\Delta_{n,\beta}}{\beta}\ge\frac{c'}{2}V^{5/4}-C(c')^5V^{5/4}\ge\frac{c'}{4}V^{5/4}.
+\]
+Since $V=\beta^{-2}(\Var(F_n)+\beta^2/2)/n$, multiplying by $\beta$ gives \eqref{eq:mean-bias-variance-deficit} with $c_\beta=(c'/4)\beta^{-3/2}$, independent of $n$.
+
+\section{Proof of the mean-bias bound}\label{sec:bias-proof}
+
+\begin{proof}[Proof of \cref{cor:mean-bias}]
+Fix $\beta>1$ and $\eps>0$. By the lower bound in \eqref{f:variance}, applied with $\eta=4\eps/5$, there exists $n_0(\beta,\eps)\ge2$ such that
+\[
+ \Var(F_n)\ge n^{1/3-4\eps/5}\qquad(n\ge n_0(\beta,\eps)).
+\]
+Since $t\mapsto t^{5/4}$ is increasing on $[0,\infty)$, we may drop the term $\beta^2/2$ in \eqref{eq:mean-bias-variance-deficit}. Inserting the variance bound, we obtain, for $n\ge n_0(\beta,\eps)$,
+\[
+ \Delta_{n,\beta}\ge c_\beta\bigl(n^{1/3-4\eps/5-1}\bigr)^{5/4}=c_\beta\,n^{-5/6-\eps},
+\]
+where we used $\frac54\bigl(-\frac23-\frac{4\eps}{5}\bigr)=-\frac56-\eps$. Multiplying by $n$, we find $nP_\beta-\E F_n\ge c_\beta n^{1/6-\eps}$. This proves \cref{cor:mean-bias} with $c_{\beta,\eps}=c_\beta$ and this threshold $n_0(\beta,\eps)$; only the threshold depends on $\eps$.
+\end{proof}
+
+If we use instead the earlier lower bound $\Var(F_n)\ge c\,n^{4/15}$ of \cite[Theorem~1.4]{quantitative-parisi}, the same computation yields $\Delta_{n,\beta}\ge c\,n^{-11/12}$, which is how the lower bound on the mean bias in \cite[Theorem~1.4]{quantitative-parisi} is obtained there. Using the variance exponent $1/3$ gives $5/6+\eps$ in place of $11/12$, as already observed in \cite[Section~1.6, p.~11]{hexagon-bias}.
+
+\section{What the bound does not determine}\label{sec:bias-scope}
+
+\begin{remark}[A positive variance prefactor]\label{rem:bias-prefactor}
+If there were a constant $k_\beta>0$ such that $\Var(F_n)\ge k_\beta n^{1/3}$ for all sufficiently large $n$, the same computation would give
+\begin{equation}\label{eq:mean-bias-prefactor-target}
+ \Delta_{n,\beta}\ge c_\beta k_\beta^{5/4}\,n^{-5/6}
+\end{equation}
+for all sufficiently large $n$. This is \cite[(1.4), p.~11]{hexagon-bias}, where Aronow and Lopatto note that it would follow from the positive limit of $n^{-1/3}\Var(F_n)$ claimed in \cite[Theorem~1.2]{oai-limiting-law}. \Cref{f:main} does not give such a prefactor: a variance equal to $n^{1/3}/\log n$, for example, is of the form $n^{1/3+o(1)}$, and inserting it in \eqref{eq:mean-bias-variance-deficit}, we obtain \eqref{eq:mean-bias-prefactor-target} only up to the factor $(\log n)^{-5/4}$. We therefore prove the bound with exponent $5/6+\eps$, not \eqref{eq:mean-bias-prefactor-target}.
+\end{remark}
+
+\begin{remark}[The exponent of the mean bias]\label{rem:bias-exponent}
+For every fixed $\beta>1$, Aronow and Lopatto prove that $\Delta_{n,\beta}\le C_b n^{-7/10}$ for $n\ge2$ \cite[Theorem~1.1]{hexagon-bias}. Combined with \cref{cor:mean-bias}, this bound implies that if $\Delta_{n,\beta}=n^{-a+o(1)}$ for some exponent $a$, then $7/10\le a\le5/6$ \cite[Section~1.6, p.~11]{hexagon-bias}. The exact exponent is not determined by these bounds. Franz, Parisi, and Ricci-Tersenghi predict $a=3/4$, possibly with logarithmic corrections \cite[(13)--(17)]{franz-parisi-ricci-2026}; this prediction is consistent with both bounds.
+\end{remark}

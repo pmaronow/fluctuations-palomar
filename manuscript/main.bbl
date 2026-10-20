@@ -1,0 +1,938 @@
+\begin{thebibliography}{108}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aizenman et~al.(1987)Aizenman, Lebowitz, and Ruelle]{alr-1987}
+Michael Aizenman, Joel~L. Lebowitz, and David Ruelle.
+\newblock Some rigorous results on the {Sher\-rington--Kirkpatrick} spin glass
+  model.
+\newblock \emph{Communications in Mathematical Physics}, 112\penalty0
+  (1):\penalty0 3--20, 1987.
+\newblock \doi{10.1007/BF01217677}.
+\newblock \url{https://doi.org/10.1007/BF01217677}.
+
+\bibitem[Aizenman et~al.(2003)Aizenman, Sims, and
+  Starr]{aizenman-sims-starr-2003}
+Michael Aizenman, Robert Sims, and Shannon~L. Starr.
+\newblock Extended variational principle for the {Sherrington--Kirkpatrick}
+  spin-glass model.
+\newblock \emph{Physical Review B}, 68:\penalty0 214403, 2003.
+\newblock \doi{10.1103/PhysRevB.68.214403}.
+
+\bibitem[Anari et~al.(2022)Anari, Jain, Koehler, Pham, and
+  Vuong]{anari-jain-koehler-pham-vuong-2022}
+Nima Anari, Vishesh Jain, Frederic Koehler, Huy~Tuan Pham, and Thuy-Duong
+  Vuong.
+\newblock Entropic independence: optimal mixing of down-up random walks.
+\newblock In \emph{Proceedings of the 54th Annual {ACM} {SIGACT} Symposium on
+  Theory of Computing}, pages 1418--1430. ACM, 2022.
+\newblock \doi{10.1145/3519935.3520048}.
+\newblock Theorem locators refer to the preprint arXiv:2106.04105v2.
+
+\bibitem[Aronow and Lopatto(2026{\natexlab{a}})]{al-overlap-structure}
+P.~M. Aronow and Patrick Lopatto.
+\newblock Overlap structure of mixed even {$p$}-spin models.
+\newblock \url{https://arxiv.org/abs/2609.17442v1}, 2026{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2609.17442v1}.
+\newblock Version 1, September 15, 2026.
+
+\bibitem[Aronow and Lopatto(2026{\natexlab{b}})]{hexagon-bias}
+P.~M. Aronow and Patrick Lopatto.
+\newblock An {$N^{-7/10}$} bound for the finite-size bias of the
+  {Sherrington--Kirkpatrick} free energy.
+\newblock Hexagon preprint, \url{https://hexagonmath.org/pdf/2610.00177v1},
+  October 2026{\natexlab{b}}.
+\newblock URL \url{https://hexagonmath.org/pdf/2610.00177v1}.
+\newblock Version 1; publication date October 12, 2026. hexagon:2610.00177v1.
+
+\bibitem[Aronow and Lopatto(2026{\natexlab{c}})]{hexagon-bias-lean}
+P.~M. Aronow and Patrick Lopatto.
+\newblock Finite-size mean bias in the {Sherrington--Kirkpatrick} model.
+\newblock Lean development,
+  \url{https://github.com/pmaronow/sk-mean-bias-palomar/tree/7601a9d5ade08066632bc68b9a615e163f2dd02c},
+  2026{\natexlab{c}}.
+\newblock URL
+  \url{https://github.com/pmaronow/sk-mean-bias-palomar/tree/7601a9d5ade08066632bc68b9a615e163f2dd02c}.
+\newblock Commit 7601a9d5ade08066632bc68b9a615e163f2dd02c.
+
+\bibitem[Aronow and Lopatto(2026{\natexlab{d}})]{quantitative-parisi}
+P.~M. Aronow and Patrick Lopatto.
+\newblock Quantitative {Parisi} formulas and fluctuations in the
+  {Sherrington--Kirkpatrick} model.
+\newblock \url{https://arxiv.org/abs/2609.09103v1}, 2026{\natexlab{d}}.
+\newblock URL \url{https://arxiv.org/abs/2609.09103v1}.
+\newblock Version 1, September 8, 2026.
+
+\bibitem[Aspelmeier and Moore(2022)]{aspelmeier-moore-2022}
+T.~Aspelmeier and M.~A. Moore.
+\newblock Free-energy barriers in the {Sherrington--Kirkpatrick} model.
+\newblock \emph{Physical Review E}, 105:\penalty0 034138, 2022.
+\newblock \doi{10.1103/PhysRevE.105.034138}.
+
+\bibitem[Aspelmeier(2008)]{aspelmeier-2008}
+Timo Aspelmeier.
+\newblock An exact relation between free energy fluctuations and bond chaos in
+  the {Sherrington--Kirkpatrick} model.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2008\penalty0 (4):\penalty0 P04018, 2008.
+\newblock \doi{10.1088/1742-5468/2008/04/P04018}.
+\newblock Equation locators refer to arXiv:0802.3007v1.
+
+\bibitem[Aspelmeier et~al.(2008)Aspelmeier, Billoire, Marinari, and
+  Moore]{aspelmeier-billoire-marinari-moore-2008}
+Timo Aspelmeier, Alain Billoire, Enzo Marinari, and Michael~A. Moore.
+\newblock Finite size corrections in the {Sherrington--Kirkpatrick} model.
+\newblock \emph{Journal of Physics A: Mathematical and Theoretical},
+  41\penalty0 (32):\penalty0 324008, 2008.
+\newblock \doi{10.1088/1751-8113/41/32/324008}.
+\newblock Section locators refer to arXiv:0711.3445v1.
+
+\bibitem[Auffinger and Chen(2015{\natexlab{a}})]{auffinger-chen-2015}
+Antonio Auffinger and Wei-Kuo Chen.
+\newblock On properties of {Parisi} measures.
+\newblock \emph{Probability Theory and Related Fields}, 161:\penalty0 817--850,
+  2015{\natexlab{a}}.
+\newblock \doi{10.1007/s00440-014-0563-y}.
+\newblock URL \url{https://arxiv.org/abs/1303.3573v1}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1303.3573v1}.
+
+\bibitem[Auffinger and
+  Chen(2015{\natexlab{b}})]{auffinger-chen-uniqueness-2015}
+Antonio Auffinger and Wei-Kuo Chen.
+\newblock The {Parisi} formula has a unique minimizer.
+\newblock \emph{Communications in Mathematical Physics}, 335:\penalty0
+  1429--1444, 2015{\natexlab{b}}.
+\newblock \doi{10.1007/s00220-014-2254-z}.
+\newblock URL \url{https://arxiv.org/abs/1402.5132v3}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1402.5132v3}.
+
+\bibitem[Baik and Lee(2016)]{baik-lee-2016}
+Jinho Baik and Ji~Oon Lee.
+\newblock Fluctuations of the free energy of the spherical
+  {Sherrington--Kirkpatrick} model.
+\newblock \emph{Journal of Statistical Physics}, 165\penalty0 (2):\penalty0
+  185--224, 2016.
+\newblock \doi{10.1007/s10955-016-1610-0}.
+\newblock Statement locators refer to arXiv:1505.07349v5.
+
+\bibitem[Bauerschmidt and Bodineau(2019)]{bauerschmidt-bodineau-2019}
+Roland Bauerschmidt and Thierry Bodineau.
+\newblock A very simple proof of the {LSI} for high temperature spin systems.
+\newblock \emph{Journal of Functional Analysis}, 276\penalty0 (8):\penalty0
+  2582--2588, 2019.
+\newblock \doi{10.1016/j.jfa.2019.01.007}.
+\newblock Statement locators refer to arXiv:1712.03676v2.
+
+\bibitem[Ben~Arous and Jagannath(2018)]{ben-arous-jagannath-2018}
+G\'{e}rard Ben~Arous and Aukosh Jagannath.
+\newblock Spectral gap estimates in mean field spin glasses.
+\newblock \emph{Communications in Mathematical Physics}, 361\penalty0
+  (1):\penalty0 1--52, 2018.
+\newblock \doi{10.1007/s00220-018-3152-6}.
+\newblock URL \url{https://arxiv.org/abs/1705.04243v3}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1705.04243v3},
+  version 3, March 2, 2018.
+
+\bibitem[Billoire(2006)]{billoire-2006}
+Alain Billoire.
+\newblock Numerical estimate of the finite-size corrections to the free energy
+  of the {Sherrington--Kirkpatrick} model using {Guerra--Toninelli}
+  interpolation.
+\newblock \emph{Physical Review B}, 73:\penalty0 132201, 2006.
+\newblock \doi{10.1103/PhysRevB.73.132201}.
+
+\bibitem[Billoire(2010)]{billoire-2010}
+Alain Billoire.
+\newblock Distribution of timescales in the {Sherrington--Kirkpatrick} model.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2010\penalty0 (11):\penalty0 P11034, 2010.
+\newblock \doi{10.1088/1742-5468/2010/11/P11034}.
+\newblock Equation and figure locators refer to arXiv:1003.6086v3.
+
+\bibitem[Billoire and Marinari(2001)]{billoire-marinari-2001}
+Alain Billoire and Enzo Marinari.
+\newblock Correlation time scales in the {Sherrington--Kirkpatrick} model.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 34:\penalty0
+  L727--L734, 2001.
+\newblock \doi{10.1088/0305-4470/34/50/101}.
+
+\bibitem[Bittner and Janke(2006)]{bittner-janke-2006}
+Elmar Bittner and Wolfhard Janke.
+\newblock Free-energy barriers in the {Sherrington--Kirkpatrick} model.
+\newblock \emph{Europhysics Letters}, 74\penalty0 (2):\penalty0 195--201, 2006.
+\newblock \doi{10.1209/epl/i2006-10007-y}.
+
+\bibitem[Boban et~al.(2026)Boban, Li, and
+  Oveis~Gharan]{boban-li-oveis-gharan-2026}
+Mathews Boban, Anqi Li, and Shayan Oveis~Gharan.
+\newblock Rank-1-perturbed trickledown theorems: mixing time of {Glauber}
+  dynamics for the {Sherrington--Kirkpatrick} model up to
+  {$\beta\leq\frac12+\varepsilon$}.
+\newblock \url{https://arxiv.org/abs/2609.13138v1}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2609.13138v1}.
+\newblock Version 1.
+
+\bibitem[Boettcher(2005)]{boettcher-2005}
+Stefan Boettcher.
+\newblock Extremal optimization for {Sherrington--Kirkpatrick} spin glasses.
+\newblock \emph{The European Physical Journal B}, 46\penalty0 (4):\penalty0
+  501--505, 2005.
+\newblock \doi{10.1140/epjb/e2005-00280-6}.
+
+\bibitem[Boettcher(2010)]{boettcher-2010}
+Stefan Boettcher.
+\newblock Simulations of ground state fluctuations in mean-field {Ising} spin
+  glasses.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2010\penalty0 (7):\penalty0 P07002, 2010.
+\newblock \doi{10.1088/1742-5468/2010/07/P07002}.
+\newblock Section locators refer to arXiv:0906.1292v2.
+
+\bibitem[Bogachev et~al.(2005)Bogachev, Kolesnikov, and
+  Medvedev]{bogachev-kolesnikov-medvedev-2005}
+V.~I. Bogachev, A.~V. Kolesnikov, and K.~V. Medvedev.
+\newblock Triangular transformations of measures.
+\newblock \emph{Sbornik: Mathematics}, 196\penalty0 (3):\penalty0 309--335,
+  2005.
+\newblock \doi{10.1070/SM2005v196n03ABEH000882}.
+
+\bibitem[Bolthausen(2014)]{bolthausen-2014}
+Erwin Bolthausen.
+\newblock An iterative construction of solutions of the {TAP} equations for the
+  {Sherrington}--{Kirkpatrick} model.
+\newblock \emph{Communications in Mathematical Physics}, 325:\penalty0
+  333--366, 2014.
+\newblock \doi{10.1007/s00220-013-1862-3}.
+
+\bibitem[Bouchaud et~al.(1997)Bouchaud, Cugliandolo, Kurchan, and
+  M{\'e}zard]{bouchaud-cugliandolo-kurchan-mezard-1997}
+Jean-Philippe Bouchaud, Leticia~F. Cugliandolo, Jorge Kurchan, and Marc
+  M{\'e}zard.
+\newblock Out of equilibrium dynamics in spin-glasses and other glassy systems.
+\newblock \url{https://arxiv.org/abs/cond-mat/9702070v1}, 1997.
+\newblock URL \url{https://arxiv.org/abs/cond-mat/9702070v1}.
+\newblock Version 1.
+
+\bibitem[Bouchaud et~al.(2003)Bouchaud, Krzakala, and
+  Martin]{bouchaud-krzakala-martin-2003}
+Jean-Philippe Bouchaud, Florent Krzakala, and Olivier~C. Martin.
+\newblock Energy exponents and corrections to scaling in {Ising} spin glasses.
+\newblock \emph{Physical Review B}, 68:\penalty0 224404, 2003.
+\newblock \doi{10.1103/PhysRevB.68.224404}.
+
+\bibitem[Boucheron et~al.(2013)Boucheron, Lugosi, and
+  Massart]{boucheron-lugosi-massart-2013}
+St\'ephane Boucheron, G\'abor Lugosi, and Pascal Massart.
+\newblock \emph{Concentration Inequalities: A Nonasymptotic Theory of
+  Independence}.
+\newblock Oxford University Press, 2013.
+\newblock \doi{10.1093/acprof:oso/9780199535255.001.0001}.
+
+\bibitem[Bovier and Klimovsky(2009)]{bovier-klimovsky-2009}
+Anton Bovier and Anton Klimovsky.
+\newblock The {Aizenman--Sims--Starr} and {Guerra}'s schemes for the {SK} model
+  with multidimensional spins.
+\newblock \emph{Electronic Journal of Probability}, 14\penalty0 (8):\penalty0
+  161--241, 2009.
+\newblock \doi{10.1214/EJP.v14-611}.
+
+\bibitem[Brascamp and Lieb(1976)]{brascamp-lieb-1976}
+Herm~Jan Brascamp and Elliott~H. Lieb.
+\newblock On extensions of the {Brunn--Minkowski} and {Pr\'{e}kopa--Leindler}
+  theorems, including inequalities for log concave functions, and with an
+  application to the diffusion equation.
+\newblock \emph{Journal of Functional Analysis}, 22\penalty0 (4):\penalty0
+  366--389, 1976.
+\newblock \doi{10.1016/0022-1236(76)90004-5}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/0022123676900045}.
+\newblock \url{https://doi.org/10.1016/0022-1236(76)90004-5}.
+
+\bibitem[Bray and Moore(1981)]{bray-moore-1981}
+A.~J. Bray and M.~A. Moore.
+\newblock Metastable states in the solvable spin glass model.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 14\penalty0
+  (9):\penalty0 L377--L383, 1981.
+\newblock \doi{10.1088/0305-4470/14/9/012}.
+
+\bibitem[Chatterjee(2009)]{chatterjee-2009}
+Sourav Chatterjee.
+\newblock Disorder chaos and multiple valleys in spin glasses.
+\newblock \url{https://arxiv.org/abs/0907.3381v4}, 2009.
+\newblock URL \url{https://arxiv.org/abs/0907.3381v4}.
+\newblock Version 4, 23 November 2009.
+
+\bibitem[Chen et~al.(2026)Chen, Guionnet, Ko, Lacroix-A-Chez-Toine, and
+  Mourrat]{chen-guionnet-ko-lacroix-mourrat-2026}
+Hong-Bin Chen, Alice Guionnet, Justin Ko, Bertrand Lacroix-A-Chez-Toine, and
+  Jean-Christophe Mourrat.
+\newblock One-sided large deviations for the ground-state energy of spin
+  glasses.
+\newblock \url{https://arxiv.org/abs/2603.06368v1}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.06368v1}.
+\newblock Version 1, March 6, 2026.
+
+\bibitem[Chen(2017)]{chen-2017}
+Wei-Kuo Chen.
+\newblock Variational representations for the {Parisi} functional and the
+  two-dimensional {Guerra--Talagrand} bound.
+\newblock \emph{The Annals of Probability}, 45\penalty0 (6A):\penalty0
+  3929--3966, 2017.
+\newblock \doi{10.1214/16-AOP1154}.
+\newblock URL \url{https://arxiv.org/abs/1501.06635v2}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1501.06635v2}.
+
+\bibitem[Chen(2026)]{chen-gaussian-convexity}
+Wei-Kuo Chen.
+\newblock A {Gaussian} convexity for logarithmic moment generating functions
+  with applications in spin glasses.
+\newblock \emph{Annales de l'Institut Henri Poincar{\'e}, Probabilit{\'e}s et
+  Statistiques}, 62\penalty0 (1):\penalty0 195--206, 2026.
+\newblock \doi{10.1214/24-AIHP1527}.
+\newblock URL \url{https://doi.org/10.1214/24-AIHP1527}.
+\newblock Preprint version arXiv:2311.08351v2.
+
+\bibitem[Chen and Lam(2019)]{chen-lam-2019}
+Wei-Kuo Chen and Wai-Kit Lam.
+\newblock Order of fluctuations of the free energy in the {SK} model at
+  critical temperature.
+\newblock \emph{ALEA. Latin American Journal of Probability and Mathematical
+  Statistics}, 16\penalty0 (1):\penalty0 809--816, 2019.
+\newblock \doi{10.30757/ALEA.v16-29}.
+\newblock URL \url{https://alea.impa.br/articles/v16/16-29.pdf}.
+\newblock \url{https://doi.org/10.30757/ALEA.v16-29}.
+
+\bibitem[Chen et~al.(2017)Chen, Dey, and Panchenko]{chen-dey-panchenko-2017}
+Wei-Kuo Chen, Partha Dey, and Dmitry Panchenko.
+\newblock Fluctuations of the free energy in the mixed {$p$}-spin models with
+  external field.
+\newblock \emph{Probability Theory and Related Fields}, 168\penalty0
+  (1--2):\penalty0 41--53, 2017.
+\newblock \doi{10.1007/s00440-016-0705-5}.
+\newblock URL \url{https://arxiv.org/abs/1509.07071v2}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1509.07071v2}.
+
+\bibitem[Colborne(1990)]{colborne-1990}
+S.~G.~W. Colborne.
+\newblock A {Monte Carlo} study of the dynamics of the {Ising} {SK} model.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 23\penalty0
+  (17):\penalty0 4013--4023, 1990.
+\newblock \doi{10.1088/0305-4470/23/17/030}.
+
+\bibitem[Comets and Neveu(1995)]{comets-neveu-1995}
+Francis Comets and Jacques Neveu.
+\newblock The {Sherrington--Kirkpatrick} model of spin glasses and stochastic
+  calculus: the high temperature case.
+\newblock \emph{Communications in Mathematical Physics}, 166\penalty0
+  (3):\penalty0 549--564, 1995.
+\newblock \doi{10.1007/BF02099887}.
+\newblock URL \url{https://doi.org/10.1007/BF02099887}.
+\newblock \url{https://doi.org/10.1007/BF02099887}.
+
+\bibitem[Contucci and Mingione(2019)]{contucci-mingione-2019}
+Pierluigi Contucci and Emanuele Mingione.
+\newblock A multi-scale spin-glass mean-field model.
+\newblock \emph{Communications in Mathematical Physics}, 368\penalty0
+  (3):\penalty0 1323--1344, 2019.
+\newblock \doi{10.1007/s00220-019-03308-8}.
+
+\bibitem[Crisanti and Rizzo(2002)]{crisanti-rizzo-2002}
+Andrea Crisanti and Tommaso Rizzo.
+\newblock Analysis of the {$\infty$}-replica symmetry breaking solution of the
+  {Sherrington--Kirkpatrick} model.
+\newblock \emph{Physical Review E}, 65:\penalty0 046137, 2002.
+\newblock \doi{10.1103/PhysRevE.65.046137}.
+\newblock Equation locators refer to arXiv:cond-mat/0111037v5.
+
+\bibitem[Crisanti et~al.(1992)Crisanti, Paladin, Sommers, and
+  Vulpiani]{crisanti-paladin-sommers-vulpiani-1992}
+Andrea Crisanti, Giovanni Paladin, Hans-J{\"u}rgen Sommers, and Angelo
+  Vulpiani.
+\newblock Replica trick and fluctuations in disordered systems.
+\newblock \emph{Journal de Physique I}, 2\penalty0 (7):\penalty0 1325--1332,
+  1992.
+\newblock \doi{10.1051/jp1:1992213}.
+
+\bibitem[Cugliandolo and Kurchan(1994)]{cugliandolo-kurchan-1994}
+Leticia~F. Cugliandolo and Jorge Kurchan.
+\newblock On the out-of-equilibrium relaxation of the
+  {Sherrington--Kirkpatrick} model.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 27:\penalty0
+  5749--5772, 1994.
+\newblock \doi{10.1088/0305-4470/27/17/011}.
+
+\bibitem[De~Dominicis and Kondor(1983)]{de-dominicis-kondor-1983}
+Cirano De~Dominicis and Imre Kondor.
+\newblock Eigenvalues of the stability matrix for {Parisi} solution of the
+  long-range spin-glass.
+\newblock \emph{Physical Review B}, 27\penalty0 (1):\penalty0 606--608, 1983.
+\newblock \doi{10.1103/PhysRevB.27.606}.
+
+\bibitem[de~Moura and Ullrich(2021)]{lean4}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean 4} theorem prover and programming language.
+\newblock In \emph{Automated Deduction -- CADE 28}, volume 12699 of
+  \emph{Lecture Notes in Computer Science}, pages 625--635. Springer, 2021.
+\newblock \doi{10.1007/978-3-030-79876-5_37}.
+\newblock URL \url{https://doi.org/10.1007/978-3-030-79876-5_37}.
+\newblock \url{https://doi.org/10.1007/978-3-030-79876-5_37}.
+
+\bibitem[Dey and Kang(2026)]{dey-kang-2026}
+Partha~S. Dey and Taegu Kang.
+\newblock Fluctuations for the {Sherrington--Kirkpatrick} spin glass model near
+  the critical temperature.
+\newblock \url{https://arxiv.org/abs/2603.05636v1}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.05636v1}.
+\newblock Version 1, March 5, 2026.
+
+\bibitem[Diaconis and Saloff-Coste(1996)]{diaconis-saloff-coste-1996}
+Persi Diaconis and Laurent Saloff-Coste.
+\newblock Logarithmic {Sobolev} inequalities for finite {Markov} chains.
+\newblock \emph{Annals of Applied Probability}, 6\penalty0 (3):\penalty0
+  695--750, 1996.
+\newblock \doi{10.1214/aoap/1034968224}.
+
+\bibitem[Du and Huang(2026)]{du-huang-2026}
+Hang Du and Brice Huang.
+\newblock Fluctuations of the {Sherrington--Kirkpatrick} free energy at
+  critical temperature.
+\newblock \url{https://arxiv.org/abs/2607.02172v2}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.02172v2}.
+\newblock Version 2, 8 July 2026.
+
+\bibitem[El~Alaoui et~al.(2022)El~Alaoui, Montanari, and
+  Sellke]{el-alaoui-montanari-sellke-sampling}
+Ahmed El~Alaoui, Andrea Montanari, and Mark Sellke.
+\newblock Sampling from the {Sherrington--Kirkpatrick} gibbs measure via
+  algorithmic stochastic localization.
+\newblock In \emph{2022 IEEE 63rd Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 323--334. IEEE, 2022.
+\newblock \doi{10.1109/FOCS54457.2022.00038}.
+\newblock URL \url{https://arxiv.org/abs/2203.05093v2}.
+\newblock Numbered statements here use the extended preprint
+  \url{https://arxiv.org/abs/2203.05093v2}, version 2, February 15, 2024.
+
+\bibitem[Eldan et~al.(2022)Eldan, Koehler, and
+  Zeitouni]{eldan-koehler-zeitouni-2022}
+Ronen Eldan, Frederic Koehler, and Ofer Zeitouni.
+\newblock A spectral condition for spectral gap: fast mixing in
+  high-temperature {Ising} models.
+\newblock \emph{Probability Theory and Related Fields}, 182\penalty0
+  (3--4):\penalty0 1035--1051, 2022.
+\newblock \doi{10.1007/s00440-021-01085-x}.
+\newblock URL \url{https://arxiv.org/abs/2007.08200v2}.
+\newblock Statement locators use \url{https://arxiv.org/abs/2007.08200v2}.
+
+\bibitem[Franz and Parisi(1995)]{franz-parisi-1995}
+Silvio Franz and Giorgio Parisi.
+\newblock Recipes for metastable states in spin glasses.
+\newblock \emph{Journal de Physique I}, 5\penalty0 (11):\penalty0 1401--1415,
+  1995.
+\newblock \doi{10.1051/jp1:1995201}.
+
+\bibitem[Franz et~al.(2026)Franz, Parisi, and
+  Ricci-Tersenghi]{franz-parisi-ricci-2026}
+Silvio Franz, Giorgio Parisi, and Federico Ricci-Tersenghi.
+\newblock Overlap locking and nonperturbative effects in spin glasses.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 123\penalty0
+  (25):\penalty0 e2606171123, 2026.
+\newblock \doi{10.1073/pnas.2606171123}.
+\newblock URL \url{https://arxiv.org/abs/2602.18399v2}.
+\newblock Statement and equation locators use
+  \url{https://arxiv.org/abs/2602.18399v2}.
+
+\bibitem[Gheissari and Jagannath(2019)]{gheissari-jagannath-2019}
+Reza Gheissari and Aukosh Jagannath.
+\newblock On the spectral gap of spherical spin glass dynamics.
+\newblock \emph{Annales de l'Institut Henri Poincar{\'e}, Probabilit{\'e}s et
+  Statistiques}, 55\penalty0 (2):\penalty0 756--776, 2019.
+\newblock \doi{10.1214/18-AIHP897}.
+\newblock Statement locators refer to arXiv:1608.06609v3.
+
+\bibitem[Glauber(1963)]{glauber-1963}
+Roy~J. Glauber.
+\newblock Time-dependent statistics of the {Ising} model.
+\newblock \emph{Journal of Mathematical Physics}, 4\penalty0 (2):\penalty0
+  294--307, 1963.
+\newblock \doi{10.1063/1.1703954}.
+\newblock URL \url{https://doi.org/10.1063/1.1703954}.
+\newblock \url{https://doi.org/10.1063/1.1703954}.
+
+\bibitem[Guerra(2003)]{guerra-2003}
+Francesco Guerra.
+\newblock Broken replica symmetry bounds in the mean field spin glass model.
+\newblock \emph{Communications in Mathematical Physics}, 233:\penalty0 1--12,
+  2003.
+\newblock \doi{10.1007/s00220-002-0773-5}.
+\newblock URL
+  \url{https://link.springer.com/article/10.1007/s00220-002-0773-5}.
+\newblock \url{https://doi.org/10.1007/s00220-002-0773-5}.
+
+\bibitem[Guerra and Toninelli(2002)]{guerra-toninelli-2002}
+Francesco Guerra and Fabio~L. Toninelli.
+\newblock The thermodynamic limit in mean field spin glass models.
+\newblock \emph{Communications in Mathematical Physics}, 230\penalty0
+  (1):\penalty0 71--79, 2002.
+\newblock \doi{10.1007/s00220-002-0699-y}.
+\newblock URL \url{https://arxiv.org/abs/cond-mat/0204280v1}.
+\newblock Statement locators use
+  \url{https://arxiv.org/abs/cond-mat/0204280v1}.
+
+\bibitem[Jagannath and Tobasco(2016)]{jagannath-tobasco-2016}
+Aukosh Jagannath and Ian Tobasco.
+\newblock A dynamic programming approach to the {Parisi} functional.
+\newblock \emph{Proceedings of the American Mathematical Society}, 144\penalty0
+  (7):\penalty0 3135--3150, 2016.
+\newblock \doi{10.1090/proc/12968}.
+\newblock URL \url{https://arxiv.org/abs/1502.04398v4}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1502.04398v4}.
+
+\bibitem[Jagannath and Tobasco(2017)]{jagannath-tobasco-2017}
+Aukosh Jagannath and Ian Tobasco.
+\newblock Some properties of the phase diagram for mixed {$p$}-spin glasses.
+\newblock \emph{Probability Theory and Related Fields}, 167:\penalty0 615--672,
+  2017.
+\newblock \doi{10.1007/s00440-015-0691-z}.
+\newblock URL \url{https://arxiv.org/abs/1504.02731v2}.
+\newblock Statement locators use \url{https://arxiv.org/abs/1504.02731v2}.
+
+\bibitem[Karatzas and Shreve(1991)]{karatzas-shreve-1991}
+Ioannis Karatzas and Steven~E. Shreve.
+\newblock \emph{Brownian Motion and Stochastic Calculus}, volume 113 of
+  \emph{Graduate Texts in Mathematics}.
+\newblock Springer, New York, second edition, 1991.
+\newblock \doi{10.1007/978-1-4612-0949-2}.
+
+\bibitem[Kinzelbach and Horner(1991)]{kinzelbach-horner-1991}
+Harald Kinzelbach and Heinz Horner.
+\newblock Dynamics of the finite {SK} spin-glass.
+\newblock \emph{Zeitschrift f{\"u}r Physik B Condensed Matter}, 84:\penalty0
+  95--114, 1991.
+\newblock \doi{10.1007/BF01453763}.
+
+\bibitem[Kondor(1983)]{kondor-1983}
+Imre Kondor.
+\newblock Parisi's mean-field solution for spin glasses as an analytic
+  continuation in the replica number.
+\newblock \emph{Journal of Physics A: Mathematical and General}, 16\penalty0
+  (4):\penalty0 L127--L131, 1983.
+\newblock \doi{10.1088/0305-4470/16/4/006}.
+\newblock \url{https://doi.org/10.1088/0305-4470/16/4/006}.
+
+\bibitem[Lawler and Sokal(1988)]{lawler-sokal-1988}
+Gregory~F. Lawler and Alan~D. Sokal.
+\newblock Bounds on the {$L^2$} spectrum for {Markov} chains and {Markov}
+  processes: a generalization of {Cheeger}'s inequality.
+\newblock \emph{Transactions of the American Mathematical Society},
+  309\penalty0 (2):\penalty0 557--580, 1988.
+\newblock \doi{10.1090/S0002-9947-1988-0930082-9}.
+
+\bibitem[Levin and Peres(2017)]{levin-peres-2017}
+David~A. Levin and Yuval Peres.
+\newblock \emph{Markov Chains and Mixing Times}.
+\newblock American Mathematical Society, Providence, RI, second edition, 2017.
+\newblock \doi{10.1090/mbk/107}.
+\newblock URL \url{https://pages.uoregon.edu/dlevin/MARKOV/mcmt2e.pdf}.
+\newblock With contributions by Elizabeth L. Wilmer.
+
+\bibitem[Lopatto(2026)]{full-rsb}
+Patrick Lopatto.
+\newblock Full replica symmetry breaking in the {Sherrington--Kirkpatrick}
+  model.
+\newblock \url{https://arxiv.org/abs/2607.11756v3}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2607.11756v3}.
+\newblock Version 3, July 16, 2026.
+
+\bibitem[Lugosi and Neu(2022)]{lugosi-neu-2022}
+G\'abor Lugosi and Gergely Neu.
+\newblock Generalization bounds via convex analysis.
+\newblock In Po-Ling Loh and Maxim Raginsky, editors, \emph{Proceedings of
+  Thirty Fifth Conference on Learning Theory}, volume 178 of \emph{Proceedings
+  of Machine Learning Research}, pages 3524--3546. PMLR, 2022.
+\newblock URL \url{https://proceedings.mlr.press/v178/lugosi22a.html}.
+
+\bibitem[Mackenzie and Young(1982)]{mackenzie-young-1982}
+N.~D. Mackenzie and A.~P. Young.
+\newblock Lack of ergodicity in the infinite-range {Ising} spin-glass.
+\newblock \emph{Physical Review Letters}, 49:\penalty0 301--304, 1982.
+\newblock \doi{10.1103/PhysRevLett.49.301}.
+
+\bibitem[Mackenzie and Young(1983)]{mackenzie-young-1983}
+N.~D. Mackenzie and A.~P. Young.
+\newblock Statics and dynamics of the infinite-range {Ising} spin glass model.
+\newblock \emph{Journal of Physics C: Solid State Physics}, 16\penalty0
+  (27):\penalty0 5321, 1983.
+\newblock \doi{10.1088/0022-3719/16/27/015}.
+
+\bibitem[M{\'e}zard et~al.(1986)M{\'e}zard, Parisi, and
+  Virasoro]{mezard-parisi-virasoro-1986}
+Marc M{\'e}zard, Giorgio Parisi, and Miguel~A. Virasoro.
+\newblock {SK} model: The replica solution without replicas.
+\newblock \emph{Europhysics Letters}, 1\penalty0 (2):\penalty0 77--82, 1986.
+\newblock \doi{10.1209/0295-5075/1/2/006}.
+
+\bibitem[Montanari(2025)]{montanari-2021}
+Andrea Montanari.
+\newblock Optimization of the {Sherrington}--{Kirkpatrick} {Hamiltonian}.
+\newblock \emph{SIAM Journal on Computing}, 54\penalty0 (4):\penalty0
+  FOCS19--1--FOCS19--38, 2025.
+\newblock \doi{10.1137/20M132016X}.
+\newblock First published online 2021. Numbered section locators refer to
+  \url{https://arxiv.org/abs/1812.10897v2}.
+
+\bibitem[Monthus and Garel(2009)]{monthus-garel-2009}
+C{\'e}cile Monthus and Thomas Garel.
+\newblock An eigenvalue method for computing the largest relaxation time of
+  disordered systems.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2009\penalty0 (12):\penalty0 P12017, 2009.
+\newblock \doi{10.1088/1742-5468/2009/12/P12017}.
+
+\bibitem[{OpenAI}(2026{\natexlab{a}})]{oai-barriers}
+{OpenAI}.
+\newblock Stretched-exponential barriers for typical {SK} initial states.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Stretched-exponential-barriers-for-typical-SK-initial-states-September-24-2026/paper.pdf},
+  September 2026{\natexlab{a}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Stretched-exponential-barriers-for-typical-SK-initial-states-September-24-2026/paper.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{b}})]{oai-critical-mixing}
+{OpenAI}.
+\newblock Critical mixing in the {Sherrington--Kirkpatrick} model.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026/paper.pdf},
+  September 2026{\natexlab{b}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Critical-mixing-in-the-Sherrington-Kirkpatrick-model-September-25-2026/paper.pdf}.
+\newblock September 25, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{c}})]{oai-critical-slowing}
+{OpenAI}.
+\newblock Critical slowing down in the {Sherrington--Kirkpatrick} model.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Critical-slowing-down-in-the-Sherrington-Kirkpatrick-model-September-24-2026/paper.pdf},
+  September 2026{\natexlab{c}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Critical-slowing-down-in-the-Sherrington-Kirkpatrick-model-September-24-2026/paper.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{d}})]{oai-cutoff}
+{OpenAI}.
+\newblock Cutoff throughout the high-temperature {Sherrington--Kirkpatrick}
+  phase.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Cutoff-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/paper.pdf},
+  September 2026{\natexlab{d}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/Cutoff-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/paper.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{e}})]{oai-fluctuations}
+{OpenAI}.
+\newblock The low-temperature {Sherrington--Kirkpatrick} fluctuation scale.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-low-temperature-Sherrington-Kirkpatrick-fluctuation-scale-September-24-2026/The-low-temperature-Sherrington-Kirkpatrick-fluctuation-scale-September-24-2026.pdf},
+  September 2026{\natexlab{e}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-low-temperature-Sherrington-Kirkpatrick-fluctuation-scale-September-24-2026/The-low-temperature-Sherrington-Kirkpatrick-fluctuation-scale-September-24-2026.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{f}})]{oai-limiting-law}
+{OpenAI}.
+\newblock The low-temperature {Sherrington--Kirkpatrick} free-energy limiting
+  law.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-low-temperature-Sherrington-Kirkpatrick-free-energy-limiting-law-September-24-2026/The-low-temperature-Sherrington-Kirkpatrick-free-energy-limiting-law-September-24-2026.pdf},
+  September 2026{\natexlab{f}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/The-low-temperature-Sherrington-Kirkpatrick-free-energy-limiting-law-September-24-2026/The-low-temperature-Sherrington-Kirkpatrick-free-energy-limiting-law-September-24-2026.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{g}})]{oai-math-lean}
+{OpenAI}.
+\newblock Lean formalizations in the {OpenAI} mathematics repository.
+\newblock
+  \url{https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean},
+  2026{\natexlab{g}}.
+\newblock URL
+  \url{https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/lean}.
+\newblock Commit fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb; directories
+  lean/OAI/Probability/SKBarriers and lean/OAI/Probability/SKFluctuations, and
+  lean/docs/227.md.
+
+\bibitem[{OpenAI}(2026{\natexlab{h}})]{oai-spectral-gap}
+{OpenAI}.
+\newblock A spectral gap throughout the high-temperature
+  {Sherrington--Kirkpatrick} phase.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/main.pdf},
+  September 2026{\natexlab{h}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-spectral-gap-throughout-the-high-temperature-Sherrington-Kirkpatrick-phase-September-24-2026/main.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[{OpenAI}(2026{\natexlab{i}})]{oai-typical-upper}
+{OpenAI}.
+\newblock A typical-start upper bound for low-temperature {SK} {Glauber}
+  dynamics.
+\newblock OpenAI Math Release preprint,
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-typical-start-upper-bound-for-low-temperature-SK-Glauber-dynamics-September-24-2026/paper.pdf},
+  September 2026{\natexlab{i}}.
+\newblock URL
+  \url{https://github.com/openai/math/blob/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb/preprints/A-typical-start-upper-bound-for-low-temperature-SK-Glauber-dynamics-September-24-2026/paper.pdf}.
+\newblock September 24, 2026. Source at commit
+  fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb.
+
+\bibitem[Palassini(2008)]{palassini-2008}
+Matteo Palassini.
+\newblock Ground-state energy fluctuations in the {Sherrington--Kirkpatrick}
+  model.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2008\penalty0 (10):\penalty0 P10005, 2008.
+\newblock \doi{10.1088/1742-5468/2008/10/P10005}.
+
+\bibitem[Paliy and Sohn(2026)]{paliy-sohn-2026}
+Vasyl Paliy and Youngtak Sohn.
+\newblock Rapid mixing within a phase for {Ising} models.
+\newblock \url{https://arxiv.org/abs/2610.23777v1}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2610.23777v1}.
+\newblock Version 1, October 16, 2026.
+
+\bibitem[Panchenko(2013)]{panchenko-2013}
+Dmitry Panchenko.
+\newblock \emph{The {Sherrington--Kirkpatrick} Model}.
+\newblock Springer Monographs in Mathematics. Springer, New York, 2013.
+\newblock \doi{10.1007/978-1-4614-6289-7}.
+
+\bibitem[Panchenko(2018)]{panchenko-2018}
+Dmitry Panchenko.
+\newblock Free energy in the mixed {$p$}-spin models with vector spins.
+\newblock \emph{The Annals of Probability}, 46\penalty0 (2):\penalty0 865--896,
+  2018.
+\newblock \doi{10.1214/17-AOP1194}.
+\newblock URL \url{https://doi.org/10.1214/17-AOP1194}.
+\newblock \url{https://doi.org/10.1214/17-AOP1194}.
+
+\bibitem[Paouris and Valettas(2018)]{paouris-valettas-2018}
+Grigoris Paouris and Petros Valettas.
+\newblock A {G}aussian small deviation inequality for convex functions.
+\newblock \emph{The Annals of Probability}, 46\penalty0 (3):\penalty0
+  1441--1454, 2018.
+\newblock \doi{10.1214/17-AOP1206}.
+\newblock URL \url{https://arxiv.org/abs/1611.01723v2}.
+\newblock Theorem and equation locators refer to arXiv:1611.01723v2, June 15,
+  2017.
+
+\bibitem[Parisi(1979)]{parisi-1979}
+Giorgio Parisi.
+\newblock Infinite number of order parameters for spin-glasses.
+\newblock \emph{Physical Review Letters}, 43\penalty0 (23):\penalty0
+  1754--1756, 1979.
+\newblock \doi{10.1103/PhysRevLett.43.1754}.
+\newblock URL
+  \url{https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.43.1754}.
+\newblock \url{https://doi.org/10.1103/PhysRevLett.43.1754}.
+
+\bibitem[Parisi and Rizzo(2008)]{parisi-rizzo-2008}
+Giorgio Parisi and Tommaso Rizzo.
+\newblock Large deviations in the free energy of mean-field spin glasses.
+\newblock \emph{Physical Review Letters}, 101:\penalty0 117205, 2008.
+\newblock \doi{10.1103/PhysRevLett.101.117205}.
+\newblock URL \url{https://arxiv.org/abs/0706.1180v2}.
+\newblock Statement locators use \url{https://arxiv.org/abs/0706.1180v2}.
+
+\bibitem[Parisi and Rizzo(2009)]{parisi-rizzo-2009}
+Giorgio Parisi and Tommaso Rizzo.
+\newblock Phase diagram and large deviations in the free energy of mean-field
+  spin glasses.
+\newblock \emph{Physical Review B}, 79:\penalty0 134205, 2009.
+\newblock \doi{10.1103/PhysRevB.79.134205}.
+\newblock URL \url{https://arxiv.org/abs/0811.1524v2}.
+\newblock Statement locators use \url{https://arxiv.org/abs/0811.1524v2}.
+
+\bibitem[Parisi and Rizzo(2010)]{parisi-rizzo-2010}
+Giorgio Parisi and Tommaso Rizzo.
+\newblock Universality and deviations in disordered systems.
+\newblock \emph{Physical Review B}, 81:\penalty0 094201, 2010.
+\newblock \doi{10.1103/PhysRevB.81.094201}.
+\newblock Equation locators refer to arXiv:0901.1100v1.
+
+\bibitem[Pei(2026)]{pei-fifth-order-2026}
+Yan~Ru Pei.
+\newblock Upper deviations of the {Sherrington--Kirkpatrick} free energy: the
+  fifth-order law and the onset of constrained {Parisi} measures.
+\newblock \url{https://arxiv.org/abs/2610.06480v2}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2610.06480v2}.
+\newblock Version 2, October 7, 2026.
+
+\bibitem[Pr\'{e}kopa(1973)]{prekopa-1973}
+Andr\'{a}s Pr\'{e}kopa.
+\newblock On logarithmic concave measures and functions.
+\newblock \emph{Acta Scientiarum Mathematicarum (Szeged)}, 34:\penalty0
+  335--343, 1973.
+\newblock URL \url{https://acta.bibl.u-szeged.hu/14411/}.
+\newblock \url{https://acta.bibl.u-szeged.hu/14411/1/math_034_335-343.pdf}.
+
+\bibitem[Ruelle(1987)]{ruelle-1987}
+David Ruelle.
+\newblock A mathematical reformulation of {Derrida}'s {REM} and {GREM}.
+\newblock \emph{Communications in Mathematical Physics}, 108\penalty0
+  (2):\penalty0 225--239, 1987.
+\newblock \doi{10.1007/BF01210613}.
+
+\bibitem[Schertzer(2026)]{schertzer-2026}
+Adrien Schertzer.
+\newblock The order of free energy fluctuations in the critical
+  {Sherrington--Kirkpatrick} model revisited.
+\newblock \url{https://arxiv.org/abs/2606.21360v1}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2606.21360v1}.
+\newblock Version 1, June 19, 2026.
+
+\bibitem[Sellke(2025)]{sellke-2025}
+Mark Sellke.
+\newblock Exponentially slow mixing of the low temperature {SK} model.
+\newblock \url{https://arxiv.org/abs/2511.22621v2}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2511.22621v2}.
+\newblock Version 2, December 9, 2025.
+
+\bibitem[Sherrington and Kirkpatrick(1975)]{sk-original}
+David Sherrington and Scott Kirkpatrick.
+\newblock Solvable model of a spin-glass.
+\newblock \emph{Physical Review Letters}, 35\penalty0 (26):\penalty0
+  1792--1796, 1975.
+\newblock \doi{10.1103/PhysRevLett.35.1792}.
+\newblock URL
+  \url{https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.35.1792}.
+\newblock \url{https://doi.org/10.1103/PhysRevLett.35.1792}.
+
+\bibitem[Sompolinsky and Zippelius(1981)]{sompolinsky-zippelius-1981}
+Haim Sompolinsky and Annette Zippelius.
+\newblock Dynamic theory of the spin-glass phase.
+\newblock \emph{Physical Review Letters}, 47:\penalty0 359--362, 1981.
+\newblock \doi{10.1103/PhysRevLett.47.359}.
+
+\bibitem[Sompolinsky and Zippelius(1982)]{sompolinsky-zippelius-1982}
+Haim Sompolinsky and Annette Zippelius.
+\newblock Relaxational dynamics of the {Edwards--Anderson} model and the
+  mean-field theory of spin-glasses.
+\newblock \emph{Physical Review B}, 25:\penalty0 6860--6875, 1982.
+\newblock \doi{10.1103/PhysRevB.25.6860}.
+
+\bibitem[Talagrand(2006{\natexlab{a}})]{parisi-formula}
+Michel Talagrand.
+\newblock The {Parisi} formula.
+\newblock \emph{Annals of Mathematics}, 163\penalty0 (1):\penalty0 221--263,
+  2006{\natexlab{a}}.
+\newblock \doi{10.4007/annals.2006.163.221}.
+\newblock URL \url{https://annals.math.princeton.edu/2006/163-1/p04}.
+\newblock \url{https://doi.org/10.4007/annals.2006.163.221}.
+
+\bibitem[Talagrand(2006{\natexlab{b}})]{talagrand-2006-parisi-measures}
+Michel Talagrand.
+\newblock {Parisi} measures.
+\newblock \emph{Journal of Functional Analysis}, 231\penalty0 (2):\penalty0
+  269--286, 2006{\natexlab{b}}.
+\newblock \doi{10.1016/j.jfa.2005.03.001}.
+
+\bibitem[Talagrand(2007{\natexlab{a}})]{talagrand-2007}
+Michel Talagrand.
+\newblock Mean field models for spin glasses: Some obnoxious problems.
+\newblock In Erwin Bolthausen and Anton Bovier, editors, \emph{Spin Glasses},
+  volume 1900 of \emph{Lecture Notes in Mathematics}, pages 63--80. Springer,
+  Berlin, 2007{\natexlab{a}}.
+\newblock \doi{10.1007/978-3-540-40908-3_3}.
+\newblock URL \url{https://doi.org/10.1007/978-3-540-40908-3_3}.
+\newblock \url{https://doi.org/10.1007/978-3-540-40908-3_3}.
+
+\bibitem[Talagrand(2007{\natexlab{b}})]{talagrand-2007-large-deviations}
+Michel Talagrand.
+\newblock Large deviations, {Guerra}'s and {A.S.S.} schemes, and the {Parisi}
+  hypothesis.
+\newblock \emph{Journal of Statistical Physics}, 126\penalty0 (4-5):\penalty0
+  837--894, 2007{\natexlab{b}}.
+\newblock \doi{10.1007/s10955-006-9108-9}.
+
+\bibitem[Talagrand(2011)]{talagrand-2011}
+Michel Talagrand.
+\newblock \emph{Mean Field Models for Spin Glasses. {Volume I}: Basic
+  Examples}, volume~54 of \emph{Ergebnisse der Mathematik und ihrer
+  Grenzgebiete. 3. Folge}.
+\newblock Springer, Berlin, 2011.
+\newblock \doi{10.1007/978-3-642-15202-3}.
+
+\bibitem[{The mathlib Community}(2020)]{mathlib}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In \emph{Proceedings of the 9th ACM SIGPLAN International Conference
+  on Certified Programs and Proofs}, pages 367--381. ACM, 2020.
+\newblock \doi{10.1145/3372885.3373824}.
+\newblock URL \url{https://doi.org/10.1145/3372885.3373824}.
+\newblock \url{https://doi.org/10.1145/3372885.3373824}.
+
+\bibitem[Thouless et~al.(1977)Thouless, Anderson, and
+  Palmer]{thouless-anderson-palmer-1977}
+D.~J. Thouless, P.~W. Anderson, and R.~G. Palmer.
+\newblock Solution of `{Solvable} model of a spin glass'.
+\newblock \emph{Philosophical Magazine}, 35\penalty0 (3):\penalty0 593--601,
+  1977.
+\newblock \doi{10.1080/14786437708235992}.
+
+\bibitem[Tierz(2026)]{tierz-critical-2026}
+Miguel Tierz.
+\newblock Critical free-energy variance in the {Sherrington--Kirkpatrick}
+  model.
+\newblock \url{https://arxiv.org/abs/2610.00011v2}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2610.00011v2}.
+\newblock Version 2, October 16, 2026.
+
+\bibitem[Toninelli(2002)]{toninelli-2002}
+Fabio~Lucio Toninelli.
+\newblock About the {Almeida--Thouless} transition line in the
+  {Sher\-rington--Kirkpatrick} mean-field spin glass model.
+\newblock \emph{Europhysics Letters}, 60\penalty0 (5):\penalty0 764--767, 2002.
+\newblock \doi{10.1209/epl/i2002-00667-5}.
+
+\bibitem[Tsirel'son et~al.(1976)Tsirel'son, Ibragimov, and
+  Sudakov]{tsirelson-ibragimov-sudakov-1976}
+B.~S. Tsirel'son, I.~A. Ibragimov, and V.~N. Sudakov.
+\newblock Norms of {Gaussian} sample functions.
+\newblock In \emph{Proceedings of the {Third Japan--USSR} Symposium on
+  Probability Theory ({Tashkent}, 1975)}, volume 550 of \emph{Lecture Notes in
+  Mathematics}, pages 20--41. Springer, Berlin, 1976.
+
+\bibitem[Vertechi and Virasoro(1989)]{vertechi-virasoro-1989}
+D.~Vertechi and M.~A. Virasoro.
+\newblock Energy barriers in {SK} spin-glass model.
+\newblock \emph{Journal de Physique}, 50\penalty0 (17):\penalty0 2325--2332,
+  1989.
+\newblock \doi{10.1051/jphys:0198900500170232500}.
+
+\bibitem[Wang(2026)]{wang-2026}
+Sihan Wang.
+\newblock Optimal mixing of {Glauber} dynamics for the
+  {Sherrington--Kirkpatrick} model at {$\beta<1/2$}.
+\newblock \url{https://arxiv.org/abs/2608.22159v2}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2608.22159v2}.
+\newblock Version 2.
+
+\bibitem[Zhou(2026)]{zhou-2026}
+Yuxin Zhou.
+\newblock Existence of full replica symmetry breaking for the
+  {Sherrington--Kirkpatrick} model at low temperature.
+\newblock \emph{Communications on Pure and Applied Mathematics}, 79\penalty0
+  (7):\penalty0 1746--1770, 2026.
+\newblock \doi{10.1002/cpa.70038}.
+
+\end{thebibliography}

@@ -1,0 +1,1144 @@
+\chapter{Introduction}\label{sec:intro}
+
+The Sherrington--Kirkpatrick (SK) model is the mean-field Ising spin glass,
+in which every pair of spins interacts through an independent Gaussian
+coupling~\cite{sk-original}. Its equilibrium theory is well developed.
+Parisi's hierarchical ansatz~\cite{parisi-1979} predicted the limiting free
+energy, and this prediction was proved through Guerra's interpolation
+bound~\cite{guerra-2003} and Talagrand's matching lower
+bound~\cite{parisi-formula}. At every fixed inverse temperature $\beta>1$
+and zero external field, the minimizing Parisi measure is supported on an
+interval $[0,q_\beta]$; this was proved by Zhou for $\beta$ close to
+one~\cite[Theorem~1]{zhou-2026} and in~\cite[Theorem~1.1]{full-rsb} for every
+$\beta>1$. Much less is known about the
+dynamics of the model at low temperature, and about the finite-size
+corrections to its equilibrium quantities. This paper addresses both.
+
+Our main results concern the heat-bath dynamics, also called Glauber
+dynamics~\cite{glauber-1963}, in which one spin at a time is resampled from
+its conditional law. For fixed $\beta>1$, we sample the couplings and then one
+configuration from the Gibbs measure, and run the dynamics from this
+configuration. We prove that, with probability tending to one, the law of
+the configuration at time $\exp(A_\beta n^{7/30})$ is still at total-variation
+distance greater than $\tau$ from the Gibbs measure, for every fixed $\tau<1/2$
+and a coefficient $A_\beta>0$ that does not depend on $\tau$
+(\cref{thm:barrier-730}). In the other direction, for every fixed
+$\omega\in(0,1/4)$, the distance is at most $1/4$ at time $\exp(n^{1-\omega})$,
+again with probability tending to one (\cref{thm:upper}). OpenAI proved bounds
+of both kinds in the same setting, with the same joint law of the couplings
+and the initial configuration, the same clocks of rate one per site, and the
+threshold $1/4$: a lower bound at time
+$\exp(n^{1/10000})$~\cite[Theorem~1.1]{oai-barriers} and an upper bound at
+time $\exp(n^{1-1/40000000})$~\cite[Theorem~1]{oai-typical-upper}. We follow
+the overall strategy of both proofs. Let $T^J(X_0)$ be the first time at which
+the distance from the Gibbs measure is at most $1/4$. Combining our two
+bounds, we find that if $\log T^J(X_0)=n^{\zeta+o(1)}$, then
+$7/30\le\zeta\le3/4$ (\cref{cor:two-sided}). The proof of the lower bound
+uses the upper bound $n^{-7/10}$ of Aronow and Lopatto on the mean bias of
+the pressure~\cite[Theorem~1.1]{hexagon-bias}.
+
+Our second contribution is a complete formal proof of
+\cref{thm:barrier-730} in the Lean~4 proof assistant~\cite{lean4,mathlib},
+together with formal proofs of two results that are not new. The first is the
+fluctuation theorem $\Var(F_n)=n^{1/3+o(1)}$ for the logarithm $F_n$ of the
+partition function (\cref{f:main}), which was stated and proved by OpenAI
+in~\cite[Theorem~1.1]{oai-fluctuations}. OpenAI's public formalization of
+this theorem assumes a two-sided bound on positive logarithmic moments of
+the centered completed log partition function, which is proved on paper
+in~\cite[Proposition~7.5]{oai-fluctuations}; our formal proof establishes
+this bound. We restate the theorem with attribution,
+describe the structure of its proof, and reproduce the short final step of
+that proof; we do not claim a new mathematical proof of \cref{f:main}.
+\statusIntroShort
+
+The second known result is a lower bound with exponent $5/6$ on the mean bias
+$P_\beta-n^{-1}\E F_n$, where $P_\beta=\lim_{n\to\infty}n^{-1}\E F_n$ is the
+limiting pressure. It follows from \cref{f:main} and a variance--bias
+inequality of Aronow and Lopatto
+\cite[Lemma~7.4 and Remark~7.14]{quantitative-parisi} that the mean bias is
+at least of order $n^{-5/6-\varepsilon}$ for every fixed $\varepsilon>0$
+(\cref{cor:mean-bias}). This deduction was already recorded
+in~\cite[Section~1.6]{hexagon-bias}; what is new here is its formal proof.
+Together with the upper bound of~\cite{hexagon-bias}, it shows that if the
+mean bias is $n^{-a+o(1)}$, then $7/10\le a\le5/6$.
+
+\section{Main results}\label{sec:intro-results}
+
+For an integer $n\ge2$, let $\Sigma_n=\{-1,1\}^n$, and let
+$J=(J_{ij})_{1\le i<j\le n}$ be independent standard Gaussian variables. We
+set $J_{ji}=J_{ij}$ and $J_{ii}=0$. The Hamiltonian, the partition function,
+and the Gibbs measure at inverse temperature $\beta$ are
+\begin{equation}\label{eq:intro-model}
+ H_n(x)=\frac1{\sqrt n}\sum_{1\le i<j\le n}J_{ij}x_ix_j,\qquad
+ Z_n=\sum_{x\in\Sigma_n}e^{\beta H_n(x)},\qquad
+ \pi^J(x)=\frac{e^{\beta H_n(x)}}{Z_n}.
+\end{equation}
+We write $R(x,y)=n^{-1}\sum_{i=1}^n x_iy_i$ for the overlap of
+$x,y\in\Sigma_n$, and $F_n=\log Z_n$.
+
+In the heat-bath dynamics, each site carries an independent exponential
+clock of rate one. When the clock of site $i$ rings at a configuration $x$,
+the spin $x_i$ is replaced by $\sigma\in\{-1,1\}$ with probability
+\[
+ p_i^J(\sigma\mid x)=\frac{e^{\beta\sigma h_i(x)}}{2\cosh(\beta h_i(x))},\qquad
+ h_i(x)=\frac1{\sqrt n}\sum_{j\ne i}J_{ij}x_j,
+\]
+which is the conditional law of the $i$th spin under $\pi^J$ given the
+other spins. An update may leave the configuration unchanged. We write
+$P_t^J(x,\cdot)$ for the law at time $t$ of this process started at $x$, and
+$K^J$ for the transition matrix of the discrete chain that chooses a site
+uniformly at random and performs one such update. One unit of continuous
+time contains $n$ update attempts on average. Both chains are reversible with
+respect to $\pi^J$. For $x\in\Sigma_n$, $t\ge0$, and integers $k\ge0$, we
+set
+\[
+ d^J(x,t)=\norm{P_t^J(x,\cdot)-\pi^J}_{\TV},\qquad
+ d^J_{\mathrm{disc}}(x,k)=\norm{(K^J)^k(x,\cdot)-\pi^J}_{\TV},
+\]
+where $\norm{\nu-\zeta}_{\TV}=\frac12\sum_x\abs{\nu(x)-\zeta(x)}$. We also
+write
+\[
+ T^J(x)=\inf\{t\ge0:d^J(x,t)\le1/4\},\qquad
+ T^J_{\mathrm{disc}}(x)=\min\{k\ge0:d^J_{\mathrm{disc}}(x,k)\le1/4\}
+\]
+for the mixing times of the two chains started at $x$. Since
+$t\mapsto d^J(x,t)$ is continuous and nonincreasing
+(\cref{lem:model-dynamics}), we have $T^J(x)\le t$ if and only if
+$d^J(x,t)\le1/4$, and similarly in discrete time. Finally,
+$\PP_{J,\,X_0\sim\pi^J}$ denotes the joint law of the couplings $J$ and of a
+configuration $X_0$ whose conditional law given $J$ is $\pi^J$; see
+\eqref{eq:common-joint}. These definitions are given in detail in
+\cref{sec:model}.
+
+\begin{theorem}[Barrier from typical equilibrium states]\label{thm:barrier-730}
+For every fixed $\beta>1$ there exists $A_\beta>0$ such that, for every
+fixed $\tau\in(0,1/2)$,
+\begin{align}
+ \PP_{J,\,X_0\sim\pi^J}
+   \bigl\{d^J\bigl(X_0,e^{A_\beta n^{7/30}}\bigr)>\tau\bigr\}
+   &\longrightarrow1,\label{eq:barrier-730-continuous}\\
+ \PP_{J,\,X_0\sim\pi^J}
+   \bigl\{d^J_{\mathrm{disc}}\bigl(X_0,\lfloor e^{A_\beta n^{7/30}}\rfloor\bigr)>\tau\bigr\}
+   &\longrightarrow1.\label{eq:barrier-730-discrete}
+\end{align}
+\end{theorem}
+
+The configuration $X_0$ is sampled once and then held fixed, so that
+$d^J(X_0,t)$ measures the distance from equilibrium of the chain started at
+this particular configuration. If the initial configuration were instead
+averaged over $\pi^J$ before the distance is taken, the law at time $t$
+would be $\pi^J$ by stationarity, and the distance would vanish. Since the
+Gibbs mass of the set of initial configurations in the event of
+\eqref{eq:barrier-730-continuous} takes values in $[0,1]$ and has expectation
+equal to the displayed probability, \eqref{eq:barrier-730-continuous} is
+equivalent to the convergence of this Gibbs mass to one in probability over
+the disorder; this observation is made after
+\cite[Theorem~1.1]{oai-barriers} and is recalled in \cref{sec:model}. The
+coefficient $A_\beta$ depends only on $\beta$: the same coefficient serves
+for every fixed threshold $\tau<1/2$ and for both clocks, while the rate of
+convergence in \eqref{eq:barrier-730-continuous} and
+\eqref{eq:barrier-730-discrete} may depend on $\tau$. The restriction
+$\tau<1/2$ comes from spin-flip symmetry: for every configuration $v$, the
+half-space $\{y:R(v,y)\le0\}$ has Gibbs mass at least $1/2$, and the proof
+shows that, for a suitable configuration $v$ with $R(v,X_0)$ bounded away
+from zero, the chain started at $X_0$ is unlikely to enter this half-space
+before the stated time.
+
+The exponent $7/30$ is one third of the exponent $7/10$ in the bound
+$0\le P_\beta-n^{-1}\E F_n\le C_b n^{-7/10}$ on the mean bias
+proved in~\cite[Theorem~1.1]{hexagon-bias}, where
+we recall that $P_\beta$ is the limiting pressure. The proof needs overlap constraints on a scale
+$\rho$ whose pressure deficit, of order $\rho^3$ per spin, dominates the
+mean bias, and our counting argument allows a time $t$ with $\log t$ of
+order $1/\rho$. With the bound $n^{-7/10}$, we can take
+$\rho\asymp n^{-7/30}$. \Cref{sec:intro-methods} explains this balance in
+more detail. A union bound over polynomially many constraints in the
+argument requires $n\rho^4$ to be large compared with $\log n$, so the
+present argument gives no exponent of $1/4$ or more, whatever the upper
+bound on the mean bias. \Cref{thm:barrier-730} is proved in
+\cref{sec:barrier-proof}.
+
+Since total variation contracts under a Markov kernel that preserves
+$\pi^J$, the distances $d^J(x,t)$ and $d^J_{\mathrm{disc}}(x,k)$ are
+nonincreasing in $t$ and $k$. For every fixed $A>0$ and $\kappa<7/30$, we
+have $n^\kappa<An^{7/30}$ for all sufficiently large $n$.
+\Cref{thm:barrier-730} implies the following statement with
+coefficient one, which is also proved in \cref{sec:barrier-proof}.
+
+\begin{corollary}[Unit coefficient below the exponent $7/30$]\label{b:cor:subcritical}
+For every fixed $\beta>1$, every fixed $\kappa\in(0,7/30)$, and every
+fixed $\tau\in(0,1/2)$,
+\[
+ \PP_{J,\,X_0\sim\pi^J}\bigl\{d^J\bigl(X_0,e^{n^\kappa}\bigr)>\tau\bigr\}
+   \longrightarrow1,\qquad
+ \PP_{J,\,X_0\sim\pi^J}
+   \bigl\{d^J_{\mathrm{disc}}\bigl(X_0,\lfloor e^{n^\kappa}\rfloor\bigr)>\tau\bigr\}
+   \longrightarrow1.
+\]
+\end{corollary}
+
+The corollary does not assert coefficient one at the exponent $7/30$
+itself.
+
+The proof gives more than the convergence of the probabilities in
+\cref{thm:barrier-730}; we record the stronger forms in
+\cref{thm:barrier-strong}. There exist $A>0$ and, for each $n$, a disorder
+event of probability at least $1-Ce^{-cn^{1/15}}$ on which the following
+holds for all sufficiently large $n$. The set of initial configurations $x$
+with $d^J(x,t)\ge1/2-Ce^{-cn^{7/30}}$ for every $t\le e^{An^{7/30}}$, and
+with the analogous bound for the discrete chain, has Gibbs mass at least
+$1-Ce^{-cn^{7/30}}$. The same holds for the Metropolis dynamics and, more
+generally, for every single-site dynamics with uniformly bounded rates that
+leaves $\pi^J$ stationary. For every reversible such dynamics, the
+relaxation time is at least $e^{An^{7/30}}/(Cn^{7/30})$. Finally, the Gibbs
+mass of the slow initial configurations tends to one almost surely along the
+full sequence of system sizes, however the disorders of different sizes are
+coupled. The main change in the proof is a lower bound on $F_n$ from the
+small-deviation inequality of Paouris and Valettas for convex functions of
+Gaussian vectors~\cite[Theorem~2.1 and
+Remark~2.4(3)]{paouris-valettas-2018}, in place of Chebyshev's inequality.
+We have formalized \cref{thm:barrier-730} and \cref{b:cor:subcritical} in
+Lean, but not \cref{thm:barrier-strong}; see \cref{sec:intro-formal}.
+
+\begin{theorem}[Mixing from typical equilibrium states]\label{thm:upper}
+For every fixed $\beta>1$ and every fixed $\omega\in(0,1/4)$,
+\[
+ \PP_{J,\,X_0\sim\pi^J}\bigl\{d^J\bigl(X_0,e^{n^{1-\omega}}\bigr)\le 1/4\bigr\}\longrightarrow1;
+ \quad\text{equivalently}\quad
+ \PP_{J,\,X_0\sim\pi^J}\bigl\{T^J(X_0)\le e^{n^{1-\omega}}\bigr\}\longrightarrow1 .
+\]
+\end{theorem}
+
+As in \cref{thm:barrier-730}, the configuration $X_0$ is sampled once and
+then held fixed when the distance $d^J(X_0,t)$ is formed, and the clocks
+have rate one per site, as in \cref{sec:model-dynamics}. By the argument of
+\cref{lem:model-joint}, applied to the complementary events
+$\{d^J(X_0,t)>1/4\}$, \cref{thm:upper} is equivalent to the convergence to
+zero, in probability over the disorder, of the Gibbs mass of the initial
+configurations $x$ with $d^J(x,e^{n^{1-\omega}})>1/4$. The theorem asserts
+nothing at $\omega=1/4$. It improves the exponent $1-1/40000000$
+of~\cite[Theorem~1]{oai-typical-upper}, and it is proved in
+\cref{part:upper}. \statusIntroShort
+
+For the discrete chain, we prove the same bound after
+$\lfloor e^{n^{1-\omega}}\rfloor$ update attempts. Since one unit of
+continuous time contains $n$ update attempts on average, this number of
+attempts corresponds to the time $e^{n^{1-\omega}}/n$. Together with
+\cref{thm:barrier-730}, we obtain two-sided bounds in both time
+conventions.
+
+\begin{corollary}[Discrete time]\label{cor:upper-discrete}
+For every fixed $\beta>1$ and $\omega\in(0,1/4)$,
+\[
+\PP_{J,X_0\sim\pi^J}\{d^J_{\mathrm{disc}}(X_0,\lfloor e^{n^{1-\omega}}\rfloor)\le1/4\}\to1.
+\]
+\end{corollary}
+
+\begin{corollary}[Two-sided typical-start bounds]\label{cor:two-sided}
+For every fixed $\beta>1$ and $\omega\in(0,1/4)$, with $A_\beta$ from \cref{thm:barrier-730},
+\begin{gather*}
+\PP_{J,X_0\sim\pi^J}\bigl\{e^{A_\beta n^{7/30}}<T^J(X_0)\le e^{n^{1-\omega}}\bigr\}\to1,\\
+\PP_{J,X_0\sim\pi^J}\bigl\{\lfloor e^{A_\beta n^{7/30}}\rfloor<T^J_{\mathrm{disc}}(X_0)\le \lfloor e^{n^{1-\omega}}\rfloor\bigr\}\to1 .
+\end{gather*}
+\end{corollary}
+
+In the notation of \cref{sec:model-asymptotics}, \cref{cor:two-sided}
+implies that if $\log T^J(X_0)=n^{\zeta+o_\PP(1)}$ under
+$\PP_{J,\,X_0\sim\pi^J}$ for some $\zeta$, then $7/30\le\zeta\le3/4$, and the
+same holds for $T^J_{\mathrm{disc}}(X_0)$. The value $\zeta=1/3$ suggested by
+the physics literature (\cref{sec:intro-dynamics}) lies in this interval.
+\Cref{cor:upper-discrete,cor:two-sided} are proved in \cref{u:sec:proof}.
+
+Both arguments stop at the exponent $1/4$. The proof of
+\cref{thm:barrier-730} needs $n\rho^4/\log n\to\infty$ for the overlap scale
+$\rho$, and the proof of \cref{thm:upper} needs the chain of inequalities
+$\omega<\mathsf q<\mathsf s_{\rm b}<\mathsf s_{\rm seq}<\mathsf e<\mathsf u_{\rm E}<\mathsf k_{\rm f}/2\le1/4$
+of \cref{u:sec:budget}. We do not know whether this coincidence has a common
+explanation.
+
+\section{Two known results: fluctuations and the mean bias}\label{sec:intro-known}
+
+The other two results that we present concern the fluctuations of $F_n$ and
+the mean bias. The first was proved by OpenAI. The
+paper~\cite{oai-fluctuations} uses the uniform probability measure on
+$\Sigma_n$ instead of the counting measure in \eqref{eq:intro-model}. This
+changes $F_n$ by the constant $n\log2$ and leaves the following statement
+unchanged (see \cref{sec:model-dictionary}).
+
+\begin{theorem}[{\cite[Theorem~1.1]{oai-fluctuations}}]\label{f:main}
+For every fixed $\beta>1$ and every $\eta>0$, there exists $n_0(\beta,\eta)$
+such that, for all $n\ge n_0$,
+\begin{align}
+ n^{1/6-\eta}&\le\sqrt{\Var(F_n)}\le n^{1/6+\eta},\label{f:sd}\\
+ n^{1/3-\eta}&\le\Var(F_n)\le n^{1/3+\eta}.\label{f:variance}
+\end{align}
+Moreover, for every $\eta>0$,
+\begin{equation}\label{f:typical}
+ \PP\bigl\{n^{1/6-\eta}\le\abs{F_n-\E F_n}\le n^{1/6+\eta}\bigr\}
+ \longrightarrow1.
+\end{equation}
+\end{theorem}
+
+The proof of \cref{f:main} in~\cite{oai-fluctuations} reduces it to a
+two-sided bound on positive logarithmic moments of the centered completed
+log partition function, which we state as \cref{f:window} and discuss in
+\cref{sec:intro-fluct}. Our formal proof of
+\cref{f:main} includes a formal proof of this bound
+(\cref{sec:intro-formal}).
+
+Let $p_n(\beta)=n^{-1}\E F_n$, so that the mean bias is
+$\Delta_{n,\beta}=P_\beta-p_n(\beta)$. By Guerra's
+bound~\cite[Theorem~3]{guerra-2003} and the Parisi
+formula~\cite[Theorem~1.1]{parisi-formula}, we have $\Delta_{n,\beta}\ge0$
+for every $n$. A lower bound on the variance implies a lower bound on the
+mean bias. Aronow and Lopatto proved that for every fixed $\beta>1$ there
+exists $c_\beta>0$ such that
+\begin{equation}\label{eq:intro-variance-deficit}
+ \Delta_{n,\beta}\ge c_\beta\left(\frac{\Var(F_n)+\beta^2/2}{n}\right)^{5/4}
+\end{equation}
+for every $n\ge2$~\cite[Lemma~7.4 and Remark~7.14, equation~(7.68)]{quantitative-parisi};
+we state it as \cref{prop:bias-variance-deficit}. The term $\beta^2/2$ is
+the variance of the Gaussian variable that completes the covariance of
+$\beta H_n$ (\cref{sec:model-completion}). Inserting \eqref{f:variance}
+into \eqref{eq:intro-variance-deficit}, we obtain the following corollary,
+which is already recorded in~\cite[Section~1.6, p.~11]{hexagon-bias}.
+
+\begin{corollary}[Mean bias]\label{cor:mean-bias}
+For every fixed $\beta>1$ and every $\varepsilon>0$, there exist
+$c_{\beta,\varepsilon}>0$ and $n_0(\beta,\varepsilon)$ such that
+\begin{equation}\label{eq:mean-bias-lower}
+ \Delta_{n,\beta}\ge c_{\beta,\varepsilon}n^{-5/6-\varepsilon}
+ \qquad(n\ge n_0(\beta,\varepsilon)).
+\end{equation}
+Equivalently, $nP_\beta-\E F_n\ge c_{\beta,\varepsilon}n^{1/6-\varepsilon}$ for
+$n\ge n_0(\beta,\varepsilon)$.
+\end{corollary}
+
+Together with the upper bound of~\cite{hexagon-bias}, \cref{cor:mean-bias}
+implies that if $\Delta_{n,\beta}=n^{-a+o(1)}$ for some $a$, then
+$7/10\le a\le5/6$. \Cref{sec:bias} proves \cref{cor:mean-bias}, which does
+not use \cref{thm:barrier-730}, and discusses what it leaves open. If
+$\liminf_{n\to\infty}n^{-1/3}\Var(F_n)>0$, the same inequality implies that
+$\Delta_{n,\beta}\ge c_\beta n^{-5/6}$ for all sufficiently large $n$, as
+observed in~\cite[Section~1.6, equation~(1.4)]{hexagon-bias}; this
+hypothesis follows from the convergence of $n^{-1/3}\Var(F_n)$ to a positive
+constant, which is stated in~\cite[Theorem~1.2]{oai-limiting-law}. Our formal
+proof of \cref{cor:mean-bias} combines the formal proof of \cref{f:main}
+with a formal proof of \eqref{eq:intro-variance-deficit}.
+
+\section{Related results on the dynamics}\label{sec:intro-dynamics}
+
+\paragraph{Physics.}
+The slow relaxation of finite SK systems has been studied in physics since
+the early 1980s. Sompolinsky and Zippelius developed the dynamical mean-field
+theory of the spin-glass
+phase~\cite{sompolinsky-zippelius-1981,sompolinsky-zippelius-1982}, in which
+the relaxation times of a finite system diverge with its size $n$. In
+simulations of the Ising SK model, Mackenzie and Young found two families of
+time scales $\tau_n$. For observables invariant under global spin reversal,
+$\log\tau_n$ grew like $n^{1/4}$, and for the reversal itself like
+$n^{1/2}$~\cite{mackenzie-young-1982,mackenzie-young-1983}. Later work
+revised this picture. Vertechi and Virasoro computed energy barriers between
+metastable states numerically and found growth like $n^\alpha$ with
+$\alpha=0.34\pm0.08$~\cite{vertechi-virasoro-1989}. Colborne's Monte Carlo
+study gave the exponent $0.25\pm0.05$ for the barrier that governs the
+ergodic time~\cite{colborne-1990}. Kinzelbach and Horner predicted
+free-energy barriers of order $n^{1/3}$ from a resummed perturbative
+analysis of the dynamics of finite systems~\cite{kinzelbach-horner-1991}.
+The simulations of Billoire and Marinari~\cite{billoire-marinari-2001}, of
+Bittner and Janke~\cite{bittner-janke-2006}, and of
+Billoire~\cite{billoire-2010} are consistent with $\log\tau_n\propto n^{1/3}$,
+and so is the computation of spectral gaps of small systems by Monthus and
+Garel~\cite{monthus-garel-2009}. Aspelmeier and Moore studied barriers
+between solutions of the Thouless--Anderson--Palmer
+equations~\cite{thouless-anderson-palmer-1977,bray-moore-1981}. They found
+that barriers of order $n^{1/3}$ are one of several possibilities below a
+threshold for the free-energy density~\cite{aspelmeier-moore-2022}.
+
+These works concern different quantities: energy barriers, free-energy
+barriers along an overlap coordinate, autocorrelation times, and spectral
+gaps. They use binary as well as Gaussian couplings, Metropolis as well as
+heat-bath updates, and moderate system sizes. They suggest that the logarithm
+of the relaxation time from a typical configuration grows like $n^{1/3}$,
+but they do not determine a mixing exponent. A different question concerns
+times that stay bounded as $n$ grows. When $n\to\infty$ is taken first, the
+dynamics from a random configuration ages and does not reach
+equilibrium~\cite{cugliandolo-kurchan-1994}; we refer
+to~\cite[Section~3.7]{bouchaud-cugliandolo-kurchan-mezard-1997} for a
+discussion of the two orders of limits.
+
+\paragraph{High and critical temperature.}
+Rigorous results on the dynamics depend strongly on the temperature. At high
+temperature, functional inequalities imply fast mixing from every initial
+configuration. Bauerschmidt and Bodineau proved a logarithmic Sobolev
+inequality, uniform in $n$, for a Dirichlet form of gradient type under a
+condition on the spectral width of the interaction matrix, which applies to
+SK when $\beta<1/4$~\cite[Theorem~1 and Corollary~2]{bauerschmidt-bodineau-2019}.
+Eldan, Koehler, and Zeitouni proved a Poincar\'e inequality for the
+heat-bath Dirichlet form itself under a spectral condition of the same kind,
+and deduced a polynomial bound on the mixing time from every initial
+configuration~\cite[Theorems~1 and~11]{eldan-koehler-zeitouni-2022}. Anari,
+Jain, Koehler, Pham, and Vuong obtained mixing in $O(n\log n)$ updates in the
+same range through entropic
+independence~\cite[Theorem~12]{anari-jain-koehler-pham-vuong-2022}. Wang
+extended mixing in $O(n\log n)$ updates to every $\beta<1/2$
+\cite[Theorem~1.1]{wang-2026}, and Boban, Li, and Oveis Gharan proved
+polynomial mixing for $\beta<1/2+\varepsilon_0$, for an absolute constant
+$\varepsilon_0>0$~\cite[Theorem~1.5 and Corollary~1.6]{boban-li-oveis-gharan-2026}.
+With external fields sufficiently large at every site and their average
+bounded by a fixed constant $H$, Paliy and Sohn proved a modified
+logarithmic Sobolev inequality and mixing in $O_{\beta,H}(n\log n)$ update
+attempts at every fixed $\beta$, with probability tending to
+one~\cite[Corollary~1.5]{paliy-sohn-2026}.
+For every fixed $\beta<1$, OpenAI proved that the spectral gap of the
+continuous-time chain is bounded below by a positive constant with
+probability tending to one~\cite[Theorem~1.1]{oai-spectral-gap}, and that
+the chain started from the worst initial configuration exhibits cutoff at
+time $(\log n)/(2\lambda(\beta))$, for a deterministic
+$\lambda(\beta)>0$~\cite[Theorem~1.1]{oai-cutoff}. At the critical
+temperature $\beta=1$, OpenAI proved that, for every deterministic $t_n$
+with $t_n=o(n^{2/3})$, the Gibbs mass of initial configurations $x$ with
+$d^J(x,t_n)>1/4$ tends to one in probability~\cite[Theorem~1.1]{oai-critical-slowing},
+and that the mixing time is $n^{2/3+o(1)}$~\cite[Theorem~1.1]{oai-critical-mixing}.
+
+\paragraph{Low temperature.}
+At low temperature, Ben Arous and Jagannath showed that a free-energy barrier
+in the overlap of two replicas forces an exponentially small spectral gap
+in mean-field spin glasses~\cite[Theorem~1.3]{ben-arous-jagannath-2018}.
+Their sufficient conditions for such a barrier include the vanishing of the
+second derivative at zero of the covariance
+function~\cite[Theorem~1.9]{ben-arous-jagannath-2018}, so they do not apply
+to the quadratic covariance of SK. For the pure spherical $p$-spin models
+with $p\ge3$, Gheissari and Jagannath proved that the spectral gap of the
+Langevin dynamics is exponentially small at sufficiently low
+temperature~\cite[Theorem~1]{gheissari-jagannath-2019}. For SK, Sellke proved
+that there exist absolute constants $\beta_*,c>0$ such that, for every
+$\beta>\beta_*$, the mixing time from the worst initial configuration is at
+least $e^{c\beta n}$ with probability tending to
+one~\cite[Theorem~1.1]{sellke-2025}. The slow initial configurations in his
+proof are configurations at which almost every spin is aligned with its
+local field by a uniform margin. He notes after his theorem that the chain may mix much
+faster from a random initial configuration. El Alaoui, Montanari, and Sellke
+proved that for $\beta>1$ no family of sampling algorithms that is stable
+under small perturbations of the disorder approximates the Gibbs measure in
+normalized Wasserstein distance~\cite[Theorem~2.6]{el-alaoui-montanari-sellke-sampling}.
+Neither result determines the Gibbs mass of the initial configurations from
+which the heat-bath chain mixes slowly.
+
+OpenAI proved a lower bound and an upper bound for initial configurations
+sampled from the Gibbs measure that hold throughout $\beta>1$.
+By~\cite[Theorem~1.1]{oai-barriers}, the conclusions of \cref{thm:barrier-730}
+hold with the time $\exp(n^{1/10000})$ and the threshold $\tau=1/4$. In a
+companion preprint, OpenAI proved that
+$\PP_{J,\,X_0\sim\pi^J}\{T^J(X_0)\le\exp(n^{1-c_\beta})\}\to1$ for some
+$c_\beta\in(0,1)$, and the proof permits
+$c_\beta=1/40000000$~\cite[Theorem~1]{oai-typical-upper}. Combining the two
+bounds, and using that $t\mapsto d^J(x,t)$ is continuous and nonincreasing,
+they obtained a two-sided bound on $T^J(X_0)$ with these
+exponents~\cite[Corollary~2]{oai-typical-upper}. The upper bound
+of~\cite{oai-typical-upper} is stated only in continuous time.
+
+\Cref{thm:barrier-730} improves the exponent $1/10000$ of~\cite{oai-barriers}
+to $7/30$, and it holds for every fixed threshold below $1/2$ with a
+coefficient that does not depend on the threshold. \Cref{thm:upper} improves
+the exponent $1-1/40000000$ of~\cite{oai-typical-upper} to $1-\omega$ for
+every fixed $\omega<1/4$, and \cref{cor:upper-discrete} gives the same bound
+for the discrete chain. For $\beta>\beta_*$, we find from \cref{thm:upper}
+that the mixing time from a typical initial configuration is much smaller
+than the lower bound
+$e^{c\beta n}$ of~\cite{sellke-2025} on the mixing time from the worst initial
+configuration. Our results do not determine the exponent of the typical
+mixing time, which by \cref{cor:two-sided} lies in $[7/30,3/4]$ if it exists.
+They are compatible with the value $1/3$ suggested by the physics literature,
+but they do not decide whether this value is correct. The value $1/3$ also
+appears as the exponent of $\Var(F_n)$ in \cref{f:main}; we know of no
+argument relating the two exponents. The coefficient $A_\beta$ depends on
+$\beta$, and our proof does not control it as $\beta\downarrow1$ or
+$\beta\to\infty$. Similarly, the rate of convergence in \cref{thm:upper}
+depends on $\beta$ and $\omega$, and we assert no uniformity in either
+parameter.
+
+\section{The fluctuation scale and the mean bias}\label{sec:intro-fluct}
+
+\paragraph{Physics.}
+The prediction of the fluctuation scale of $F_n$ has a separate history in
+physics. In a truncated replica theory near the critical temperature, Kondor
+found that the replica-normalized free energy depends on a small positive
+replica number $s$ first at order $s^5$~\cite{kondor-1983}. Crisanti,
+Paladin, Sommers, and Vulpiani interpreted the replica number as a tilt of
+the disorder distribution, and predicted that the free energy per spin
+fluctuates on the scale $n^{-5/6}$ in the low-temperature phase at zero
+field~\cite{crisanti-paladin-sommers-vulpiani-1992}. At fixed $\beta$, this
+is the scale $n^{1/6}$ for $F_n$. Parisi and Rizzo extended the fifth-order
+calculation throughout the low-temperature phase and computed the resulting
+large deviations of the free energy~\cite{parisi-rizzo-2008,parisi-rizzo-2009}.
+Passing from these large deviations to the width of typical fluctuations
+requires matching the tail of the distribution to its center. This is an
+additional assumption, which they discuss
+in~\cite[Section~VI]{parisi-rizzo-2009}; the limits $n\to\infty$ and
+$s\downarrow0$ cannot simply be interchanged.
+Aspelmeier, Billoire, Marinari, and Moore argued that a system of $n$ spins
+resolves about $n^{1/6}$ levels of replica symmetry breaking. From this they
+derived both a variance of order $n^{1/3}$ for the total free energy and a
+correction of order $n^{-2/3}$ to its mean per
+spin~\cite[Section~2]{aspelmeier-billoire-marinari-moore-2008}. Aspelmeier
+derived exact identities relating the variance of the free energy to
+overlaps between systems with correlated disorder~\cite{aspelmeier-2008}. At
+zero temperature, numerical studies of the width of the distribution of the
+ground-state energy have produced exponents between $3/4$ and $5/6$ for the
+standard deviation per spin, and the fits are sensitive to corrections to
+scaling~\cite{bouchaud-krzakala-martin-2003,boettcher-2005,boettcher-2010,palassini-2008}.
+
+\paragraph{Rigorous results.}
+Rigorous results on the fluctuations of $F_n$ depend on the temperature and
+the field. For $0<\beta<1$ at zero field, $F_n$ has Gaussian fluctuations of
+order one, as shown by Aizenman, Lebowitz, and Ruelle~\cite{alr-1987}. Comets
+and Neveu studied these fluctuations by stochastic
+calculus~\cite{comets-neveu-1995}. At $\beta=1$ the variance grows
+logarithmically. Chen and Lam proved an upper bound of order
+$(\log n)^2$~\cite[Theorem~1.1]{chen-lam-2019}, Schertzer proved the upper
+bound $(\log n)/4+C$ and a lower bound of order
+$\log\log\log n$~\cite[Theorems~1 and~2]{schertzer-2026}, Tierz bounded the
+variance for every $n$ in terms of the spin-glass
+susceptibility~\cite[Theorem~1.2]{tierz-critical-2026}, and Du and Huang
+proved that $\Var(F_n)=(\log n)/6+O(1)$ and that the fluctuations have a
+Gaussian limit~\cite[Theorem~1.3]{du-huang-2026}. Dey and Kang obtained the
+variance asymptotics and a Gaussian limit along sequences $\beta_n\uparrow1$
+for which $n^{1/3}(1-\beta_n^2)$ converges to a limit in
+$(0,\infty]$~\cite[Theorem~1.1]{dey-kang-2026}. With a nonzero external field,
+Chen, Dey, and Panchenko proved that the variance is of order $n$ and that a
+central limit theorem
+holds~\cite[Theorems~1 and~2]{chen-dey-panchenko-2017}. The spin space also
+matters: for the spherical SK model at low temperature, Baik and Lee proved
+that the free energy per spin has Tracy--Widom fluctuations of order
+$n^{-2/3}$~\cite[Theorems~2.10 and~2.11]{baik-lee-2016}, so that the total
+free energy fluctuates on the scale $n^{1/3}$ rather than $n^{1/6}$.
+
+For fixed $\beta>1$ at zero field, the Gaussian Poincar\'e inequality implies
+that $\Var(F_n)\le C_\beta n$. Chatterjee improved this to $O_\beta(n/\log n)$ and
+related this superconcentration to disorder
+chaos~\cite[Theorem~1.5]{chatterjee-2009}. Aronow and Lopatto proved
+$c_\beta n^{4/15}\le\Var(F_n)\le C_v n^{7/15}$ for all sufficiently large
+$n$~\cite[Theorem~1.4]{quantitative-parisi}, using quantitative comparisons
+between positive fractional moments of $Z_n$ and constrained Parisi
+functionals~\cite[Theorem~1.1]{quantitative-parisi}. The sharp exponent was
+then obtained by OpenAI~\cite[Theorem~1.1]{oai-fluctuations}, as stated in
+\cref{f:main}.
+
+\Cref{f:main} is a statement about exponents. It identifies neither a
+limiting law nor a positive limit of $n^{-1/3}\Var(F_n)$. Both are stated in
+the companion preprint~\cite[Theorems~1.1 and~1.2]{oai-limiting-law}: there,
+$n^{-1/3}\Var(F_n)$ converges to a constant $a_2(\beta)\in(0,\infty)$, and
+$(F_n-\E F_n)/\sqrt{\Var(F_n)}$ converges in law to a nondegenerate
+probability measure with mean zero and variance one. The proofs
+in~\cite{oai-limiting-law} use the exponent of \cref{f:main} and the
+comparison estimates of~\cite{oai-fluctuations};
+see~\cite[Appendix~A]{oai-limiting-law}. We do not use~\cite{oai-limiting-law} in
+this paper. On the side of large deviations, Pei identified the coefficient
+of the fifth-order term in the constrained Parisi functional and the
+resulting rate for upward deviations of $F_n/n$, with $n\to\infty$ taken
+before the deviation tends to zero~\cite[Theorem~1]{pei-fifth-order-2026}.
+
+The proof of \cref{f:main} in~\cite{oai-fluctuations} reduces it to a
+two-sided bound on a positive logarithmic moment. Let $F_n^c=F_n+\beta G$,
+where $G$ is a centered Gaussian variable of variance $1/2$, independent of
+the disorder. The variable $\beta G$ completes the covariance of $\beta H_n$ to
+$n\beta^2R(x,y)^2/2$, and we call $F_n^c$ the completed log partition
+function (\cref{sec:model-completion}). For every fixed $m\in(0,1/300)$ and
+$s_n=n^{-1/6+5m}$, it is shown in~\cite[Proposition~7.5]{oai-fluctuations}
+that $\log\E\exp\{s_n(F_n^c-\E F_n^c)\}$ lies between constant multiples of
+$n^{20m}$ and $n^{100m}$ for all sufficiently large $n$. We state this bound
+precisely as \cref{f:window}. The deduction of \cref{f:main} from this bound
+in~\cite[Lemmas~7.6 and~7.7]{oai-fluctuations} uses an argument of Aronow
+and Lopatto~\cite[Proposition~5.1]{quantitative-parisi}, based on the
+log-concavity of an exponential augmentation of $F_n^c$. We reproduce it in
+\cref{sec:fluct}.
+
+\paragraph{The mean bias.}
+For fixed $\beta>1$, Aronow and Lopatto proved that
+$c_\beta n^{-11/12}\le\Delta_{n,\beta}\le C_\beta n^{-2/3}$ for all
+sufficiently large $n$~\cite[Theorem~1.4]{quantitative-parisi}, and later
+that $\Delta_{n,\beta}\le C_b n^{-7/10}$ for every
+$n\ge2$~\cite[Theorem~1.1]{hexagon-bias}. Their lower bound $n^{-11/12}$
+follows from \eqref{eq:intro-variance-deficit} and the lower bound
+$c_\beta n^{4/15}$ on the variance; with \eqref{f:variance} in place of this
+bound, the exponent becomes $5/6$, as in \cref{cor:mean-bias}. The proof of
+\eqref{eq:intro-variance-deficit} balances a gain that is linear in a small
+positive tilt and proportional to the variance against the fifth-order cost
+of constraining the Parisi measure to have mass at least $s$ at
+zero~\cite[Lemma~7.2]{quantitative-parisi}. In physics, the correction is
+expected to be of order $n^{-a}$ with $a<1$ at low temperature, and
+two values have been proposed. The value $a=2/3$ was supported by the
+zero-temperature numerics of Bouchaud, Krzakala, and
+Martin~\cite{bouchaud-krzakala-martin-2003} and of
+Boettcher~\cite{boettcher-2005}, by Billoire's numerical integration along
+the interpolation of Guerra and Toninelli~\cite{guerra-toninelli-2002}
+in~\cite{billoire-2006}, and by the
+argument of Aspelmeier, Billoire, Marinari, and Moore mentioned above.
+Franz, Parisi, and Ricci-Tersenghi argued that the correct value is
+$a=3/4$, possibly up to logarithmic
+factors~\cite[equations~(13)--(17)]{franz-parisi-ricci-2026}. The bound
+of~\cite{hexagon-bias} excludes a nonzero correction of order $n^{-2/3}$ at
+every fixed $\beta>1$ and is consistent with the value $3/4$. A fuller account
+of these predictions is given in~\cite[Section~1.4]{hexagon-bias}.
+
+\paragraph{Normalizations.}
+We have converted the results quoted in this section and the previous one to
+the normalization \eqref{eq:intro-model}. Some of the cited works sum over
+ordered pairs of sites, which changes the inverse temperature by a constant
+factor; for instance, the critical inverse temperature
+of~\cite{chen-lam-2019} is $1/\sqrt2$ in its own normalization.
+\Cref{sec:model-dictionary} compares our normalization with those of the
+works on which our proofs rely.
+
+\section{Formal verification}\label{sec:intro-formal}
+
+OpenAI has published formalizations of~\cite{oai-barriers}
+and~\cite{oai-fluctuations} in the Lean~4 proof
+assistant~\cite{lean4,mathlib,oai-math-lean}. The main formal theorem on the
+fluctuation exponents takes the two-sided bound of \cref{f:window} as an
+explicit hypothesis. In~\cite{oai-fluctuations}, that bound is the
+conclusion of Proposition~7.5, which is proved there on paper. We have
+completed this formal proof: our Lean development proves the three
+conclusions of \cref{f:main} with no hypothesis beyond the definition of the
+model and $\beta>1$. It follows the mathematical route
+of~\cite{oai-fluctuations}; the work consisted in carrying out that route in
+full detail for the comparison problems of~\cite[Section~3]{oai-fluctuations}
+whose minimizers have a positive lower radius, and for the successive
+comparisons built from them.
+
+We have also formalized \cref{thm:barrier-730}, \cref{b:cor:subcritical},
+and \cref{cor:mean-bias}. In these formal proofs, the upper bound on the
+mean bias of~\cite[Theorem~1.1]{hexagon-bias} and the variance--bias
+inequality \eqref{eq:intro-variance-deficit} are proved, not assumed;
+their formal proofs come from our Lean development~\cite{hexagon-bias-lean}
+for~\cite{hexagon-bias}. The formal proof of \cref{cor:mean-bias} also
+proves the identities that relate the normalizations of \cref{f:main} and
+\eqref{eq:intro-variance-deficit}. The formal proof of
+\cref{thm:barrier-730} has the structure of the written proof, but it uses
+a weaker form of the local expansion of \cref{b:prop:os-expansion}, which
+suffices for the same exponent. \Cref{thm:barrier-strong} is not
+formalized.
+
+Each of these four formal theorems was compared with a separately written
+statement of the same result that depends only on Mathlib, and its proof was
+checked to use only the standard axioms \texttt{propext},
+\texttt{Classical.choice}, and \texttt{Quot.sound}. The declarations on
+which its statement and proof depend were then checked again by three
+kernels: the kernel of Lean and the independent kernels nanoda and con-ron.
+\Cref{sec:formal} states the formal theorems, explains how they correspond
+to the statements of this paper, describes what the completion of the proof
+of \cref{f:main} had to establish, and describes these checks.
+
+\statusIntroFormal{} The proofs in this paper are complete without reference
+to the formalization.
+
+\section{Methods and their sources}\label{sec:intro-methods}
+
+We describe the proofs of \cref{thm:barrier-730,thm:upper} and the sources
+of their ideas. A more detailed overview is given in \cref{sec:overview}.
+
+\subsection{The lower bound}
+
+\paragraph{From overlap constraints to slow mixing.}
+We follow the strategy of~\cite{oai-barriers}. Its first step reduces the
+problem to a statement about the stationary
+chain~\cite[Section~8.1]{oai-barriers}. Let $v$ be a reference
+configuration with $R(v,X_0)$ bounded away from zero. By spin-flip symmetry,
+the half-space $\{y:R(v,y)\le0\}$ has Gibbs mass at least $1/2$. If
+$d^J(X_0,t)\le\tau<1/2$, the chain started at $X_0$ is in this
+half-space at time $t$ with probability at least $1/2-\tau$. A single update
+changes $R(v,\cdot)$ by at most $2/n$, so the chain must cross every
+intermediate overlap level. It suffices to show that the chain started from
+$X_0\sim\pi^J$ crosses these levels before time $t$ only with small
+probability. At each deterministic time the stationary chain has law
+$\pi^J$, and a union bound over times controls the discrete chain; an
+independent Poisson clock of rate $n$ then gives the continuous-time chain.
+This argument is related to bottleneck estimates for Markov chains
+(see~\cite[Theorem~7.4]{levin-peres-2017}). Here, however, the bottleneck
+depends on the initial configuration, and it must separate almost every
+initial configuration in Gibbs measure from equilibrium.
+
+To show that crossings are rare, we build, as in~\cite{oai-barriers}, a
+growing family of reference configurations along the path. The references
+are chosen from independent Gibbs samples, and their overlaps with the
+current configuration are constrained simultaneously. At each crossing
+level, we find a new reference with large overlap with the current configuration
+using a bound on the Gibbs mass of overlap
+neighborhoods~\cite[Proposition~6.1]{oai-barriers}. This bound is derived
+from an upper tail bound for the energy and an estimate for small Gaussian
+rotations of the disorder~\cite[Lemmas~5.1 and~5.2]{oai-barriers}. We
+then search backward for the crossing of the overlap level of the new
+reference, while overlap constraints keep the overlaps with the earlier
+references almost unchanged. Iterating this step creates many simultaneous
+constraints at a single time. We arrange the references in blocks of fixed
+length, so that a conflict deletes only a short final segment of a block, and
+we draw the overlap thresholds at random, one level at a time; these features
+allow us to obtain the final
+probability estimate~\cite[Sections~8.3--8.5]{oai-barriers}.
+
+The overlap constraints have the following form. Let $\varepsilon$ be a
+tolerance. If the mean $r$ of the overlaps $R(v,x)$ and $R(v,w)$ lies in a
+fixed compact subinterval of $(0,q_\beta)$ and $R(w,x)\ge r+\rho$, then
+$\abs{R(v,x)-R(v,w)}$ does not lie in $[2\varepsilon,4\varepsilon]$. In words, a large overlap between $w$ and $x$
+forces their overlaps with $v$ to agree. Since overlaps change by at most
+$2/n$ in one update, excluding this band keeps the two overlaps close along
+a path. To show that such a constraint fails with small Gibbs probability, we show
+that the partition function restricted to the triples $(v,x,w)$ with
+violating overlaps is small compared with $Z_n^3$. In physics, free energies constrained by the overlap
+with an equilibrium reference configuration go back to Franz and
+Parisi~\cite{franz-parisi-1995}. The work of Ben Arous and
+Jagannath~\cite{ben-arous-jagannath-2018} is an earlier rigorous argument
+that passes from such constrained free energies to the dynamics, there for
+the spectral gap.
+
+\paragraph{Constrained comparisons and the scalar problem.}
+We bound constrained partition functions by Gaussian interpolation.
+Guerra's hierarchical interpolation~\cite{guerra-2003} gives the upper bound
+in the Parisi formula. Talagrand extended it to systems of replicas with
+prescribed overlaps, in the proof of the matching lower
+bound~\cite[Section~3]{parisi-formula} and in the two- and three-replica
+bounds of~\cite[Propositions~3.4 and~4.4]{talagrand-2007}. These bounds
+already retain a cost when the prescribed overlaps differ from the endpoint
+of the interpolation. Bovier and Klimovsky developed the interpolation for
+multidimensional spins~\cite{bovier-klimovsky-2009}. Chen studied the
+two-dimensional Guerra--Talagrand bound and its variational
+representation~\cite{chen-2017}, and Panchenko proved the vector-spin
+variational formula and the asymptotic sharpness of the constrained
+bounds~\cite{panchenko-2018}. We use the matrix comparison for finite hierarchies
+of~\cite[Proposition~2.3]{oai-barriers} for the quadratic covariance of SK,
+which allows any finite number of replicas and endpoint matrices whose
+diagonal entries need not equal one. The hierarchies themselves descend from Parisi's
+recursion~\cite{parisi-1979} and from Ruelle's probability
+cascades~\cite{ruelle-1987}; see~\cite{panchenko-2013}. For the mixed even
+$p$-spin models with exponentially summable coefficients, including SK,
+Aronow and Lopatto identified the limiting overlap array averaged over the
+disorder~\cite[Theorems~1.1 and~1.2]{al-overlap-structure}. At zero field, the
+absolute overlaps have the law of the overlap array $(U_{ab})_{a<b}$ of the
+corresponding Ruelle probability cascade, and the signed array has the law of
+$(\epsilon_a\epsilon_bU_{ab})_{a<b}$, where the replica signs $\epsilon_a$
+are independent symmetric signs, independent of the cascade. These are
+limiting statements, while the proof below needs estimates at finite $n$ on
+shrinking scales.
+
+We obtain the pressure deficits from the scalar Parisi problem. Auffinger and
+Chen proved that the Parisi functional has a unique minimizer, and they
+expressed it through a stochastic control
+problem~\cite[Theorems~2 and~3 and Corollary~1]{auffinger-chen-uniqueness-2015}.
+They also proved regularity properties of the Parisi equation and of its
+minimizers~\cite[Propositions~1 and~2 and Theorems~1 and~2]{auffinger-chen-2015}.
+Jagannath and Tobasco gave a dynamic-programming treatment of the
+functional~\cite[Lemma~18]{jagannath-tobasco-2016} and characterized its
+minimizers through their first
+variation~\cite[Proposition~1.1 and Corollary~3.10]{jagannath-tobasco-2017};
+Chen obtained the same characterization~\cite[Theorem~2 and
+Proposition~1]{chen-2017}. Toninelli proved that replica symmetry is broken
+at zero field for $\beta>1$~\cite{toninelli-2002}. Let $u$ be the spatial
+derivative of the solution of the Parisi equation at the minimizer, and let
+$Y$ be the associated diffusion. The identity $\E u(t,Y_t)^2=t$ at every
+point $t$ of the support is due to
+Talagrand~\cite{talagrand-2006-parisi-measures}; see
+also~\cite[Theorem~5]{auffinger-chen-2015}, \cite[Proposition~1]{chen-2017},
+and~\cite[Lemma~2.2]{full-rsb}. OpenAI proved it in the normalization used
+here, together with the regularity of the scalar evolution that it
+requires~\cite[Lemma~3.1 and Proposition~3.2]{oai-barriers}; the argument
+of~\cite{oai-barriers} does not assume a description of the support, and it
+treats separately the case of a forbidden overlap
+interval~\cite[Section~8.2]{oai-barriers}. By~\cite[Theorem~1.1]{full-rsb}, the identity holds on the whole
+interval $(0,q_\beta)$, and this case does not arise. Differentiating the
+identity once and twice along this interval, we obtain two stationarity
+identities,
+\[
+ \beta^2\E\chi(t,Y_t)^2=1,\qquad
+ \E w(t,Y_t)^2=2\alpha(t)\E\chi(t,Y_t)^3\qquad(0<t<q_\beta),
+\]
+where $\chi$ and $w$ are the second and third spatial derivatives and
+$\alpha$ is the distribution function of the Parisi measure
+(\cref{sec:scalar}). Both identities appear, in the normalization of energy
+units, in the proof of~\cite[Lemma~7.2]{quantitative-parisi}
+(see~\cite[equation~(7.12)]{quantitative-parisi} and the identity preceding
+it), and the differentiated moment identity is also
+in~\cite[Lemma~2.5]{full-rsb}. The first identity expresses, in scalar form, the
+marginal stability of the Parisi solution, which De Dominicis and Kondor
+found in a truncated replica model~\cite{de-dominicis-kondor-1983}; Crisanti
+and Rizzo wrote it in physical
+variables~\cite[equations~(22) and~(23)]{crisanti-rizzo-2002}.
+
+Positive fractional moments $\E Z_n^s$ have their own genealogy. Talagrand
+computed the limits of their normalized logarithms~\cite{talagrand-2007-large-deviations}.
+For SK at zero field and fixed $s\in(0,1)$, the limit of
+$(ns)^{-1}\log\E Z_n^s$ is the minimum of the Parisi functional over measures
+with mass at least $s$ at zero. This formula is contained in the multiscale
+formula of Contucci and Mingione~\cite[Theorem~2.1]{contucci-mingione-2019},
+and it was stated in this form by Chen, Guionnet, Ko, Lacroix-A-Chez-Toine,
+and Mourrat~\cite[Theorem~2.1]{chen-guionnet-ko-lacroix-mourrat-2026}. Aronow
+and Lopatto made the comparison quantitative when $s$ depends on
+$n$~\cite[Theorem~1.1]{quantitative-parisi}, and they proved that the
+constraint raises the Parisi value by an amount of order
+$s^5$~\cite[Lemma~7.2 and Proposition~7.3]{quantitative-parisi}. This is a
+rigorous counterpart of the replica calculations of Kondor and of Parisi and
+Rizzo, and Pei identified its leading
+coefficient~\cite[Theorem~1(a)]{pei-fifth-order-2026}.
+
+\paragraph{What is new.}
+Four parts of the proof are new. Together they allow overlap constraints at
+the scale $\rho\asymp n^{-7/30}$, with tolerance comparable to $\rho$.
+\begin{enumerate}
+\item \emph{A three-replica covariance perturbation with a cubic deficit}
+(\cref{sec:cubic}). In~\cite[Section~7]{oai-barriers}, the overlap
+constraints near a level $r$ come from a local perturbation of the covariance
+path of width $\rho^8$ with tolerance $\rho^{20}$, and the resulting pressure
+deficit is of order $\rho^{43}$. We keep the block hierarchy and the
+antisymmetric Gaussian contrast of~\cite[Section~7, Steps~1 and~2]{oai-barriers},
+but we perturb the covariance path differently. It is positive
+semidefinite at every stage, ends exactly at the prescribed overlap matrix
+after a terminal correction, and its expansion uses both stationarity
+identities to cancel the lower-order terms. The resulting
+deficit is of order $\rho^3$ per spin, with tolerance comparable to $\rho$,
+uniformly for $r$ in a compact subinterval of $(0,q_\beta)$. Its coefficient
+involves $\E\chi(r,Y_r)^3$, which is positive (\cref{sec:scalar}).
+\item \emph{A positive fractional-moment comparison} (\cref{sec:fractional}).
+For constraints near the level $r$, the deficit $n\rho^3$ in the logarithm
+of a constrained partition function is smaller than the scale $O_\beta(\sqrt n)$
+supplied by the standard Gaussian concentration bound for Lipschitz
+functions, so that bound is too coarse here. Instead, we bound the moment $\E Z^s$ of a constrained
+partition function $Z$, with $s$ comparable to $\rho$, by a fractional-moment
+version of the matrix comparison of~\cite[Proposition~2.3]{oai-barriers},
+in which the outer level of the hierarchy has mass $s$, as in the
+positive-moment interpolation of~\cite[Section~2]{quantitative-parisi}. The
+comparison uses the profile $\max\{\alpha,3s\}$, whose cost is of order
+$s^5$ by the trial bound of~\cite[Lemma~7.2]{quantitative-parisi}, together
+with a bound on the response of the local perturbation to this change of
+profile. Markov's inequality then bounds the disorder probability of
+failure of each of these bounds on constrained partition functions by
+$e^{-cn\rho^4}$.
+\item \emph{One disorder event for all constraints} (\cref{sec:static}). The
+denominator $Z_n^3$ is bounded below on the event
+$F_n/n\ge P_\beta-c_0\rho^3$, for a fixed $c_0>0$. Let $\delta\in(0,c_0)$ be
+fixed such that $\Delta_{n,\beta}\le(c_0-\delta)\rho^3$ for all
+sufficiently large $n$; this margin is obtained by choosing the constant $R$
+in $\rho=Rn^{-7/30}$ large. Chebyshev's inequality and the variance bound
+of~\cite[Theorem~1.4]{quantitative-parisi} give
+\[
+ \PP\bigl\{F_n/n<P_\beta-c_0\rho^3\bigr\}
+ \le\frac{\Var(F_n)}{\delta^2n^2\rho^6}
+ \le C_{\beta,\delta}\,n^{-23/15}\rho^{-6},
+\]
+which is $O(n^{-2/15})$ for $\rho=Rn^{-7/30}$. We intersect this event with
+the bounds on polynomially many constrained partition functions, and the
+complement of the resulting event, whose probability tends to zero, is
+discarded once and for all. On this event, the number
+of reference configurations and path steps, which is exponential in
+$1/\rho$, multiplies only the conditional Gibbs probability of a violation,
+which is at most $e^{-cn\rho^3}$. This replaces the probability estimate
+of~\cite[Lemma~4.2]{oai-barriers}.
+\item \emph{Control of crossing errors through the next retained reference}
+(\cref{sec:induction,sec:barrier-proof}). In~\cite[Section~8.4]{oai-barriers},
+the overlap of an earlier reference with the current configuration may drift
+by up to $6j\varepsilon$ after $j$ levels, and the final count requires
+$p\varepsilon/\rho$ to be small for $p$ levels. Since $p$ is of order
+$1/\rho$, this forces $\varepsilon$ to be much smaller than $\rho^2$.
+Instead, we control the overlap of each retained reference with the next
+retained reference. This overlap changes only when a deletion occurs, and the
+error stays of order $\varepsilon$ at every level, rather than accumulating.
+The first reference of each block keeps its next retained
+reference, and at one common time the overlap of the path with the first
+reference of each of the $M$ blocks lies within a fixed multiple of
+$\varepsilon$ of its threshold. A count over the $m+1$ path steps of these
+$M$ windows of predictable center gives the bound $(m+1)\gamma_n^M$, where
+$\gamma_n$ is the ratio of the window length to the length of a threshold
+interval, and $\gamma_n$ stays below one when $\varepsilon$ is a small fixed
+multiple of $\rho$. This allows $\varepsilon$ comparable to $\rho$.
+\end{enumerate}
+The other overlap constraints use the inherited pressure bounds:
+the pair bound of~\cite[Lemma~4.3]{oai-barriers}, the three-replica bound at
+fixed scales of~\cite[equation~(4.20)]{oai-barriers}, and, for large
+overlaps $R(w,x)$, the comparison of~\cite[Section~7, Steps~5--8]{oai-barriers}.
+We also extend the bound on the Gibbs mass of overlap neighborhoods
+of~\cite[Proposition~6.1]{oai-barriers} to every scale $L\to\infty$ with
+$L=o(n)$; its proof is that of~\cite{oai-barriers}
+(\cref{sec:references}).
+
+\paragraph{The exponent.}
+We determine the exponent by balancing these estimates. The lower
+bound on $Z_n^3$ in item~3 requires the mean bias $\Delta_{n,\beta}$ to be
+smaller than a small multiple of the deficit $\rho^3$. The comparison proved
+in~\cite[Theorem~2.4]{oai-barriers} has error $O(n^{-1/24})$. This is much
+smaller than the deficit $\rho^{43}$ at the scale $\rho=n^{-1/10000}$ used
+there, but not than $\rho^3$ at the scale used here. For this reason we use
+the upper bound $\Delta_{n,\beta}\le C_b n^{-7/10}$ of Aronow and
+Lopatto~\cite{hexagon-bias}, and we take $\rho=Rn^{-7/30}$ for a large
+constant $R$. A fixed overlap interval inside $(0,q_\beta)$ then contains
+of order $1/\rho\asymp n^{7/30}$ crossing levels. By counting, we find
+that the probability of crossing all of them before time $t$ is small
+when $\log t$ is a small multiple of the number of levels. This leads to the
+time $\exp(A_\beta n^{7/30})$. Two further conditions concern the two kinds
+of union bound in the proof. For the union over reference configurations and
+path steps, the conditional Gibbs error is at most $\exp(C/\rho-cn\rho^3)$,
+which tends to zero if $cn\rho^3-C/\rho\to\infty$. For the disorder event,
+a union over at most $Cn^d$ constrained partition functions has failure
+probability at most $Cn^de^{-c'n\rho^4}$, which tends to zero if
+$c'n\rho^4-d\log n\to\infty$. The
+condition $n\rho^4/\log n\to\infty$ implies both. For $\rho=Rn^{-\lambda}$
+with fixed $R$, it holds when $\lambda<1/4$, in particular at
+$\lambda=7/30$; at $\lambda=1/4$, the second union bound fails. This is the
+restriction to exponents below $1/4$ mentioned in \cref{sec:intro-results}.
+
+\paragraph{Inputs for the lower bound.}
+Besides standard tools, the proof of \cref{thm:barrier-730} uses the following
+public results, which are stated in \cref{sec:inputs} with their hypotheses:
+the Parisi formula and Guerra's bound~\cite{guerra-2003,parisi-formula}, the
+uniqueness of the Parisi minimizer~\cite{auffinger-chen-uniqueness-2015}, the
+interval support of the Parisi measure~\cite{full-rsb}, the upper bound on
+the mean bias of~\cite[Theorem~1.1]{hexagon-bias}, the upper bound on the
+variance and the trial bound of~\cite{quantitative-parisi}, and results
+of~\cite[Sections~2--8]{oai-barriers}. The proof of
+\cref{thm:barrier-strong} uses in addition the small-deviation inequality
+of~\cite{paouris-valettas-2018}. All other steps are proved in this paper.
+
+\subsection{The upper bound}
+
+\paragraph{From flows to mixing.}
+We follow the strategy of~\cite{oai-typical-upper}. Its last step reduces the
+problem to a lower bound on stationary flows across
+cuts~\cite[Section~7, Lemma~8]{oai-typical-upper}. For $S\subseteq\Sigma_n$,
+the flow $\sum_{x\in S,\,y\notin S}\pi^J(x)\mathcal L^J(x,y)$ is the stationary
+rate at which the continuous heat-bath process jumps from $S$ to its
+complement. Let $0<\epsilon<1/3$ and $\phi>0$, and suppose that the flow
+across $S$ is greater than $\phi$ for every $S$ with
+$\epsilon\le\pi^J(S)\le1-\epsilon$. Then for every $t>0$,
+\[
+ \sum_{x\in\Sigma_n}\pi^J(x)\,d^J(x,t)\le\frac{n\sqrt{2\log2}}{\phi\sqrt t}+2\epsilon.
+\]
+The proof removes a set of small Gibbs mass, proves a Poincar\'e inequality
+on the remainder by the coarea argument for the reversible Cheeger
+bound~\cite[Theorem~3.5]{lawler-sokal-1988}, and then bounds the Gibbs
+average of the distances through the entropy dissipation of the whole
+chain~\cite[Lemmas~2.5 and~2.7]{diaconis-saloff-coste-1996}. It uses only
+cuts that separate appreciable Gibbs masses, and it does not require the
+trajectory to stay in the retained set. We reproduce it in
+\cref{u:lem:pruning}. With $\epsilon=n^{-\mathsf d}$,
+$\phi=e^{-n^{1-\mathsf q}}$, and $t=e^{n^{1-\omega}}$, where $\mathsf d$ and
+$\mathsf q$ are positive exponents of the proof (\cref{u:sec:parameters}),
+the right side tends to zero when $\omega<\mathsf q$, and using Markov's
+inequality for the Gibbs average, we obtain \cref{thm:upper}. It therefore suffices to show
+that, with probability tending to one over the disorder, the flow across
+every $S$ with $\min\{\pi^J(S),\pi^J(S^{\rm c})\}\ge n^{-\mathsf d}$ is greater
+than $e^{-n^{1-\mathsf q}}$.
+
+\paragraph{The proposal.}
+To bound these flows, OpenAI constructs a random configuration correlated
+with the disorder, called a proposal~\cite[Section~4]{oai-typical-upper}.
+Each coordinate of the proposal follows the magnetization martingale of the
+scalar Parisi diffusion. The martingale is driven by successive queries of
+the interaction matrix: over each cell of a time mesh, the increment of the
+magnetizations, orthogonalized against the earlier query directions, is
+multiplied by the matrix. By orthogonal invariance, the part of the matrix
+that has not been revealed is a compressed block of the Gaussian orthogonal
+ensemble (GOE) at each step. Beyond the top $q_\beta$ of the support of the
+Parisi measure, the martingale is continued until the average uncertainty of
+the coordinates is small, and the query noise is mixed with an independent
+Brownian noise. At the final time, the spins are drawn independently with
+the magnetizations as means. Successive Gaussian conditioning along
+orthogonalized directions is used in Bolthausen's iterative construction of
+solutions of the TAP equations~\cite[Sections~2--3]{bolthausen-2014}, and
+Montanari's incremental approximate message passing algorithm uses a Parisi
+diffusion and normalized increments of the
+magnetizations~\cite[Sections~2--3]{montanari-2021}.
+
+The equilibrium input is the stationarity of the Parisi measure along the
+whole interval $[0,q_\beta]$. The stationarity conditions on the support were
+obtained by Chen~\cite[Theorem~2 and Proposition~1]{chen-2017} and by
+Jagannath and Tobasco~\cite[Proposition~1.1 and
+Corollary~3.10]{jagannath-tobasco-2017}, and the support is the whole interval
+by~\cite[Theorem~1]{zhou-2026} for $\beta$ close to one and
+by~\cite[Theorem~1.1]{full-rsb} for every $\beta>1$. Along the scalar
+diffusion, an exact identity balances the information about the matrix that
+the queries reveal against the energy gained by the
+proposal~\cite[Section~3, Lemma~4]{oai-typical-upper}. It yields the two
+estimates of~\cite[Proposition~5]{oai-typical-upper}. The relative entropy of
+the joint law of the matrix and the proposal with respect to the joint law of
+the disorder and a Gibbs sample is sublinear in $n$, and outside an event of
+small probability, the law of the pair is dominated by $e^{o(n)}$ times this
+joint law.
+
+\paragraph{Coverage and the connecting sequence.}
+Forward relative entropy alone does not show that the proposal reaches a
+prescribed set of positive Gibbs mass. Under the joint law of the disorder
+and a Gibbs sample, the conditional law of the disorder given the spin is
+strongly log-concave. A transport bound for such
+laws~\cite[Corollary~3.10]{bogachev-kolesnikov-medvedev-2005} and Gaussian
+smoothing of the disorder~\cite[Lemma~11]{lugosi-neu-2022} reverse the entropy
+comparison. They give a lower bound on the probability that the proposal lands
+in any set of appreciable Gibbs mass~\cite[Section~5,
+Proposition~6]{oai-typical-upper}. Two proposals generated from a common
+smoothed disorder then land on the two sides of a balanced cut with a
+probability that is not too small. Following~\cite{oai-typical-upper}, these
+two proposals are run to a longer, fine horizon, and they are joined by a
+sequence of proposals run to a shorter, coarse horizon, obtained by rotating
+the Gaussian inputs, with small consecutive Hamming distances. Near-pinning of
+the magnetizations joins the two horizons. If the cut had small flow, its
+enlarged vertex boundary would have tiny Gibbs mass, and the likelihood bound
+keeps the coarse proposals away from this boundary. But a sequence with short
+steps that crosses the cut must come close to its boundary. This
+contradiction bounds the flows from below~\cite[Section~6,
+Proposition~7]{oai-typical-upper}.
+
+\paragraph{What is new.}
+In~\cite{oai-typical-upper}, the parameters of the proof are fixed numbers,
+and the saving $1/40000000$ is not optimized~\cite[Section~1, after
+Theorem~1]{oai-typical-upper}. To reach every saving below $1/4$, the
+estimates for the coarse proposal must hold outside events of probability
+close to $e^{-n^{3/4}}$, with a likelihood bound close to $e^{n^{3/4}}$ times
+the joint law. The following refinements yield every fixed saving below $1/4$.
+\begin{enumerate}
+\item \emph{Sharp estimates for the coarse proposal}
+(\cref{u:sec:concentration,u:sec:coarse}). We strengthen the scalar
+entropy--energy identity of~\cite[Section~3, Lemma~4]{oai-typical-upper}
+to a pathwise terminal identity. Along the scalar diffusion beyond the
+support, the information revealed by the queries and $\beta$ times the
+linearized energy of the proposal cancel up to a terminal term. The centered fluctuation
+of this term has variance at most $\beta^4p(V)^3$, where $p(V)$ is the mean
+conditional variance of a spin given its magnetization at the final time $V$
+(\cref{u:lem:joint}). The coarse likelihood estimate absorbs the
+deterministic amplitude of this term. The centered difference between this cancellation
+and its version on the mesh has a moment generating function bounded by
+$e^{C_\beta\theta^2h}$ for $\abs\theta\le c_\beta/h$, where $h$ is the mesh
+parameter (\cref{u:lem:lag}). We combine these bounds with concentration of
+weighted dyadic sums over cells of unequal length, normalized by the
+durations of the cells (\cref{u:lem:weighted}), with a bound on the deviation
+of the Gram matrix of the queries from the identity that uses the variance of
+the squared projections and not only their tails (\cref{u:lem:gram}), and
+with sharper bounds on the variances of the Gaussian terms that the proposal
+does not use (\cref{u:lem:weighted-energy}). The dyadic triangular and
+Cholesky arguments build on~\cite[Section~4, proof of
+Proposition~5]{oai-typical-upper}.
+\item \emph{The growing mesh} (\cref{u:sec:proposal}). The cells of the mesh
+in~\cite{oai-typical-upper} have a common length. Ours have length $he^{t/4}$
+at time $t$, with $h=n^{-\mathsf a}$, so that the horizon $L\log n$ is
+reached after at most $8n^{\mathsf a}$ cells when $\mathsf a>L/4$
+(\cref{u:lem:quad}). The quadrature error is $O_\beta(h)$, uniformly in the
+horizon. On this mesh, adjacent cells have different lengths, and
+the estimates distinguish the duration of the previous cell, which governs
+the conditional law of the spins, from that of the next cell, which
+normalizes the query. For instance, the bound on the conditional
+correlations of the query entries with the spins in \cref{u:sec:fine-energy}
+loses a factor two compared with equal cells.
+\item \emph{Direct expected energy at the fine horizon}
+(\cref{u:sec:fine-energy}). We compute the expected queried energy through
+the exact one-query conditional identity of \cref{u:lem:onequery}, including
+fallback outcomes. This avoids the Gram-event restriction in the energy
+calculation of~\cite[Section~4, Proposition~5]{oai-typical-upper} and gives
+the fine relative-entropy bound of \cref{u:prop:fine-kl}, with saving
+$\mathsf k_{\rm f}<\min(\mathsf a,\mathsf f,1-\mathsf a)$.
+\item \emph{The parameter system} (\cref{u:sec:budget}). The exponents of the
+proof are affine functions of $\varepsilon_\omega=(1/4-\omega)/20$, and this
+single family satisfies every condition of the proof for every
+$\omega\in(0,1/4)$ (\cref{u:prop:range}).
+\end{enumerate}
+
+The connecting sequence, including fine proposals only at the two
+endpoints, stability from coarse Gram events, and pinning without a fine
+Gram exception, follows~\cite[Section~6, proof of
+Proposition~7]{oai-typical-upper}.
+
+\paragraph{The exponent.}
+The proof of \cref{u:prop:range} shows that, for every choice of the
+exponents, the estimates of \cref{part:upper} require
+\[
+ \omega<\mathsf q<\mathsf s_{\rm b}<\mathsf s_{\rm seq}<\mathsf e<\mathsf u_{\rm E}
+ <\mathsf k_{\rm f}/2\le1/4 .
+\]
+The mixing step needs $\omega<\mathsf q$, since the flow threshold is
+$e^{-n^{1-\mathsf q}}$. In the connecting sequence, $e^{-n^{1-\mathsf s_{\rm b}}}$
+bounds the failure probability of one coarse proposal,
+$e^{-n^{1-\mathsf s_{\rm seq}}}$ that of the whole sequence, and
+$e^{-2n^{1-\mathsf e}}$ bounds from below the probability that the two fine
+endpoints lie on opposite sides of the cut, and the proof needs
+$\mathsf q<\mathsf s_{\rm b}<\mathsf s_{\rm seq}<\mathsf e$. Smoothing and
+coverage need $\mathsf e+\mathsf d<\mathsf u_{\rm E}
+<\min\{\mathsf D,\mathsf k_{\rm f}-\mathsf D\}$, where $n^{-\mathsf D}$ is the
+smoothing parameter and $n^{1-\mathsf k_{\rm f}}$ bounds the forward relative
+entropy at the fine horizon. Finally, this relative entropy contains terms of
+order $nh=n^{1-\mathsf a}$ and $n^{\mathsf a}$, the second from the number of
+queries, so that $\mathsf k_{\rm f}<\min\{\mathsf a,1-\mathsf a\}\le1/2$.
+
+\paragraph{Inputs for the upper bound.}
+Besides standard tools of Gaussian analysis and stochastic
+calculus~\cite{tsirelson-ibragimov-sudakov-1976,karatzas-shreve-1991,boucheron-lugosi-massart-2013},
+the proof of \cref{thm:upper} uses the following results, which are stated in
+\cref{sec:inputs} and \cref{u:sec:scalar} with their hypotheses: the Parisi
+formula and Guerra's bound (\cref{inp:parisi}), the uniqueness of the Parisi
+minimizer (\cref{inp:unique}), the interval support of the Parisi measure
+(\cref{inp:full-rsb}) and the identity $\Gamma(t)=t$ on $(0,q_\beta)$
+(\cref{cor:inp-identity}), the regularity and scalar evolution of
+\cref{inp:ob-scalar}, the scalar estimates of~\cite[Section~3, Lemmas~3
+and~4]{oai-typical-upper}, and the transport, smoothing, and finite-chain
+results cited above. All other steps are proved in this paper.
+
+\subsection{The fluctuation theorem}
+
+The proof of \cref{f:window} in~\cite{oai-fluctuations} combines finite
+replica trees and covariance differentiation for Gaussian
+hierarchies~\cite[Section~2]{oai-fluctuations}, optimized short comparisons
+over overlap quantiles~\cite[Section~3]{oai-fluctuations}, a one-site cavity
+estimate, which compares an overlap moment of a comparison with the
+corresponding moment of a scalar recursion~\cite[Proposition~4.1]{oai-fluctuations},
+a rigidity theorem, by which rescaled overlap quantiles of minimizing
+comparisons have linear limits at small masses~\cite[Theorem~5.1]{oai-fluctuations},
+finite propagation of regularity through successive
+comparisons~\cite[Proposition~6.6]{oai-fluctuations}, and a low-field
+perturbation that yields the upper bound~\cite[Section~7]{oai-fluctuations}.
+As explained in~\cite[Section~1]{oai-fluctuations}, its closest analytic
+predecessor is the combination in~\cite{quantitative-parisi} of a pinned
+Brascamp--Lieb estimate for the variance~\cite{brascamp-lieb-1976}, optimized
+covariance interpolation, and positive
+moments~\cite[Propositions~2.2 and~2.3 and Section~3]{quantitative-parisi}.
+The single-site analysis of Thouless, Anderson, and
+Palmer~\cite{thouless-anderson-palmer-1977} is an early antecedent of the cavity
+method in spin glasses, and M\'ezard, Parisi, and Virasoro developed
+the cavity construction of the solution with broken replica
+symmetry~\cite{mezard-parisi-virasoro-1986}. The cavity variational principle
+of Aizenman, Sims, and Starr~\cite{aizenman-sims-starr-2003} is a rigorous
+antecedent of comparisons that add or remove sites. \Cref{sec:fluct} summarizes this route, with
+references to the corresponding statements.
+
+\section{Organization of the paper}\label{sec:intro-organization}
+
+\Cref{sec:overview} gives an overview of the proofs of both bounds.
+\Cref{part:prelim} contains preliminaries: \cref{sec:model} defines the model,
+the dynamics, and the joint law of the disorder and the initial
+configuration, and \cref{sec:inputs} defines Gaussian hierarchies and the
+Parisi functional and states the imported results. \Cref{part:static}
+contains the static estimates for the proof of \cref{thm:barrier-730}.
+\Cref{sec:scalar} treats the scalar
+problem near a point of the support of the Parisi measure,
+\cref{sec:flow} proves short-time estimates for Gaussian hierarchies,
+\cref{sec:cubic} constructs the three-replica covariance perturbation and
+proves the cubic deficit, \cref{sec:fractional} proves the fractional-moment
+comparison, and \cref{sec:static} combines these into a single estimate for
+all overlap constraints. \Cref{part:dynamics} contains the dynamical part of
+the proof of the lower bound. \Cref{sec:references} treats the Gibbs mass of
+overlap neighborhoods and the families of reference configurations,
+\cref{sec:induction} proves that the overlap constraints persist along a
+trajectory, and \cref{sec:barrier-proof} completes the proof of
+\cref{thm:barrier-730} and \cref{b:cor:subcritical} and proves
+\cref{thm:barrier-strong}.
+
+\Cref{part:upper} proves the upper bound. \Cref{u:sec:setup} introduces the
+Gaussian matrix from which the disorder is built, the scalar Parisi process
+and its continuation beyond the support, and the exponents of the proof.
+\Cref{u:sec:proposal} constructs the Gaussian-query proposal on a growing
+mesh, and \cref{u:sec:fine} bounds its forward relative entropy at the fine
+horizon. \Cref{u:sec:concentration} proves the concentration estimates on the
+growing mesh, and \cref{u:sec:coarse} proves the joint cancellation and the
+likelihood bound for the coarse proposal. \Cref{u:sec:connections} proves the
+coverage estimate and constructs the connecting sequence, and
+\cref{u:sec:proof} proves \cref{thm:upper,cor:upper-discrete,cor:two-sided}
+and verifies the conditions on the exponents.
+
+\Cref{part:fluct} concerns the fluctuations and the mean bias:
+\cref{sec:fluct} states the bound of \cref{f:window} and deduces
+\cref{f:main} from it, and \cref{sec:bias} proves \cref{cor:mean-bias}.
+\Cref{part:formal} contains \cref{sec:formal}, which describes the formal
+proofs, and \cref{sec:open}, which lists open problems.

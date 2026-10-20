@@ -1,0 +1,6 @@
+SKConstants/Vendor/StochasticCalculus/ is vendored from the StochasticCalculus library
+by Ezzeri Esa (savarin/lean-stochastic-calculus), Apache License 2.0 (LICENSE-Apache-2.0 here),
+as distributed in pmaronow/all-lean at commit 91b0f7aece4af24622757e7fbf7b967a84d14a6a (path StochasticCalculus/),
+where it was modified for Lean compiler/module compatibility. Modification here: module paths
+StochasticCalculus.* renamed to SKConstants.Vendor.StochasticCalculus.* (import lines only).
+Original file headers and notices are retained.

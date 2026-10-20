@@ -1,0 +1,62 @@
+module
+
+public import ComparisonSignedCavityActualIRootAnchorRaw
+public import ComparisonActualHighWallRestRawMoments
+
+@[expose] public section
+noncomputable section
+set_option maxHeartbeats 14000000
+open MeasureTheory ProbabilityTheory Filter Set
+open scoped BigOperators Topology NNReal
+namespace OAI.SKFluctuations.Cavity
+open Hierarchy LaplaceWindowFormalization
+
+theorem eventually_actual_high_wall_i_exterior_fourth_bound
+    (Bclock : ℝ) {m delta cl cu Az C0 Ct D : ℝ}
+    (hm : 0 < m) (hdelta : 0 < delta) (hroom : delta < 3*m)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az) (hC0 : 0 < C0) (hCt : 0 ≤ Ct) :
+    ∃C : ℝ,0 < C ∧ ∀ᶠn : ℕ in atTop,
+      ∀M : ActualHighWallOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock,
+      ∀(L : ℕ) (us : List PositiveMass),
+        (∀u∈us,u.val ≤ 1) → (∀u∈uniformMasses L,u∈us) → ((L+1:ℕ):ℝ)⁻¹ ≤ M.xs →
+      ∀ᶠk : ℕ in atTop,
+        let as:=finiteCutMasses us k
+        let q : ℕ → RestCoordinate n → ℝ:=fun j=>Sum.elim
+          (fun _=>(M.bf (partitionPoint 0 as j):ℝ)) (fun _=>(M.hf (partitionPoint 0 as j):ℝ))
+        ∀(pre mid tail : List PositiveMass),pre++(mid++tail)=as →
+        ∀(Ei : ClockTree (Spin n) (mid++tail)) (e : Ei.Slot),
+          (∫z,(Ei.fork Ei).expect (restWeight n) (restFeature n)
+            (fun j=>cumulativeIncrements (q 0) (fun k=>q (k+1)) (pre.length+j))
+            (fun η=>|deletedOverlap n (joinSpin (Ei.atSlot η.1 e,false))
+              (joinSpin (Ei.atSlot η.2 e,false))|^4) (exteriorForestIRoot z)
+            ∂nativeExteriorForestDisorderRootLaw (restWeight n) (restFeature n) pre mid tail 0 q 0) ≤
+            (C*(M.xs+partitionPoint 0 as pre.length))^4 := by
+  obtain ⟨C,hC,HR⟩:=eventually_actual_high_wall_rest_even_bound
+    (D:=D) 2 (by norm_num) Bclock hm hdelta hroom hcl hcu hAz hC0 hCt
+  refine ⟨C,hC,?_⟩
+  filter_upwards [HR] with n hn
+  intro M L us hus hret hmesh
+  filter_upwards [hn M L us hus hret hmesh] with k hk
+  dsimp only at hk ⊢
+  intro pre mid tail hcut Ei e
+  have ho : MassOrdered 0 (pre++(mid++tail)):=hcut.symm ▸ finiteCutMasses_ordered us hus k
+  let q : ℕ → RestCoordinate n → ℝ:=fun j=>Sum.elim
+    (fun _=>(M.bf (partitionPoint 0 (finiteCutMasses us k) j):ℝ))
+    (fun _=>(M.hf (partitionPoint 0 (finiteCutMasses us k) j):ℝ))
+  rw [native_common_i_pair_marginal n pre mid tail ho Ei e 0 q
+    (fun σ τ=>|deletedOverlap n (joinSpin (σ,false)) (joinSpin (τ,false))|^4) 0]
+  apply (native_pair_deleted_even_le_ordered n 2 ho pre.length 0 _ 0).trans
+  have hj : pre.length ≤ (finiteCutMasses us k).length := by
+    rw [←hcut]
+    simp only [List.length_append]
+    omega
+  have HK (bs : List PositiveMass) (hbs : bs=finiteCutMasses us k) :
+      (ClockTree.pairClock bs pre.length).disorderExpect (restWeight n) (restFeature n) 0 q
+        (fun σ=>|orderedOverlap n (ClockTree.pairSpin bs pre.length σ).1
+          (ClockTree.pairSpin bs pre.length σ).2|^4) 0 ≤
+        (C*(M.xs+partitionPoint 0 (finiteCutMasses us k) pre.length))^4 := by
+    subst bs
+    simpa only [q,show 2*2=4 by norm_num] using hk pre.length hj
+  exact HK (pre++(mid++tail)) hcut
+
+end OAI.SKFluctuations.Cavity

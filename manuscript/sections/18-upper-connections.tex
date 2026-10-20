@@ -1,0 +1,699 @@
+\chapter{Smoothing, coverage, and the connecting sequence}\label{u:sec:connections}
+
+The goal of this section is to prove \cref{u:prop:witness}, which excludes
+balanced cuts with small stationary flow on the event
+$\|W(g)\|_{\mathrm{op}}\le12$. We use the fine entropy estimate of
+\cref{u:prop:fine-kl} to obtain coverage of both sides of a cut, and the
+coarse domination estimate of \cref{u:prop:coarse} to construct a sequence
+that avoids its enlarged boundary. These are the smoothing and connecting
+sequence arguments of \cite[Sections~5--6, Propositions~6--7]{oai-typical-upper},
+with the estimates at the fine and coarse horizons established in
+\cref{u:sec:fine,u:sec:coarse}. In \cref{u:sec:proof}, the witness estimate
+and \cref{u:lem:goe-norm} will imply \cref{thm:upper}.
+
+Throughout, we fix $\beta>1$ and the exponent parameters before taking
+$n\to\infty$, as in \cref{u:sec:parameters}. We retain the primitive disorder,
+completed Hamiltonian, and joint law $\Pi_n$ of \cref{u:sec:primitive},
+and the source and replay constructions of \cref{u:sec:proposal}.
+
+\section{Smoothing and coverage}\label{u:sec:smoothing}
+
+We first record the transport inequality for disorder conditioned on a
+spin. Under $\Pi_n$, the spin marginal is $\Unif_n$: this follows from the
+gauge transformation $g_{ij}\mapsto x_ix_jg_{ij}$ and summation over spins.
+Conditional on $x$, primitive disorder has density
+\begin{equation}\label{u:eq:conditional-density}
+ p_x(g)=2^n(2\pi)^{-n^2/2}
+       \exp\{-\|g\|_F^2/2+\beta H^c_g(x)-F^c(g)\}.
+\end{equation}
+Since $F^c$ is a log-sum-exp of linear functions and $H^c_g(x)$ is
+linear in $g$, we have that the negative logarithm of $p_x$ is
+$1$-strongly convex.
+We write $W_2$ for the quadratic Wasserstein distance for the Euclidean
+norm on the primitive matrix space, that is, the Frobenius norm.
+
+\begin{lemma}\label{u:lem:transport}
+For every $x\in\Sigma_n$ and every probability measure $\eta$ on the
+primitive matrix space,
+\begin{equation}\label{u:eq:conditional-transport}
+ W_2(\eta,p_x)^2\le2\KL(\eta\Vert p_x).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This is the transport inequality for measures with a strongly convex potential; see
+\cite[Corollary~3.10]{bogachev-kolesnikov-medvedev-2005} and its use in
+\cite[Section~5]{oai-typical-upper}. We recall the finite-dimensional
+argument. For a smooth positive density $\eta$, let $T$ be the optimal
+transport map from $p_x$ to $\eta$, which is the gradient of a convex function, and let $V_x$ be the
+negative logarithm of $p_x$. By the change-of-variables formula, we have
+\[
+ \KL(\eta\Vert p_x)
+ =\int\bigl(V_x(T(g))-V_x(g)-\log\det DT(g)\bigr)p_x(g)\dd g.
+\]
+By strong convexity and $-\log\det DT\ge\tr(I-DT)$, we have
+\[
+ \KL(\eta\Vert p_x)
+ \ge\frac12\int\|T(g)-g\|_F^2p_x(g)\dd g.
+\]
+In the last step, we used integration by parts to cancel the linear terms.
+For a general measure with finite entropy, we obtain the inequality by smooth
+truncation and regularization, followed by lower semicontinuity. If the
+entropy is infinite, there is nothing to prove.
+\end{proof}
+
+For every $L$-Lipschitz linear function $f$ and every $t\in\R$, the variational formula for relative entropy and \cref{u:lem:transport} imply that
+\begin{equation}\label{u:eq:conditional-linear-mgf}
+ \E_{p_x}\exp\{t(f-\E_{p_x}f)\}\le e^{t^2L^2/2}.
+\end{equation}
+Indeed, $\E_\eta f-\E_{p_x}f\le L W_2(\eta,p_x)$, and maximizing
+$|t|L\sqrt{2K}-K$ over $K\ge0$ proves
+\eqref{u:eq:conditional-linear-mgf}.
+
+Let $\delta=n^{-\ex{D}}$, and write the fine output as
+$Q_F(\dd g,x)=\gamma_n(\dd g)q_F(g,x)$. We take the version of $q_F$
+given by the replay integral, with the conventions of
+\cref{u:sec:primitive}, and define
+\begin{equation}\label{u:eq:smoothed-kernel}
+ \nu^{\rm sm}_g(x)=\int
+ q_F(\sqrt{1-\delta}\,g+\sqrt\delta\,z,x)\,\gamma_n(\dd z).
+\end{equation}
+For every $g$, we have that $\nu^{\rm sm}_g$ is a probability measure
+on the spins.
+
+\begin{lemma}\label{u:lem:smoothing}
+Let $g_\star,g_\circ$ be independent with law $\gamma_n$, and set
+$g_{\rm base}=\sqrt{1-\delta}\,g_\star+\sqrt\delta\,g_\circ$. Then
+\begin{equation}\label{u:eq:reverse-entropy}
+ \E_{g_\star,g_\circ}\KL(\pi_{g_\star}\Vert\nu^{\rm sm}_{g_{\rm base}})
+ \le\frac{\beta^2(n-1)}2\delta+\delta^{-1}\KL(Q_F\Vert\Pi_n).
+\end{equation}
+In particular, if $\ex{u}_{\rm E}<\min(\ex{D},\ex{k}_{\rm f}-\ex{D})$,
+the outer event
+\begin{equation}\label{u:eq:coverage-event}
+ \mathcal C_n=\bigl\{(g_\star,g_\circ):
+ \KL(\pi_{g_\star}\Vert\nu^{\rm sm}_{g_{\rm base}})
+                         \le n^{1-\ex{u}_{\rm E}}\bigr\}
+\end{equation}
+has complementary probability at most
+$C_\beta(n^{\ex{u}_{\rm E}-\ex{D}}+
+ n^{\ex{u}_{\rm E}-\ex{k}_{\rm f}+\ex{D}})=o(1)$.
+\end{lemma}
+
+\begin{proof}
+We first compare the joint laws after smoothing, conditioning on the spin.
+We then compare the Gibbs laws at the target and its smoothing base.
+This is the reverse comparison of \cite[Section~5, Proposition~6]{oai-typical-upper};
+we use Gaussian integration by parts for the second comparison.
+
+We disintegrate $\Pi_n$ and $Q_F$ over the spin, whose marginal is uniform
+under both laws. For each spin, by \eqref{u:eq:conditional-transport},
+we can couple the conditional laws of the disorder with squared cost at
+most twice their forward relative entropy. Under the channel
+$g\mapsto\sqrt{1-\delta}\,g+\sqrt\delta\,Z$, the relative entropy between
+the Gaussian output laws at two inputs is $(1-\delta)\|g-g'\|_F^2/(2\delta)$ in either
+direction. By convexity of relative entropy, applied to the coupled mixture and
+averaged over the common spin, we have
+\begin{equation}\label{u:eq:smoothed-joint-entropy}
+ \KL(\Pi_n^{\rm sm}\Vert Q_F^{\rm sm})
+                 \le\delta^{-1}\KL(Q_F\Vert\Pi_n).
+\end{equation}
+This comparison for Gaussian convolutions also appears in
+\cite[Lemma~11]{lugosi-neu-2022}. Both smoothed measures have disorder
+marginal $\gamma_n$. By Gaussian reversibility, we identify the
+conditional spin law of $Q_F^{\rm sm}$ with \eqref{u:eq:smoothed-kernel},
+and we denote that of $\Pi_n^{\rm sm}$ by $\bar\pi_g$. Under the joint law of $(g_\star,g_{\rm base})$, expanding the logarithms
+of the probabilities on the finite spin space gives
+\begin{equation}\label{u:eq:entropy-decomposition}
+ \begin{split}
+ \E\KL(\pi_{g_\star}\Vert\nu^{\rm sm}_{g_{\rm base}})
+ &=\E\KL(\pi_{g_\star}\Vert\bar\pi_{g_{\rm base}})\\
+ &\quad+\E\KL(\bar\pi_{g_{\rm base}}\Vert\nu^{\rm sm}_{g_{\rm base}}).
+ \end{split}
+\end{equation}
+Using the same decomposition with any alternative kernel at $g_{\rm base}$,
+we find that the first term is at most
+$\E\KL(\pi_{g_\star}\Vert\pi_{g_{\rm base}})$. When intermediate expressions may be infinite, we justify these
+identities by finite approximations, or by the variational formula for relative entropy and monotone
+approximation. By \cref{u:prop:fine-kl} and the following calculation,
+the upper bounds are finite.
+
+Since $g_\star$ and $g_{\rm base}$ have the same marginal law, the expected
+difference of log partition functions vanishes. Using the independence of
+$g_\circ$, we obtain
+\begin{equation}\label{u:eq:gibbs-smoothing-cost}
+ \begin{split}
+ \E\KL(\pi_{g_\star}\Vert\pi_{g_{\rm base}})
+ &=\beta(1-\sqrt{1-\delta})
+   \E_{g_\star}\sum_x\pi_{g_\star}(x)H^c_{g_\star}(x)\\
+ &\le\tfrac12\beta^2(n-1)(1-\sqrt{1-\delta})
+ \le\tfrac12\beta^2(n-1)\delta.
+ \end{split}
+\end{equation}
+For the middle inequality, Gaussian integration by parts gives the
+off-diagonal contribution
+$(\beta/n)\sum_{i<j}(1-\langle x_ix_j\rangle_{g_\star}^2)$;
+the spin-independent diagonal has mean zero. Since the derivatives that occur here are bounded spin moments and
+Gaussian first moments are finite, the integrations are justified. Combining \eqref{u:eq:smoothed-joint-entropy}--\eqref{u:eq:gibbs-smoothing-cost}
+proves \eqref{u:eq:reverse-entropy}. The final assertion follows from
+\cref{u:prop:fine-kl} and Markov's inequality.
+\end{proof}
+
+\begin{lemma}\label{u:lem:coverage}
+On $\mathcal C_n$, every spin has positive
+$\nu^{\rm sm}_{g_{\rm base}}$ probability, and, simultaneously for every
+$S\subseteq\Sigma_n$,
+\begin{equation}\label{u:eq:all-set-coverage}
+ \pi_{g_\star}(S)\ge\epsilon_n=n^{-\ex{d}}
+ \quad\Longrightarrow\quad
+ \nu^{\rm sm}_{g_{\rm base}}(S)
+ \ge\exp\{-n^{\ex{d}}(n^{1-\ex{u}_{\rm E}}+\log2)\}.
+\end{equation}
+If $\ex{e}+\ex{d}<\ex{u}_{\rm E}$, two independent draws from
+$\nu^{\rm sm}_{g_{\rm base}}$ cross every $\epsilon_n$-balanced cut with
+probability at least
+\begin{equation}\label{u:eq:crossing-probability}
+ \varpi_n=\exp\{-2n^{\ex{d}}(n^{1-\ex{u}_{\rm E}}+\log2)\}
+                       \ge e^{-2n^{1-\ex{e}}}
+\end{equation}
+eventually.
+\end{lemma}
+
+\begin{proof}
+Finite relative entropy and the strict positivity of $\pi_{g_\star}(x)$
+imply that $\nu^{\rm sm}_{g_{\rm base}}(x)>0$ for every spin. We pass to the partition $\{S,S^c\}$, which does not increase relative
+entropy. If $a=\pi_{g_\star}(S)$ and
+$b=\nu^{\rm sm}_{g_{\rm base}}(S)$, the binary relative entropy is at least
+$a\log(1/b)-\log2$, since binary entropy is at most $\log2$.
+We have proved \eqref{u:eq:all-set-coverage}. Applying it to both sides
+of a balanced cut and multiplying the independent probabilities gives
+\eqref{u:eq:crossing-probability}; the strict power gap also absorbs the
+$\log2$ term. The implication holds for every set once the outer pair is
+fixed, including a cut selected from this pair.
+\end{proof}
+
+\section{The witness event and the enlarged boundary}\label{u:sec:witness}
+
+We now select a balanced cut with small flow, whenever one exists, and
+bound the Gibbs mass of its enlarged boundary. The selection follows
+\cite[Section~6, Proposition~7]{oai-typical-upper}. The estimate below uses
+the conditional disorder law to control sums of local fields over small
+sets of sites.
+
+For $\epsilon>0$ and $\phi>0$, we define the witness event
+\begin{equation}\label{u:eq:witness-event}
+ \begin{split}
+ \mathcal W_n(\epsilon,\phi)=\{g:\ &\|W(g)\|_{\mathrm{op}}\le12,\\
+ &\exists S\subseteq\Sigma_n:\epsilon\le\pi_g(S)\le1-\epsilon,
+                         \ \mathcal Q_g(S,S^c)\le\phi\}.
+ \end{split}
+\end{equation}
+Fix an ordering of the subsets of $\Sigma_n$, and let $S_g$ be the first
+cut satisfying these conditions. The cut $S_g$ depends only on $g$, and any fixed order
+works for the argument. The mass and flow of each cut are continuous
+finite sums in $g$, so this selection is measurable, as in the conventions
+of \cref{u:sec:primitive}. The selected sets defined below are empty off
+the witness event.
+
+Let
+\[
+ \epsilon_n=n^{-\ex{d}},\qquad \phi_n=e^{-n^{1-\ex{q}}},\qquad
+ R_n=\lceil n^{1-\ex{r}}\rceil,\qquad
+ A_n^{\rm fld}=n^{1-\ex{u}_{\rm F}}.
+\]
+We write $d_H(x,y)=\#\{i\in[n]:x_i\ne y_i\}=\|x-y\|_2^2/4$
+for the Hamming distance between $x,y\in\Sigma_n$, and
+$d_H(x,A)=\min_{y\in A}d_H(x,y)$, with
+$d_H(x,\varnothing)=+\infty$.
+We write $\partial S$ for the vertex boundary that contains both endpoints
+of every edge across the cut, and define
+$\partial_R S=\{x:d_H(x,\partial S)\le R\}$. Let $\mathcal V_R$ be the family of differences of the indicator vectors
+of two subsets of $[n]$ with at most $R$ elements each. Then $v_i\in\{-1,0,1\}$ and
+$\|v\|_1=\|v\|_2^2\le2R$. The family contains both signs of every
+indicator of at most $R$ sites, and
+\begin{equation}\label{u:eq:field-direction-count}
+ |\mathcal V_R|\le[(R+1)(n+1)^R]^2.
+\end{equation}
+Define
+\[
+ \mathrm{Bad}_{R,A}(g)=\Bigl\{x:\exists v\in\mathcal V_R,
+                         \ \sum_i v_i(W(g)x)_i\ge A\Bigr\}.
+\]
+The excluded set is
+\begin{equation}\label{u:eq:excluded-set}
+ \mathcal E_n(g)=\partial_{R_n}S_g
+           \ \cup\ \mathrm{Bad}_{R_n,A_n^{\rm fld}}(g)
+ \quad\text{on }\mathcal W_n(\epsilon_n,\phi_n),
+\end{equation}
+and is empty off that event. It contains the enlarged boundary of the selected cut and the spins with large sums of local fields.
+
+\begin{lemma}\label{u:lem:boundary}
+Suppose that
+\begin{equation}\label{u:eq:boundary-conditions}
+ 0<\ex{q}<\ex{u}_{\rm F}<\ex{r}<1,\qquad
+ 2\ex{u}_{\rm F}-\ex{r}<\ex{q},\qquad \ex{q}<1/2.
+\end{equation}
+Then, eventually,
+\begin{equation}\label{u:eq:annealed-boundary-mass}
+ \E_{\gamma_n}\pi_g(\mathcal E_n(g))
+                         \le e^{-\frac12 n^{1-\ex{q}}}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first bound the annealed mass of $\mathrm{Bad}_{R,A}$ by conditioning
+on the spin. We then compare Gibbs weights along a short path from an
+enlarged boundary vertex to the boundary.
+
+Fix a spin $x$. Recall that, under the joint law $\Pi_n$, the conditional
+density of the disorder given this spin is
+\eqref{u:eq:conditional-density}. For fixed $v$, the linear functional
+$f_v(g)=\sum_i v_i(W(g)x)_i$ has coefficients
+$a_{ij}=(v_ix_j+v_jx_i)/\sqrt{2n}$, so
+\[
+ \|a\|_2^2=\|v\|_2^2+(\textstyle\sum_i v_ix_i)^2/n
+                         \le2\|v\|_2^2\le4R.
+\]
+By integration by parts under \eqref{u:eq:conditional-density}, we have
+$|\E_{p_x}f_v|\le2\beta\|v\|_1\le4\beta R$. Indeed, the derivative of
+$\beta H^c_g(x)-F^c(g)$ in the $(i,j)$ entry is
+$\beta(x_ix_j-\langle y_iy_j\rangle_g)/\sqrt{2n}$, whose absolute value
+is at most $2\beta/\sqrt{2n}$. The density has Gaussian tails up to a linear exponential factor; by
+truncation, this justifies the integration by parts, including its
+boundary terms. Using
+\eqref{u:eq:conditional-linear-mgf} and a union bound over
+$\mathcal V_R$, we find that, for $A\ge4\beta R$,
+\begin{equation}\label{u:eq:sparse-field-tail}
+ \E_{\gamma_n}\pi_g(\mathrm{Bad}_{R,A}(g))
+ \le[(R+1)(n+1)^R]^2
+                    \exp\{-(A-4\beta R)^2/(8R)\}.
+\end{equation}
+When $R=R_n$ and $A=A_n^{\rm fld}$, the inequality
+$\ex{u}_{\rm F}<\ex{r}$ implies that $A\ge8\beta R$ eventually. We also
+have that the logarithm of \eqref{u:eq:field-direction-count} is $o(A^2/R)$.
+Then \eqref{u:eq:sparse-field-tail} implies the upper bound
+$\exp(-c_\beta n^{1+\ex{r}-2\ex{u}_{\rm F}})$ eventually.
+By \eqref{u:eq:boundary-conditions}, the power of $n$ in this exponent is
+strictly larger than $1-\ex{q}$.
+
+Next, fix a witness matrix and its selected cut. On
+$\|W(g)\|_{\mathrm{op}}\le12$, we find by polarization that the change
+in energy when one spin is flipped is at most $24\sqrt n$. Then every
+flip rate is at least
+$(1/2)e^{-24\beta\sqrt n}$. By reversibility, the flow in each direction
+across the selected cut is at most $\phi_n$. We conclude that its two-sided
+boundary has Gibbs mass at most $4\phi_n e^{24\beta\sqrt n}$.
+If $x\notin\mathrm{Bad}_{R,A}(g)$ and $d_H(x,y)\le R$, expansion about
+$x$ gives
+\begin{equation}\label{u:eq:sparse-energy-change}
+ |H^c_g(y)-H^c_g(x)|\le2A+24R.
+\end{equation}
+To see this, let $I$ be the set of flipped sites. Both $-x\mathbf 1_I$
+and its negative belong to $\mathcal V_R$, since $|I|\le R$. Their linear
+fields are bounded by $A$ in both signs, and the quadratic correction is
+at most $2\|W(g)\|_{\mathrm{op}}R$.
+For each vertex of the enlarged boundary, we select a nearest boundary
+vertex, using a fixed order to break ties. By the bound on the size of a
+Hamming ball, each boundary vertex is selected at most
+$(R+1)(n+1)^R$ times. Comparing Gibbs weights by
+\eqref{u:eq:sparse-energy-change}, we obtain
+\begin{equation}\label{u:eq:boundary-weight-comparison}
+ \begin{split}
+ \pi_g(\mathcal E_n(g))
+ &\le4(R_n+1)(n+1)^{R_n}\phi_n
+       e^{\beta(2A_n^{\rm fld}+24R_n+24\sqrt n)}\\
+ &\quad+\pi_g(\mathrm{Bad}_{R_n,A_n^{\rm fld}}(g)).
+ \end{split}
+\end{equation}
+The inequality also holds off the witness event, since its left side
+vanishes there. In the first term, the logarithms of the positive factors other than
+$\phi_n$ have powers $1-\ex{r}$ (with a factor $\log n$), $1-\ex{u}_{\rm F}$,
+and $1/2$, all smaller than $1-\ex{q}$. Averaging
+\eqref{u:eq:boundary-weight-comparison} and using
+\eqref{u:eq:sparse-field-tail}, we obtain
+\eqref{u:eq:annealed-boundary-mass} after absorbing the sum and constants.
+\end{proof}
+
+We impose a pressure cutoff only at the outer target. We define
+\begin{equation}\label{u:eq:target-pressure-event}
+ \begin{split}
+ \mathcal H_n&=\{g:F^c(g)\le nP_\beta+n^{1-\ex{z}_{\rm P}}\},\\
+ \overline{\mathcal E}_n(g)&=
+ \begin{cases}
+ \mathcal E_n(g),&g\in\mathcal H_n,\\
+ \varnothing,&g\notin\mathcal H_n.
+ \end{cases}
+ \end{split}
+\end{equation}
+The gradient of $F^c$ has norm at most $\beta\sqrt{n/2}$.
+By Gaussian concentration and $\E F^c\le nP_\beta$
+(\cref{inp:ob-concentration,inp:parisi,lem:model-completion}), we have
+\begin{equation}\label{u:eq:target-pressure-tail}
+ \gamma_n(\mathcal H_n^c)
+ \le e^{-c_\beta n^{1-2\ex{z}_{\rm P}}}=o(1)
+                         \qquad(0<\ex{z}_{\rm P}<1/2).
+\end{equation}
+This is also \cref{u:lem:pressure-tail}. Each set is measurable by the
+conventions of \cref{u:sec:primitive}; the disorder used in each coarse
+proposal is not restricted by $\mathcal H_n$.
+
+\section{The connecting sequence}\label{u:sec:sequence}
+
+We construct the sequence on one product space, following
+\cite[Section~6, Proposition~7]{oai-typical-upper}. At the two endpoints
+we continue the coarse proposal to the fine horizon. At every other
+vertex we use only the coarse proposal.
+
+For the common fine schedule, let $\mu^{\rm aux}_n$ be the independent
+product law of all $D_i$ Wiener paths to $V_{\ex{f}}$, auxiliary $B_i^0$
+paths, used bridge paths through $N_{\ex{f}}$, and full completion vectors
+$C_j\sim N(0,I_n)$ through $N_{\ex{f}}$. We may retain the unused bridge coordinates independently; this gives
+the same finite experiment. At both horizons, the matrix has dimension $n$ and the initial frame is
+the identity. By
+\cref{u:lem:assembly}, these are the replay inputs.
+
+Under a single product probability $\PP_n$, we sample independently
+\[
+ g_\star,g_\circ,g_1,g_2\sim\gamma_n,\qquad
+ a_1,a_2\sim\mu^{\rm aux}_n,
+\]
+and independent arrays of uniform thresholds at each grid point, together
+with two arrays for the fine endpoints. For $0\le\theta\le\pi/2$, we define
+\begin{equation}\label{u:eq:coupled-rotation}
+ \begin{split}
+ g_{\rm base}&=\sqrt{1-\delta}\,g_\star+\sqrt\delta\,g_\circ,\\
+ g_\theta&=\sqrt{1-\delta}\,g_{\rm base}
+                +\sqrt\delta(\cos\theta\,g_1+\sin\theta\,g_2),\\
+ a_\theta&=\cos\theta\,a_1+\sin\theta\,a_2.
+ \end{split}
+\end{equation}
+The rotation of the auxiliary inputs is defined by blockwise addition of
+vectors and paths, which preserves the zero endpoints of bridges. The uniform thresholds are not
+rotated. We use the coarse replay at every angle and continue it to the fine
+horizon at the two endpoints. Let
+\[
+ \ell_n=\lceil(\pi/2)e^{n^{\ex{g}_{\rm rot}}}\rceil,
+ \qquad \theta_j=\frac{\pi j}{2\ell_n}\quad(0\le j\le\ell_n).
+\]
+We denote the coarse spins by $X_j^B$, their coarse magnetizations by
+$M_j$, and the fine endpoint spins by $X_0^F,X_1^F$.
+For a grid angle $\theta=\theta_j$, we write $X_\theta^B=X_j^B$,
+and let $U_j^B$ be its coarse threshold array. We define
+\[
+ E_{B,\theta_j}
+   =\{(g_{\theta_j},a_{\theta_j}|_B,U_j^B)\in E_B\},
+\]
+where $E_B$ is the event of \cref{u:prop:coarse} and
+$a|_B$ restricts the $D$ paths to $V_{\ex{b}}$ and retains only
+the auxiliary cell, bridges, and completion vectors used by the
+coarse replay.
+
+The outer pair $(g_\star,g_\circ)$ has law $\gamma_n^{\otimes2}$.
+The internal law $\mu^{\rm int}_n$ is the fixed product law of
+$(g_1,g_2,a_1,a_2,\text{thresholds})$, so
+$\PP_n=\gamma_n^{\otimes2}\otimes\mu^{\rm int}_n$. After an outer pair is
+fixed, the internal law remains the same. For each fixed angle,
+$g_\theta$ is standard Gaussian, and $a_\theta\sim\mu^{\rm aux}_n$
+independently of all matrix drivers. For the complete paths, we note that every finite collection of path
+evaluations is jointly Gaussian, that the covariances within and
+between blocks are unchanged by the rotation, and that cylinders at
+rational times generate the path sigma algebra. After fixing $(g_\star,g_\circ)$, the spin $X_0^F$ depends only on
+$(g_1,a_1,U_0^F)$, and $X_1^F$ depends only on $(g_2,a_2,U_1^F)$. We have
+\begin{equation}\label{u:eq:endpoint-product-law}
+ \Law_{\mu^{\rm int}_n}(X_0^F,X_1^F)
+        =\nu^{\rm sm}_{g_{\rm base}}\otimes\nu^{\rm sm}_{g_{\rm base}}.
+\end{equation}
+This is the law of the endpoints under the internal measure, before any
+Gram, pinning, or crossing event is imposed.
+
+\begin{lemma}\label{u:lem:transfer}
+If $\ex{q}<\min(\ex{k}_{\rm b},\ex{z}_{\rm P},\ex{D})$, then at each fixed
+grid angle, eventually,
+\begin{equation}\label{u:eq:boundary-transfer}
+ \PP_n(E_{B,\theta},\ X_\theta^B\in\overline{\mathcal E}_n(g_\star))
+                   \le e^{-\frac14 n^{1-\ex{q}}}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We condition only on $g_\star$. From \eqref{u:eq:coupled-rotation}, we have
+\begin{equation}\label{u:eq:gaussian-regression}
+ \begin{split}
+ g_\theta&=(1-\delta)g_\star+\sqrt{\delta(2-\delta)}\,Z_\theta,\\
+ Z_\theta&=\frac{\sqrt{1-\delta}\,g_\circ
+                    +\cos\theta\,g_1+\sin\theta\,g_2}{\sqrt{2-\delta}},
+ \end{split}
+\end{equation}
+where $Z_\theta\sim\gamma_n$ is independent of $g_\star$. For a fixed
+spin, $H^c_Z(x)$ is Gaussian with variance $n/2$, including the completed
+diagonal. It follows that
+\begin{equation}\label{u:eq:regression-energy-moment}
+ \E[e^{\beta H^c_{g_\theta}(x)}\mid g_\star]
+ =e^{\beta(1-\delta)H^c_{g_\star}(x)+\beta^2n\delta(2-\delta)/4}.
+\end{equation}
+At a fixed angle, the auxiliary input and thresholds are independent of
+the entire matrix tuple. The restricted coarse kernel of
+\cref{u:prop:coarse} therefore still applies after adjoining
+$g_\star,g_\circ,g_\theta$. The conditional Gaussian in
+\eqref{u:eq:gaussian-regression} has positive covariance, so it does not
+charge the common $\gamma_n$-null exceptional set of that proposition.
+
+Recall that on the support of $\overline{\mathcal E}_n(g_\star)$, we have
+$\|W(g_\star)\|_{\mathrm{op}}\le12$ and $|H^c_{g_\star}(x)|\le6n$.
+Using \cref{u:prop:coarse} and \eqref{u:eq:regression-energy-moment}, then
+summing over the set $\overline{\mathcal E}_n(g_\star)$ fixed by the target,
+we bound the conditional probability of hitting this set by
+\[
+ \exp\bigl\{n^{1-\ex{k}_{\rm b}}+F^c(g_\star)-nP_\beta
+                    +(6\beta+\beta^2/2)n\delta\bigr\}
+             \pi_{g_\star}(\overline{\mathcal E}_n(g_\star)).
+\]
+Here we retained the target Gibbs normalization. By
+\eqref{u:eq:target-pressure-event} and
+\eqref{u:eq:annealed-boundary-mass}, its average in $g_\star$ is at most
+\[
+ \exp\{n^{1-\ex{k}_{\rm b}}+n^{1-\ex{z}_{\rm P}}
+                   +C_\beta n^{1-\ex{D}}\}
+                         e^{-\frac12 n^{1-\ex{q}}}.
+\]
+By the strict inequalities between the exponents, this proves
+\eqref{u:eq:boundary-transfer}. The cost of the regression is of order
+$n\delta$; the exceptional event \eqref{u:eq:target-pressure-tail} for the
+target pressure is included only after the crossing
+argument in \cref{u:sec:exclusion}.
+\end{proof}
+
+\begin{lemma}\label{u:lem:stability}
+There exists a measurable cap event, with failure probability at most
+$C(N_{\ex{f}}+2)e^{-cn}$, that controls all angles. On this event and all
+coarse Gram events, neighboring grid points satisfy
+\begin{equation}\label{u:eq:coarse-continuity}
+ \normn{M_{j+1}-M_j}
+ \le e^{C_\beta n^{\ex{a}}\log n}|\theta_{j+1}-\theta_j|
+ \le e^{-n^{\ex{g}_{\rm rot}}/2}
+\end{equation}
+eventually, provided $\ex{a}<\ex{g}_{\rm rot}$.
+\end{lemma}
+
+\begin{proof}
+We first bound the primitive inputs uniformly in the angle. We then
+compare the two coarse recursions at neighboring grid points.
+
+For a Wiener path of duration $T$, the reflection bound gives
+$\PP(\sup|B|>u\sqrt T)\le4e^{-u^2/2}$. Then, for some fixed small parameter, the exponential moment of
+$\sup|B|^2/T$ is bounded by a universal constant. By Chernoff's inequality
+over the independent rows, we have
+$\sum_i\sup|B_i|^2\le CTn$ except with probability $e^{-cn}$ when $C$
+is sufficiently large. A bridge has supremum at most twice that of its
+generating Wiener path. These bounds cover the two $D$ blocks, the
+auxiliary cells, and the finitely many used bridge blocks. We also bound
+every coordinate of the four primitive matrices and of the two streams of
+completion vectors by $n$; this adds failure probability at most
+$C(n^2+nN_{\ex{f}})e^{-n^2/2}$. All required path norms, completion norms,
+and matrix operator norms are then at most $n^{C_0}$ for a fixed $C_0$;
+for example, an enlarged $n^4$ cap suffices. Rotated inputs satisfy the
+same cap up to a factor of two, and their differences are at most a
+polynomial times $|\theta-\phi|$. This bounds the inputs for all angles.
+
+For the recursion, we use the path norm
+$(n^{-1}\sum_i\sup_t|b_i(t)|^2)^{1/2}$. On the target Gram events at the two grid points
+$\|A_{\mathcal T}-I\|\le3/4$, every Gram--Schmidt residual has normalized
+norm at least $1/2$. Indeed, the squared norm of each residual is a Schur complement
+and is at least the minimum eigenvalue of the relevant Gram matrix.
+If $u_l,u_l'$ are the earlier unit queries, the operator norm of their
+projection difference is at most $2\sum_l\normn{u_l-u_l'}$.
+Normalization is $4$-Lipschitz on vectors of norm at least $1/2$.
+The next query difference is bounded by a fixed multiple of the target
+difference and this sum of earlier differences.
+
+Each target difference is bounded by $2s_j^{-1}$ times the scalar field
+difference on the preceding path. Using Picard's construction, Gronwall's inequality, and integration by
+parts for bounded-variation coefficients, we bound that difference by
+$Ce^{V_{\ex{f}}}$ times the gap between the inputs to the preceding drivers. All $s_j^{-1}$ are polynomially bounded, since
+$s_j^2\ge h/R_{V_{\ex{f}}}$ and \cref{u:lem:tails} applies. By the query
+endpoint formula in \cref{u:lem:assembly}, the next endpoint gap is bounded
+by a polynomial times the primitive matrix and completion gap plus the
+sum of preceding query gaps. Appending the next cell adds at most the
+old path gap, $\sqrt{h_j}$ times this endpoint gap, and the bridge gap.
+Here $\sqrt{h_j}\le1$. The recursion implies that one chronological step multiplies the accumulated gap by
+at most $n^{C_\beta}$ and adds at most that factor times the primitive
+input gap. After $N_{\ex{b}}\le8n^{\ex{a}}$ steps, the
+amplification is at most $e^{C_\beta n^{\ex{a}}\log n}$.
+The final map $m$ is spatially $1$-Lipschitz. The grid spacing is at most
+$e^{-n^{\ex{g}_{\rm rot}}}$, proving \eqref{u:eq:coarse-continuity}.
+This comparison uses only coarse queries and the Gram events at the
+two endpoints of each grid edge.
+\end{proof}
+
+\trilogyneedspace{12\baselineskip}
+\begin{lemma}\label{u:lem:pinning}
+If $\ex{r}<\ex{b}/2$, each of the $\ell_n+3$ pairs
+\[
+ \begin{gathered}
+ (X,M_B)=(X_j^B,M_j)\quad(0\le j\le\ell_n),\\
+ (X_0^F,M_0),\qquad (X_1^F,M_{\ell_n})
+ \end{gathered}
+\]
+satisfies
+\begin{equation}\label{u:eq:pinning-tail}
+ \PP_n(\|X-M_B\|_2^2>R_n/4)\le2e^{-R_n/64}
+\end{equation}
+eventually.
+\end{lemma}
+
+\begin{proof}
+Under the unconditioned law at a single angle, the source identification
+in \cref{u:sec:proposal} gives the law of the complete coordinate rows,
+which are independent under this law.
+For $T=V_{\ex{b}}$ or $V_{\ex{f}}$, posterior projection at $S=V_{\ex{b}}$ gives
+\[
+ \E[(X_T-m_S)^2]=1-\E m_S^2=p(S)\le C_\beta n^{-\ex{b}/2}.
+\]
+The squared distances lie in $[0,4]$ and are independent across rows.
+Using $e^{z/4}\le1+(e-1)z/4$ for $0\le z\le4$ and Chernoff's inequality
+with parameter $1/4$, we find that, once $np(S)\le R_n/16$, their sum
+exceeds $R_n/4$ with probability at most $e^{-R_n/32}$. This implies \eqref{u:eq:pinning-tail}.
+For the fine endpoints, the equality of the common initial segment after
+\cref{u:lem:quad} gives the same $m_S$. We have proved the bounds under the unconditioned law of each run.
+\end{proof}
+
+Define the sequence
+\begin{equation}\label{u:eq:connecting-sequence}
+ f_0=X_0^F,\qquad f_{j+1}=X_j^B\quad(0\le j\le\ell_n),
+ \qquad f_{\ell_n+2}=X_1^F.
+\end{equation}
+Every step has a coarse endpoint. Let $\mathrm{Good}_n$ be the intersection
+of the cap event, all $E_{B,\theta_j}$, all pinning events in
+\eqref{u:eq:pinning-tail}, and the avoidance events
+$X_j^B\notin\overline{\mathcal E}_n(g_\star)$ for every coarse vertex.
+This is a finite intersection of measurable events on the product space.
+
+\begin{proposition}\label{u:prop:sequence}
+Assume the hypotheses of
+\cref{u:prop:coarse,u:lem:boundary,u:lem:transfer,u:lem:stability,u:lem:pinning}.
+On $\mathrm{Good}_n$, every step of \eqref{u:eq:connecting-sequence} has
+Hamming length at most $R_n$. Moreover,
+\begin{equation}\label{u:eq:sequence-union-bound}
+ \begin{split}
+ \PP_n(\mathrm{Good}_n^c)
+ &\le C(N_{\ex{f}}+2)e^{-cn}
+       +(\ell_n+1)e^{-n^{1-\ex{s}_{\rm b}}}\\
+ &\quad+2(\ell_n+3)e^{-R_n/64}
+       +(\ell_n+1)e^{-\frac14 n^{1-\ex{q}}}.
+ \end{split}
+\end{equation}
+If, in addition,
+\begin{equation}\label{u:eq:sequence-conditions}
+ \begin{gathered}
+ \ex{r}<\ex{s}_{\rm b},\qquad \ex{q}<\ex{s}_{\rm b},\qquad
+ \ex{a}<\ex{g}_{\rm rot}<1-\ex{s}_{\rm b},\\
+ \ex{s}_{\rm b}<\ex{s}_{\rm seq}<\ex{e},
+ \end{gathered}
+\end{equation}
+then, eventually,
+\begin{equation}\label{u:eq:sequence-failure}
+ \PP_n(\mathrm{Good}_n^c)\le e^{-n^{1-\ex{s}_{\rm seq}}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+For spins $x,y$ and real vectors $m,m'$, we have
+\[
+ 4d_H(x,y)\le3\{\|x-m\|_2^2+\|m-m'\|_2^2+\|m'-y\|_2^2\}.
+\]
+Each term is at most $R_n/4$ on $\mathrm{Good}_n$, eventually, by
+\eqref{u:eq:coarse-continuity} and \eqref{u:eq:pinning-tail}. For the steps between fine and coarse spins, we have that the middle
+term is zero, since the common initial segments agree.
+
+A union bound using \cref{u:prop:coarse},
+\eqref{u:eq:boundary-transfer}, the cap bound, and
+\eqref{u:eq:pinning-tail} proves \eqref{u:eq:sequence-union-bound}.
+The strict gaps in \eqref{u:eq:sequence-conditions} absorb its constants
+and $\log(\ell_n+1)=O(n^{\ex{g}_{\rm rot}})$, giving
+\eqref{u:eq:sequence-failure}. The fine endpoints contribute their pinning
+failures to this union. The Gram and likelihood events concern only coarse proposals. Each
+bound holds under the unconditioned law of the corresponding run. This union bound does not use independence between different angles.
+\end{proof}
+
+\section{Exclusion of low-flow witnesses}\label{u:sec:exclusion}
+
+We now combine coverage with the connecting sequence. The crossing
+argument is the one in \cite[Section~6, Proposition~7]{oai-typical-upper}.
+
+\begin{proposition}\label{u:prop:witness}
+Assume the hypotheses of
+\cref{u:lem:smoothing,u:lem:coverage,u:prop:sequence}, and let
+$0<\ex{z}_{\rm P}<1/2$. Then
+\begin{equation}\label{u:eq:witness-decay}
+ \begin{split}
+ \gamma_n(\mathcal W_n(\epsilon_n,\phi_n))
+ &\le C_\beta\bigl(n^{\ex{u}_{\rm E}-\ex{D}}
+                 +n^{\ex{u}_{\rm E}-\ex{k}_{\rm f}+\ex{D}}\bigr)
+        +e^{-c_\beta n^{1-2\ex{z}_{\rm P}}}\\
+ &\quad+e^{2n^{1-\ex{e}}-n^{1-\ex{s}_{\rm seq}}}=o(1).
+ \end{split}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Fix an outer pair $(g_\star,g_\circ)\in\mathcal C_n$ with
+$g_\star\in\mathcal H_n\cap\mathcal W_n(\epsilon_n,\phi_n)$.
+The selected cut $S_{g_\star}$ is $\epsilon_n$-balanced. By
+\eqref{u:eq:endpoint-product-law} and \cref{u:lem:coverage}, the event
+$f_0\in S_{g_\star}$, $f_{\ell_n+2}\notin S_{g_\star}$ has internal
+probability at least $\varpi_n$.
+
+If a sequence joins opposite sides with steps of Hamming length at most
+$R_n$, then some step has endpoints on opposite sides.
+A shortest path in the hypercube between the endpoints of that step
+contains an edge across the cut, and both endpoints of this edge lie in the
+boundary.
+Both endpoints of the step are within $R_n$ of that boundary. One endpoint
+is coarse by \eqref{u:eq:connecting-sequence}, so it belongs to
+$\partial_{R_n}S_{g_\star}$, which is contained in
+$\mathcal E_n(g_\star)=\overline{\mathcal E}_n(g_\star)$ on this target.
+Crossing is therefore impossible on $\mathrm{Good}_n$, and
+\begin{equation}\label{u:eq:conditional-crossing-obstruction}
+ \varpi_n\le
+ \mu^{\rm int}_n\bigl(\mathrm{Good}_n(g_\star,g_\circ)^c\bigr).
+\end{equation}
+The crossing event may depend on the fixed outer pair, while \eqref{u:eq:endpoint-product-law} gives the law of the endpoints
+under the unconditioned internal measure.
+
+Integrating \eqref{u:eq:conditional-crossing-obstruction} against
+$\gamma_n^{\otimes2}$ and using Fubini's theorem for the product measure, we obtain
+\[
+ \begin{split}
+ \gamma_n(\mathcal W_n(\epsilon_n,\phi_n))
+ &\le C_\beta\bigl(n^{\ex{u}_{\rm E}-\ex{D}}
+                +n^{\ex{u}_{\rm E}-\ex{k}_{\rm f}+\ex{D}}\bigr)
+        +e^{-c_\beta n^{1-2\ex{z}_{\rm P}}}\\
+ &\quad+\varpi_n^{-1}\PP_n(\mathrm{Good}_n^c).
+ \end{split}
+\]
+Here we used \cref{u:lem:smoothing} and
+\eqref{u:eq:target-pressure-tail} for the outer exceptions. By
+\eqref{u:eq:crossing-probability} and \eqref{u:eq:sequence-failure}, this
+proves \eqref{u:eq:witness-decay}. The exceptional events for the pressure and for coverage each enter
+once, before we divide by the crossing probability.
+\end{proof}

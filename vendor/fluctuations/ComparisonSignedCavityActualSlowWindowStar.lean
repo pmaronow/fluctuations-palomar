@@ -1,0 +1,146 @@
+module
+
+public import ComparisonSignedCavityActualSlowWindowGeometry
+public import ComparisonSignedCavityActualCentralMassSelection
+
+@[expose] public section
+
+noncomputable section
+open MeasureTheory ProbabilityTheory Filter Set
+open scoped BigOperators Topology NNReal
+namespace OAI.SKFluctuations.LaplaceWindowFormalization
+open Hierarchy NativeStarBuffer
+set_option maxHeartbeats 9000000
+
+namespace NativeOverlapMinimum
+
+theorem eventually_actual_bare_calibrated_slow_window
+    {m delta cl cu Az C0 Ct D Bclock T L c1 : ℝ}
+    (hm : 0 < m) (hdelta : 0 < delta) (hroom : delta < 3*m)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az) (hC0 : 0 < C0) (hCt : 0 ≤ Ct)
+    (hT : 0 < T) (hL : 0 < L) (hc1 : 0 < c1)
+    (hc1thermal : c1 < actualMassSavingExponent m delta/8) (hc1floor : c1 < 3*m+delta)
+    (M : (n : ℕ) → NativeOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock)
+    (W : ℕ → ℝ) (hxs : ∀n,(M n).xs ≤ W n) (hWlim : Tendsto W atTop (𝓝 0))
+    (hscale : ∀n,laplaceComparisonStrength (M n).context.d (M n).lam (M n).xs ≤ (W n)^2)
+    (hb : ∀n u,(M n).b u=T) (hh : ∀n u,(M n).h u=0) :
+    ∃Cs : ℝ,0 < Cs ∧ ∀ᶠn : ℕ in atTop,
+      let a := calibratedBandStart cu Az
+      let b := a+4*L
+      let c := starMassBandConstant cu Az/cu
+      let S := orderedPathS (n+1) (M n).bf (M n).hf
+      ∃N : ℕ,∃quarter : ℝ,∃i : ℕ,∃p : (M n).Potential,∃u : PositiveMass,
+        i < N ∧ 0 < N ∧ 0 < quarter ∧
+        (M n).context.N^(-c1)*W n ≤ quarter ∧ 4*(N:ℝ)*quarter=4*L*W n ∧
+        (∀j ≤ 4*N,massNode (a*W n) quarter j ∈ Icc (a*W n) (b*W n)) ∧
+        u.val ∈ Ioo (massNode (a*W n) quarter (4*i+1)+quarter/2)
+          (massNode (a*W n) quarter (4*i+3)-quarter/2) ∧
+        p.H ((M n).R u.val) ≤ 0 ∧
+        orderedPathB (n+1) (M n).bf (M n).hf u.val-(S u.val)^2 ≤
+          (M n).context.N^(-(actualMassSavingExponent m delta/4))*(W n)^2 ∧
+        (3*c/4)*W n ≤ S u.val ∧ S u.val ≤ Cs*W n ∧
+        (a/cu)*W n ≤ (M n).R u.val ∧ (M n).R u.val ≤ (b/cl)*W n ∧
+        (M n).xs ≤ (M n).R u.val ∧ (M n).z ≤ (M n).R u.val/2 ∧
+        (3*T*c/8)*W n ≤ actualMixedClock (n+1) (M n).bf (M n).hf u.val ∧
+        |actualMixedClock (n+1) (M n).bf (M n).hf u.val-T*S u.val| ≤
+          ((c+1)/4)*(W n)^3 ∧
+        (∀v∈Icc (massNode (a*W n) quarter (4*i)) (massNode (a*W n) quarter (4*(i+1))),
+          |S v-S u.val| ≤ (M n).context.N^(-c1/2)*W n) := by
+  let A := starMassBandConstant cu Az
+  let a := calibratedBandStart cu Az
+  let b := a+4*L
+  let c := A/cu
+  let η := actualMassSavingExponent m delta
+  have hA : 0 < A := star_mass_band_constant_pos hcu hAz
+  have ha : 0 < a := calibrated_band_start_pos hcu hAz
+  have hc : 0 < c := div_pos hA hcu
+  have hab : a ≤ b := by dsimp only [b];linarith
+  have hAa : A ≤ a := by dsimp only [a,calibratedBandStart,A];linarith
+  have hη : 0 < η := actualMassSavingExponent_pos hm hdelta
+  obtain ⟨Cs,hCs,Hband⟩ := eventually_actual_bare_calibrated_mass_band
+    hm hdelta hroom hcl hcu hAz hC0 hCt hT hL M W hxs hWlim hscale hb hh
+  have Hblock := (tendsto_add_atTop_nat 1).eventually
+    (eventually_exists_native_continuum_star (A:=L) (B:=Cs) hL hc1)
+  have Hcentral := eventually_actual_minimum_central_mass_selection (D:=D)
+    Bclock hm hdelta hroom hcl hcu hAz hC0 hCt a b c1 hAa hab hc1 hc1thermal hc1floor
+  have Hpotential := eventually_exists_actual_common_geometry_constant
+    (m:=m) (cl:=cl) (cu:=cu) (Az:=Az) (C0:=C0) (Ct:=Ct) (D:=D) (Bclock:=Bclock) hdelta
+  have Htravel := eventually_actual_minimum_cap_travel_small
+    (m:=m) (delta:=delta) (cl:=cl) (cu:=cu) (Az:=Az) (Ct:=Ct) (D:=D) (Bclock:=Bclock)
+    (epsilon:=c/32) hC0 (by linarith) (by positivity)
+  have Hsize := (tendsto_add_atTop_nat 1).eventually
+    (eventually_coefficient_rpow_le (c:=1) (d:=c^2/64) (q:=-(η/4)) (r:=0)
+      (by positivity) (by linarith))
+  have HW1 := hWlim.eventually (eventually_le_nhds (by norm_num : (0:ℝ) < 1))
+  have HWclock := ((hWlim.pow 2).const_mul (1+1/c)).eventually
+    (eventually_le_nhds (show (1+1/c)*(0:ℝ)^2 < T/2 by simpa using half_pos hT))
+  refine ⟨Cs,hCs,?_⟩
+  filter_upwards [Hband,Hblock,Hcentral,Hpotential,Htravel,Hsize,HW1,HWclock]
+    with n hnBand hnBlock hnCentral hnPotential hnTravel hnSize hnW1 hnClock
+  dsimp only at hnBand ⊢
+  have hW : 0 < W n := (M n).hxs.trans_le (hxs n)
+  have hsmall : b*W n ≤ 1 := hnBand.2.1
+  have hend : a*W n+4*L*W n ≤ 1 := by nlinarith only [hsmall]
+  have hvariation : orderedPathS (n+1) (M n).bf (M n).hf (a*W n+4*L*W n)-
+      orderedPathS (n+1) (M n).bf (M n).hf (a*W n) ≤ Cs*W n := by
+    have H := hnBand.2.2.2
+    have he : a*W n+4*L*W n=b*W n := by dsimp only [b];ring
+    rw [he]
+    exact H
+  obtain ⟨N,quarter,i,hi,hN,hq,hqlower,htotal,hosc⟩ := hnBlock
+    (orderedPathS (n+1) (M n).bf (M n).hf) (a*W n) (W n) hnBand.1
+      (mul_pos ha hW).le hW hend hvariation
+  have hnodes : ∀j ≤ 4*N,massNode (a*W n) quarter j ∈ Icc (a*W n) (b*W n) := by
+    intro j hj
+    exact calibrated_mass_node_mem hq.le hj htotal
+  let s := massNode (a*W n) quarter (4*i+1)+quarter/2
+  let t := massNode (a*W n) quarter (4*i+3)-quarter/2
+  have hlength : t-s=quarter := calibrated_mass_middle_length _ _ _
+  have hst : s < t := by linarith only [hlength,hq]
+  have hs : a*W n ≤ s := by
+    have H := (hnodes (4*i+1) (by omega)).1
+    dsimp only [s]
+    linarith only [H,hq]
+  have ht : t ≤ b*W n := by
+    have H := (hnodes (4*i+3) (by omega)).2
+    dsimp only [t]
+    linarith only [H,hq]
+  have hwidth : (M n).context.N^(-c1)*W n ≤ t-s := by
+    rw [hlength]
+    exact hqlower
+  obtain ⟨p,_⟩ := hnPotential (M n) T 0 (hb n) (hh n)
+  obtain ⟨v,hv,hH,hthermal,hmismatch⟩ := hnCentral (M n) T 0 (hb n) (hh n)
+    (W n) (hxs n) hnW1 hsmall p s t hs ht hst hwidth
+  have hvblock := calibrated_mass_central_subset hq.le (calibrated_mass_middle_subset hq.le hv)
+  have hvband := calibrated_mass_block_subset hq.le hi htotal hvblock
+  have hvunit : v ∈ Icc (0:ℝ) 1 := ⟨(mul_pos ha hW).le.trans hvband.1,hvband.2.trans hsmall⟩
+  have hvpos : 0 < v := (mul_pos ha hW).trans_le hvband.1
+  let u : PositiveMass := ⟨v,hvpos⟩
+  have Hbandv := hnBand.2.2.1 v hvband
+  have htravel : (M n).cavityCapTravel ≤ c*W n/32 := by
+    exact (hnTravel (M n)).1.trans (by
+      simpa only [div_mul_eq_mul_div] using
+        mul_le_mul_of_nonneg_left (hxs n) (show 0 ≤ c/32 by positivity))
+  have hsize : (M n).context.N^(-(η/4)) ≤ c^2/64 := by
+    simpa only [NativeOverlapContext.N,Real.rpow_zero,mul_one,one_mul] using hnSize
+  have htbound : (M n).context.N^(-(η/4))*(W n)^2 ≤ (c*W n)^2/64 := by
+    have H := mul_le_mul_of_nonneg_right hsize (sq_nonneg (W n))
+    nlinarith only [H]
+  have htravel2 := pow_le_pow_left₀ (M n).cavityCapTravel_nonneg htravel 2
+  have hsq : (orderedPathS (n+1) (M n).bf (M n).hf v-(M n).R v)^2 ≤ (c*W n/4)^2 := by
+    nlinarith only [hmismatch,htravel2,htbound,sq_nonneg (c*W n)]
+  have habs : |orderedPathS (n+1) (M n).bf (M n).hf v-(M n).R v| ≤ c*W n/4 := by
+    apply (sq_le_sq₀ (abs_nonneg _) (by positivity : 0 ≤ c*W n/4)).mp
+    simpa only [sq_abs] using hsq
+  have hrad : c*W n ≤ (M n).R v :=
+    (mul_le_mul_of_nonneg_right (div_le_div_of_nonneg_right hAa hcu.le) hW.le).trans Hbandv.2.2.1
+  obtain ⟨hclock,hcomp⟩ := (M n).bare_selected_mass_clock_calibration hvunit hc hW hnW1 (hxs n)
+    hrad (hscale n) hnClock (hb n v) (hh n v) Hbandv.1 habs
+  refine ⟨N,quarter,i,p,u,hi,hN,hq,hqlower,htotal,hnodes,hv,hH,hthermal,
+    Hbandv.1,Hbandv.2.1,Hbandv.2.2.1,Hbandv.2.2.2.1,Hbandv.2.2.2.2.1,Hbandv.2.2.2.2.2,
+    hclock,hcomp,?_⟩
+  intro w hw
+  exact hosc w hw v hvblock
+
+end NativeOverlapMinimum
+end OAI.SKFluctuations.LaplaceWindowFormalization

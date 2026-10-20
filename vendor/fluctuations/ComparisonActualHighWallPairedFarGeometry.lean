@@ -1,0 +1,103 @@
+module
+
+public import ComparisonActualHighWallInnovation
+
+@[expose] public section
+
+noncomputable section
+set_option maxHeartbeats 12000000
+open MeasureTheory ProbabilityTheory Filter Set
+open scoped BigOperators Topology NNReal
+namespace OAI.SKFluctuations.LaplaceWindowFormalization.ActualHighWallOverlapMinimum
+open Hierarchy Cavity
+
+theorem inverse_radius_le_source_mass
+    {n : ℕ} {m delta cl cu Az C0 Ct D Bclock : ℝ}
+    (M : ActualHighWallOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock)
+    (hcl : 0 < cl) (hAz : 0 ≤ Az) {u : ℝ} (hu : u∈Icc (0:ℝ) 1) :
+    M.data.wallRadius M.alpha u ≤ (Az+1/cl)*(M.xs+u) := by
+  let R:=M.data.wallRadius M.alpha u
+  have hR:=M.data.wallRadius_bounds M.alpha u
+  have hx:=M.hxs.le
+  have hi : 0 ≤ 1/cl:=by positivity
+  by_cases hz : R ≤ M.z
+  · have H0:=hz.trans M.hzxs
+    have H1:=mul_nonneg (add_nonneg hAz hi) hu.1
+    have H2:=mul_nonneg hi hx
+    dsimp only [R] at H0
+    nlinarith
+  · have hzR : M.z ≤ R:=(lt_of_not_ge hz).le
+    have hrmin : M.data.rmin < M.data.wallRadius M.alpha u:=M.hz.1.trans_lt (lt_of_not_ge hz)
+    have hus : M.data.s ≤ u:=(M.data.wallRadius_high_mass M.alpha hrmin).le
+    have Hreg:=(M.regular R ⟨hzR,hR.2⟩).1
+    rw [M.data.wallRadius_spec M.alpha ⟨hus,hu.2⟩] at Hreg
+    have HR : R ≤ u/cl:=(le_div_iff₀ hcl).mpr (by simpa only [mul_comm] using Hreg)
+    have H1:=mul_nonneg hAz (add_nonneg hx hu.1)
+    have H2:=mul_nonneg hi hx
+    have He : (Az+1/cl)*(M.xs+u)=Az*(M.xs+u)+(1/cl)*M.xs+u/cl:=by ring
+    rw [He]
+    exact HR.trans (by linarith)
+
+theorem actual_paired_far_radius_geometry
+    {n : ℕ} {m delta cl cu Az C0 Ct D Bclock : ℝ}
+    (M : ActualHighWallOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az)
+    {Cmass Cnear W Rmacro u : ℝ} (hCm : 0 ≤ Cmass) (hW : 0 < W) (hxs : M.xs ≤ W)
+    (hnear : 8*cu*((Az+1/cl)*(1+Cmass))+4*cu+cu*Az+1 ≤ Cnear)
+    (hsmall : (Az+1/cl)*(1+Cmass)*W ≤ Rmacro/4)
+    (hu : u∈Icc (0:ℝ) 1) (hfar : Cnear*W ≤ u) :
+    4*W ≤ M.data.wallRadius M.alpha u ∧ M.z ≤ min (M.data.wallRadius M.alpha u/8) (Rmacro/4) ∧
+      ∀v∈Icc (0:ℝ) 1,v ≤ Cmass*W → M.data.wallRadius M.alpha v ≤ min (M.data.wallRadius M.alpha u/8) (Rmacro/4) := by
+  let Clow:=(Az+1/cl)*(1+Cmass)
+  have hClow : 0 < Clow:=by dsimp only [Clow];positivity
+  have hAzlow : Az ≤ Clow := by
+    have hI : 0 < 1/cl:=one_div_pos.mpr hcl
+    have H:=mul_nonneg (show 0 ≤ Az+1/cl by positivity) hCm
+    dsimp only [Clow]
+    nlinarith
+  have hA : cu*Az < Cnear := by
+    have H:=mul_nonneg hcu.le hClow.le
+    nlinarith
+  have h4 : 4*cu ≤ Cnear := by
+    have H:=mul_nonneg hcu.le hClow.le
+    have HA:=mul_nonneg hcu.le hAz
+    nlinarith
+  have h8 : 8*cu*Clow ≤ Cnear := by
+    have HA:=mul_nonneg hcu.le hAz
+    change 8*cu*((Az+1/cl)*(1+Cmass)) ≤ Cnear
+    linarith
+  have hR:=M.data.wallRadius_bounds M.alpha u
+  have hNear1 : 1 ≤ Cnear:=by
+    have H1:=mul_nonneg hcu.le hClow.le
+    have H2:=mul_nonneg hcu.le hAz
+    nlinarith
+  have hus : M.data.s ≤ u:=M.hsxs.trans (hxs.trans
+    (by simpa only [one_mul] using (mul_le_mul_of_nonneg_right hNear1 hW.le).trans hfar))
+  have hspec:=M.data.wallRadius_spec M.alpha ⟨hus,hu.2⟩
+  have hzR : M.z ≤ M.data.wallRadius M.alpha u := by
+    by_contra H
+    have HA:=M.alpha.val.property.2 (le_of_not_ge H)
+    rw [hspec] at HA
+    have HR:=(M.regular M.z ⟨le_rfl,M.hz.2⟩).2
+    have HZ:=mul_le_mul_of_nonneg_left M.hzxs hcu.le
+    have HX:=mul_le_mul_of_nonneg_left hxs (mul_nonneg hcu.le hAz)
+    have HAW:=mul_lt_mul_of_pos_right hA hW
+    nlinarith
+  have hreg:=(M.regular (M.data.wallRadius M.alpha u) ⟨hzR,hR.2⟩).2
+  rw [hspec] at hreg
+  have h4W:=mul_le_mul_of_nonneg_right h4 hW.le
+  have h8W:=mul_le_mul_of_nonneg_right h8 hW.le
+  have hRW : Clow*W ≤ M.data.wallRadius M.alpha u/8 := by nlinarith
+  have hzW : M.z ≤ Clow*W := by
+    have HZ:=mul_le_mul_of_nonneg_left hxs hAz
+    have HA:=mul_le_mul_of_nonneg_right hAzlow hW.le
+    exact M.hzxs.trans (HZ.trans HA)
+  refine ⟨by nlinarith,le_min (hzW.trans hRW) (hzW.trans hsmall),?_⟩
+  intro v hv hvW
+  have HV:=M.inverse_radius_le_source_mass hcl hAz hv
+  have Hsum : M.xs+v ≤ (1+Cmass)*W := by nlinarith
+  have H:=mul_le_mul_of_nonneg_left Hsum (show 0 ≤ Az+1/cl by positivity)
+  have HVW : M.data.wallRadius M.alpha v ≤ Clow*W := by dsimp only [Clow];nlinarith
+  exact le_min (HVW.trans hRW) (HVW.trans hsmall)
+
+end OAI.SKFluctuations.LaplaceWindowFormalization.ActualHighWallOverlapMinimum

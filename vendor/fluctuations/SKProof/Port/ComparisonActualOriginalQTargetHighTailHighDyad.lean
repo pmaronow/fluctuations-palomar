@@ -1,0 +1,216 @@
+module
+
+public import SKProof.Port.ComparisonActualOriginalQTargetHighTailMassRates
+public import SKProof.Port.ComparisonActualOriginalQOuterComparableMassAssembly
+public import SKProof.Port.OriginalQHighOnlyBridge
+public import SKProof.Port.ComparisonActualOriginalQLocalDiameterBudgetMonotonicity
+public import SKProof.Port.ComparisonActualOriginalQHighMassFloorNormalization
+public import SKProof.Port.ComparisonActualOriginalQMassSlabScale
+
+@[expose] public section
+
+noncomputable section
+set_option maxHeartbeats 24000000
+set_option linter.unusedVariables false
+namespace OAI.SKFluctuations.LaplaceWindowFormalization
+open Set Filter MeasureTheory ProbabilityTheory Hierarchy WholeUnitSideKernel
+open scoped Topology NNReal ENNReal BigOperators
+
+theorem eventually_actual_regular_strong_high_mass_dyad_original_q
+    (Bclock : ℝ) {m delta cl cu Az C0 Ct D Cs c : ℝ}
+    (hm : 0 < m) (hdelta : 0 < delta) (hroom : delta < 3*m)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az) (hC0 : 0 < C0) (hCt : 0 ≤ Ct)
+    (hCs : 0 ≤ Cs) (hc : 0 < c) (hcouter : 2*cu*(Az+1) ≤ c) :
+    ∀ᶠn : ℕ in atTop,
+      ∀(a : ActualThetaZeroOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock)
+        (_hclock : NativePullbackClockRegularity a.alpha.val.val a.b a.h a.data.rmin 1),
+        a.data.s≤1/4 → a.data.s≤a.xs → 64*a.data.s≤c*a.xs →
+        a.xs^2 ≤ Cs*laplaceComparisonStrength a.data.d a.lam a.xs →
+        a.directTestWorkingScale ≤ 1 →
+        ∀v : ℝ, 0 < v → 2*v ≤ 1 → c*a.directTestWorkingScale ≤ v →
+          (∫u in v..2*v,orderedPathB (n+1) a.sweepBf a.sweepHf u-(orderedPathS (n+1) a.sweepBf a.sweepHf u)^2)/
+            (a.xs^4*v/a.directTestWorkingScale^2) ≤
+              a.data.N^(-(actualMassSavingExponent m delta/2)) := by
+  by_cases hD : 0 < D
+  swap
+  · apply Eventually.of_forall
+    intro n a
+    exact False.elim (hD (a.data.hd.trans_le a.hdD))
+  let Cdiam := 576+288*cu^3/cl^3+1
+  let csource := c/16
+  have hCdiam : 0 < Cdiam := by dsimp [Cdiam]; positivity
+  have hCdiamOrd : 576 ≤ Cdiam := by
+    dsimp [Cdiam]
+    have HH : 0 ≤ 288*cu^3/cl^3 := by positivity
+    linarith
+  have hCdiamBroad : 288*cu^3/cl^3 ≤ Cdiam := by dsimp [Cdiam]; linarith
+  have hcsource : 0 < csource := by dsimp [csource]; positivity
+  obtain ⟨l,hl,HreverseFactory⟩ := ActualThetaZeroOverlapMinimum.exists_actual_high_mass_reverse_polynomial_order
+    (cl:=cl) (cu:=cu) (Az:=Az) (Ct:=Ct) (Bclock:=Bclock)
+    hm hdelta hC0 hD hCs hcsource hCdiam
+  obtain ⟨Qo,Qb,Kfloor,hQo,hQb,hKfloor,Hassembly⟩ := eventually_actual_outer_comparable_mass_of_explicit_budgets_original_q
+    (D:=D) l hl Bclock hm hdelta hroom hcl hcu hAz hC0 hCt
+  have HordinaryReverse := HreverseFactory Qo hQo
+  have HbroadReverse := HreverseFactory Qb hQb
+  have Hordinary := ActualThetaZeroOverlapMinimum.eventually_high_mass_ordinary_budget_of_reverse_rate
+    l hl Qo hm hdelta hcl hAz hCt hC0 hCs hcsource hCdiam HordinaryReverse
+  have Hbroad := ActualThetaZeroOverlapMinimum.chosen_high_comparable_broad_budget_polynomial_le
+    l hl Qb hQb hm hdelta hcl hcu hAz hCt hC0 hCs hcsource hCdiam HbroadReverse
+  let eta := actualMassSavingExponent m delta
+  let Ccount := (1+Real.log (1+D^2))/Real.log 2+2
+  let Cfloor := Kfloor*cu*(1/c+2)^2*(Cs+1)^2*C0^6
+  let Ctotal := 24*Ccount+Cfloor
+  have heta : 0 < eta := actualMassSavingExponent_pos hm hdelta
+  have Hdecay := (tendsto_add_atTop_nat 1).eventually
+    (native_mass_log_power_decay (q:=eta) (s:=eta/2) (by linarith) 1 Ctotal)
+  have Hratio := (tendsto_add_atTop_nat 1).eventually
+    (eventually_coefficient_rpow_le (c:=C0^3) (d:=c/64) (q:=-3*m) (r:=0) (by positivity) (by linarith))
+  have Hdepth := (tendsto_add_atTop_nat 1).eventually (eventually_comparisonLowerScale_depth hC0 hm)
+  have Hlog := (tendsto_add_atTop_nat 1).eventually
+    ((Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually (eventually_ge_atTop (1:ℝ)))
+  have Hcut := eventually_actual_mass_polynomial_cut_feasible_original_q
+    (m:=m) (delta:=delta) (cl:=cl) (cu:=cu) (Az:=Az) (C0:=C0) (Ct:=Ct) (D:=D) (Bclock:=Bclock)
+  filter_upwards [Hassembly,Hordinary,Hbroad,Hdecay,Hratio,Hdepth,Hlog,Hcut]
+    with n hnassembly hnordinary hnbroad hnrate hnratio hndepth hnlog hncut
+  intro a hclock hs hsxs hsomit hsmall hW1 v hv hv2 hvlo
+  let W := a.directTestWorkingScale
+  let target := a.xs^4*v/W^2
+  let bound := 4*a.data.N^(-eta)*target
+  have hW : 0 < W := a.canonical_direct_test_band_pos
+  have hxs := a.hxs
+  have htarget : 0 < target := by dsimp [target]; positivity
+  have hbound : 0 ≤ bound := by dsimp [bound]; positivity
+  have hN : 1 ≤ a.data.N := by dsimp [ActualHighWallData.N]; exact_mod_cast Nat.succ_pos n
+  have hlog : 1 ≤ Real.log a.data.N := by simpa only [ActualHighWallData.N,Function.comp_def] using hnlog
+  have hlog0 : 0 ≤ Real.log a.data.N := zero_le_one.trans hlog
+  have hnd : 1/a.data.N ≤ a.data.d := by
+    have hd := hndepth a.data.E a.data.d a.data.hE a.data.hd a.hlower
+    have hs : comparisonLowerScale (n+1 : ℕ) a.data.E a.data.d ≤ a.data.d := by
+      unfold comparisonLowerScale
+      exact (div_le_iff₀ a.data.hd).mpr (by simpa only [pow_two] using a.hupper)
+    exact hd.trans hs
+  obtain ⟨p⟩ := a.exists_potential_original_q hs
+  have hxsW := a.canonical_direct_test_band_ge_scale
+  have hUscale : 64*a.data.U ≤ c*W := by
+    have Hr := a.canonical_mass_small_ratio hC0
+    have HR : a.data.U/a.xs ≤ c/64 := Hr.trans (by
+      simpa only [ActualHighWallData.N,Real.rpow_zero,mul_one] using hnratio)
+    have HU := (div_le_iff₀ a.hxs).mp HR
+    have Hxs := mul_le_mul_of_nonneg_left hxsW hc.le
+    dsimp only [W] at *
+    linarith
+  have hU : a.data.U ≤ v := by nlinarith only [hUscale,hvlo,mul_pos hc hW]
+  have hstart : 32*a.data.s < v := by
+    have Hxs := mul_le_mul_of_nonneg_left hxsW hc.le
+    nlinarith only [hsomit,hvlo,Hxs,mul_pos hc hW]
+  have hwall : 8*a.positiveOriginMassCoverBase < v := by
+    have Hxs := mul_le_mul_of_nonneg_left hxsW hc.le
+    unfold ActualThetaZeroOverlapMinimum.positiveOriginMassCoverBase
+    rw [mul_max_of_nonneg a.data.U a.data.s (by norm_num : (0:ℝ)≤8)]
+    exact max_lt (by nlinarith only [hUscale,hvlo,mul_pos hc hW])
+      (by nlinarith only [hsomit,hvlo,Hxs,mul_pos hc hW])
+  have houter : 2*cu*(Az+1)*a.xs ≤ v := by
+    have hcoef : 0 ≤ 2*cu*(Az+1) := by positivity
+    exact ((mul_le_mul_of_nonneg_left hxsW hcoef).trans
+      (mul_le_mul_of_nonneg_right hcouter hW.le)).trans hvlo
+  have hlo : v∈Icc (0:ℝ) 1 := ⟨hv.le,by linarith⟩
+  have hhi : 2*v∈Icc (0:ℝ) 1 := ⟨by positivity,hv2⟩
+  have hcutpos : 0 < a.data.N^(-(10:ℝ)) := Real.rpow_pos_of_pos a.data.hN _
+  have hlogcut : Real.log (1/a.data.N^(-(10:ℝ))) ≤ 10*Real.log a.data.N := by
+    rw [one_div,Real.log_inv,Real.log_rpow a.data.hN]
+    ring_nf
+    exact le_refl _
+  have hLside : 0 ≤ 10*Real.log a.data.N := by linarith
+  have Hphysical := hnassembly a hs hsxs p hclock v (2*v) (a.data.N^(-(10:ℝ)))
+    (10*Real.log a.data.N) bound bound hlo hhi (by linarith) hU hstart hwall houter
+    hcutpos (hncut a) hLside hlogcut hbound hbound
+    (by
+      intro s hs hsp hs1
+      have hslo : csource*W ≤ s := by dsimp [csource]; nlinarith [hs.1]
+      have Hsource := a.canonical_ordinary_mass_budget_at_diameter_mono
+        (Q:=Qo) (cut:=a.data.N^(-(10:ℝ))) hl hsp hLside
+        (a.canonical_local_mass_diameter_pos (by linarith) hsp).le
+        (a.canonical_local_mass_diameter_le_chosen hCdiamOrd hlog0 hsp)
+      have Hnumeric := hnordinary a hnd hsmall hW1 s hsp hs1 hslo
+      have Hstarget : 0 < a.xs^4*s/W^2 := by positivity
+      have Hsave := (div_le_iff₀ Hstarget).mp Hnumeric
+      have Hscale : a.xs^4*s/W^2 ≤ 4*target := by
+        dsimp [target]
+        have Hs : s ≤ 4*v := by linarith [hs.2]
+        have HH := mul_le_mul_of_nonneg_left Hs (show 0 ≤ a.xs^4/W^2 by positivity)
+        convert HH using 1 <;> ring
+      have HH := mul_le_mul_of_nonneg_left Hscale (Real.rpow_nonneg a.data.hN.le (-eta))
+      exact Hsource.trans (Hsave.trans (by simpa only [bound,mul_assoc,mul_left_comm,mul_comm] using HH)))
+    (by
+      intro s hs hsp hs1 width hw hw1
+      have hslo : csource*W ≤ s := by dsimp [csource]; nlinarith [hs.1,mul_pos hc hW]
+      have hU := a.data.hU
+      have hE := a.data.hE
+      have hd := a.data.hd
+      have hN0 := a.data.hN
+      have htravel0 : 0 ≤ a.cavityCapTravel := by
+        unfold ActualThetaZeroOverlapMinimum.cavityCapTravel
+        have hLcap := a.data.hL
+        have Hrl : 0 ≤ Real.log ((1+a.data.U)/a.data.U) :=
+          Real.log_nonneg ((one_le_div hU).mpr (by linarith))
+        positivity
+      have houterD0 : 0 ≤ a.canonicalOuterBroadMassDiameter s := by
+        unfold ActualThetaZeroOverlapMinimum.canonicalOuterBroadMassDiameter
+        exact mul_nonneg (by positivity) (le_min htravel0 (by positivity))
+      have Hsource := a.canonical_comparable_broad_mass_budget_at_diameter_mono
+        (Q:=Qb) (cut:=a.data.N^(-(10:ℝ))) hl hsp.le hLside
+        (hsp.le.trans hw.1) houterD0
+        (a.canonical_outer_mass_diameter_le_chosen hcl hcu hCdiamBroad hlog0 hsp)
+      have Hnumeric := hnbroad a hnd hsmall hW1 s width hsp hs1 hslo hw.1 hw.2 hw1
+      have Hstarget : 0 < a.xs^4*s/W^2 := by positivity
+      have Hsave := (div_le_iff₀ Hstarget).mp Hnumeric
+      have Hscale : a.xs^4*s/W^2 ≤ 4*target := by
+        dsimp [target]
+        have Hs : s ≤ 4*v := by linarith [hs.2]
+        have HH := mul_le_mul_of_nonneg_left Hs (show 0 ≤ a.xs^4/W^2 by positivity)
+        convert HH using 1 <;> ring
+      have HH := mul_le_mul_of_nonneg_left Hscale (Real.rpow_nonneg a.data.hN.le (-eta))
+      exact Hsource.trans (Hsave.trans (by simpa only [bound,mul_assoc,mul_left_comm,mul_comm] using HH)))
+  have HphysicalNorm := div_le_div_of_nonneg_right Hphysical htarget.le
+  have Hcount := a.actual_mass_log_count_le hN hlog (hU.trans hlo.2)
+  have HcountTerm : ((2*bound+4*bound)*
+      ((Nat.ceil (Real.log (1/a.data.U)/Real.log 2):ℝ)+1))/target ≤
+      24*Ccount*Real.log a.data.N*a.data.N^(-eta) := by
+    have HE : ((2*bound+4*bound)*
+      ((Nat.ceil (Real.log (1/a.data.U)/Real.log 2):ℝ)+1))/target=
+      24*a.data.N^(-eta)*((Nat.ceil (Real.log (1/a.data.U)/Real.log 2):ℝ)+1) := by
+      dsimp [bound]
+      field_simp
+      ring
+    rw [HE]
+    have HH := mul_le_mul_of_nonneg_left Hcount (show 0 ≤ 24*a.data.N^(-eta) by positivity)
+    convert HH using 1
+    ring
+  have Hfloor := mass_high_floor_slab_normalized_le (delta:=delta) (U:=a.data.U)
+    a.hxs hW hv hcu hc hhi.1 le_rfl
+    a.data.hN.le hKfloor.le hxsW hvlo
+  have HfloorSource := a.canonical_direct_test_floor_strong_rate hC0 hCs hsmall
+  have HfloorCoef : 0 ≤ Kfloor*cu*(1/c+2)^2 := by positivity
+  have HfloorMul := mul_le_mul_of_nonneg_left HfloorSource HfloorCoef
+  have Hbounds := actualMassSavingExponent_bounds m delta
+  have HfloorPower : a.data.N^(-(6*m-delta)) ≤ a.data.N^(-eta) :=
+    Real.rpow_le_rpow_of_exponent_le hN (by dsimp [eta]; nlinarith [Hbounds.2.1])
+  have HfloorTerm : (Kfloor*(a.xs+2*v)^2*a.data.N^delta*a.data.U^2/(v/cu))/target ≤
+      Cfloor*Real.log a.data.N*a.data.N^(-eta) := by
+    apply Hfloor.trans
+    have HH := mul_le_mul_of_nonneg_left HfloorPower (show 0 ≤ Cfloor by dsimp [Cfloor]; positivity)
+    have HL := mul_le_mul_of_nonneg_left hlog (show 0 ≤ Cfloor*a.data.N^(-eta) by dsimp [Cfloor]; positivity)
+    dsimp [Cfloor] at HH HL ⊢
+    nlinarith only [HfloorMul,HH,HL]
+  have Htotal : (∫u in v..2*v,
+      orderedPathB (n+1) a.sweepBf a.sweepHf u-(orderedPathS (n+1) a.sweepBf a.sweepHf u)^2)/target ≤
+      Ctotal*Real.log a.data.N*a.data.N^(-eta) := by
+    apply HphysicalNorm.trans
+    rw [add_div]
+    have HH := add_le_add HcountTerm HfloorTerm
+    convert HH using 1
+    dsimp [Ctotal]
+    ring
+  exact Htotal.trans (by simpa only [ActualHighWallData.N,pow_one] using hnrate)
+
+end OAI.SKFluctuations.LaplaceWindowFormalization

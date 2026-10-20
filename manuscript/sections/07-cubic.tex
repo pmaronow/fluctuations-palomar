@@ -1,0 +1,1812 @@
+\chapter{A three-replica covariance perturbation}\label{sec:cubic}
+
+In this section, we construct a trial path for the pressure of three
+configurations whose overlaps are prescribed near a level
+$r\in(0,q_\beta)$, and we show that its trial value lies below $3P_\beta$ by
+an amount of third order in the width parameter of the perturbation. The prescribed
+overlap matrix is $D(r,q,\delta)$ of \eqref{eq:inp-triple}, with $q-r$ and
+$\delta$ small. There are two main results. \Cref{b:prop:os-expansion}
+expands the trial value to third order with an explicit polynomial
+coefficient. \Cref{prop:cub-band} turns this expansion into a
+deficit of order $\rho^3$, uniformly over the matrices with
+$\rho\le q-r\le d_0$ and $E\rho\le\abs\delta\le2E\rho$. The deficit is used in
+\cref{sec:fractional}, in the proof of \cref{lem:fr-local-gap}, and through it
+in the static estimate of \cref{sec:static}.
+
+We use the following earlier results. From \cref{sec:inputs}, we use the
+integration steps of \cref{def:inp-step} and their properties
+(\cref{lem:inp-steps}), the hierarchies, penalties and trial values of
+\cref{def:inp-hierarchy,def:inp-trial} and \eqref{eq:inp-penalty}, block
+factorization (\cref{lem:inp-blocks}), and the matrix interpolation bound
+\cref{inp:ob-matrix}. From \cref{sec:scalar}, we use the bounds on spatial
+derivatives of \cref{lem:sc-derivatives} and the constant
+$m_\beta$ of \cref{cor:sc-mbeta}. We also use the regularity of $\alpha$ and
+$\Phi$ on $(0,q_\beta)$ and the stationarity identities
+\eqref{b:eq:os-contacts}, both from \cref{b:lem:os-scalar-jets}. From \cref{sec:flow}, we use the uniform
+estimates for short compositions of Gaussian flows (\cref{prop:flow-uniform}),
+the identification of these flows with limits of hierarchies
+(\cref{lem:flow-step-limit}), and the response of a hierarchy to a small
+change of its terminal function (\cref{b:lem:os-prefix,cor:flow-prefix}).
+
+\paragraph{Relation to \cite[Section~7]{oai-barriers}.}
+The construction refines the narrow-annulus comparison of OpenAI's barrier
+paper \cite[Section~7, Steps~1--8]{oai-barriers}. We keep three of its
+ingredients. The first is the three-coordinate hierarchy in which the masses
+are divided by the sizes of the common blocks
+\cite[Section~4.2 and Section~7, Step~1, (7.7)]{oai-barriers}; OpenAI attributes
+it to Talagrand's three-replica construction
+\cite[discussion after Proposition~4.4]{talagrand-2007}. The second is the
+perturbation that adds a Gaussian linear combination of field increments to
+the field of $x$, subtracts it from the field of $y$, and leaves $v$
+unchanged \cite[Section~7, Step~2, (7.8)--(7.12)]{oai-barriers}. The third
+is the source of the loss: the identity $\beta^2\E\chi(r,Y_r)^2=1$, which
+follows from stationarity, together with the evolution of the susceptibility
+$\chi$ along the scalar diffusion \cite[Section~7, Step~8, (7.31)]{oai-barriers}. In
+\cite{oai-barriers}, the window has width $\rho^8$ and the imbalance $\delta$ is
+of order $\rho^{20}$. The endpoint of the perturbed path differs from the
+prescribed matrix, and the mismatch is paid through the term
+$(\beta^2/4)\norm{D-Q_N}_F^2$ of \cref{inp:ob-matrix}
+\cite[(7.12)--(7.13)]{oai-barriers}. The resulting deficit is of order $\rho^{43}$
+\cite[(7.32)]{oai-barriers}.
+
+Three parts of the present construction are new. First, the window has width
+parameter $h=(q-r)/\vartheta$ for a fixed ratio $\vartheta$. The Gaussian contrast has
+fixed weights and extends past the time at which $x$ and $y$ separate, and a
+terminal correction of the covariance removes the excess covariance in the
+antisymmetric direction $\mathbf e_x-\mathbf e_y$ exactly. The path is positive semidefinite at every stage, its
+endpoint is $D(r,q,\delta)$, and no mismatch is paid (\cref{sec:cub-path}).
+Second, we expand the trial value to third order in $h$. At second order the
+first stationarity identity cancels the penalty, and at third order we use the
+second stationarity identity to combine two coefficient polynomials into one
+(\cref{sec:cub-coefficients,sec:cub-profile,sec:cub-expansion}). The identities
+themselves are known; their sources are recalled in \cref{sec:scalar}. Third,
+the resulting polynomial gives a deficit of order $\rho^3$ on a band where
+$q-r$ and $\abs\delta$ are both comparable to $\rho$ (\cref{sec:cub-band}).
+
+\paragraph{Organization.}
+\Cref{sec:cub-path} defines the perturbed path and its trial value and reduces
+the trial value to a boundary perturbation $V$ on the diagonal. \Cref{sec:cub-derivatives} records
+the derivative bounds for the local part of the path. In
+\cref{sec:cub-coefficients} we compute the Taylor coefficients of $V$ in the
+width parameter $h$ when the Parisi distribution function is replaced by a constant on
+the window, using covariance matrices that are not positive semidefinite as
+formal bookkeeping devices. In \cref{sec:cub-profile} we compute the
+contribution of the variation of $\alpha$ on the window and prove the
+pointwise expansion \cref{prop:cub-pointwise}. \Cref{sec:cub-expansion} proves
+\cref{b:prop:os-expansion}, and \cref{sec:cub-band} proves the uniform deficit
+\cref{prop:cub-band}.
+
+\paragraph{Standing notation.}
+Throughout this section, $\beta>1$ is fixed and $b=\beta^2$. We write
+$\alpha=\alpha_\beta$, $\Phi=\Phi_\alpha$, $u=\partial_z\Phi$,
+$\chi=\partial_z^2\Phi$ and $w=\partial_z^3\Phi$, and $Y$ is the scalar
+diffusion of \eqref{b:eq:os-scalar}. Vectors of $\R^3$ are written in bold,
+in the coordinate order $(v,x,y)$. We write $\mathbf e=(1,1,1)^{\mathsf T}$,
+$\mathbf e_v,\mathbf e_x,\mathbf e_y$ for the unit vectors,
+\[
+ L_2=(\mathbf e_x-\mathbf e_y)(\mathbf e_x-\mathbf e_y)^{\mathsf T},
+\]
+and $\mathbf z=(z_v,z_x,z_y)$ for a point of $\R^3$. A real number $z$
+denotes the point $z\mathbf e$ of the diagonal. As in
+\cref{sec:inp-hierarchies}, $U\mathbin:U'=\sum_{i,l}U_{il}U'_{il}$ and
+$\norm U_F^2=U\mathbin:U$. For a symmetric $3\times3$ matrix $B$ and a function
+$F$ on $\R^3$, we write $B\mathbin:D^2F=\sum_{i,l}B_{il}\partial_i\partial_lF$
+and $\nabla F\cdot B\nabla F$. We also set
+$\operatorname{cub}(U)=\sum_{i,l}U_{il}^3$.
+
+We fix a ratio $\vartheta\in(0,1/2]$, a bound $k_0>0$ for the relative
+imbalance $k$ below, and a compact interval $K\subset(0,q_\beta)$ of left
+endpoints. With $L_\vartheta$ as in \eqref{b:eq:os-parameters} below, we set
+$\tau_{\max}=2+4k_0^2L_\vartheta$, and we fix $h_1\in(0,1]$ such that
+\[
+ K'=\bigl[\min K,\ \max K+\tau_{\max}h_1\bigr]\subset(0,q_\beta).
+\]
+By \cref{b:lem:os-scalar-jets}, $\alpha$ is infinitely differentiable on
+$K'$, the number $\alpha_*=\min_{K'}\alpha$ is positive, $\alpha$ is
+Lipschitz on $K'$ with constant $K_\beta$, and every derivative
+$\partial_t^i\partial_z^j\Phi$ with $i+j\ge1$ is bounded on $K'\times\R$. In
+this section, $C$ denotes a constant that depends only on $\beta$,
+$\vartheta$, $k_0$ and $K$ (and therefore on $h_1$ and $K'$); its value may
+change from line to line. We make no claim of uniformity as
+$\vartheta\downarrow0$. The symbols of the construction are collected in
+\cref{tab:cub-symbols}.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{@{}lp{0.45\textwidth}l@{}}
+\toprule
+Symbol & Meaning & Defined in\\
+\midrule
+$\vartheta$ & ratio $(q-r)/h$, fixed in $(0,1/2]$ & \eqref{b:eq:os-parameters}\\
+$q_0$, $h$, $k$ & left endpoint, width parameter, relative imbalance & \eqref{b:eq:os-parameters}\\
+$r$, $q$, $d$, $\delta$ & $q_0+h$, $q_0+(1+\vartheta)h$, $\vartheta h$, $hk$ & \eqref{b:eq:os-parameters}\\
+$\omega_0$, $\omega_1$, $L_\vartheta$ & weights of the contrast and its variance & \eqref{b:eq:os-parameters}\\
+$\kappa_j$, $\mathfrak n_j$, $B_j$, $B_j^\circ$ & lengths, block sizes and rates of the stages & \cref{tab:cub-stages}\\
+$\tau_T$, $T$ & $2+4k^2L_\vartheta$ and $q_0+h\tau_T$ & \eqref{eq:cub-T}\\
+$\mathcal T$, $\mathcal B$, $V$, $\Delta\Pi$ & trial value, local block, boundary perturbation, change of the penalty & \cref{sec:cub-trial}\\
+$\Lambda_0$, $\Lambda_1$, $\Lambda_2$ & coefficient matrices at constant mass & \eqref{eq:cub-Lambda}\\
+$C_\chi$, $C_w$, $N_\vartheta$ & coefficient polynomials & \eqref{b:eq:os-R}, \eqref{b:eq:os-W}, \eqref{eq:cub-N}\\
+$P_\vartheta$, $c_j$, $M$ & cubic polynomial, its coefficients, scalar factor & \cref{sec:cub-expansion}\\
+\bottomrule
+\end{tabular}
+\caption{Notation of \cref{sec:cubic}.}\label{tab:cub-symbols}
+\end{table}
+
+\section{The perturbed covariance path}\label{sec:cub-path}
+
+\subsection{Parameters and stages}
+
+For $q_0\in(0,1)$, $h\ge0$ and $k\in\R$, we set
+\begin{equation}\label{b:eq:os-parameters}
+\begin{gathered}
+ r=q_0+h,\qquad q=q_0+(1+\vartheta)h,\qquad d=q-r=\vartheta h,
+ \qquad \delta=hk,\\
+ \omega_0=\frac1{2-\vartheta},\qquad \omega_1=\frac{1-\vartheta}{2-\vartheta},
+ \qquad L_\vartheta=\omega_0^2(3-\vartheta)+\omega_1^2
+ =\frac{\vartheta^2-3\vartheta+4}{(2-\vartheta)^2}.
+\end{gathered}
+\end{equation}
+Note that $\omega_0+\omega_1=1$ and $\omega_1=(1-\vartheta)\omega_0$. The number $k$
+is the imbalance relative to the width. We define the vectors
+\[
+\begin{gathered}
+ \mathbf c_0=\begin{pmatrix}1\\1+\omega_0k\\1-\omega_0k\end{pmatrix},\qquad
+ \mathbf c_1=\begin{pmatrix}0\\1-\omega_0k\\1+\omega_0k\end{pmatrix},\qquad
+ \mathbf c_v=\begin{pmatrix}1\\\omega_1k\\-\omega_1k\end{pmatrix},\\
+ \mathbf c_x=\begin{pmatrix}0\\1-\omega_0k\\\omega_0k\end{pmatrix},\qquad
+ \mathbf c_y=\begin{pmatrix}0\\-\omega_0k\\1+\omega_0k\end{pmatrix},
+\end{gathered}
+\]
+the rates
+\begin{equation}\label{eq:cub-rates}
+\begin{gathered}
+ B_1=\mathbf c_0\mathbf c_0^{\mathsf T},\quad
+ B_2=\mathbf c_1\mathbf c_1^{\mathsf T},\quad
+ B_3=\mathbf c_v\mathbf c_v^{\mathsf T},\quad
+ B_4=\mathbf c_v\mathbf c_v^{\mathsf T}+\mathbf c_x\mathbf c_x^{\mathsf T}
+   +\mathbf c_y\mathbf c_y^{\mathsf T},\quad
+ B_5=\mathrm{Id}-\tfrac14L_2,\\
+ B_1^\circ=\mathbf e\mathbf e^{\mathsf T},\quad
+ B_2^\circ=(\mathbf e_x+\mathbf e_y)(\mathbf e_x+\mathbf e_y)^{\mathsf T},\quad
+ B_3^\circ=\mathbf e_v\mathbf e_v^{\mathsf T},\quad
+ B_4^\circ=B_5^\circ=\mathrm{Id},
+\end{gathered}
+\end{equation}
+and the lengths $\kappa_1=1$, $\kappa_2=\kappa_3=\vartheta$,
+$\kappa_4=1-\vartheta$ and $\kappa_5=4k^2L_\vartheta$. Note that
+$B_j=B_j^\circ$ for $j\le4$ when $k=0$, and that $\kappa_5=0$ when $k=0$. We
+also set
+\begin{equation}\label{eq:cub-T}
+ \tau_T=\kappa_1+\kappa_2+\kappa_4+\kappa_5=2+4k^2L_\vartheta,\qquad T=q_0+h\tau_T.
+\end{equation}
+The length $\kappa_3$ does not enter $\tau_T$, because stages $2$ and $3$ below
+have the same scalar interval; $h\tau_T$ is the length of the window $[q_0,T]$.
+
+The \emph{local window} consists of the five stages of \cref{tab:cub-stages},
+listed from the root to the terminal time; their Gaussian integrations are
+applied in the reverse order, from stage $5$ to stage $1$. Stage $j$ has scalar interval
+$I_j=[q_0+ho_j,\,q_0+h(o_j+\kappa_j)]$, with offsets $o_1=0$,
+$o_2=o_3=1$, $o_4=1+\vartheta$ and $o_5=2$, and its covariance increment over
+a scalar time $\dd t$ in $I_j$ is $B_j\dd t$ (before multiplication by $b$),
+integrated at mass $\alpha(t)/\mathfrak n_j$. Stages $2$ and $3$ have the same scalar
+interval $[r,q]$; they are different blocks of the hierarchy, and stage $2$
+precedes stage $3$ along the path, so that the integration of stage $3$ is
+applied first. In the \emph{baseline} window, the rates
+$B_j$ are replaced by $B_j^\circ$ and everything else is unchanged; in
+particular, the baseline has the same stage $5$, of length $\kappa_5$, with
+the rate $\mathrm{Id}$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{@{}clcccc@{}}
+\toprule
+$j$ & stage & scalar interval $I_j$ & length $\kappa_j$ & mass & rate\\
+\midrule
+1 & common & $[q_0,r]$ & $1$ & $\alpha(t)/3$ & $B_1$\\
+2 & shared & $[r,q]$ & $\vartheta$ & $\alpha(t)/2$ & $B_2$\\
+3 & singleton, first part & $[r,q]$ & $\vartheta$ & $\alpha(t)$ & $B_3$\\
+4 & singleton, second part & $[q,q_0+2h]$ & $1-\vartheta$ & $\alpha(t)$ & $B_4$\\
+5 & terminal correction & $[q_0+2h,T]$ & $4k^2L_\vartheta$ & $\alpha(t)$ & $B_5$\\
+\bottomrule
+\end{tabular}
+\caption{The five stages of the local window. The length is the length of
+$I_j$ divided by $h$, and the mass of stage $j$ is $\alpha(t)/\mathfrak n_j$ with block
+sizes $\mathfrak n_1=3$, $\mathfrak n_2=2$, $\mathfrak n_3=\mathfrak n_4=\mathfrak n_5=1$.}\label{tab:cub-stages}
+\end{table}
+
+The \emph{perturbed path} consists of an initial segment on $[0,q_0]$, on
+which the three coordinates share every increment, with rate
+$\mathbf e\mathbf e^{\mathsf T}$ and mass $\alpha(t)/3$; the local window;
+and a final segment on $[T,1]$ with rate $\mathrm{Id}$ and mass $\alpha(t)$. The
+\emph{baseline path} is the same with the baseline window. It is the path of
+\cref{lem:inp-blocks}(b), with the stages split at the scalar times $q_0$,
+$q_0+2h$ and $T$.
+
+\paragraph{The contrast.} The rates have the following meaning. In this
+description we assume $h>0$; at $h=0$ the window has length zero, and all its
+covariance increments vanish. Let $g_1$,
+$g_2$, $g_v$, $g_x$ and $g_y$ be independent centered Gaussian variables with
+variances $bh$, $b\vartheta h$, $bh$, $b(1-\vartheta)h$ and
+$b(1-\vartheta)h$. In the baseline window, these are the field increments: the
+three coordinates share $g_1$ on $[q_0,r]$, the coordinates $x$ and $y$ share
+$g_2$ on $[r,q]$, the coordinate $v$ receives $g_v$ on $[r,q_0+2h]$ (split
+between stages $3$ and $4$), and $x$ and $y$ receive $g_x$ and $g_y$ on
+$[q,q_0+2h]$. We define the contrast
+\begin{equation}\label{eq:cub-contrast}
+ \Xi=\frac1h\bigl\{\omega_0(g_1-g_2-g_x-g_y)+\omega_1g_v\bigr\}.
+\end{equation}
+The perturbation adds $\delta\,\Xi$ to the field of $x$, subtracts it from the
+field of $y$, and leaves the field of $v$ unchanged. Collecting the
+coefficients of the five Gaussian variables, we find that the perturbed field
+vector of the window is
+\[
+ \mathbf c_0g_1+\mathbf c_1g_2+\mathbf c_vg_v+\mathbf c_xg_x+\mathbf c_yg_y.
+\]
+This explains the rates $B_1,\dots,B_4$. By independence,
+\begin{equation}\label{eq:cub-contrast-moments}
+\begin{gathered}
+ \Var\Xi=\frac bh\bigl\{\omega_0^2\bigl(1+\vartheta+2(1-\vartheta)\bigr)+\omega_1^2\bigr\}
+ =\frac{bL_\vartheta}h,\\
+ \Cov(\Xi,g_1+g_2+g_x)=b\,\omega_0\bigl(1-\vartheta-(1-\vartheta)\bigr)=0,\\
+ \Cov(\Xi,g_1+g_v)=b(\omega_0+\omega_1)=b,
+\end{gathered}
+\end{equation}
+and the same holds with $g_y$ in place of $g_x$. These identities imply that
+the perturbation changes the covariance of the window fields, divided by $b$, by
+\[
+ \delta\bigl(\mathbf e_v(\mathbf e_x-\mathbf e_y)^{\mathsf T}
+ +(\mathbf e_x-\mathbf e_y)\mathbf e_v^{\mathsf T}\bigr)
+ +\frac{\delta^2L_\vartheta}h\,L_2.
+\]
+The first term changes the overlaps of $v$ with $x$ and with $y$ by $+\delta$
+and $-\delta$, respectively. The second term is an excess covariance in the antisymmetric direction
+$\mathbf e_x-\mathbf e_y$.
+We have $\delta^2L_\vartheta/h=hk^2L_\vartheta=h\kappa_5/4$. Stage $5$ uses the
+rate $\mathrm{Id}-L_2/4$ instead of $\mathrm{Id}$ during a time $h\kappa_5$, and it removes this
+excess exactly. We call stage $5$ the terminal correction.
+
+\begin{lemma}[Identities of the window]\label{lem:cub-identities}
+For every $k\in\R$, the following hold.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item $\mathbf e\cdot B_j\mathbf e=\mathbf e\cdot B_j^\circ\mathbf e$ for
+ $1\le j\le5$; these numbers are $9$, $4$, $1$, $3$ and $3$.
+\item $\sum_j\kappa_jB_j=\sum_j\kappa_jB_j^\circ
+ +k\bigl(\mathbf e_v(\mathbf e_x-\mathbf e_y)^{\mathsf T}
+ +(\mathbf e_x-\mathbf e_y)\mathbf e_v^{\mathsf T}\bigr)$. In particular, both
+ sums have all diagonal entries equal to $\tau_T$.
+\item $\sum_j\mathfrak n_j^{-1}\kappa_jB_j\mathbf e
+ =\sum_j\mathfrak n_j^{-1}\kappa_jB_j^\circ\mathbf e=\tau_T\mathbf e$.
+\item Let $\mathsf S$ be the permutation matrix that exchanges the coordinates
+ $x$ and $y$, and write $B_j(k)$ for the dependence on $k$. Then
+ $\mathsf SB_j(k)\mathsf S=B_j(-k)$ and $\mathsf SB_j^\circ\mathsf S=B_j^\circ$ for
+ every $j$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (a), we have $\mathbf e\cdot\mathbf c_0=3$, $\mathbf e\cdot\mathbf c_1=2$,
+$\mathbf e\cdot\mathbf c_v=\mathbf e\cdot\mathbf c_x=\mathbf e\cdot\mathbf c_y=1$
+and $L_2\mathbf e=0$, and the same numbers for the baseline vectors
+$\mathbf e$, $\mathbf e_x+\mathbf e_y$ and $\mathbf e_v$. For (b), note that
+$h\sum_{j\le4}\kappa_jB_j$ is the covariance of the perturbed window fields
+divided by $b$. The computation above gives
+\[
+ h\sum_{j\le4}\kappa_jB_j=h\sum_{j\le4}\kappa_jB_j^\circ
+ +\delta\bigl(\mathbf e_v(\mathbf e_x-\mathbf e_y)^{\mathsf T}
+ +(\mathbf e_x-\mathbf e_y)\mathbf e_v^{\mathsf T}\bigr)+hk^2L_\vartheta L_2,
+\]
+while $h\kappa_5B_5=h\kappa_5B_5^\circ-hk^2L_\vartheta L_2$. Adding and
+dividing by $h$ gives (b). The diagonal of the baseline sum is
+$\kappa_1+\kappa_2+\kappa_4+\kappa_5=\tau_T$ in the coordinates $x,y$ and
+$\kappa_1+\kappa_3+\kappa_4+\kappa_5=\tau_T$ in the coordinate $v$. For (c),
+we have $B_1\mathbf e=3\mathbf c_0$, $B_2\mathbf e=2\mathbf c_1$,
+$B_3\mathbf e=\mathbf c_v$, $B_4\mathbf e=\mathbf c_v+\mathbf c_x+\mathbf c_y$
+and $B_5\mathbf e=\mathbf e$, so that
+\[
+ \sum_j\mathfrak n_j^{-1}\kappa_jB_j\mathbf e
+ =\mathbf c_0+\vartheta\mathbf c_1+\mathbf c_v
+ +(1-\vartheta)(\mathbf c_x+\mathbf c_y)+\kappa_5\mathbf e.
+\]
+Its $v$ entry is $2+\kappa_5$. Its $x$ entry is
+\[
+\begin{aligned}
+ &(1+\omega_0k)+\vartheta(1-\omega_0k)+\omega_1k+(1-\vartheta)(1-2\omega_0k)
+ +\kappa_5\\
+ &\qquad=2+\kappa_5+k\bigl(\omega_1-(1-\vartheta)\omega_0\bigr)=\tau_T,
+\end{aligned}
+\]
+and the $y$ entry is the same with $k$ replaced by $-k$. For the baseline we
+find $\mathbf e+\vartheta(\mathbf e_x+\mathbf e_y)+\vartheta\mathbf e_v
++(1-\vartheta)\mathbf e+\kappa_5\mathbf e=\tau_T\mathbf e$. Finally, (d)
+holds because $\mathsf S\mathbf c_0(k)=\mathbf c_0(-k)$, $\mathsf S\mathbf
+c_1(k)=\mathbf c_1(-k)$, $\mathsf S\mathbf c_v(k)=\mathbf c_v(-k)$, $\mathsf
+S\mathbf c_x(k)=\mathbf c_y(-k)$, $\mathsf S\mathbf c_y(k)=\mathbf c_x(-k)$ and
+$\mathsf SL_2\mathsf S=L_2$.
+\end{proof}
+
+Part (b) says that the window shifts the overlaps of $v$ with $x$ and $y$ by
+$\pm\delta$ and changes nothing else in the total covariance. Part (c) is the
+identity behind the cancellation of the linear part of the terminal function
+in \cref{sec:cub-coefficients,sec:cub-profile}.
+
+\begin{lemma}[Admissibility and endpoint]\label{lem:cub-path}
+Let $q_0\in K$, $0\le h\le h_1$ and $\abs k\le k_0$, and suppose that
+$\vartheta K_\beta h\le\alpha_*$. Then every increment of the perturbed path is
+positive semidefinite, and its masses are nondecreasing along the path. Its
+endpoint is
+\begin{equation}\label{b:eq:os-target}
+ D_\delta=D(r,q,\delta)=\begin{pmatrix}
+ 1&r+\delta&r-\delta\\r+\delta&1&q\\r-\delta&q&1
+ \end{pmatrix}.
+\end{equation}
+The same holds for the baseline path, whose endpoint is $D(r,q,0)$.
+\end{lemma}
+
+\begin{proof}
+The rates $B_1,\dots,B_4$ and the baseline rates are sums of matrices of the
+form $\mathbf c\mathbf c^{\mathsf T}$. The matrix $L_2$ has the eigenvalue
+$\abs{\mathbf e_x-\mathbf e_y}^2=2$ on $\mathbf e_x-\mathbf e_y$ and the
+eigenvalue $0$ on the orthogonal complement, and $\mathrm{Id}-L_2/4$ has eigenvalues
+$1,1,1/2$. This proves that the increments are positive semidefinite.
+
+The masses are nondecreasing within each stage because $\alpha$ is
+nondecreasing. At the junctions, they are $\alpha(q_0)/3$ on both sides of
+$q_0$, then $\alpha(r)/3\le\alpha(r)/2$, then $\alpha(q)/2\le\alpha(r)$, and
+they are continuous at the remaining junctions. The inequality
+$\alpha(q)\le2\alpha(r)$ holds because $[q_0,T]\subset K'$, so that
+\[
+ \alpha(q)-\alpha(r)\le K_\beta(q-r)=\vartheta K_\beta h\le\alpha_*\le\alpha(r).
+\]
+All masses are at most $1$.
+
+For the endpoint, the baseline path ends at
+$q_0\mathbf e\mathbf e^{\mathsf T}+h\sum_j\kappa_jB_j^\circ+(1-T)\mathrm{Id}$. We have
+$h\kappa_1=h$, $h\kappa_2=h\kappa_3=\vartheta h$ and
+$h(\kappa_4+\kappa_5)+1-T=1-q$, and this endpoint equals
+\[
+ r\,\mathbf e\mathbf e^{\mathsf T}
+ +\vartheta h\bigl((\mathbf e_x+\mathbf e_y)(\mathbf e_x+\mathbf e_y)^{\mathsf T}
+ +\mathbf e_v\mathbf e_v^{\mathsf T}\bigr)+(1-q)\mathrm{Id}=D(r,q,0).
+\]
+By \cref{lem:cub-identities}(b), the endpoint of the perturbed path is
+$D(r,q,0)+hk\bigl(\mathbf e_v(\mathbf e_x-\mathbf e_y)^{\mathsf T}
++(\mathbf e_x-\mathbf e_y)\mathbf e_v^{\mathsf T}\bigr)=D_\delta$.
+\end{proof}
+
+\subsection{The trial value}\label{sec:cub-trial}
+
+Let $\Lambda_*=\max_{\abs k\le k_0}\sum_j\kappa_j\abs{B_j}$, where $\abs{B_j}$
+is the operator norm, and fix $h_0\in(0,h_1]$ such that
+\begin{equation}\label{eq:cub-h0}
+ \vartheta K_\beta h_0\le\alpha_*,\qquad 6bh_0\Lambda_*\le1.
+\end{equation}
+In the rest of this section we assume that $q_0\in K$, $0\le h\le h_0$ and
+$\abs k\le k_0$, so that \cref{lem:cub-path} applies. We now define the trial
+value and express it through the local window.
+
+For $N\ge1$, let $(Q^{(N)},m^{(N)})$ be the admissible path obtained from the
+perturbed path by dividing $[0,q_0]$, each scalar interval $I_j$ and $[T,1]$
+into $N$ intervals of equal length, keeping the covariance increments, and
+giving each increment the mass of the path at the left endpoint of its scalar
+interval. The proof of \cref{lem:cub-path} shows that these masses are
+nondecreasing, and the endpoint is $D_\delta$. We define
+\begin{equation}\label{b:eq:os-trial}
+ \mathcal T(q_0,h,k)=\lim_{N\to\infty}\Bigl(\Psi\bigl(Q^{(N)},m^{(N)},0\bigr)
+ -\frac b4\int m^{(N)}\dd\norm{Q^{(N)}}_F^2\Bigr).
+\end{equation}
+The expression in parentheses is the trial value
+$\mathcal T_{D_\delta}(Q^{(N)},m^{(N)},0)$ of \cref{def:inp-trial}, whose
+mismatch term $\norm{D_\delta-Q_N}_F^2$ vanishes because the endpoint is
+$D_\delta$; by \cref{lem:cub-trial} below,
+$\mathcal T(q_0,h,k)$ is a trial value for $D_\delta$ in the sense of that
+definition. We write $\mathcal T^\circ(q_0,h,k)$ for the same limit for the
+baseline path.
+
+To describe the limit, we use the flows of \cref{sec:flow}. The \emph{local
+block} is the flow, in the sense of \cref{def:flow,lem:flow-step-limit}, of the
+stage datum with $\ell=3$, $N=5$, matrices $B_1,\dots,B_5$, durations
+$h\kappa_1,\dots,h\kappa_5$, and masses
+$m_j(\tau)=\mathfrak n_j^{-1}\alpha\bigl(q_0+h(o_j+\kappa_j\tau)\bigr)$ for
+$\tau\in[0,1]$. Here $\tau=0$ is the end of $I_j$ closest to the root of
+the hierarchy, and $\tau=1$ the end closest to the terminal time. The flow
+$F$ solves
+\begin{equation}\label{b:eq:os-vector-flow}
+ -\partial_\tau F=\frac{bh\kappa_j}2\Bigl\{B_j\mathbin:D^2F
+ +m_j(\tau-j+1)\,\nabla F\cdot B_j\nabla F\Bigr\}\quad\text{on }(j-1,j)\times\R^3,
+ \qquad j=1,\dots,5,
+\end{equation}
+with $F(5,\mathbf z)=\sum_{i\in\{v,x,y\}}\Phi(T,z_i)$, and we set
+\[
+ \mathcal B(q_0,h,k,\mathbf z)=F(0,\mathbf z).
+\]
+We define $\mathcal B^\circ$ in the same way with the rates $B_j^\circ$. For
+masses that are constant on the pieces of a partition, the flow is the
+composition of the integration steps of \cref{def:inp-step}
+(see \eqref{eq:flow-step-solution}), that is, the value of a finite hierarchy; for
+the masses above it is the limit of these values (\cref{lem:flow-step-limit}(b)).
+
+For the initial segment, let $f\colon\R\to\R$ have bounded derivatives of orders
+one and two. We write $\mathcal H(f)=\mathcal H^\alpha_{q_0,3}f$, in the notation
+of \cref{cor:flow-prefix}: this is the value at $(0,0)$ of the solution
+$\Phi^\alpha_f$ of
+\[
+ -\partial_t\Phi^\alpha_f=\frac b2\Bigl(\partial_{zz}\Phi^\alpha_f+\frac{\alpha(t)}3
+ (\partial_z\Phi^\alpha_f)^2\Bigr)\quad\text{on }[0,q_0]\times\R,\qquad
+ \Phi^\alpha_f(q_0,\cdot)=f,
+\]
+in the sense of \cref{lem:flow-step-limit}. It is the one-site recursion of
+three coordinates that share every field increment on $[0,q_0]$, acting on a
+function of their common value (\cref{rem:flow-diagonal}), and it is the
+operator $\mathcal H_\alpha$ of \cref{sec:fr-prefix} on the interval $[0,q_0]$.
+By the first claim of \cref{cor:flow-prefix},
+\begin{equation}\label{eq:cub-prefix-scalar}
+ \mathcal H\bigl(3\Phi(q_0,\cdot)\bigr)=3\Phi(0,0).
+\end{equation}
+
+Finally, the penalties of the two paths are the limits
+$\Pi(q_0,h,k)$ and $\Pi^\circ$ of $\int m^{(N)}\dd\norm{Q^{(N)}}_F^2$, and
+we write $\Delta\Pi=\Pi-\Pi^\circ$ and
+\begin{equation}\label{eq:cub-V}
+ V(q_0,h,k,z)=\mathcal B(q_0,h,k,z\mathbf e)-3\Phi(q_0,z)\qquad(z\in\R).
+\end{equation}
+
+\begin{lemma}[The trial value]\label{lem:cub-trial}
+The limit \eqref{b:eq:os-trial} exists, and the following hold.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item For every $n\ge2$ such that $D_\delta$ is feasible, we have
+ $p_{3,n}(D_\delta)\le\mathcal T(q_0,h,k)$.
+\item $\mathcal T(q_0,h,k)=\mathcal H\bigl(\mathcal B(q_0,h,k,\cdot\,\mathbf e)\bigr)
+ -\frac b4\Pi(q_0,h,k)$, and the same holds for the baseline path with
+ $\mathcal B^\circ$ and $\Pi^\circ$.
+\item $\mathcal B^\circ(q_0,h,k,z\mathbf e)=3\Phi(q_0,z)$ for all $z\in\R$,
+ $\Pi^\circ=6\int_0^1t\alpha(t)\dd t$, and $\mathcal T^\circ(q_0,h,k)=3P_\beta$.
+\item We have
+ \begin{equation}\label{eq:cub-decomposition}
+  \mathcal T(q_0,h,k)-3P_\beta
+  =\mathcal H\bigl(3\Phi(q_0,\cdot)+V\bigr)-\mathcal H\bigl(3\Phi(q_0,\cdot)\bigr)
+  -\frac b4\Delta\Pi.
+ \end{equation}
+\item Let $\widetilde Q_0=0$ and $\widetilde Q_j=\sum_{i\le j}\kappa_iB_i$, and
+ define $\widetilde Q_j^\circ$ in the same way with the rates $B_i^\circ$. Then
+ \begin{equation}\label{eq:cub-penalty}
+  \Delta\Pi=\sum_{j=1}^5\frac{2h^2\kappa_j}{\mathfrak n_j}\int_0^1
+  \alpha\bigl(q_0+h(o_j+\kappa_j\tau)\bigr)
+  \Bigl[(\widetilde Q_{j-1}+\kappa_j\tau B_j)\mathbin:B_j
+  -(\widetilde Q_{j-1}^\circ+\kappa_j\tau B_j^\circ)\mathbin:B_j^\circ\Bigr]\dd\tau .
+ \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We first identify the values of the finite paths with step flows, then pass to
+the limit, and then treat the baseline and the penalties.
+
+\paragraph{Step 1: the finite paths as step flows.} We consider the stage datum
+with seven stages: the initial segment, with matrix $\mathbf e\mathbf
+e^{\mathsf T}$, duration $q_0$ and mass $\alpha(q_0\tau)/3$; the five stages
+of the window; and the final segment, with matrix $\mathrm{Id}$, duration $1-T$ and mass
+$\alpha(T+(1-T)\tau)$. Its terminal function is
+$\mathbf z\mapsto\sum_i\log(2\cosh z_i)$. The masses of $(Q^{(N)},m^{(N)})$ are the sampled
+masses of this datum for the partition of each stage into $N$ pieces of equal
+length. By the remark after \eqref{eq:flow-step-solution},
+$\Psi(Q^{(N)},m^{(N)},0)$ is the output at $\mathbf z=0$ of the corresponding
+step flow.
+
+\paragraph{Step 2: the limit.} The sampled masses converge in $L^1$ to the
+masses of the datum, because these are nondecreasing functions. By
+\cref{lem:flow-step-limit}(b), the step flows converge uniformly to the flow of
+the seven-stage datum, and in particular the values converge. By \cref{lem:flow-step-limit}(c),
+applied twice, this flow is obtained by composing the flows of the three parts.
+The final segment, with this terminal function, gives
+$\sum_i\Phi(T,z_i)$: its matrix is $\mathrm{Id}$ and the terminal function is a sum of
+functions of single coordinates; by \cref{lem:inp-steps}(c), its step flows are sums of
+scalar recursions \eqref{eq:inp-scalar-recursion}, which converge to $\Phi$ by
+the definition of $\Phi_\alpha$ (\cref{inp:ob-scalar}(i)). This function belongs
+to $\mathcal C^2$, since $\abs u\le1$ and $0<\chi\le1$, and to $\mathcal C^\infty$
+by \cref{lem:sc-derivatives}. The window then gives
+$\mathcal B$, which belongs to $\mathcal C^2$ by \cref{lem:flow-step-limit}(d):
+its terminal function has $\norm{D^2f}_\infty\le1$, and
+$2\cdot3\,b\,\norm{D^2f}_\infty\sum_jh\kappa_j\abs{B_j}\le6bh_0\Lambda_*\le1$ by
+\eqref{eq:cub-h0}. By \cref{rem:flow-diagonal} the initial
+segment acts on $z\mapsto\mathcal B(z\mathbf e)$ as $\mathcal H$. We conclude
+that the values converge to $\mathcal H(\mathcal B(\cdot\,\mathbf e))$. The penalties
+converge as well. On the window, this is \cref{lem:flow-penalty}, with
+$Q_\star=q_0\mathbf e\mathbf e^{\mathsf T}$. On the initial and final segments,
+the penalties are Riemann--Stieltjes sums $\sum_im_i(\norm{Q_i}_F^2
+-\norm{Q_{i-1}}_F^2)$, in which $m_i$ is the value of a nondecreasing function
+at the left endpoint of a piece and $\norm Q_F^2$ is a continuous, piecewise
+quadratic function of the scalar time; they converge to the corresponding
+integrals. This shows that the limit \eqref{b:eq:os-trial} exists, and it
+proves (b). The endpoints, values and penalties converge, and (a) follows from the
+last sentence of \cref{inp:ob-matrix}.
+
+\paragraph{Step 3: the baseline.} Let $\alpha_N$ be the step distribution
+function equal to $\alpha$ at the left endpoints of the scalar partition. The
+baseline finite path is the path of \cref{lem:inp-blocks}(b) for $\alpha_N$,
+whose breakpoints contain $r$ and $q$: the common increments are those on
+$[0,r]$, the $xy$-increments of stage $2$ precede the $v$-increments of stage
+$3$ (their masses are ordered by \cref{lem:cub-path}), and the independent
+increments are those on $[q,1]$. \Cref{lem:inp-blocks}(b) implies that its
+trial value is $3\mathcal P_\beta(\alpha_N)$ and that its penalty is
+$6\int_0^1t\alpha_N(t)\dd t$.
+By \cref{inp:ob-scalar}(ii), these converge to $3\mathcal P_\beta(\alpha)$ and
+$6\int_0^1t\alpha(t)\dd t$, and $\mathcal P_\beta(\alpha)=P_\beta$ by
+\cref{inp:parisi,inp:unique}. The proof of \cref{lem:inp-blocks}(b) also shows
+that the step flow of the baseline window, applied to $\sum_i\Phi_{\alpha_N}(T,z_i)$,
+equals $3\Phi_{\alpha_N}(q_0,z)$ at $z\mathbf e$. By the last estimate of
+\cref{lem:flow-step-limit}(a), by \cref{lem:flow-step-limit}(b), and by
+\cref{inp:ob-scalar}(ii), the left side converges to $\mathcal B^\circ(q_0,h,k,z\mathbf e)$
+and the right side to $3\Phi(q_0,z)$. This proves (c), and (d) follows from (b),
+(c) and \eqref{eq:cub-prefix-scalar}.
+
+\paragraph{Step 4: the penalty.} During stage $j$, at the fraction $\tau\in[0,1]$
+of its scalar interval, the perturbed path is
+$Q=q_0\mathbf e\mathbf e^{\mathsf T}+h(\widetilde Q_{j-1}+\kappa_j\tau B_j)$. Then
+$\dd\norm Q_F^2=2Q\mathbin:\dd Q=2h\kappa_jQ\mathbin:B_j\dd\tau$, and the
+mass is $\alpha(q_0+h(o_j+\kappa_j\tau))/\mathfrak n_j$. The term
+$2h\kappa_jq_0\mathbf e\mathbf e^{\mathsf T}\mathbin:B_j=2h\kappa_jq_0\,
+\mathbf e\cdot B_j\mathbf e$ is the same for the baseline path, by
+\cref{lem:cub-identities}(a). The initial segments of the two paths coincide.
+On $[T,1]$, both paths have $\dd\norm Q_F^2=2\tr Q\,\dd t$, and $\tr Q(T)$
+is the same for both paths, because $\sum_j\kappa_jB_j$ and
+$\sum_j\kappa_jB_j^\circ$ have the same diagonal
+(\cref{lem:cub-identities}(b)). Subtracting the two penalties, we obtain
+\eqref{eq:cub-penalty}.
+\end{proof}
+
+By \cref{lem:cub-trial}(a), every upper bound for $\mathcal T(q_0,h,k)$ is an
+upper bound for the constrained pressure $p_{3,n}(D_\delta)$. The rest of the
+section bounds $\mathcal T(q_0,h,k)-3P_\beta$ through \eqref{eq:cub-decomposition}.
+In \eqref{eq:cub-decomposition}, the function $V$, the number $\Delta\Pi$, and
+the part of $\Pi$ accumulated on $[q_0,1]$ depend on $\alpha$ only through its
+restriction to $[q_0,1]$. Changing $\alpha$ on $[0,q_0)$
+leaves them unchanged; we use this in \cref{sec:fractional}.
+
+\section{Derivatives of the local block}\label{sec:cub-derivatives}
+
+We now apply the estimates of \cref{sec:flow} to the local block. Let
+$\mathcal U=[0,h_1]\times[-k_0,k_0]$. The stage datum of
+\eqref{b:eq:os-vector-flow} satisfies the hypotheses \ref{H1}--\ref{H5} of
+\cref{sec:flow}, with $\ell=3$ and $N=5$, for the following reasons.
+\begin{itemize}
+\item \ref{H1}: the matrices $B_j$ and $B_j^\circ$ do not depend on $h$, are
+ polynomial in $k$, and are positive semidefinite (\cref{lem:cub-path}). Some
+ of them are singular.
+\item \ref{H2}: the durations are $h\kappa_j(k)$, where $\kappa_j\ge0$ is a
+ polynomial in $k$. The coefficient $\kappa_5=4k^2L_\vartheta$ of the terminal
+ correction vanishes at $k=0$.
+\item \ref{H3}: the masses $m_j(\tau,h,k)=\mathfrak n_j^{-1}\alpha(q_0+h(o_j+\kappa_j(k)\tau))$
+ take values in $[0,1]$. For $(h,k)\in\mathcal U$, the argument of $\alpha$ lies
+ in $K'$, on which $\alpha$ is infinitely differentiable, and all derivatives
+ of $m_j$ in $(h,k)$ exist and are continuous.
+\item \ref{H4}: the terminal function is $f(h,k,\mathbf z)=\sum_i\Phi(q_0+h\tau_T(k),z_i)$.
+ By \cref{lem:sc-derivatives} and \cref{b:lem:os-scalar-jets}(v), every
+ derivative $\partial_h^{\gamma_h}\partial_k^{\gamma_k}D^\iota_{\mathbf z}f$ with
+ $(\gamma_h,\gamma_k,\iota)\ne(0,0,0)$ exists, is continuous, and is bounded on
+ $\mathcal U\times\R^3$.
+\item \ref{H5}: since $0<\chi\le1$ and $f$ is a sum of functions of single
+ coordinates, we have $\norm{D^2f}_\infty\le1$, and $2\ell bh_0\Lambda_*\norm{D^2f}_\infty
+ \le6bh_0\Lambda_*\le1$ by \eqref{eq:cub-h0}.
+\end{itemize}
+The suprema that enter the constants of \cref{prop:flow-uniform}(ii) and
+\cref{lem:flow-penalty} are bounded uniformly in $q_0\in K$, because they involve
+only the derivatives of $\alpha$ and $\Phi$ on $K'$. By
+\cref{rem:flow-uniformity}, the conclusions are uniform in $q_0\in K$.
+
+\begin{lemma}[Derivatives of the local block]\label{b:lem:os-flow}
+Let $h_0$ be as in \eqref{eq:cub-h0}. The following hold for $q_0\in K$,
+$0\le h\le h_0$ and $\abs k\le k_0$, where derivatives in $h$ at $h=0$ are
+right derivatives. All constants depend only on $\beta$, $\vartheta$, $k_0$, $K$
+and the orders of the derivatives.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For all integers $\gamma_h,\gamma_k,j\ge0$ with $\gamma_h+\gamma_k+j\ge1$, the derivatives
+ $\partial_h^{\gamma_h}\partial_k^{\gamma_k}D_{\mathbf z}^j\mathcal B$ and
+ $\partial_h^{\gamma_h}\partial_k^{\gamma_k}D_{\mathbf z}^j\mathcal B^\circ$ exist, are continuous,
+ and are bounded uniformly in $\mathbf z\in\R^3$.
+\item For all integers $\gamma_h,\gamma_k,j\ge0$, the derivative
+ $\partial_h^{\gamma_h}\partial_k^{\gamma_k}\partial_z^jV(q_0,h,k,z)$ is bounded uniformly in $z$.
+ Moreover,
+ \[
+  V(q_0,h,0,\cdot)=0,\qquad V(q_0,h,-k,\cdot)=V(q_0,h,k,\cdot),
+ \]
+ and $V(q_0,0,k,\cdot)=\partial_hV(q_0,0,k,\cdot)=0$.
+\item There exists $C$ such that, for $0\le j\le3$ and all $z$,
+ \begin{equation}\label{b:eq:os-V-bound}
+  \abs{\partial_z^jV(q_0,h,k,z)}\le Ch^2k^2.
+ \end{equation}
+\item The function $\Delta\Pi$ is smooth in $(h,k)$, with bounded derivatives of
+ every order, it is even in $k$, it vanishes at $k=0$, and
+ $\abs{\Delta\Pi}\le Ch^2k^2$.
+\end{enumerate}
+\end{lemma}
+
+We have $\norm{V}_{C^3_b}\le Ch^2k^2=C\delta^2$, which is at most
+$C\delta^2/h$ for $h\le1$. Of the derivatives in (i) and (ii), we use those with
+$\gamma_h\le4$, $\gamma_k\le2$, and $j\le3$; they have weight $j+2(\gamma_h+\gamma_k)\le15$ in the sense of
+\cref{sec:flow}.
+
+\begin{proof}
+Part (i) is \cref{prop:flow-uniform}(ii), with constants uniform in $q_0\in K$
+by \cref{rem:flow-uniformity}. The bounds include the right derivatives
+at $h=0$ and the derivatives at $k=0$, where the terminal correction has zero
+duration (\cref{rem:flow-regularization}). The value $\mathcal B$ itself has
+linear growth, and (i) does not bound it.
+
+For (ii), we first prove the identities. If $k=0$, then $B_j=B_j^\circ$ for $j\le4$ and
+$\kappa_5=0$. The perturbed and baseline windows coincide, and
+$V=\mathcal B^\circ(\cdot\,\mathbf e)-3\Phi(q_0,\cdot)=0$ by
+\cref{lem:cub-trial}(c). For the evenness, let $\mathsf S$ be as in
+\cref{lem:cub-identities}(d). The durations and masses are even in $k$, and the
+terminal function is invariant under $\mathsf S$. If $F$ solves
+\eqref{b:eq:os-vector-flow} at $k$, then $(\tau,\mathbf z)\mapsto F(\tau,\mathsf
+S\mathbf z)$ solves it at $-k$, by \cref{lem:cub-identities}(d), and it has bounded
+first and second spatial derivatives. By the uniqueness in
+\cref{prop:flow-uniform}(i), $\mathcal B(q_0,h,-k,\mathbf z)
+=\mathcal B(q_0,h,k,\mathsf S\mathbf z)$, and $\mathsf S(z\mathbf e)=z\mathbf e$.
+
+At $h=0$ all durations vanish. Let $\varphi(\mathbf z)=\sum_i\Phi(q_0,z_i)$. Then
+$\mathcal B(q_0,0,k,\mathbf z)=\varphi(\mathbf z)$ by \cref{rem:flow-first-order},
+which implies that $V(q_0,0,k,\cdot)=0$. By \eqref{eq:flow-first-order}, in which the average mass of
+stage $j$ at $h=0$ is $a/\mathfrak n_j$ with $a=\alpha(q_0)$,
+\[
+ \partial_h\mathcal B(q_0,0,k,\mathbf z)
+ =\tau_T\sum_i\partial_t\Phi(q_0,z_i)
+ +\frac b2\sum_{j=1}^5\kappa_j\Bigl\{B_j\mathbin:D^2\varphi(\mathbf z)
+ +\frac a{\mathfrak n_j}\nabla\varphi(\mathbf z)\cdot B_j\nabla\varphi(\mathbf z)\Bigr\}.
+\]
+The first term comes from the dependence of $T$ on $h$. At $\mathbf
+z=z\mathbf e$, we have $D^2\varphi=\chi(q_0,z)\mathrm{Id}$ and $\nabla\varphi=u(q_0,z)\mathbf
+e$, and the sum equals
+$\chi(q_0,z)\sum_j\kappa_j\tr B_j+u(q_0,z)^2a\sum_j\mathfrak n_j^{-1}\kappa_j\,
+\mathbf e\cdot B_j\mathbf e$. By \cref{lem:cub-identities}(a) and (b), it does
+not change when $B_j$ is replaced by $B_j^\circ$. Since $\mathcal B^\circ(q_0,h,k,z\mathbf
+e)=3\Phi(q_0,z)$ does not depend on $h$, we conclude that
+$\partial_hV(q_0,0,k,\cdot)=0$. The bounds in (ii) with $\gamma_h+\gamma_k+j\ge1$ follow
+from (i), the formula for derivatives along the diagonal in
+\cref{rem:flow-uniformity}, and \cref{lem:sc-derivatives}, since $V$ is the difference of
+$\mathcal B(\cdot\,\mathbf e)$ and the function $3\Phi(q_0,\cdot)$, which does
+not depend on $(h,k)$. Finally, $V$ itself is bounded, since
+$V(q_0,0,k,\cdot)=0$ and $\partial_hV$ is bounded.
+
+For (iii), let $0\le j\le3$. Taylor's formula and the identities
+$V(q_0,0,k,\cdot)=\partial_hV(q_0,0,k,\cdot)=0$ yield
+$\partial_z^jV(h)=\int_0^h(h-h')\,\partial_h^2\partial_z^jV(h')\dd h'$. The function
+$\partial_h^2\partial_z^jV(h',k)$ vanishes at $k=0$ and is even in $k$, which
+implies that $\abs{\partial_h^2\partial_z^jV(h',k)}\le\frac{k^2}2\sup\abs{\partial_k^2
+\partial_h^2\partial_z^jV}$. Combining these bounds with (ii), we obtain
+\eqref{b:eq:os-V-bound}.
+
+For (iv), \cref{lem:flow-penalty} with $Q_\star=q_0\mathbf e\mathbf e^{\mathsf T}$
+shows that the penalties of the two windows are smooth with bounded
+derivatives of every order, and their contributions on $[0,q_0]$ and $[T,1]$
+cancel in $\Delta\Pi$ (Step~4 of the proof of \cref{lem:cub-trial}). The
+penalty of each path is invariant under $Q\mapsto\mathsf SQ\mathsf S$, since
+$\norm{\mathsf SQ\mathsf S}_F=\norm Q_F$; by \cref{lem:cub-identities}(d), this
+proves that $\Delta\Pi$ is even in $k$. At $k=0$ the two windows coincide, and
+$\Delta\Pi=0$. Finally, $\Delta\Pi=h^2\Theta(h,k)$, where $\Theta$ is the sum in
+\eqref{eq:cub-penalty} without the factor $h^2$; since $\Theta$ is smooth, even in
+$k$ and zero at $k=0$, we have $\abs\Theta\le Ck^2$.
+\end{proof}
+
+\begin{corollary}[Reduction to the boundary perturbation]\label{cor:cub-prefix}
+For $q_0\in K$, $0\le h\le h_0$, and $\abs k\le k_0$,
+\[
+ \mathcal T(q_0,h,k)-3P_\beta
+ =\E V(q_0,h,k,Y_{q_0})-\frac b4\Delta\Pi(q_0,h,k)+\mathcal E_{\rm in},
+ \qquad\abs{\mathcal E_{\rm in}}\le Ch^4k^4.
+\]
+\end{corollary}
+
+\begin{proof}
+By \cref{b:lem:os-flow}(ii), $V$, $V'$, and $V''$ are bounded, and
+$\norm V_\infty\le Ch^2k^2$ by \eqref{b:eq:os-V-bound}. Using \cref{cor:flow-prefix}
+with $\mathfrak n=3$, $t_\star=q_0$, and $\eps=Ch^2k^2$, we find that
+\[
+ \Bigl|\mathcal H\bigl(3\Phi(q_0,\cdot)+V\bigr)-3\Phi(0,0)
+ -\E V(q_0,h,k,Y_{q_0})\Bigr|\le\frac{C^2h^4k^4}2.
+\]
+We have $3\Phi(0,0)=\mathcal H(3\Phi(q_0,\cdot))$ by \eqref{eq:cub-prefix-scalar},
+and inserting this bound into \eqref{eq:cub-decomposition} completes the proof.
+\end{proof}
+
+The expectation $\E V(q_0,h,k,Y_{q_0})$ is taken under the law of the scalar
+diffusion at the fixed time $q_0$, which does not depend on $h$ or $k$. This is
+why we expand at a fixed left endpoint $q_0$ rather than at a fixed center $r$.
+
+We expand $\Delta\Pi$ explicitly. We write $a=\alpha(q_0)$ and insert
+$\alpha(q_0+h(o_j+\kappa_j\tau))=a+\alpha'(q_0)h(o_j+\kappa_j\tau)+O(h^2)$ in
+\eqref{eq:cub-penalty}. Then the Taylor polynomial of degree three of
+$\Delta\Pi$ in $h$ is
+$ah^2N_\vartheta(k)+\alpha'(q_0)h^3N_\vartheta^{(1)}(k)$, where
+\begin{equation}\label{eq:cub-N}
+ N^{(i)}_\vartheta(k)=\sum_{j=1}^5\frac{2\kappa_j}{\mathfrak n_j}\int_0^1
+ (o_j+\kappa_j\tau)^i\Bigl[(\widetilde Q_{j-1}+\kappa_j\tau B_j)\mathbin:B_j
+ -(\widetilde Q^\circ_{j-1}+\kappa_j\tau B_j^\circ)\mathbin:B^\circ_j\Bigr]\dd\tau
+\end{equation}
+for $i\in\{0,1\}$, and $N_\vartheta=N_\vartheta^{(0)}$. The integrands are
+polynomials in $\tau$, and we find
+\begin{equation}\label{eq:cub-N-explicit}
+ N_\vartheta(k)=\frac{8(1-\vartheta)}{(2-\vartheta)^2}k^2
+ -\frac{2(3\vartheta^2+6\vartheta+4)}{3(2-\vartheta)^4}k^4,\qquad
+ N_{1/2}(k)=\frac{16}9k^2-\frac{248}{243}k^4,
+\end{equation}
+and $N^{(1)}_{1/2}(k)=\frac{103}{108}k^2-\frac{7180}{729}k^4-\frac{21296}{729}k^6$.
+The polynomial $N^{(1)}_\vartheta$ enters only through the cancellation in
+\cref{b:prop:os-expansion}, and we do not use its value.
+
+\section{Taylor coefficients at constant mass}\label{sec:cub-coefficients}
+
+By \cref{b:lem:os-flow}, the function $h\mapsto V(q_0,h,k,z)$ has four
+bounded derivatives, and it is determined up to an error $O(h^4)$ by its
+Taylor polynomial of degree three. In this section and the next we compute
+this polynomial. We write $[X]_n=\partial_h^nX|_{h=0}/n!$ for the Taylor
+coefficients of a function $X$ of $h$ at $h=0$.
+
+\subsection{The recursion for the coefficients}
+
+By \cref{prop:flow-uniform}(iii), the derivatives $\partial_h^nF$ solve the
+equations obtained by differentiating \eqref{b:eq:os-vector-flow} in $h$.
+Evaluating them at $h=0$, we obtain a recursion for the Taylor coefficients
+$[F]_n(\tau,\mathbf z)$ of the flow. We write
+$[m_j]_l(\tau)=\alpha^{(l)}(q_0)\,(o_j+\kappa_j\tau)^l/(l!\,\mathfrak n_j)$ for the
+Taylor coefficients of the masses. The right side of
+\eqref{b:eq:os-vector-flow} contains the factor $h$, and taking the coefficient
+of $h^n$ we find, for $n\ge1$ and $\tau\in[j-1,j]$,
+\begin{equation}\label{eq:cub-coefficient-recursion}
+\begin{aligned}
+ [F]_n(\tau)=[F]_n(j)+\frac{b\kappa_j}2\int_\tau^j\Bigl\{&B_j\mathbin:D^2[F]_{n-1}(\tau')\\
+ &+\sum_{l+p+p'=n-1}[m_j]_l(\tau'-j+1)\,\nabla[F]_p(\tau')\cdot B_j\nabla[F]_{p'}(\tau')\Bigr\}\dd\tau',
+\end{aligned}
+\end{equation}
+with $[F]_0=f(0,k,\cdot)$ and
+$[F]_n(5,\mathbf z)=\frac{\tau_T^n}{n!}\sum_i\partial_t^n\Phi(q_0,z_i)$.
+We call each use of the right side of \eqref{b:eq:os-vector-flow} in this
+recursion an \emph{insertion}. By \eqref{eq:sc-time-derivative} and its consequences in the proof of
+\cref{b:lem:os-scalar-jets}, $\partial_t^n\Phi(q_0,\cdot)$ is a polynomial in
+$\alpha(q_0),\dots,\alpha^{(n-1)}(q_0)$ and in the spatial derivatives of
+$\Phi(q_0,\cdot)$ of orders one to $2n$. By induction on $n$, for every $n\ge1$ the coefficient
+$[\mathcal B]_n(\mathbf z)$ is a sum of products of spatial
+derivatives of positive order of $\Phi(q_0,\cdot)$ at $z_v,z_x,z_y$,
+of total spatial order at most $2n$, with coefficients
+that are polynomials in $k$ and in
+$\alpha(q_0),\ldots,\alpha^{(n-1)}(q_0)$. Each power $h^l$ of the
+expansion of a mass carries a factor $\alpha^{(l)}(q_0)$, and each insertion
+of the right side of \eqref{b:eq:os-vector-flow} carries a factor $h$; in
+particular, $\alpha'''(q_0)$ does not occur for $n\le3$. The same holds for
+$\mathcal B^\circ$ and for $V$.
+
+We call the \emph{constant-mass part} of $[V]_n$ the value of this polynomial
+at $\alpha'(q_0)=\alpha''(q_0)=0$, with the other variables unchanged. It is
+the value of the recursion when every mass $m_j$ is replaced by the constant
+$a/\mathfrak n_j$, with $a=\alpha(q_0)$, and when the time derivatives of $\Phi$ at
+$q_0$ are computed from the Parisi equation with the constant profile $a$. In
+this section we compute the constant-mass part. The remaining part is computed
+in \cref{sec:cub-profile}.
+
+\subsection{Formal Gaussian steps}
+
+With constant masses, each stage is a Gaussian integration step, and the
+three stages of mass $a$ combine into one step by \cref{lem:inp-steps}(b). It
+is convenient to subtract the scalar evolution of the terminal function from
+this step. The result is a step whose covariance is not positive semidefinite,
+and we treat it as a formal object.
+
+Let $\ell\ge1$, let $\Sigma$ be a symmetric $\ell\times\ell$ matrix, let
+$m\in[0,1]$, and let $f$ be a smooth function on $\R^\ell$. We define $f^{[0]}=f$
+and, for $n\ge1$,
+\begin{equation}\label{eq:cub-formal}
+ f^{[n]}=\frac1{2n}\Bigl(\Sigma\mathbin:D^2f^{[n-1]}
+ +m\sum_{p+p'=n-1}\nabla f^{[p]}\cdot\Sigma\nabla f^{[p']}\Bigr),
+\end{equation}
+and we write $\widehat T_{m,\varepsilon\Sigma}f=\sum_{n\ge0}\varepsilon^nf^{[n]}$
+for the resulting formal power series in $\varepsilon$. It is the unique formal
+solution of $\partial_\varepsilon F=\frac12\bigl(\Sigma\mathbin:D^2F
++m\nabla F\cdot\Sigma\nabla F\bigr)$ with $F=f$ at $\varepsilon=0$. By induction,
+$f^{[n]}$ is a sum of products of derivatives of $f$ of positive order, of
+total order $2n$, and it is a homogeneous polynomial of degree $n$ in the
+entries of $\Sigma$. Formal series of functions are composed by substitution:
+if the function in \eqref{eq:cub-formal} is itself a formal power series in
+$\varepsilon$, we insert this series and collect the powers of $\varepsilon$. The coefficient of each power involves finitely many
+terms. The relation with the integration steps of \cref{def:inp-step} is the
+following.
+
+\begin{lemma}[Formal steps]\label{lem:cub-formal}
+Let $m\in[0,1]$, let $\Sigma,\Sigma'$ be symmetric $\ell\times\ell$ matrices, and
+let $f$ be smooth with bounded derivatives of positive order.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If $\Sigma\succeq0$, then $\varepsilon\mapsto T_{m,\varepsilon\Sigma}f(\mathbf z)$
+ is infinitely differentiable on $[0,1]$, and $\widehat T_{m,\varepsilon\Sigma}f(\mathbf z)$ is its
+ Taylor series at $\varepsilon=0$.
+\item $\widehat T_{m,\varepsilon\Sigma}\widehat T_{m,\varepsilon\Sigma'}f
+ =\widehat T_{m,\varepsilon(\Sigma+\Sigma')}f$.
+\item For $c>0$ such that $m/c\in[0,1]$, we have $\widehat T_{m/c,\varepsilon\Sigma}(cf)=c\,\widehat
+ T_{m,\varepsilon\Sigma}f$.
+\item If $\Sigma$ is diagonal with entries $\sigma_1,\dots,\sigma_\ell$ and
+ $f(\mathbf z)=\sum_i\psi_i(z_i)$, then $\widehat T_{m,\varepsilon\Sigma}f(\mathbf
+ z)=\sum_i\widehat T_{m,\varepsilon\sigma_i}\psi_i(z_i)$.
+\item For $c,u\in\R$ and $\mathbf e'\in\R^\ell$,
+ \[
+  \widehat T_{m,\varepsilon\Sigma}\bigl(c+u\,\mathbf e'\cdot\mathbf z+f\bigr)(\mathbf z)
+  =c+u\,\mathbf e'\cdot\mathbf z+\frac{\varepsilon mu^2}2\,\mathbf e'\cdot\Sigma\mathbf e'
+  +\bigl(\widehat T_{m,\varepsilon\Sigma}f\bigr)\bigl(\mathbf z+\varepsilon mu\Sigma\mathbf e'\bigr),
+ \]
+ where the last term is expanded in powers of $\varepsilon$ by Taylor's formula
+ in the shift.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (a), let $\Sigma\succeq0$. By \cref{lem:flow-cole-hopf}(b) and (c), the
+function $F(\varepsilon,\mathbf z)=T_{m,\varepsilon\Sigma}f(\mathbf z)$ is
+infinitely differentiable on $[0,1]\times\R^\ell$ and solves
+$\partial_\varepsilon F=\frac12(\Sigma\mathbin:D^2F+m\nabla F\cdot\Sigma\nabla F)$.
+Differentiating this equation $n-1$ times in $\varepsilon$ and setting
+$\varepsilon=0$, we find by induction that
+$\partial_\varepsilon^nF(0,\cdot)=n!\,f^{[n]}$.
+
+For (b), both sides are formal series whose coefficients are polynomials in
+the entries of $\Sigma$ and $\Sigma'$ and in the derivatives of $f$. If
+$\Sigma,\Sigma'\succeq0$, then \cref{lem:inp-steps}(b), part (a), and the chain
+rule show that the two sides have the same coefficients. The set of pairs of
+positive semidefinite matrices contains a nonempty open subset of the space of
+pairs of symmetric matrices, and a polynomial that vanishes on a nonempty open
+set vanishes identically. This proves (b). Parts (c) and (d) follow from
+\eqref{eq:cub-formal} by induction on $n$: for (c), the function $(cf)^{[n]}$
+computed with mass $m/c$ equals $c\,f^{[n]}$ computed with mass $m$, since the
+quadratic term acquires the factor $(m/c)c^2=mc$; for (d), mixed derivatives of
+$f$ vanish and the recursion splits into one recursion for each coordinate. For
+(e), let $\Sigma\succeq0$ and $m>0$, and let $\mathbf X$ be a centered Gaussian
+vector with covariance $\varepsilon\Sigma$. Multiplying the law of
+$\mathbf X$ by $e^{mu\mathbf e'\cdot\mathbf X}/\E e^{mu\mathbf e'\cdot\mathbf X}$
+shifts its mean to $\varepsilon mu\Sigma\mathbf e'$, and
+$\E e^{mu\mathbf e'\cdot\mathbf X}=e^{\varepsilon m^2u^2\mathbf
+e'\cdot\Sigma\mathbf e'/2}$. We obtain
+\begin{equation}\label{b:eq:os-gauge}
+ T_{m,\varepsilon\Sigma}\bigl(c+u\,\mathbf e'\cdot\mathbf z+f\bigr)(\mathbf z)
+ =c+u\,\mathbf e'\cdot\mathbf z+\frac{\varepsilon mu^2}2\,\mathbf e'\cdot\Sigma\mathbf e'
+ +\bigl(T_{m,\varepsilon\Sigma}f\bigr)\bigl(\mathbf z+\varepsilon mu\Sigma\mathbf e'\bigr).
+\end{equation}
+For $m=0$ this is immediate. Taking Taylor series in $\varepsilon$ and
+arguing as in (b), we obtain (e) for every symmetric $\Sigma$.
+\end{proof}
+
+The identity \eqref{b:eq:os-gauge} is the Cameron--Martin formula for a
+Gaussian shift.
+
+\subsection{The coefficient matrices}
+
+We define
+\begin{equation}\label{eq:cub-Lambda}
+ \Lambda_0=\mathbf c_0\mathbf c_0^{\mathsf T},\qquad
+ \Lambda_1=\vartheta\,\mathbf c_1\mathbf c_1^{\mathsf T},\qquad
+ \Lambda_2=\mathbf c_v\mathbf c_v^{\mathsf T}
+ +(1-\vartheta)\bigl(\mathbf c_x\mathbf c_x^{\mathsf T}+\mathbf c_y\mathbf c_y^{\mathsf T}\bigr)
+ -2\mathrm{Id}-k^2L_\vartheta L_2.
+\end{equation}
+We have $\Lambda_0=\kappa_1B_1$, $\Lambda_1=\kappa_2B_2$, and
+$\Lambda_2=\kappa_3B_3+\kappa_4B_4+\kappa_5B_5-\tau_T\mathrm{Id}$. The matrices
+$\Lambda_0$ and $\Lambda_1$ are positive semidefinite, and $\Lambda_2$ is not:
+its $(v,v)$ entry is $-1$. At $k=0$ we have $\Lambda_0=\mathbf e\mathbf
+e^{\mathsf T}$, $\Lambda_1=\vartheta(\mathbf e_x+\mathbf e_y)(\mathbf e_x+\mathbf
+e_y)^{\mathsf T}$ and $\Lambda_2=\vartheta\mathbf e_v\mathbf e_v^{\mathsf
+T}-(1+\vartheta)\mathrm{Id}$, which are the same expressions for the baseline rates.
+By \cref{lem:cub-identities}(b) and (c),
+\begin{equation}\label{b:eq:os-matrix-cancellations}
+ \operatorname{diag}(\Lambda_0+\Lambda_1+\Lambda_2)=0,\qquad
+ \bigl(\tfrac13\Lambda_0+\tfrac12\Lambda_1+\Lambda_2\bigr)\mathbf e=0.
+\end{equation}
+Moreover, $\mathbf e\cdot\Lambda_0\mathbf e=9$,
+$\mathbf e\cdot\Lambda_1\mathbf e=4\vartheta$,
+$\mathbf e\cdot\Lambda_2\mathbf e=-3-2\vartheta$, and
+\[
+ \Lambda_0+\Lambda_1+\Lambda_2=\begin{pmatrix}0&1+k&1-k\\1+k&0&1+\vartheta\\
+ 1-k&1+\vartheta&0\end{pmatrix}.
+\]
+For $\vartheta=1/2$ we have $\omega_0=2/3$, $\omega_1=1/3$, $L_{1/2}=11/9$,
+$\Lambda_0=\mathbf c_0\mathbf c_0^{\mathsf T}$ with
+$\mathbf c_0=(1,1+\frac{2k}3,1-\frac{2k}3)^{\mathsf T}$, and
+\[
+ \Lambda_2=\begin{pmatrix}
+ -1&\frac k3&-\frac k3\\[2pt]
+ \frac k3&-\frac{2k^2}3-\frac{2k}3-\frac32&\frac{2k^2}3\\[2pt]
+ -\frac k3&\frac{2k^2}3&-\frac{2k^2}3+\frac{2k}3-\frac32
+ \end{pmatrix},
+\]
+\[
+ \Lambda_0+\Lambda_1=\begin{pmatrix}
+ 1&1+\frac{2k}3&1-\frac{2k}3\\[2pt]
+ 1+\frac{2k}3&\frac{2k^2}3+\frac{2k}3+\frac32&\frac32-\frac{2k^2}3\\[2pt]
+ 1-\frac{2k}3&\frac32-\frac{2k^2}3&\frac{2k^2}3-\frac{2k}3+\frac32
+ \end{pmatrix}.
+\]
+
+\begin{lemma}[Reduction to three formal steps]\label{lem:cub-three-steps}
+Let $a=\alpha(q_0)$ and $\varphi(\mathbf z)=\sum_i\Phi(q_0,z_i)$. For $n\le3$,
+the constant-mass part of $[\mathcal B]_n$ is the coefficient of $h^n$ in
+\begin{equation}\label{eq:cub-three-steps}
+ \widehat T_{a/3,\,bh\Lambda_0}\,\widehat T_{a/2,\,bh\Lambda_1}\,
+ \widehat T_{a,\,bh\Lambda_2}\,\varphi,
+\end{equation}
+and the constant-mass part of $[\mathcal B^\circ]_n$ is the coefficient of $h^n$
+in the same expression at $k=0$.
+\end{lemma}
+
+\begin{proof}
+With the constant mass $a/\mathfrak n_j$, stage $j$ maps $F(j,\cdot)$ to
+$F(j-1,\cdot)=T_{a/\mathfrak n_j,\,bh\kappa_jB_j}F(j,\cdot)$, by
+\eqref{eq:flow-step-solution}. By \cref{lem:cub-formal}(a) and the chain rule,
+the recursion \eqref{eq:cub-coefficient-recursion} for this stage is therefore
+the recursion of the formal step $\widehat T_{a/\mathfrak n_j,\,bh\kappa_jB_j}$, with
+$\varepsilon=h$. By \cref{lem:cub-formal}(b), the stages
+$3$, $4$, and $5$, all of mass $a$, combine into
+$\widehat T_{a,\,bh(\Lambda_2+\tau_T\mathrm{Id})}$. With the constant profile $a$, the
+Parisi equation reads $\partial_t\Phi=-\frac b2(\partial_{zz}\Phi
++a(\partial_z\Phi)^2)$, and the Taylor series
+$\sum_n(h\tau_T)^n\partial_t^n\Phi(q_0,\cdot)/n!$ is the formal solution of
+this equation in the time $h\tau_T$, that is,
+$\widehat T_{a,-bh\tau_T}\Phi(q_0,\cdot)$. By \cref{lem:cub-formal}(d), the
+terminal function is therefore $\widehat T_{a,-bh\tau_T\mathrm{Id}}\varphi$. By
+\cref{lem:cub-formal}(b) again,
+$\widehat T_{a,bh(\Lambda_2+\tau_T\mathrm{Id})}\widehat T_{a,-bh\tau_T\mathrm{Id}}=\widehat
+T_{a,bh\Lambda_2}$, which proves the first claim. The second is the same
+computation with the baseline rates, whose coefficient matrices are the values of
+$\Lambda_0,\Lambda_1,\Lambda_2$ at $k=0$.
+\end{proof}
+
+The scalar evolution of the terminal function between $q_0$ and $T$ appears in
+\eqref{eq:cub-three-steps} through the term $-\tau_T\mathrm{Id}$ in $\Lambda_2$. It
+accounts for the change of the curvature of the terminal function between the
+times $T$ and $q_0$. This change is of order $h$, and it enters at order $h^3$
+through the quadratic part of the terminal function; the term $-\tau_T\mathrm{Id}$ in $\Lambda_2$ retains this contribution in the coefficients computed below.
+
+\subsection{Expansion at a centered point}
+
+We now expand compositions of three formal steps applied to a separable function
+whose linear part vanishes. For symmetric matrices $\Sigma_0,\Sigma_1,\Sigma_2$
+we write $\Sigma_{\le j}=\Sigma_0+\dots+\Sigma_j$ and $\Sigma_{\le-1}=0$.
+
+\begin{lemma}[Expansion at a centered point]\label{lem:cub-centered}
+Let $\Sigma_0,\Sigma_1,\Sigma_2$ be symmetric $3\times3$ matrices with
+$\operatorname{diag}(\Sigma_{\le2})=0$, and let $m_0,m_1,m_2\in(0,1]$. Let
+$\psi\colon\R\to\R$ be smooth with $\psi(0)=\psi'(0)=0$, write
+$\chi=\psi''(0)$ and $w=\psi'''(0)$, and set $\bar\psi(\mathbf y)=\sum_i\psi(y_i)$. Let
+$\mathfrak E(\varepsilon)$ be the value at $\mathbf y=0$ of
+$\widehat T_{m_0,\varepsilon\Sigma_0}\widehat T_{m_1,\varepsilon\Sigma_1}\widehat
+T_{m_2,\varepsilon\Sigma_2}\bar\psi$. Then $[\mathfrak E]_0=[\mathfrak E]_1=0$,
+\begin{equation}\label{b:eq:os-quadratic-norm}
+ [\mathfrak E]_2=\frac{\chi^2}4\sum_{j=0}^2m_j\bigl(\norm{\Sigma_{\le j}}_F^2
+ -\norm{\Sigma_{\le j-1}}_F^2\bigr),
+\end{equation}
+and
+\begin{equation}\label{eq:cub-third}
+ [\mathfrak E]_3=\chi^3\mathcal Q
+ +\frac{w^2}{12}\sum_{j=0}^2m_j\bigl(\operatorname{cub}(\Sigma_{\le j})
+ -\operatorname{cub}(\Sigma_{\le j-1})\bigr),
+\end{equation}
+where, with $\Upsilon_1=m_2\Sigma_2+m_1\Sigma_1$ and
+$\Upsilon_2=m_2^2\Sigma_2^2+m_1m_2(\Sigma_1\Sigma_2+\Sigma_2\Sigma_1)+m_1^2\Sigma_1^2$,
+\[
+\begin{aligned}
+ \mathcal Q={}&\frac{m_2^2}6\tr\Sigma_2^3+\frac{m_2^2}2\tr(\Sigma_1\Sigma_2^2)
+ +\frac{m_1m_2}2\tr(\Sigma_1^2\Sigma_2)+\frac{m_1^2}6\tr\Sigma_1^3\\
+ &+\frac12\tr(\Sigma_0\Upsilon_2)+\frac{m_0}2\tr(\Sigma_0^2\Upsilon_1)+\frac{m_0^2}6\tr\Sigma_0^3.
+\end{aligned}
+\]
+\end{lemma}
+
+The sum in \eqref{b:eq:os-quadratic-norm} is the squared-norm integral
+\eqref{eq:inp-penalty} of the path with increments $\Sigma_0,\Sigma_1,\Sigma_2$
+and masses $m_0,m_1,m_2$. In its cross terms
+$2m_j\,\Sigma_{\le j-1}\mathbin:\Sigma_j$, the mass is that of the later
+increment.
+
+\begin{proof}
+We first determine which products of derivatives of $\psi$ can occur. We then
+compute the coefficients of the terms that are linear and quadratic in $\psi$,
+and finally the term that is cubic in $\psi$. The computations in Steps~2
+and~3 do not use the condition on the diagonal of $\Sigma_{\le2}$, which enters
+only at the end of each step.
+
+\paragraph{Step 1: the possible terms.} By the remark after
+\eqref{eq:cub-formal}, applied to each of the three steps, $[\mathfrak E]_n$ is
+a sum of products of derivatives of positive order of $\bar\psi$ at $0$, of total
+order $2n$, with coefficients that are polynomials in the entries of the
+$\Sigma_j$ and in the $m_j$. At $\mathbf y=0$, the derivatives of order one
+vanish, because $\psi'(0)=0$, the mixed derivatives vanish, because $\bar\psi$ is
+separable, and $\partial_i^p\bar\psi(0)=\psi^{(p)}(0)$. We conclude that
+$[\mathfrak E]_0=\bar\psi(0)=0$ and
+\[
+ [\mathfrak E]_1=\mathsf c_1\chi,\qquad [\mathfrak E]_2=\mathsf c_2\psi^{(4)}(0)+\mathsf c_3\chi^2,\qquad
+ [\mathfrak E]_3=\mathsf c_4\psi^{(6)}(0)+\mathsf c_5\chi\psi^{(4)}(0)+\mathsf c_6w^2+\mathsf c_7\chi^3,
+\]
+where the coefficients $\mathsf c_i$ are polynomials in the entries of
+$\Sigma_0,\Sigma_1,\Sigma_2$ (with the masses fixed). These
+coefficients depend on $\psi$ only through $\psi^{(p)}(0)$ for $2\le p\le6$, and
+we may compute each of them with a convenient choice of $\psi$.
+
+In Step~2 we take $\psi$ smooth with compact support, for instance the Taylor
+polynomial of degree six of the given $\psi$ multiplied by a smooth function
+with compact support that equals one near the origin. We also assume in Step~2
+that $\Sigma_0,\Sigma_1,\Sigma_2$ are positive semidefinite. This is no loss of
+generality: the triples of positive semidefinite matrices contain a nonempty
+open subset of the triples of symmetric matrices, and an identity between
+polynomials in the entries that holds on this subset holds for all symmetric
+triples. For a parameter $\theta\in[-1,1]$, \cref{lem:flow-cole-hopf}(c),
+applied to the three steps in turn, shows that the composition of the steps
+$T_{m_j,\varepsilon\Sigma_j}$ applied to $\theta\bar\psi$ is infinitely
+differentiable in $(\varepsilon,\theta)\in[0,1]\times[-1,1]$. By
+\cref{lem:cub-formal}(a) and the chain rule, as in the proof of
+\cref{lem:cub-formal}(b), its Taylor coefficients in $\varepsilon$ are those of
+the formal composition. We use independent centered Gaussian vectors
+$\mathbf X_0,\mathbf X_1,\mathbf X_2$ with covariances
+$\varepsilon\Sigma_0,\varepsilon\Sigma_1,\varepsilon\Sigma_2$, and we set
+$\mathbf S_j=\mathbf X_0+\dots+\mathbf X_j$, which has covariance
+$\varepsilon\Sigma_{\le j}$.
+
+\paragraph{Step 2: the terms linear and quadratic in $\psi$.} We replace $\psi$ by
+$\theta\psi$, so that $\mathsf c_1,\mathsf c_2,\mathsf c_4$ are coefficients of $\theta$ and
+$\mathsf c_3,\mathsf c_5,\mathsf c_6$ are coefficients of $\theta^2$. Let $U_3=\theta\bar\psi$ and
+$U_j=T_{m_j,\varepsilon\Sigma_j}U_{j+1}$ for $j=2,1,0$, so that $U_0(0)$ is the
+value of the composition. At $\theta=0$ all $U_j$ vanish. Differentiating
+$U_j=m_j^{-1}\log\E_je^{m_jU_{j+1}}$ in $\theta$ at $\theta=0$, where $\E_j$ is
+the expectation over $\mathbf X_j$, we obtain
+$\partial_\theta U_j=\E_j\partial_\theta U_{j+1}$ and
+$\partial_\theta^2U_j=\E_j\partial_\theta^2U_{j+1}+m_j\Var_j(\partial_\theta
+U_{j+1})$. Let $M_j=\E[\bar\psi(\mathbf S_2)\mid\mathbf X_0,\dots,\mathbf X_{j-1}]$,
+so that $M_0=\E\bar\psi(\mathbf S_2)$ and $M_3=\bar\psi(\mathbf S_2)$. These recursions imply
+that
+\[
+ \partial_\theta U_0(0)\big|_{\theta=0}=\E\bar\psi(\mathbf S_2),\qquad
+ \frac12\partial_\theta^2U_0(0)\big|_{\theta=0}
+ =\sum_{j=0}^2\frac{m_j}2\bigl(\E M_{j+1}^2-\E M_j^2\bigr).
+\]
+The first expression is $\sum_i\E\psi(S_{2,i})$. Its Taylor coefficients in
+$\varepsilon$ are polynomials in the diagonal entries $(\Sigma_{\le2})_{ii}$
+without constant term. These polynomial identities hold for all symmetric
+triples, and the coefficients vanish under the diagonal condition, which proves that
+$\mathsf c_1=\mathsf c_2=\mathsf c_4=0$. For the second, we have
+$M_{j+1}=(\mathsf H\bar\psi)(\mathbf S_j)$, where $\mathsf H$ is the heat average over
+the Gaussian vector $\mathbf X_{j+1}+\dots+\mathbf X_2$, with covariance
+$\varepsilon(\Sigma_{\le2}-\Sigma_{\le j})$. We write
+$\psi=\psi_2+\dots+\psi_6+\psi_{>6}$, with $\psi_p(y)=\psi^{(p)}(0)y^p/p!$ and
+$\abs{\psi_{>6}(y)}\le C\abs y^7$. All the Gaussian vectors involved have
+covariances of order $\varepsilon$. The part of $M_{j+1}$ coming from $\psi_p$
+with $p\le6$ is a polynomial in $\mathbf S_j$ of the parity of $p$, and it is
+$O(\varepsilon^{p/2})$ in every $L^q$; the part coming from $\psi_{>6}$ is
+$O(\varepsilon^{7/2})$. A product of the parts coming from $\psi_p$ and
+$\psi_{p'}$ has expectation $O(\varepsilon^{(p+p')/2})$, with $p=7$
+for $\psi_{>6}$, and this expectation vanishes if $p,p'\le6$ and $p+p'$ is
+odd. The terms of order $\varepsilon^2$ and $\varepsilon^3$ of
+$\E M_{j+1}^2$ come from the three products that we now compute. Let
+$\Omega=\varepsilon\Sigma_{\le j}$, and let
+$\Omega'=\varepsilon(\Sigma_{\le2}-\Sigma_{\le j})$, so that
+$\Omega_{ii}+\Omega'_{ii}=\varepsilon(\Sigma_{\le2})_{ii}$.
+\begin{itemize}
+\item For $\psi_2$, we have $M_{j+1}=\frac\chi2\abs{\mathbf S_j}^2+{}$const and
+ $\Var\abs{\mathbf S_j}^2=2\norm\Omega_F^2$. The means $\E M_j$ do not depend on
+ $j$, and $\E M_{j+1}^2-\E M_j^2=\frac{\chi^2\varepsilon^2}2\bigl(\norm{\Sigma_{\le
+ j}}_F^2-\norm{\Sigma_{\le j-1}}_F^2\bigr)$. This gives $\mathsf c_3$ and proves
+ \eqref{b:eq:os-quadratic-norm}.
+\item For $\psi_3$, we have $\mathsf H\psi_3(y_i)=\frac w6(y_i^3+3\Omega'_{ii}y_i)$.
+ Using $\E S_iS_l=\Omega_{il}$, $\E S_i^3S_l=3\Omega_{ii}\Omega_{il}$ and
+ $\E S_i^3S_l^3=6\Omega_{il}^3+9\Omega_{ii}\Omega_{ll}\Omega_{il}$ for $\mathbf S=\mathbf S_j$, we
+ find
+ \begin{equation}\label{eq:cub-wick}
+  \E M_{j+1}^2=w^2\sum_{i,l}\Bigl\{\frac{\Omega_{il}^3}6
+  +\frac{\Omega_{il}(\Omega_{ii}+\Omega'_{ii})(\Omega_{ll}+\Omega'_{ll})}4\Bigr\}.
+ \end{equation}
+ Under the diagonal condition the second term vanishes, and
+ $\E M_{j+1}^2=\frac{w^2\varepsilon^3}6\operatorname{cub}(\Sigma_{\le j})$. Also
+ $M_0=0$, because $\psi_3$ is odd. This gives $\mathsf c_6$.
+\item For the product of $\psi_2$ and $\psi_4$, the means of the two parts of
+ $M_j$ do not depend on $j$, and by the Wick formula,
+ \[
+  \Cov\bigl(M^{(2)}_{j+1},M^{(4)}_{j+1}\bigr)
+  =\frac{\chi\psi^{(4)}(0)}4\sum_{i,l}\Omega_{il}^2(\Omega_{ll}+\Omega'_{ll}),
+ \]
+ where $M^{(p)}_{j+1}$ is the part of $M_{j+1}$ coming from $\psi_p$. Under
+ the diagonal condition this vanishes, and $\mathsf c_5=0$.
+\end{itemize}
+
+\paragraph{Step 3: the term cubic in $\psi$.} It remains to compute $\mathsf c_7$, and
+we may take $\psi(y)=\chi y^2/2$. We compute with the formal steps directly, for
+symmetric $\Sigma_0,\Sigma_1,\Sigma_2$. Let $\Sigma$ and $H$ be symmetric,
+$c\in\R$, and $m\in(0,1]$. For a quadratic function
+$F=c(\varepsilon)+\frac12\mathbf y\cdot H(\varepsilon)\mathbf y$, we have
+$\Sigma\mathbin:D^2F=\tr(\Sigma H(\varepsilon))$ and
+$\nabla F\cdot\Sigma\nabla F=\mathbf y\cdot H(\varepsilon)\Sigma H(\varepsilon)\mathbf y$.
+The equation $\partial_\varepsilon F=\frac12(\Sigma\mathbin:D^2F+m\nabla
+F\cdot\Sigma\nabla F)$ with $F=c+\frac12\mathbf y\cdot H\mathbf y$ at
+$\varepsilon=0$ reduces to $c'=\frac12\tr(\Sigma H(\varepsilon))$ and
+$H'=mH(\varepsilon)\Sigma H(\varepsilon)$. Differentiating, we find that the
+power series $H(\varepsilon)=H(\mathrm{Id}-\varepsilon m\Sigma H)^{-1}$ and
+$c(\varepsilon)=c-(2m)^{-1}\log\det(\mathrm{Id}-\varepsilon m\Sigma H)$ solve these
+equations. By the uniqueness of the formal solution,
+\[
+ \widehat T_{m,\varepsilon\Sigma}\Bigl(c+\tfrac12\mathbf y\cdot H\mathbf y\Bigr)
+ =c-\frac1{2m}\log\det\bigl(\mathrm{Id}-\varepsilon m\Sigma H\bigr)
+ +\tfrac12\mathbf y\cdot H(\mathrm{Id}-\varepsilon m\Sigma H)^{-1}\mathbf y,
+\]
+where the right side is expanded in powers of $\varepsilon$. By the
+substitution rule for formal series, the same holds when $c$ and $H$ are
+themselves formal power series in $\varepsilon$. Starting from $H_3=\chi \mathrm{Id}$, the three steps produce the matrices
+$H_2=\chi(\mathrm{Id}-\varepsilon m_2\chi\Sigma_2)^{-1}$ and
+$H_1=H_2(\mathrm{Id}-\varepsilon m_1\Sigma_1H_2)^{-1}=\chi \mathrm{Id}+\varepsilon\chi^2\Upsilon_1
++\varepsilon^2\chi^3\Upsilon_2+O(\varepsilon^3)$, and the value at $\mathbf y=0$ is
+\[
+ -\sum_{j=0}^2\frac1{2m_j}\log\det\bigl(\mathrm{Id}-\varepsilon m_j\Sigma_jH_{j+1}\bigr)
+ =\sum_{j=0}^2\sum_{p\ge1}\frac{\varepsilon^pm_j^{p-1}}{2p}\tr\bigl((\Sigma_jH_{j+1})^p\bigr).
+\]
+Collecting the terms of order $\varepsilon^3$, we obtain $\chi^3\mathcal Q$. For
+example, for $j=1$ the terms with $p=1$, $2$, and $3$ contribute
+$\frac{m_2^2}2\tr(\Sigma_1\Sigma_2^2)$, $\frac{m_1m_2}2\tr(\Sigma_1^2\Sigma_2)$ and
+$\frac{m_1^2}6\tr\Sigma_1^3$, respectively. The terms of order $\varepsilon$ and
+$\varepsilon^2$ are $\frac\chi2\tr\Sigma_{\le2}$, which vanishes under the
+diagonal condition, and \eqref{b:eq:os-quadratic-norm}. This completes the
+proof.
+\end{proof}
+
+In \cref{lem:cub-centered} we take $\varepsilon=h$, $\Sigma_j=b\Lambda_j$ and
+$(m_0,m_1,m_2)=(a/3,a/2,a)$. With these masses $\Upsilon_1=a(\Sigma_2+\Sigma_1/2)$ and
+$\Upsilon_2=a^2(\Sigma_2+\Sigma_1/2)^2$. We define the trace polynomial
+\begin{equation}\label{b:eq:os-R}
+\begin{aligned}
+ C_\chi(k)={}&\frac{\tr\Lambda_2^3}6+\frac{\tr(\Lambda_1\Lambda_2^2)}2
+ +\frac{\tr(\Lambda_1^2\Lambda_2)}4+\frac{\tr\Lambda_1^3}{24}\\
+ &+\frac{\tr\bigl(\Lambda_0(\Lambda_2+\tfrac12\Lambda_1)^2\bigr)}2
+ +\frac{\tr\bigl(\Lambda_0^2(\Lambda_2+\tfrac12\Lambda_1)\bigr)}6
+ +\frac{\tr\Lambda_0^3}{54},
+\end{aligned}
+\end{equation}
+the Wick polynomial
+\begin{equation}\label{b:eq:os-W}
+\begin{aligned}
+ C_w(k)=\frac1{12}\Bigl\{&\frac{\operatorname{cub}(\Lambda_0)}3
+ +\frac{\operatorname{cub}(\Lambda_0+\Lambda_1)-\operatorname{cub}(\Lambda_0)}2\\
+ &+\operatorname{cub}(\Lambda_0+\Lambda_1+\Lambda_2)-\operatorname{cub}(\Lambda_0+\Lambda_1)\Bigr\},
+\end{aligned}
+\end{equation}
+and
+\[
+ N^{\rm f}_\vartheta(k)=\frac13\norm{\Lambda_0}_F^2
+ +\frac12\bigl(\norm{\Lambda_0+\Lambda_1}_F^2-\norm{\Lambda_0}_F^2\bigr)
+ +\norm{\Lambda_0+\Lambda_1+\Lambda_2}_F^2-\norm{\Lambda_0+\Lambda_1}_F^2.
+\]
+These are polynomials in $k$ whose coefficients are rational functions of
+$\vartheta$, and they are even in $k$ by \cref{lem:cub-identities}(d).
+
+\begin{proposition}[The constant-mass part]\label{prop:cub-frozen}
+Let $a=\alpha(q_0)$, $\chi_0=\chi(q_0,z)$, and $w_0=w(q_0,z)$. The constant-mass
+parts of $[V]_0,\dots,[V]_3$ are
+\[
+ 0,\qquad 0,\qquad \frac{b^2\chi_0^2}4\,a\,N_\vartheta(k),\qquad
+ a^2b^3\chi_0^3\,C_\chi(k)+ab^3w_0^2\,C_w(k),
+\]
+respectively. Moreover, $C_\chi(0)=C_w(0)=0$, and
+$N^{\rm f}_\vartheta=N_\vartheta$.
+\end{proposition}
+
+\begin{proof}
+Let $u_0=u(q_0,z)$ and, for $\mathbf y\in\R^3$, write
+$\varphi(z\mathbf e+\mathbf y)=3\Phi(q_0,z)+u_0\,\mathbf e\cdot\mathbf y+\bar\psi(\mathbf y)$,
+where $\bar\psi(\mathbf y)=\sum_i\psi(y_i)$ with
+$\psi(y)=\Phi(q_0,z+y)-\Phi(q_0,z)-u_0y$. Then $\psi(0)=\psi'(0)=0$,
+$\psi''(0)=\chi_0$ and $\psi'''(0)=w_0$. We use \cref{lem:cub-formal}(e) for
+each of the three formal steps in \eqref{eq:cub-three-steps}, from the inside
+out. Formal steps commute with translations, because their coefficients do not
+depend on $\mathbf z$, and the translations produced by the inner steps pass
+through the outer ones. The total translation is
+$hbau_0(\frac13\Lambda_0+\frac12\Lambda_1+\Lambda_2)\mathbf e$, and the total
+added constant is
+$\frac12hbau_0^2\,\mathbf e\cdot(\frac13\Lambda_0+\frac12\Lambda_1+\Lambda_2)\mathbf
+e$. Both vanish by \eqref{b:eq:os-matrix-cancellations}, which implies that the
+value of \eqref{eq:cub-three-steps} at $z\mathbf e$ is $3\Phi(q_0,z)$ plus the value
+$\mathfrak E(h)$ at $\mathbf y=0$ of the three formal steps applied to $\bar\psi$. By
+\eqref{b:eq:os-matrix-cancellations}, \cref{lem:cub-centered} applies to
+$\Sigma_j=b\Lambda_j$, and it gives $[\mathfrak E]_0=[\mathfrak E]_1=0$,
+$[\mathfrak E]_2=\frac{b^2\chi_0^2}4aN^{\rm f}_\vartheta(k)$ and
+$[\mathfrak E]_3=a^2b^3\chi_0^3C_\chi(k)+ab^3w_0^2C_w(k)$. The same holds for the
+baseline, with the values at $k=0$. By \cref{lem:cub-three-steps}, the
+constant-mass part of $[V]_n$ is the difference between these
+expressions and their values at $k=0$.
+
+At $k=0$ these values vanish. Indeed, at $k=0$ the composition
+\eqref{eq:cub-three-steps} equals $\varphi$ on the diagonal, for every smooth
+function $\Phi_0$ in place of $\Phi(q_0,\cdot)$ in the definition of
+$\varphi$. To see this, note that $\Lambda_2=\operatorname{diag}(-1,-1-\vartheta,
+-1-\vartheta)$ at $k=0$, and by \cref{lem:cub-formal}(d) the inner step maps
+$\varphi$ to $\psi_v(z_v)+\psi_x(z_x)+\psi_x(z_y)$, with
+$\psi_v=\widehat T_{a,-bh}\Phi_0$ and $\psi_x=\widehat T_{a,-bh(1+\vartheta)}\Phi_0$.
+The covariance of the shared step is a multiple of $(\mathbf e_x+\mathbf
+e_y)(\mathbf e_x+\mathbf e_y)^{\mathsf T}$, and its recursion \eqref{eq:cub-formal}
+involves only derivatives in the direction $\mathbf e_x+\mathbf e_y$; on the
+set $\{z_x=z_y\}$, it is the one-dimensional recursion with variance
+$bh\vartheta$ and mass $a/2$ applied to $2\psi_x$, which gives
+$2\widehat T_{a,bh\vartheta}\psi_x=2\widehat T_{a,-bh}\Phi_0$ by
+\cref{lem:cub-formal}(b) and (c). Similarly, the common step acts on the
+diagonal as the one-dimensional step with variance $bh$ and mass $a/3$ applied
+to $\psi_v+2\widehat T_{a,-bh}\Phi_0=3\widehat T_{a,-bh}\Phi_0$, which gives
+$3\Phi_0$. The identity holds for every smooth $\Phi_0$ with bounded
+derivatives of positive order, so that the coefficients $\chi_0$ and $w_0$ in
+the expansion above can be prescribed arbitrarily. We conclude that
+$N_\vartheta^{\rm f}(0)=C_\chi(0)=C_w(0)=0$. These values can
+also be checked directly from the matrices at $k=0$. For instance,
+$\norm{\Lambda_0}_F^2=9$, $\norm{\Lambda_0+\Lambda_1}_F^2=5+4(1+\vartheta)^2$ and
+$\norm{\Lambda_0+\Lambda_1+\Lambda_2}_F^2=4+2(1+\vartheta)^2$ at $k=0$, which
+give $N^{\rm f}_\vartheta(0)=3+2(1+\vartheta)^2-2-1-2(1+\vartheta)^2=0$, and
+the same computation with cubes in place of squares gives $C_w(0)=0$. This
+proves the first claim.
+
+It remains to show that $N^{\rm f}_\vartheta=N_\vartheta$. Integrating in
+$\tau$ in \eqref{eq:cub-N} with $i=0$, we have
+\[
+ \sum_{j=1}^5\frac{2\kappa_j}{\mathfrak n_j}\int_0^1(\widetilde Q_{j-1}+\kappa_j\tau
+ B_j)\mathbin:B_j\dd\tau
+ =\sum_{j=1}^5\frac1{\mathfrak n_j}\bigl(\norm{\widetilde Q_j}_F^2-\norm{\widetilde Q_{j-1}}_F^2\bigr).
+\]
+Here $\mathfrak n_3=\mathfrak n_4=\mathfrak n_5=1$, $\widetilde Q_1=\Lambda_0$, $\widetilde
+Q_2=\Lambda_0+\Lambda_1$ and $\widetilde Q_5=\Lambda_0+\Lambda_1+\Lambda_2+\tau_T\mathrm{Id}$.
+The right side is $N^{\rm f}_\vartheta(k)$ with $\Lambda_2$ replaced by
+$\Lambda_2+\tau_T\mathrm{Id}$, and the same holds for the baseline rates. We have
+$\norm{U+\tau_T\mathrm{Id}}_F^2-\norm U_F^2=2\tau_T\tr U+3\tau_T^2$ and
+$\tr(\Lambda_0+\Lambda_1+\Lambda_2)=0$ for both paths. The replacement
+adds $3\tau_T^2$ to both expressions and does not change their difference. We conclude
+that $N_\vartheta(k)=N_\vartheta^{\rm f}(k)-N_\vartheta^{\rm f}(0)=N_\vartheta^{\rm f}(k)$.
+\end{proof}
+
+\subsection{The coefficient table}
+
+Substituting the matrices \eqref{eq:cub-Lambda} into \eqref{b:eq:os-R} and
+\eqref{b:eq:os-W} gives
+\begin{equation}\label{eq:cub-table}
+\begin{array}{c|ccc}
+ &k^2&k^4&k^6\\ \hline
+ C_\chi(k)&\dfrac{2(\vartheta-1)(\vartheta^2+2)}{(\vartheta-2)^2}
+ &\dfrac{12\vartheta^3+6\vartheta^2+\vartheta+8}{3(\vartheta-2)^4}
+ &\dfrac{(3\vartheta+4)(9\vartheta^2+15\vartheta+10)}{27(\vartheta-2)^6}\\[8pt]
+ C_w(k)&-\dfrac{(\vartheta-1)(\vartheta^2-\vartheta+2)}{(\vartheta-2)^2}
+ &-\dfrac{3\vartheta^3+\vartheta^2+\vartheta+4}{2(\vartheta-2)^4}&0
+\end{array}
+\end{equation}
+These are the coefficients of $k^2$, $k^4$ and $k^6$; the constant terms vanish
+by \cref{prop:cub-frozen}, and the odd terms vanish because the polynomials are
+even. The identities can be checked by hand from the explicit matrices, for
+instance by multiplying by $(\vartheta-2)^6$ and comparing the coefficients
+of $\vartheta^i k^j$. For $\vartheta=1/2$, the individual traces and cubic sums are
+\[
+\begin{aligned}
+ \tr\Lambda_2^3&=-\tfrac{64}{27}k^6-\tfrac{32}3k^4-\tfrac{44}3k^2-\tfrac{31}4,\\
+ \tr(\Lambda_1\Lambda_2^2)&=\tfrac{64}{81}k^6+\tfrac89k^4-\tfrac{11}9k^2+\tfrac94,\\
+ \tr(\Lambda_1^2\Lambda_2)&=-\tfrac{64}{243}k^6-\tfrac{40}{81}k^4-\tfrac49k^2-\tfrac32,\\
+ \tr\Lambda_1^3&=\tfrac{64}{729}k^6+\tfrac{16}{27}k^4+\tfrac43k^2+1,\\
+ \tr\bigl(\Lambda_0(\Lambda_2+\tfrac12\Lambda_1)^2\bigr)
+ &=\tfrac{800}{729}k^6+\tfrac{488}{81}k^4+\tfrac{22}3k^2+3,\\
+ \tr\bigl(\Lambda_0^2(\Lambda_2+\tfrac12\Lambda_1)\bigr)
+ &=-\tfrac{640}{729}k^6-\tfrac{464}{81}k^4-12k^2-9,\\
+ \tr\Lambda_0^3&=\tfrac{512}{729}k^6+\tfrac{64}9k^4+24k^2+27,
+\end{aligned}
+\]
+and
+\[
+\begin{gathered}
+ \operatorname{cub}(\Lambda_0)=\tfrac{64}9k^4+16k^2+9,\qquad
+ \operatorname{cub}(\Lambda_0+\Lambda_1)=\tfrac{88}9k^4+\tfrac{28}3k^2+\tfrac{37}2,\\
+ \operatorname{cub}(\Lambda_0+\Lambda_1+\Lambda_2)=12k^2+\tfrac{43}4.
+\end{gathered}
+\]
+Inserting these values into \eqref{b:eq:os-R} and \eqref{b:eq:os-W}, we obtain
+\begin{equation}\label{eq:cub-half}
+ C_\chi(k)=-k^2+\frac{184}{243}k^4+\frac{6952}{19683}k^6,\qquad
+ C_w(k)=\frac7{18}k^2-\frac{41}{81}k^4\qquad(\vartheta=1/2).
+\end{equation}
+We also checked \eqref{eq:cub-table}, \eqref{eq:cub-half} and the values of
+$N_\vartheta$ in \eqref{eq:cub-N-explicit} with computer algebra.
+
+\section{The varying profile}\label{sec:cub-profile}
+
+We now compute the part of the Taylor coefficients of $V$ that involves
+$\alpha'(q_0)$ and $\alpha''(q_0)$. We show that it is exactly the
+corresponding part of $\frac{b^2\chi(q_0,z)^2}4\Delta\Pi$. Together with
+\cref{prop:cub-frozen}, this gives the pointwise expansion of
+\cref{prop:cub-pointwise}.
+
+The linear part of the terminal function now has a coefficient that changes
+along the window. We remove it with the following form of
+\eqref{b:eq:os-gauge}.
+
+\begin{lemma}[Affine shift along a flow]\label{lem:cub-shift}
+Let $(B_j,\lambda_j,m_j)_{j\le N}$ be a stage datum as in \cref{def:flow}, with
+continuous masses, let $u\in\R$ and $\mathbf e'\in\R^\ell$, and let
+$f\in\mathcal C^\infty$ satisfy $2\ell b\norm{D^2f}_\infty\sum_j\lambda_j\abs{B_j}\le1$.
+Let $F_f$ and $F$ be the flows with terminal functions $f$ and
+$u\,\mathbf e'\cdot\mathbf z+f$. For $\tau'\in(j-1,j)$, write
+$\lambda(\tau')=\lambda_j$, $B(\tau')=B_j$ and $m(\tau')=m_j(\tau'-j+1)$, and set
+\[
+ \mathbf s(\tau)=ub\int_\tau^N\lambda m B\,\mathbf e'\dd\tau',\qquad
+ \bar c(\tau)=\frac{u^2b}2\int_\tau^N\lambda m\,\mathbf e'\cdot B\mathbf e'\dd\tau'.
+\]
+Then $F(\tau,\mathbf z)=u\,\mathbf e'\cdot\mathbf z+\bar c(\tau)
++F_f\bigl(\tau,\mathbf z+\mathbf s(\tau)\bigr)$ for $0\le\tau\le N$.
+\end{lemma}
+
+\begin{proof}
+Let $\widetilde F$ be the right side. By \cref{lem:flow-step-limit}(d),
+$F_f$ is of class $C^{1,2}$ on each closed stage, with bounded first and
+second spatial derivatives, and solves \eqref{eq:flow-equation}; the same
+properties hold for $\widetilde F$, since $\mathbf s$ and $\bar c$ are continuous
+and continuously differentiable on each closed stage. On a stage, with
+$F_f$ and its derivatives evaluated at $(\tau,\mathbf z+\mathbf s(\tau))$,
+\[
+ -\partial_\tau\widetilde F=\frac{u^2b\lambda m}2\,\mathbf e'\cdot B\mathbf e'
+ -\partial_\tau F_f+ub\lambda m\,B\mathbf e'\cdot\nabla F_f .
+\]
+Since $\nabla\widetilde F=u\mathbf e'+\nabla F_f$ and
+$D^2\widetilde F=D^2F_f$, we have
+\[
+\begin{aligned}
+ \frac{b\lambda}2\bigl\{B\mathbin:D^2\widetilde F+m\nabla\widetilde F\cdot B\nabla\widetilde F\bigr\}
+ ={}&\frac{b\lambda}2\bigl\{B\mathbin:D^2F_f+m\nabla F_f\cdot B\nabla F_f\bigr\}\\
+ &+\frac{b\lambda m}2\bigl(u^2\,\mathbf e'\cdot B\mathbf e'+2u\,\mathbf e'\cdot B\nabla F_f\bigr),
+\end{aligned}
+\]
+which equals $-\partial_\tau\widetilde F$. We have $\widetilde F(N)=F(N)$, and the
+terminal function $u\,\mathbf e'\cdot\mathbf z+f$ has the same Hessian as $f$.
+The uniqueness statement of \cref{lem:flow-step-limit}(d) implies that
+$\widetilde F=F$.
+\end{proof}
+
+At $\tau=0$ and for constant masses, this is \eqref{b:eq:os-gauge}, applied
+to each step.
+
+\begin{lemma}[Contribution of the variation of $\alpha$]\label{lem:cub-mass}
+Fix $q_0\in K$, $k$ with $\abs k\le k_0$, and $z\in\R$, and write
+$\chi_0=\chi(q_0,z)$. For $n\le3$, the difference between $[V]_n$ and its
+constant-mass part equals the difference between
+$\frac{b^2\chi_0^2}4[\Delta\Pi]_n$ and its constant-mass part. In other words,
+it vanishes for $n\le2$, and for $n=3$ it equals
+$\frac{b^2\chi_0^2}4\alpha'(q_0)N^{(1)}_\vartheta(k)$.
+\end{lemma}
+
+\begin{proof}
+The proof has four steps. We remove the linear part of the terminal function
+by \cref{lem:cub-shift}, we show that the resulting translations can be
+replaced by a common one, we list the places where $\alpha'(q_0)$ and
+$\alpha''(q_0)$ enter, and we compute the only term that survives. Throughout,
+statements such as ``$X=O(h^p)$'' mean that $[X]_n=0$ for $n<p$, and $\alpha$
+is regarded as a smooth function on $K'$ whose derivatives at $q_0$ are free
+variables, as in the recursion \eqref{eq:cub-coefficient-recursion}.
+
+\paragraph{Step 1: removal of the linear part.} Let $u_0=u(q_0,z)$, and write
+the terminal function as $\sum_i\Phi(T,z_i)=u_0\,\mathbf e\cdot\mathbf
+z+\bar\psi_h(\mathbf z)$. The function $\bar\psi_h$ has bounded derivatives of every positive
+order and $\norm{D^2\bar\psi_h}_\infty\le1$. By \eqref{eq:cub-h0}, \cref{lem:cub-shift}
+applies to the stage datum of \eqref{b:eq:os-vector-flow}, with
+$\mathbf e'=\mathbf e$. At $\tau=0$, it gives
+\[
+\begin{gathered}
+ \mathcal B(q_0,h,k,\mathbf z)=u_0\,\mathbf e\cdot\mathbf z+\bar c
+ +\widetilde{\mathcal B}(\mathbf z+\mathbf s),\\
+ \mathbf s=bu_0\sum_{j=1}^5\frac1{\mathfrak n_j}\Bigl(\int_{I_j}\alpha\Bigr)B_j\mathbf e,\qquad
+ \bar c=\frac{bu_0^2}2\sum_{j=1}^5\frac1{\mathfrak n_j}\Bigl(\int_{I_j}\alpha\Bigr)\mathbf e\cdot B_j\mathbf e,
+\end{gathered}
+\]
+where $\widetilde{\mathcal B}=F_{\bar\psi_h}(0,\cdot)$ is the output of the flow with terminal
+function $\bar\psi_h$, and where we used that
+$h\kappa_j\int_0^1m_j=\mathfrak n_j^{-1}\int_{I_j}\alpha$. The same holds for the
+baseline with $\widetilde{\mathcal B}^\circ$, $\mathbf s^\circ$ and $\bar c^\circ$. By
+\cref{lem:cub-identities}(a), $\bar c=\bar c^\circ$. Computing the vectors $B_j\mathbf e$
+and $B^\circ_j\mathbf e$ as in the proof of \cref{lem:cub-identities}(c), we find
+\[
+\begin{gathered}
+ \mathbf s^\circ=\mathfrak s\mathbf e,\qquad \mathfrak s=bu_0\int_{q_0}^T\alpha,\qquad
+ \mathbf s-\mathbf s^\circ=bu_0k\zeta\,(\mathbf e_x-\mathbf e_y),\\
+ \zeta=\omega_0J_0+(\omega_1-\omega_0)J_1+(\omega_1-2\omega_0)J_2,
+\end{gathered}
+\]
+where $J_0=\int_{q_0}^r\alpha$, $J_1=\int_r^q\alpha$ and
+$J_2=\int_q^{q_0+2h}\alpha$. Subtracting the two representations at $z\mathbf e$
+and using $\mathcal B^\circ(z\mathbf e)=3\Phi(q_0,z)$, we obtain
+\begin{equation}\label{eq:cub-V-shift}
+ V(q_0,h,k,z)=\widetilde{\mathcal B}\bigl((z+\mathfrak s)\mathbf e+bu_0k\zeta(\mathbf e_x-\mathbf e_y)\bigr)
+ -\widetilde{\mathcal B}^\circ\bigl((z+\mathfrak s)\mathbf e\bigr).
+\end{equation}
+
+\paragraph{Step 2: a common translation.} If $\alpha$ were constant on the
+window, then $\zeta$ would vanish, since
+$\omega_0+\vartheta(\omega_1-\omega_0)+(1-\vartheta)(\omega_1-2\omega_0)
+=\omega_1-(1-\vartheta)\omega_0=0$. Since $\alpha$ is Lipschitz on
+$K'$, we have $\abs\zeta\le Ch^2$, so that $\zeta=O(h^2)$. Next, the function
+$\Delta_{xy}(h,z')=(\mathbf e_x-\mathbf e_y)\cdot\nabla\widetilde{\mathcal B}(z'\mathbf e)$
+satisfies $\Delta_{xy}=O(h^2)$ for every $z'\in\R$. Indeed, at $h=0$ it equals
+$\partial_z\Phi(q_0,z')-\partial_z\Phi(q_0,z')=0$. Its coefficient of order one
+is the difference between the $x$ and $y$ components of the gradient of
+\[
+ \bigl[\bar\psi_h\bigr]_1+\frac b2\sum_j\kappa_j\Bigl\{B_j\mathbin:D^2\bar\psi_0
+ +\frac a{\mathfrak n_j}\nabla\bar\psi_0\cdot B_j\nabla\bar\psi_0\Bigr\}
+\]
+at $z'\mathbf e$, where $\bar\psi_0=\bar\psi_h|_{h=0}=\varphi-u_0\,\mathbf e\cdot\mathbf z$ and
+$[\bar\psi_h]_1$ is separable and symmetric in the coordinates. At $z'\mathbf e$, the
+gradient of $B_j\mathbin:D^2\bar\psi_0$ has entries $(B_j)_{ii}w(q_0,z')$, and the
+gradient of $\nabla\bar\psi_0\cdot B_j\nabla\bar\psi_0$ is
+$2\chi(q_0,z')\gamma\,B_j\mathbf e$ with $\gamma=u(q_0,z')-u_0$. These differences
+vanish after summation, by \cref{lem:cub-identities}(b) and (c). This proves
+that $\Delta_{xy}=O(h^2)$. Expanding $\widetilde{\mathcal B}$ in the shift $bu_0k\zeta(\mathbf e_x-\mathbf
+e_y)=O(h^2)$, we find that the first-order and second-order terms are
+$O(h^4)$, so that
+\[
+ [V]_n=\bigl[\Delta\widetilde{\mathcal B}(z+\mathfrak s)\bigr]_n\quad(n\le3),\qquad
+ \Delta\widetilde{\mathcal B}(z')=\widetilde{\mathcal B}(z'\mathbf e)-\widetilde{\mathcal B}^\circ(z'\mathbf e).
+\]
+For every $z'$, the function $\Delta\widetilde{\mathcal B}(z')$ is $O(h^2)$, with all its derivatives in
+$z'$: its coefficients of order zero and one vanish by the computation in the
+proof of \cref{b:lem:os-flow}(ii), with $\varphi$ replaced by $\bar\psi_0$. Since
+$\mathfrak s=O(h)$, we obtain $[V]_n=[\Delta\widetilde{\mathcal B}(z)+\mathfrak s\,(\Delta\widetilde{\mathcal B})'(z)]_n$ for $n\le3$.
+
+\paragraph{Step 3: where $\alpha'(q_0)$ and $\alpha''(q_0)$ enter.} In
+$[\Delta\widetilde{\mathcal B}(z)+\mathfrak s\,(\Delta\widetilde{\mathcal B})'(z)]_n$, $n\le3$, these quantities enter through $\mathfrak s$,
+through the terminal function $\bar\psi_h$, and through the masses.
+\begin{itemize}
+\item The part of $\mathfrak s$ that involves them is
+ $bu_0\int_{q_0}^T(\alpha(t)-a)\dd t=O(h^2)$, and the part of $(\Delta\widetilde{\mathcal B})'(z)$ that
+ involves them is $O(h^3)$ by the two items below. Since $(\Delta\widetilde{\mathcal B})'(z)=O(h^2)$ and
+ $\mathfrak s=O(h)$, neither part contributes to $[\mathfrak s\,(\Delta\widetilde{\mathcal B})'(z)]_n$ for $n\le3$.
+\item In $\bar\psi_h$, the time derivatives of $\Phi$ at $q_0$ involve
+ $\alpha'(q_0)$ only from the second derivative on, and the part of $\bar\psi_h$ that
+ involves $\alpha'(q_0)$ or $\alpha''(q_0)$ is $O(h^2)$. It is separable and
+ symmetric in the coordinates. The first-order change of $\Delta\widetilde{\mathcal B}$ under a change
+ $\delta\bar\psi$ of the terminal function of this kind is $O(h^2)\delta\bar\psi$: its
+ coefficients of order zero and one vanish by the computation of Step~2,
+ because $D^2\delta\bar\psi$ is a multiple of $\mathrm{Id}$ and $\nabla\delta\bar\psi$ is a multiple
+ of $\mathbf e$ on the diagonal. This part contributes $O(h^4)$.
+\item A mass enters \eqref{eq:cub-coefficient-recursion} only through the
+ gradient term. Each insertion carries a factor $h$, and the coefficient $[m_j]_l$ of the mass carries the factor $h^l$ and
+ the factor $\alpha^{(l)}(q_0)$. A term that contains $[m_j]_l$ with $l\ge1$
+ and only one insertion contains the factor $\nabla\bar\psi_h\cdot B_j\nabla\bar\psi_h$ at
+ $z\mathbf e$, because the stages without insertion act as the identity. Since
+ $\nabla\bar\psi_0(z\mathbf e)=0$, we have $\nabla\bar\psi_h(z\mathbf e)=O(h)$, so such a
+ term is $O(h^{3+l})$ and does not contribute for $n\le3$. A term with
+ $[m_j]_2$ and two insertions is $O(h^4)$. The only remaining terms that
+ involve $\alpha'(q_0)$ contain $[m_j]_1$ and exactly two insertions, and they
+ are of order $h^3$; in them, everything else is evaluated at $h=0$: the
+ terminal function is $\bar\psi_0$, the point is $z\mathbf e$, and the other insertion
+ has the mass $a/\mathfrak n_i$.
+\end{itemize}
+We note that $\alpha''(q_0)$ does not enter $[V]_n$ for $n\le3$.
+
+\paragraph{Step 4: the two-insertion term.} We use the variable
+$\tau\in[0,5]$ of \eqref{b:eq:os-vector-flow}, and we write
+$\Sigma'(\tau)=bh\kappa_jB_j$ and $m(\tau)=m_j(\tau-j+1)$ for $\tau\in(j-1,j)$.
+Two insertions at $\tau_2<\tau_1$ correspond to an outer insertion at $\tau_2$
+and an inner insertion at $\tau_1$. Since $\nabla\bar\psi_0(z\mathbf e)=0$ and
+$D^2\bar\psi_0(z\mathbf e)=\chi_0\mathrm{Id}$, the only term of
+\eqref{eq:cub-coefficient-recursion} with two insertions that depends on the
+masses is the heat term of the outer insertion acting on the gradient term of the
+inner one:
+\[
+\begin{aligned}
+ &\frac12\int_0^5\!\!\int_{\tau_2}^5\Sigma'(\tau_2)\mathbin:D^2\Bigl(\frac{m(\tau_1)}2
+ \nabla\bar\psi_0\cdot\Sigma'(\tau_1)\nabla\bar\psi_0\Bigr)(z\mathbf e)\dd\tau_1\dd\tau_2\\
+ &\qquad=\frac{\chi_0^2}2\int_0^5\!\!\int_{\tau_2}^5m(\tau_1)\,\Sigma'(\tau_1)\mathbin:\Sigma'(\tau_2)
+ \dd\tau_1\dd\tau_2 .
+\end{aligned}
+\]
+Here we used that $D^2(\nabla\bar\psi_0\cdot\Sigma'\nabla\bar\psi_0)=2D^2\bar\psi_0\Sigma'D^2\bar\psi_0$ at
+$z\mathbf e$. The terms in which the outer insertion is a gradient term
+contain the factor $\nabla\bar\psi_0(z\mathbf e)=0$, and the terms in which both
+insertions are heat terms do not depend on the masses. Let
+$\Sigma^{\rm acc}(\tau)=\int_0^\tau\Sigma'$ be the covariance accumulated from
+the outer end of the window. Then the right side equals
+$\frac{\chi_0^2}2\int_0^5m(\tau)\,\Sigma'(\tau)\mathbin:\Sigma^{\rm acc}(\tau)\dd\tau
+=\frac{\chi_0^2}4\int_0^5m(\tau)\,\partial_\tau\norm{\Sigma^{\rm acc}(\tau)}_F^2\dd\tau$,
+which is $\frac{\chi_0^2}4$ times the squared-norm integral of the window path
+(\eqref{eq:flow-penalty} with $Q_\star=0$); this is
+\eqref{b:eq:os-quadratic-norm} for a continuous profile. By
+\eqref{eq:cub-penalty}, its part linear in the coefficients $[m_j]_1$, for the
+perturbed window minus the baseline window, is $\frac{b^2\chi_0^2}4$ times the
+part of $[\Delta\Pi]_3$ that involves $\alpha'(q_0)$. By \eqref{eq:cub-N}, this
+part is $\alpha'(q_0)N^{(1)}_\vartheta(k)$. Finally, the part of
+$[\Delta\Pi]_n$ that involves $\alpha'(q_0)$ or $\alpha''(q_0)$ vanishes for
+$n\le2$, which completes the proof.
+\end{proof}
+
+\begin{proposition}[Pointwise expansion of the boundary perturbation]\label{prop:cub-pointwise}
+For $q_0\in K$, $0\le h\le h_0$ and $\abs k\le k_0$, write $a=\alpha(q_0)$,
+$\chi_0(z)=\chi(q_0,z)$ and $w_0(z)=w(q_0,z)$. Then
+\begin{equation}\label{eq:cub-A}
+\begin{aligned}
+ V(q_0,h,k,z)={}&\frac{b^2\chi_0(z)^2}4\,\Delta\Pi(q_0,h,k)\\
+ &+h^3\Bigl\{a^2b^3\chi_0(z)^3C_\chi(k)+ab^3w_0(z)^2C_w(k)\Bigr\}+\mathcal R(q_0,h,k,z),
+\end{aligned}
+\end{equation}
+where $\abs{\partial_z^j\mathcal R(q_0,h,k,z)}\le Ch^4k^2$ for $j\le2$ and all $z$.
+\end{proposition}
+
+The penalty $\Delta\Pi$ in \eqref{eq:cub-A} is the exact change of the
+mass-weighted squared-norm integral of the path, with the Parisi distribution
+function $\alpha$; it
+is not replaced by its Taylor polynomial. By the expansion of $\Delta\Pi$ in
+\cref{sec:cub-derivatives}, it contains the term
+$\alpha'(q_0)h^3N^{(1)}_\vartheta(k)$. The function $V$ itself depends on
+$\alpha'(q_0)$ at order $h^3$. This dependence disappears only after the
+expectation is taken in \cref{b:prop:os-expansion}.
+
+\begin{proof}
+Let $\mathcal R$ be defined by \eqref{eq:cub-A}. Using \cref{prop:cub-frozen} and
+\cref{lem:cub-mass}, together with the expansion $[\Delta\Pi]_2=aN_\vartheta(k)$,
+$[\Delta\Pi]_3=\alpha'(q_0)N^{(1)}_\vartheta(k)$ of \cref{sec:cub-derivatives},
+we find that $[\mathcal R]_n=0$ for $n\le3$, for every $k$ and $z$. By
+\cref{b:lem:os-flow}(ii) and (iv), the functions $\partial_h^{\gamma_h}\partial_k^{\gamma_k}
+\partial_z^j\mathcal R$ are bounded for $\gamma_h\le4$, $\gamma_k\le2$ and $j\le2$; for the
+second and third terms of \eqref{eq:cub-A} this follows from the bounds on
+$\chi$ and $w$ in \cref{lem:sc-derivatives}. Moreover, $\mathcal R$ vanishes at
+$k=0$ and is even in $k$, because $V$, $\Delta\Pi$, $C_\chi$ and $C_w$ have these
+properties. Fix $j\le2$ and $z$. The Taylor coefficients of
+$\partial_k^{\gamma_k}\partial_z^j\mathcal R$ of order at most three in $h$ vanish, and
+Taylor's formula implies that $\abs{\partial_k^{\gamma_k}\partial_z^j\mathcal R}\le Ch^4$
+for $\gamma_k\le2$. Since $\partial_z^j\mathcal R$ and $\partial_k\partial_z^j\mathcal R$
+vanish at $k=0$, we have
+$\partial_z^j\mathcal R(k)=\int_0^k(k-k')\,\partial_k^2\partial_z^j\mathcal
+R(k')\dd k'$, which implies that $\abs{\partial_z^j\mathcal R}\le Ch^4k^2$.
+\end{proof}
+
+The identity $[\mathcal R]_n=0$ for $n\le3$ can also be checked by expanding
+the five stages of the perturbed path directly, with the derivatives of $\Phi$
+at $(q_0,z)$, the values $\alpha(q_0)$, $\alpha'(q_0)$, $\alpha''(q_0)$, and $k$
+as variables; we did so with computer algebra for several rational values of
+$\vartheta$.
+
+\section{The expansion of the trial value}\label{sec:cub-expansion}
+
+We now take the expectation of \eqref{eq:cub-A} along the scalar diffusion.
+Here we use the two stationarity identities. Let
+\begin{equation}\label{eq:cub-M}
+ M(t)=\alpha(t)^2\beta^6\E\chi(t,Y_t)^3,
+\end{equation}
+which is positive on $(0,q_\beta)$ and infinitely differentiable there by
+\cref{b:lem:os-scalar-jets}. We define the even polynomial
+\[
+ P_\vartheta(k)=C_\chi(k)+2C_w(k)=c_2(\vartheta)k^2+c_4(\vartheta)k^4
+ +c_6(\vartheta)k^6.
+\]
+By \eqref{eq:cub-table}, its coefficients are
+\begin{equation}\label{eq:cub-c}
+\begin{gathered}
+ c_2(\vartheta)=\frac{2\vartheta(\vartheta-1)}{(\vartheta-2)^2},\qquad
+ c_4(\vartheta)=\frac{(\vartheta-1)(3\vartheta^2+6\vartheta+4)}{3(\vartheta-2)^4},\\
+ c_6(\vartheta)=\frac{(3\vartheta+4)(9\vartheta^2+15\vartheta+10)}{27(\vartheta-2)^6}.
+\end{gathered}
+\end{equation}
+For $\vartheta\in(0,1)$ we have $c_2<0$, $c_4<0$ and $c_6>0$.
+For $\vartheta=1/2$, by \eqref{eq:cub-half},
+\begin{equation}\label{eq:cub-P-half}
+ P_{1/2}(k)=-\frac29k^2-\frac{62}{243}k^4+\frac{6952}{19683}k^6.
+\end{equation}
+The polynomial $-\frac29k^2-\frac{62}{243}k^4+\frac{6952}{19683}k^6$ is the
+sum of the trace polynomial \eqref{b:eq:os-R} and twice the Wick polynomial
+\eqref{b:eq:os-W} at $\vartheta=1/2$; by \cref{b:prop:os-expansion}, it is the
+coefficient of $M(q_0)h^3$ in the expansion of $\mathcal T(q_0,h,k)-3P_\beta$.
+
+\begin{proposition}[Local three-replica expansion]\label{b:prop:os-expansion}
+Let $\vartheta\in(0,1/2]$, $k_0>0$, and let $K\subset(0,q_\beta)$ be a compact
+interval. There exist $h_0>0$ and $C<\infty$, depending only on $\beta$,
+$\vartheta$, $k_0$ and $K$, such that for all $q_0\in K$, $0\le h\le h_0$ and
+$\abs k\le k_0$, the trial value $\mathcal T(q_0,h,k)$ of \eqref{b:eq:os-trial}
+is an upper bound for $p_{3,n}(D(r,q,\delta))$ whenever this matrix is
+feasible, and
+\begin{equation}\label{b:eq:finiteE-polynomial}
+ \Bigl|\mathcal T(q_0,h,k)-3P_\beta-M(q_0)h^3P_\vartheta(k)\Bigr|\le Ch^4k^2,
+\end{equation}
+with $r,q,\delta$ as in \eqref{b:eq:os-parameters}. The same bound holds with
+$M(q_0)$ replaced by $M(q_0+h)=M(r)$.
+\end{proposition}
+
+The constants are uniform in the left endpoint $q_0\in K$, in $h\le h_0$ and
+in $\abs k\le k_0$; they are not uniform as $\vartheta\downarrow0$. In terms of
+$d=\vartheta h$ and $\delta=hk$, the remainder is $Ch^4k^2=C\delta^2d^2/\vartheta^2$.
+
+\begin{proof}
+Let $h_0$ be as in \cref{b:lem:os-flow}. The first claim is
+\cref{lem:cub-trial}(a). Using \cref{cor:cub-prefix} and
+\cref{prop:cub-pointwise}, we obtain
+\[
+\begin{aligned}
+ \mathcal T(q_0,h,k)-3P_\beta={}&\frac b4\bigl(b\,\E\chi(q_0,Y_{q_0})^2-1\bigr)\Delta\Pi\\
+ &+h^3\Bigl\{a^2b^3\,\E\chi(q_0,Y_{q_0})^3C_\chi(k)+ab^3\,\E w(q_0,Y_{q_0})^2C_w(k)\Bigr\}\\
+ &+\E\mathcal R+\mathcal E_{\rm in},
+\end{aligned}
+\]
+with $a=\alpha(q_0)$. Since $q_0\in(0,q_\beta)$, the stationarity identities
+\eqref{b:eq:os-contacts} hold at $t=q_0$: we have $b\,\E\chi(q_0,Y_{q_0})^2=1$ and
+$\E w(q_0,Y_{q_0})^2=2a\,\E\chi(q_0,Y_{q_0})^3$. The first identity cancels the
+penalty term exactly, and the second turns the braces into
+$a^2b^3\E\chi(q_0,Y_{q_0})^3\bigl(C_\chi(k)+2C_w(k)\bigr)$, so that the second
+term is $M(q_0)h^3P_\vartheta(k)$. Finally, $\abs{\E\mathcal R}\le Ch^4k^2$ by
+\cref{prop:cub-pointwise}, and $\abs{\mathcal E_{\rm in}}\le Ch^4k^4\le
+Ck_0^2h^4k^2$ by \cref{cor:cub-prefix}. This proves
+\eqref{b:eq:finiteE-polynomial}.
+
+For the last claim, recall that $M$ is continuously differentiable on $K'$. We
+have $\abs{M(q_0+h)-M(q_0)}\le Ch$ and $\abs{P_\vartheta(k)}\le Ck^2$ for $\abs
+k\le k_0$, and replacing $M(q_0)$ by $M(q_0+h)$ changes the left side of
+\eqref{b:eq:finiteE-polynomial} by at most $Ch^4k^2$.
+\end{proof}
+
+\section{A uniform cubic deficit on a band}\label{sec:cub-band}
+
+We now express the expansion in the variables $d=q-r$ and $\delta$, and we bound
+the trial value on a band where both are comparable to a small scale $\rho$.
+With $h=d/\vartheta$ and $k=\vartheta\delta/d$, we have
+$-h^3P_\vartheta(k)=\mathcal G_\vartheta(d,\abs\delta)$, where
+\begin{equation}\label{eq:cub-G-function}
+ \mathcal G_\vartheta(d,x)=-\frac{c_2}\vartheta\,x^2d-\vartheta c_4\frac{x^4}d
+ -\vartheta^3c_6\frac{x^6}{d^3}\qquad(d,x>0),
+\end{equation}
+and $c_j=c_j(\vartheta)$. Note that
+$-c_2/\vartheta=2(1-\vartheta)/(2-\vartheta)^2>0$. For $E>0$ we set
+\[
+ G(\vartheta,E)=-\frac{c_2}\vartheta-\vartheta c_4E^2-\vartheta^3c_6E^4,
+ \qquad
+ \mu_1=-\frac{c_2}\vartheta+\vartheta c_4(2E)^2,\qquad
+ \mu_2=-\frac{c_2}\vartheta-3\vartheta^3c_6(2E)^4,
+\]
+so that $\mathcal G_\vartheta(\rho,E\rho)=E^2G(\vartheta,E)\rho^3$. Since
+$c_4<0<c_6$, we have $G(\vartheta,E)\ge\mu_2$.
+
+\begin{lemma}[Monotonicity on the band]\label{lem:cub-band}
+Let $\vartheta\in(0,1/2]$ and $E>0$ satisfy
+\begin{equation}\label{b:eq:os-band-checks}
+ -\frac{c_2(\vartheta)}\vartheta+\vartheta c_4(\vartheta)(2E)^2>0,\qquad
+ -\frac{c_2(\vartheta)}\vartheta-3\vartheta^3c_6(\vartheta)(2E)^4>0,
+\end{equation}
+that is, $\mu_1>0$ and $\mu_2>0$. Let $0\le\sigma<\min\{\mu_1,\mu_2\}$ and $\rho>0$.
+Then the function $(d,x)\mapsto\mathcal G_\vartheta(d,x)-\sigma x^2d$ is
+increasing in each variable on the band $\{d\ge\rho,\ E\rho\le x\le2E\rho\}$,
+and its minimum over the band is $E^2(G(\vartheta,E)-\sigma)\rho^3$, attained at
+$(\rho,E\rho)$.
+\end{lemma}
+
+\begin{proof}
+Differentiating \eqref{eq:cub-G-function}, we obtain
+\[
+ \frac{\partial_d\mathcal G_\vartheta}{x^2}
+ =-\frac{c_2}\vartheta+\vartheta c_4\Bigl(\frac xd\Bigr)^2
+ +3\vartheta^3c_6\Bigl(\frac xd\Bigr)^4,\qquad
+ \frac{\partial_x\mathcal G_\vartheta}{2xd}
+ =-\frac{c_2}\vartheta-2\vartheta c_4\Bigl(\frac xd\Bigr)^2
+ -3\vartheta^3c_6\Bigl(\frac xd\Bigr)^4.
+\]
+On the band, $0<x/d\le2E\rho/\rho=2E$. Since $c_4<0<c_6$, the first
+expression is at least $\mu_1$ and the second is at least $\mu_2$. Subtracting
+$\sigma x^2d$ subtracts $\sigma$ from both normalized derivatives, and the partial
+derivatives of $\mathcal G_\vartheta-\sigma x^2d$ in $d$ and $x$ are at least
+$(\mu_1-\sigma)x^2>0$ and $2(\mu_2-\sigma)xd>0$. The band is the product
+$[\rho,\infty)\times[E\rho,2E\rho]$, and so the minimum is attained at the corner
+$(\rho,E\rho)$, where the value is
+$\mathcal G_\vartheta(\rho,E\rho)-\sigma E^2\rho^3=E^2(G(\vartheta,E)-\sigma)\rho^3$.
+\end{proof}
+
+The lemma bounds $\mathcal G_\vartheta-\sigma x^2d$ below by its value at one
+corner of the band. It does not say that $G(\vartheta,E)$ multiplies $x^2d$
+throughout the band.
+
+\begin{proposition}[A uniform cubic deficit]\label{prop:cub-band}
+Let $I\subset(0,q_\beta)$ be a nonempty compact interval, and let $m_\beta>0$
+satisfy $m_\beta\le\inf_{r\in I}M(r)$, for instance the constant of
+\cref{cor:sc-mbeta} for an interval $I_\beta\supset I$. Let $\vartheta\in(0,1/2]$ and
+$E>0$ satisfy \eqref{b:eq:os-band-checks}, and let $0<\sigma<\min\{\mu_1,\mu_2\}$.
+There exists $d_0>0$, depending only on $\beta$, $I$, $\vartheta$, $E$ and $\sigma$,
+such that the following holds. Let $0<\rho\le d_0$, and let $r\in I$, $d$ and
+$\delta$ satisfy
+\[
+ \rho\le d\le d_0,\qquad E\rho\le\abs\delta\le2E\rho .
+\]
+Set $h=d/\vartheta$, $q_0=r-h$ and $k=\vartheta\delta/d$. Then $\mathcal
+T=\mathcal T(q_0,h,k)$ is an upper bound for $p_{3,n}(D(r,r+d,\delta))$
+whenever this matrix is feasible, and
+\[
+ \mathcal T\le3P_\beta-m_\beta\bigl\{\mathcal G_\vartheta(d,\abs\delta)-\sigma\delta^2d\bigr\}
+ \le3P_\beta-m_\beta E^2\bigl(G(\vartheta,E)-\sigma\bigr)\rho^3.
+\]
+In particular, if $0<\bar\sigma<G(\vartheta,E)$ and $\sigma=\min\{\bar\sigma,\mu_1,\mu_2\}/2$,
+then
+\begin{equation}\label{b:eq:os-uniform-corner-gap}
+ \mathcal T\le3P_\beta-m_\beta E^2\bigl\{G(\vartheta,E)-\bar\sigma\bigr\}\rho^3 .
+\end{equation}
+\end{proposition}
+
+The parameters are chosen in the order of \cref{tab:cub-choices}, all before
+$\rho$, and before $n$ in the later sections. The deficit
+\eqref{b:eq:os-uniform-corner-gap} is uniform over the band, but it is a bound
+by the value at the corner of the band; at other points of the band the
+deficit $m_\beta\{\mathcal G_\vartheta(d,\abs\delta)-\sigma\delta^2d\}$ may be much
+larger. A fixed $d=d_0$ does not make the remainder of
+\eqref{b:eq:finiteE-polynomial} small compared with $\delta^2d$; it is the
+choice of $d_0$ in the proof that makes it so.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+Parameter & Chosen in terms of & Purpose\\
+\midrule
+$I$, $m_\beta$ & fixed first & centers; scalar factor $M\ge m_\beta$ on $I$\\
+$\vartheta$, $E$ & \eqref{b:eq:os-band-checks} & geometry of the band\\
+$k_0=2\vartheta E$, $K$ & $\vartheta$, $E$, $I$ & range of $k$ and of $q_0$\\
+$h_0$, $C$ & $\beta$, $\vartheta$, $k_0$, $K$ & \cref{b:prop:os-expansion}\\
+$\sigma$ (or $\bar\sigma$) & $\mu_1$, $\mu_2$ (and $G(\vartheta,E)$) & slack in \cref{lem:cub-band}\\
+$d_0$ & $h_0$, $C$, $\underline M_I$, $\sigma$, $I$ & $h\le h_0$, $q_0\in K$, absorption of the remainder\\
+$\rho$ & $0<\rho\le d_0$ & scale of the band\\
+\bottomrule
+\end{tabular}
+\caption{Order of the choices in \cref{prop:cub-band}.}\label{tab:cub-choices}
+\end{table}
+
+\begin{proof}
+We first fix the constants, and then combine \cref{b:prop:os-expansion} with
+\cref{lem:cub-band}.
+
+\paragraph{Step 1: constants.} Let $k_0=2\vartheta E$ and
+$K=[\frac12\min I,\max I]$, a compact subinterval of $(0,q_\beta)$. Let $h_0$
+and $C$ be the constants of \cref{b:prop:os-expansion} for $\vartheta$, $k_0$
+and $K$. By \cref{b:lem:os-scalar-jets}, the function $M$ is continuous and
+positive on the compact interval $I$, and we set
+\[
+ \underline M_I=\min_{r\in I}M(r)>0,\qquad
+ d_0=\min\Bigl\{\vartheta h_0,\ \frac\vartheta2\min I,\
+ \frac{\underline M_I\sigma\vartheta^2}C\Bigr\}.
+\]
+These constants depend only on $\beta$, $I$, $\vartheta$, $E$ and $\sigma$.
+
+\paragraph{Step 2: the expansion.} Let $\rho,r,d,\delta$ be as in the
+statement. Then $h=d/\vartheta\le h_0$, $q_0=r-h\ge\min I-\frac12\min I$, so
+that $q_0\in K$, and $\abs k=\vartheta\abs\delta/d\le2\vartheta E\rho/\rho=k_0$.
+With these parameters, $q_0+h=r$, $q_0+(1+\vartheta)h=r+d$ and $hk=\delta$. The
+endpoint of the path is $D(r,r+d,\delta)$, and the first claim is
+\cref{b:prop:os-expansion}. By \eqref{b:eq:finiteE-polynomial} with $M(r)$,
+\[
+ \mathcal T\le3P_\beta-M(r)\,\mathcal G_\vartheta(d,\abs\delta)+\frac C{\vartheta^2}\delta^2d^2.
+\]
+Since $d\le d_0$ and $r\in I$, we have
+\[
+ \frac C{\vartheta^2}\delta^2d^2\le\underline M_I\sigma\delta^2d\le M(r)\sigma\delta^2d.
+\]
+By \cref{lem:cub-band}, the braces in the next display are at least
+$E^2(G(\vartheta,E)-\sigma)\rho^3$, which is positive because
+$G(\vartheta,E)\ge\mu_2>\sigma$. Since $M(r)\ge m_\beta$, we obtain
+\[
+ \mathcal T\le3P_\beta-M(r)\bigl\{\mathcal G_\vartheta(d,\abs\delta)-\sigma\delta^2d\bigr\}
+ \le3P_\beta-m_\beta\bigl\{\mathcal G_\vartheta(d,\abs\delta)-\sigma\delta^2d\bigr\},
+\]
+and the lower bound on the braces gives the second inequality of the
+proposition. For the last claim, $\sigma\le\bar\sigma/2<\bar\sigma$.
+\end{proof}
+
+\paragraph{An explicit admissible choice.} Let $\vartheta=1/2$ and $E=1/100$.
+By \eqref{eq:cub-P-half}, $-c_2/\vartheta=4/9$,
+$c_4=-62/243$ and $c_6=6952/19683$. These values satisfy $-1<c_4<0<c_6<1$,
+which implies that
+\[
+ \mu_1=\frac49+2c_4E^2>\frac49-2E^2>0,\qquad
+ \mu_2=\frac49-6c_6E^4>\frac49-6E^4>0,
+\]
+so \eqref{b:eq:os-band-checks} holds, and
+\[
+ G\Bigl(\frac12,E\Bigr)=\frac49+\frac{31}{243}E^2-\frac{869}{19683}E^4
+ >\frac49-\frac{E^4}8>\frac13.
+\]
+The exact values are $\mu_1=269969/607500$, $\mu_2=18224999131/41006250000$ and
+$G(1/2,1/100)=874825109131/1968300000000$. This choice is used in
+\cref{sec:references}. It is compatible with every fixed $\beta>1$: the
+constants of \cref{b:prop:os-expansion} depend on $\beta$, but
+\eqref{b:eq:os-band-checks} does not.
+
+\paragraph{Scope of the local construction.} \Cref{prop:cub-band} concerns only
+matrices with $q-r\le d_0$. For $q-r>d_0$, \cref{sec:static} uses the quenched
+comparison with a fixed width of \cref{lem:st-remote}, which does not require
+the regularity of $\alpha$ near $q$. The bound of \cref{prop:cub-band} is a
+bound on the quenched pressure. To bound the positive fractional moments for the
+probability estimates, we use the separate interpolation of
+\cref{sec:fractional}, which uses the trial path of this section with the
+profile changed on $[0,q_0)$; by the remark after \cref{lem:cub-trial}, this
+change does not affect $V$ or $\Delta\Pi$.

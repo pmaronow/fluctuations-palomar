@@ -1,0 +1,37 @@
+% Shared macros.
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\E}{\mathbb E}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\TV}{\mathrm{TV}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Ent}{Ent}
+\DeclareMathOperator{\Law}{Law}
+
+% Label aliases: \aliaslabel{new}{old} makes \ref/\cref{new} resolve to the label old
+% (used where a source label was kept on a statement that already carries another label).
+\makeatletter
+\newcommand{\aliaslabel}[2]{\AtBeginDocument{%
+  \@ifundefined{r@#2}{}{%
+    \expandafter\let\csname r@#1\expandafter\endcsname\csname r@#2\endcsname
+    \expandafter\let\csname r@#1@cref\expandafter\endcsname\csname r@#2@cref\endcsname}}}
+\makeatother
+\aliaslabel{b:eq:SK-covariance}{eq:common-covariance}
+\aliaslabel{f:completion}{eq:model-completion-laplace}
+\aliaslabel{b:eq:os-contacts}{b:eq:contacts}
+
+% Macros for Part IV (see NOTATION.md).
+\DeclareMathOperator{\KL}{KL}
+\newcommand{\ipn}[2]{\langle #1,#2\rangle}
+\newcommand{\normn}[1]{\lVert #1\rVert}
+\newcommand{\ex}[1]{\mathsf{#1}}
+\DeclareMathOperator{\Up}{Up}
+\newcommand{\Upt}{\Up_{1/2}}
+\DeclareMathOperator{\Unif}{Unif}

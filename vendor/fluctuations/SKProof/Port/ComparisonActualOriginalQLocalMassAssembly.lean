@@ -1,0 +1,131 @@
+module
+
+public import SKProof.Port.ComparisonActualOriginalQLocalCapAssembly
+public import SKProof.Port.ComparisonActualOriginalQOrdinaryMassBudget
+public import SKProof.Port.ComparisonActualOriginalQBroadMassBudget
+public import SKProof.Port.ComparisonActualOriginalQLocalThermalSignPartition
+public import SKProof.Port.ComparisonActualOriginalQInitialFloorThermal
+
+@[expose] public section
+
+noncomputable section
+namespace OAI.SKFluctuations.LaplaceWindowFormalization
+open Set MeasureTheory ProbabilityTheory Filter Hierarchy WholeUnitSideKernel
+open scoped Topology NNReal ENNReal BigOperators
+set_option maxHeartbeats 12000000
+attribute [local instance] Classical.propDecidable
+open ActualThetaZeroOverlapMinimum
+
+theorem eventually_actual_local_mass_of_explicit_budgets_original_q
+    (ell : ℕ) (hell : 2 < ell) (Bclock : ℝ) {margin delta cl cu Az C0 Ct D : ℝ}
+    (hm : 0 < margin) (hdelta : 0 < delta) (hroom : delta < 3*margin)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az) (hC0 : 0 < C0) (hCt : 0 ≤ Ct) :
+    ∃Qo Qb Kfloor Kwall : ℝ,1 ≤ Qo ∧ 1 ≤ Qb ∧ 0 < Kfloor ∧ 0 < Kwall ∧
+      ∀ᶠn:ℕ in atTop,
+      ∀a:ActualThetaZeroOverlapMinimum (n+1) margin delta cl cu Az C0 Ct D Bclock,
+        a.data.s ≤ 1/4 → a.data.s ≤ a.xs → ∀_P:a.Potential,
+        NativePullbackClockRegularity a.alpha.val.val a.b a.h a.data.rmin 1 →
+      ∀lo hi cut Lside O B : ℝ,
+        lo∈Icc (0:ℝ) 1 → hi∈Icc (0:ℝ) 1 → lo ≤ hi → a.data.U ≤ lo → 32*a.data.s < lo →
+        0 < cut → 2*cut < a.data.U → 0 ≤ Lside → Real.log (1/cut) ≤ Lside → 0 ≤ O → 0 ≤ B →
+        (∀v∈Icc (lo/16) hi,0 < v → v ≤ 1 →
+          a.canonicalOrdinaryMassBudget ell Qo Lside cut v ≤ O) →
+        (∀v∈Icc (lo/4) (2*hi),0 < v → v ≤ 1 → ∀width∈Icc v (4*v),width ≤ 1 →
+          a.canonicalBroadMassBudget ell Qb Lside cut v width ≤ B) →
+      (∫u in lo..hi,orderedPathB (n+1) a.sweepBf a.sweepHf u-(orderedPathS (n+1) a.sweepBf a.sweepHf u)^2) ≤ 
+        (2*O+4*B)*(Nat.ceil (Real.log (1/a.data.U)/Real.log 2)+1)+
+          8*Kwall*(a.xs+8*max a.data.U a.data.s)^2*max a.data.U a.data.s+
+          Kfloor*(a.xs+hi)^2*(a.data.s+a.data.N^(-delta)*a.data.U) := by
+  obtain ⟨Qo,hQo,HO⟩:=eventually_actual_ordinary_mass_budget_original_q ell hell Bclock
+    (D:=D) hm hdelta hroom hcl hcu hAz hC0 hCt
+  obtain ⟨Qb,hQb,HB⟩:=eventually_actual_broad_mass_budget_original_q ell hell Bclock
+    (D:=D) hm hdelta hroom hcl hcu hAz hC0 hCt
+  obtain ⟨Kfloor,hKfloor,HF⟩:=eventually_actual_initial_floor_thermal_original_q Bclock
+    (D:=D) hm hdelta hroom hcl hcu hAz hC0 hCt
+  obtain ⟨Kwall,hKwall,HW⟩:=eventually_actual_initial_wall_thermal_original_q Bclock
+    (D:=D) hm hdelta hroom hcl hcu hAz hC0 hCt
+  refine ⟨Qo,Qb,Kfloor,Kwall,hQo,hQb,hKfloor,hKwall,?_⟩
+  filter_upwards [HO,HB,HF,HW] with n hnO hnB hnF hnW
+  intro a hs hsxs P hclock lo hi cut Lside O B hlo hhi hlh hU hstart
+    hcut hcutU hLside hlogcut hO hB hOrd hBroad
+  let m:=a.shiftedNativeModel
+  let A:=m.massSlice lo hi
+  have hloHigh : lo∈Icc a.data.s 1:=⟨by linarith [a.data.hs.1.le],hlo.2⟩
+  have hhiHigh : hi∈Icc a.data.s 1:=⟨hloHigh.1.trans hlh,hhi.2⟩
+  have hA : MeasurableSet A:=measurableSet_Ioo
+  have hAD : A⊆Ioo a.data.rmin 1:=by
+    intro r hr
+    exact ⟨(m.R_bounds lo).1.trans_lt hr.1,hr.2.trans_le (m.R_bounds hi).2⟩
+  have hAD0 : A⊆Ioo (0:ℝ) 1 := fun r hr =>
+    ⟨a.data.rmin_nonneg.trans_lt (hAD hr).1,(hAD hr).2⟩
+  have hscale : ∀r∈A,lo ≤ a.alpha.val.val r ∧ a.alpha.val.val r ≤ hi:=by
+    intro r hr
+    exact (m.massSlice_profile_mem hloHigh hhiHigh hr).imp le_of_lt le_of_lt
+  have hcap:=P.local_cap_contact_thermal_of_finite_budgets A hA hAD0 hU hstart hO hB hscale
+    (by
+      intro F j
+      let v:=a.data.U*(2:ℝ)^(j.val:ℕ)
+      have hv:=(comparison_mass_dyadic_scale a.data.hU j.val).1
+      have hv1:=(comparison_mass_dyadic_scale a.data.hU j.val).2.2
+      have hstartV : a.data.s < v/2:=by dsimp only [v];linarith [j.property.1]
+      rw [P.ordinaryGroup_eq_retainedSupport (P.capFamily F) A 16 j.val]
+      have HP:=hnO a hs hsxs P hclock F A v Lside cut hv hv1 hstartV hLside hcut hlogcut
+      exact HP.trans (hOrd v j.property hv hv1))
+    (by
+      intro F p
+      let cap:=P.capFamily F p.val.1.val
+      let f:=actualBroadCapSampler (P.capFamily F) p.val.1
+      let i:=p.val.2
+      let v:=f.scale i
+      let l:=m.R (f.node i.val)
+      let z:=m.R (f.node (i.val+1))
+      have hg:=f.geometry i
+      have hn:=f.nodes_mem i
+      have hc:=f.contracts i
+      have hw:=f.width_bounds i
+      have hvs : lo/4 ≤ v ∧ v ≤ 2*hi := by
+        obtain ⟨r,hrA,hr⟩ := p.property
+        have hm := m.massSlice_profile_mem hn.1 hn.2 hr
+        have ha := hscale r hrA
+        constructor <;> linarith [hg.2.2.1,hg.2.2.2.1,hm.1,hm.2]
+      have hv : 0 < v:=(positiveOriginMassCoverBase_pos (a:=a)).trans_le hg.1
+      have hv1 : v ≤ 1:=hw.1.trans hw.2.2
+      have hsV : a.data.s < v/2:=by dsimp only [v] at *;linarith [hvs.1]
+      have hUv : a.data.U ≤ v:=(le_max_left _ _).trans hg.1
+      have hnode : a.data.s < f.node i.val:=hsV.trans_le hg.2.2.1
+      have hlrmin : a.data.rmin < l:=by
+        have H:=m.R_strictMonoOn ⟨le_rfl,a.data.hs1⟩ hn.1 hnode
+        simpa only [m.R_left] using H
+      have hl0 : 0 < l := a.data.rmin_nonneg.trans_lt hlrmin
+      have hlz : l < z:=m.R_strictMonoOn hn.1 hn.2 hg.2.2.2.2.2.2
+      have hclL : cap.left ≤ l:=by
+        have H:=m.R_monotone ((le_max_left _ _).trans hg.2.2.2.2.1)
+        rw [m.R_inverse ⟨cap.hleft,cap.hlt.le.trans cap.hright⟩] at H
+        exact H
+      have hzcap : z ≤ cap.right:=by
+        have H:=m.R_monotone hg.2.2.2.2.2.1
+        rw [m.R_inverse ⟨cap.hleft.trans cap.hlt.le,cap.hright⟩] at H
+        exact H
+      have hlmass : v/2 ≤ a.alpha.val.val l:=by rw [m.R_spec hn.1];exact hg.2.2.1
+      have hzmass : a.alpha.val.val z  ≤  min (4*v) 1:=by
+        rw [m.R_spec hn.2]
+        exact le_min hg.2.2.2.1 hn.2.2
+      change (∫u in 0..1,(Ioo l z).indicator (fun _=>1) (m.R u)*m.thermal u) ≤ B
+      rw [m.binary_thermal_pullback_positive_origin hlrmin.le (hzcap.trans cap.hright) (Ioo l z)
+        measurableSet_Ioo (Subset.refl _) _ (m.thermal_mask_integrable _ measurableSet_Ioo)]
+      have HP:=hnB a hs hsxs P cap l z v Lside cut (P.capFamily_contacts F p.val.1.val)
+        hl0 hlz hclL hzcap hv hv1 hsV hUv hlmass hzmass hc.2.2.2.2.2
+        hLside hcut hcutU hlogcut
+      exact HP.trans (hBroad v hvs hv hv1 _ ⟨hw.1,hw.2.1⟩ hw.2.2))
+  have hfloor:=P.local_positive_thermal_le_initial_floor A hA hAD hi hhi
+    (fun r hr=>(hscale r hr).2)
+  have hfloorPrice:=hnF a hs hsxs P hi hhi
+  have hsplit:=P.local_thermal_sign_partition A hA hAD
+  have hid:=m.massSlice_thermal_integral hloHigh hhiHigh hlh
+  rw [←hid,hsplit]
+  have hwallPrice:=hnW a hs hsxs
+  change (∫u in 0..min (8*a.positiveOriginMassCoverBase) 1,m.thermal u) ≤ 
+    8*Kwall*(a.xs+8*max a.data.U a.data.s)^2*max a.data.U a.data.s at hwallPrice
+  linarith
+
+end OAI.SKFluctuations.LaplaceWindowFormalization

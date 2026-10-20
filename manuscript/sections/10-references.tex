@@ -1,0 +1,987 @@
+\chapter{Overlap neighborhoods and reference configurations}\label{sec:references}
+
+This section collects the probabilistic input of the dynamical argument in
+\cref{sec:induction,sec:barrier-proof}. It has three parts. In
+\cref{sec:ref-neighborhoods}, we prove \cref{b:lem:coverage-extension}, the
+overlap-neighborhood mass bound. It states that outside an event of
+vanishing disorder probability, for every set $S\subseteq\Sigma_n$, every
+$x\in S$ outside a set of Gibbs mass less than $e^{-D_1L_n}$ has the property
+that the configurations $z\in S$ with $|R(x,z)|\ge q_*$ carry Gibbs mass at
+least $e^{-D_3L_n}$;
+here $D_1>0$ is arbitrary, and $D_3$ depends only on $\beta$ and $D_1$.
+This is the argument of \cite[Proposition~6.1]{oai-barriers}, carried out at
+every diverging sublinear scale $L_n$. In \cref{sec:ref-parameters}, we fix the
+parameters of the dynamical argument and the order in which they are chosen
+(\cref{tab:ref-parameters}). We then define the set $\mathcal B_n$ of
+exceptional triples as an explicit union and deduce from
+\cref{b:lem:static-event} that $\pi^{\otimes3}(\mathcal B_n)$ is small on
+one disorder event (\cref{lem:ref-single-event}). In
+\cref{sec:ref-families}, we combine these two inputs. At each disorder in an
+event of probability tending to one, we fix one family of Gibbs reference
+configurations and one set $V$ of small Gibbs mass such that the four
+properties used in \cref{sec:induction} hold along every path that avoids
+$V$ (\cref{lem:ref-families}).
+
+The section uses \cref{b:lem:static-event} and the pressure estimate
+\eqref{b:eq:fixed-pressure-gap} from \cref{sec:static}, the scalar
+constant of \eqref{b:eq:main-analytic-constants} from \cref{sec:scalar},
+the band of \eqref{b:eq:os-band-checks} from \cref{sec:cubic}, and the
+imported results \cref{inp:ob-energy-tail,inp:ob-rotation,inp:ob-concentration}.
+\Cref{lem:ref-families} is the only point at which the static
+estimates of \cref{part:static} enter the induction of \cref{sec:induction};
+its bound on $\pi(V)$ enters the stationary sign test of
+\cref{sec:barrier-proof}. Although \cref{thm:barrier-730} uses only the scale
+exponent $7/30$, we state the construction for general exponents, because this
+shows which conditions on the scales each step uses
+(see \cref{tab:bp-exponents}).
+
+Throughout this section, $\beta>1$ is fixed, and we write $\pi=\pi^J$. For
+a vector $\bar J=(\bar J_{ij})_{1\le i<j\le n}$ of real numbers, we write
+$H_n^{\bar J}$ and $Z_n^{\bar J}$ for the Hamiltonian and the partition
+function in which $J$ is replaced by $\bar J$. For $k\ge1$ and a
+set $\mathcal U\subseteq\Sigma_n^k$, $\pi^{\otimes k}(\mathcal U)$ is the
+probability, at fixed disorder, that $k$ independent samples from $\pi$ form
+a $k$-tuple in $\mathcal U$; we also write
+$\pi^{\otimes2}(|R|\ge q)$ for
+$\pi^{\otimes2}(\{(x,y):|R(x,y)|\ge q\})$. The Gibbs measure is invariant
+under the spin flip $x\mapsto-x$, because $H_n^J(-x)=H_n^J(x)$, and $\pi^{\otimes k}$
+is invariant under spin flips of single coordinates and under permutations of
+the coordinates. All constants depend on $\beta$ and on the fixed parameters
+listed in \cref{tab:ref-parameters}, and never on $n$ or on the disorder.
+
+\section{Overlap neighborhoods at sublinear scales}\label{sec:ref-neighborhoods}
+
+The bound below was proved in \cite[Proposition~6.1]{oai-barriers} at the
+scale $L_n=n^{1/10000}$ used there; this is \cref{inp:ob-coverage}. Its proof
+uses the scale only through the conditions $L_n\to\infty$ and $L_n=o(n)$. Our
+time scale is different, and the constants of the bound enter the
+construction of \cref{sec:ref-families}. For these reasons we state the
+extension and write out the proof. The ingredients are those of
+\cite{oai-barriers}: the upper
+tail of the energy of a Gibbs sample (\cref{inp:ob-energy-tail}, whose proof
+in \cite[Lemma~5.1]{oai-barriers} uses the Brascamp--Lieb inequality
+\cite{brascamp-lieb-1976} in the form of \cite[Lemma~2.1]{oai-barriers}), the
+disorder rotation estimate (\cref{inp:ob-rotation}), Gaussian concentration
+for Lipschitz functions (\cref{inp:ob-concentration}), and the
+Paley--Zygmund inequality.
+
+\begin{lemma}[Overlap-neighborhood mass bound at sublinear scales]
+\label{b:lem:coverage-extension}
+There exists $q_*=q_*(\beta)\in(0,1)$ with the following property. Let
+$(L_n)$ be a deterministic sequence of positive numbers with $L_n\to\infty$
+and $L_n/n\to0$, and let $D_1>0$. Then there exist $D_3>0$ and $D_4>0$, depending only
+on $\beta$ and $D_1$, and disorder events $\mathcal C_n(D_1)$ such that
+$\PP(\mathcal C_n(D_1)^c)\le3e^{-D_4L_n}$ for all sufficiently large $n$,
+and such that on $\mathcal C_n(D_1)$,
+\begin{equation}\label{b:eq:general-coverage}
+ \pi\bigl(\bigl\{x\in S:
+   \pi(\{z\in S:|R(x,z)|\ge q_*\})<e^{-D_3L_n}\bigr\}\bigr)
+ <e^{-D_1L_n}
+ \qquad\text{for every }S\subseteq\Sigma_n .
+\end{equation}
+\end{lemma}
+
+Both masses in \eqref{b:eq:general-coverage} are masses under $\pi$ itself,
+not under $\pi$ conditioned on $S$. The inner mass is the probability that a
+single Gibbs sample lands in the overlap neighborhood
+$\{z\in S:|R(x,z)|\ge q_*\}$ of $x$ in $S$; in \cref{sec:ref-families} it is
+the success probability of one reference sample. The overlap $q_*$ is chosen
+before $D_1$ and before the sequence $(L_n)$, and $D_3$ and $D_4$ do not
+depend on the sequence either. Since $L_n\to\infty$, the lemma implies that
+$\PP(\mathcal C_n(D_1))\to1$. The event $\mathcal C_n(D_1)$ and the threshold beyond
+which the estimates below hold depend on $(L_n)$; the lemma does not provide
+one event valid for all sequences at once. For $L_n=n^{1/10000}$,
+\cref{b:lem:coverage-extension} contains \cref{inp:ob-coverage}.
+
+\begin{proof}
+The proof has three steps. In the first, we show that outside an event of
+vanishing probability, every set of Gibbs mass at least $e^{-D_1L_n}$
+contains a fraction at least $e^{-D_2L_n}$ of pairs with overlap at least
+$q_*$ in absolute value. The idea, from \cite[Section~6]{oai-barriers}, is
+that if a set has few such pairs, then a second moment computation shows
+that a small rotation of the disorder increases the partition function
+restricted to this set by nearly its full Gaussian factor. In the second
+step, we show that this gain outweighs the loss caused by shrinking the
+original disorder, which the upper energy tail controls, and that the
+rotation estimate makes the resulting increase of $\log Z_n^J$ unlikely. In the
+third step, we apply the pair bound to the set of exceptional targets
+itself.
+
+\paragraph{Constants.}
+By \cref{inp:ob-energy-tail}, there exist $e_1\in(0,\beta/2)$ and $c_E>0$
+such that the event
+\[
+ \mathcal E_n=\bigl\{\pi(\{x:H_n^J(x)>ne_1\})\le e^{-c_En}\bigr\}
+\]
+satisfies $\PP(\mathcal E_n^c)\le e^{-c_En}$ for all sufficiently large $n$.
+We define
+\[
+ g_0=\frac{\beta^2}4-\frac{\beta e_1}2,
+\]
+which is positive because $e_1<\beta/2$. We fix $q_*\in(0,1)$ with
+$\beta^2q_*<g_0/8$. These choices depend only on $\beta$. Given $D_1>0$, we
+fix constants $\Lambda$, $D_2$, and $D_3$ such that
+\begin{equation}\label{eq:ref-cov-constants}
+ \Lambda>\frac{8(D_1+1)}{g_0},\qquad
+ D_2>\frac{\beta^2\Lambda}2+1,\qquad
+ D_3>D_1+D_2 .
+\end{equation}
+They depend only on $\beta$ and $D_1$. Now let $(L_n)$ be as in the
+statement, write $L=L_n$, and let
+\[
+ \omega=\omega_n=\frac{\Lambda L_n}n .
+\]
+Then $\omega_n\to0$ and $n\omega_n=\Lambda L_n\to\infty$. We have
+$0<\omega<1/2$ for all sufficiently large $n$; we assume this from now
+on.
+
+\paragraph{Step 1: pairs with large overlap in every large set.}
+Let $\mathcal V_n$ be the event that some $S\subseteq\Sigma_n$ satisfies
+\begin{equation}\label{eq:ref-pair-violation}
+ \pi(S)\ge e^{-D_1L}\qquad\text{and}\qquad
+ \pi(\cdot\mid S)^{\otimes2}(|R|\ge q_*)<e^{-D_2L}.
+\end{equation}
+This event is measurable, since it is a finite union of events, each
+defined by finitely many continuous functions of the disorder. Off
+$\mathcal V_n$, we have
+\begin{equation}\label{b:eq:general-coverage-pairs}
+ \pi(\cdot\mid S)^{\otimes2}(|R|\ge q_*)\ge e^{-D_2L}
+ \qquad\text{for every }S\subseteq\Sigma_n\text{ with }
+ \pi(S)\ge e^{-D_1L}.
+\end{equation}
+We will show that $\PP(\mathcal V_n)\to0$.
+
+Fix $J\in\mathcal E_n\cap\mathcal V_n$ and a set $S$ satisfying
+\eqref{eq:ref-pair-violation}. We first remove the configurations of high
+energy from $S$. Let
+\[
+ S'=S\cap\{x:H_n^J(x)\le ne_1\}.
+\]
+For large $n$, we have $e^{-c_En}\le e^{-D_1L}/2\le\pi(S)/2$, because
+$D_1L=o(n)$. This implies that
+\[
+ \pi(S')\ge\pi(S)-\pi(\{x:H_n^J(x)>ne_1\})\ge\pi(S)/2 .
+\]
+Restricting the pairs to $S'\times S'$ and dividing by $\pi(S')^2$ instead of
+$\pi(S)^2$, we find
+\begin{equation}\label{eq:ref-trimmed}
+ \pi(\cdot\mid S')^{\otimes2}(|R|\ge q_*)
+ \le\Bigl(\frac{\pi(S)}{\pi(S')}\Bigr)^2
+   \pi(\cdot\mid S)^{\otimes2}(|R|\ge q_*)
+ <4e^{-D_2L}.
+\end{equation}
+
+Let $\widetilde J=(\widetilde J_{ij})_{1\le i<j\le n}$ be a standard Gaussian vector independent of
+$J$, and define
+\[
+ W=\sum_{x\in S'}\pi(x\mid S')\,e^{\beta\sqrt\omega H_n^{\widetilde J}(x)},\qquad
+ J'=\sqrt{1-\omega}\,J+\sqrt\omega\,\widetilde J .
+\]
+We write $\PP_{\widetilde J}$ and $\E_{\widetilde J}$ for probability and expectation over $\widetilde J$ with
+$J$ fixed. Recall from \eqref{eq:common-covariance} that
+$\E H_n^{\widetilde J}(x)H_n^{\widetilde J}(y)=(nR(x,y)^2-1)/2$. Using $\E e^X=e^{\E X^2/2}$ for a
+centered Gaussian variable $X$, we find
+\[
+ \E_{\widetilde J}W=e^{\beta^2\omega(n-1)/4},\qquad
+ \frac{\E_{\widetilde J}W^2}{(\E_{\widetilde J}W)^2}
+ =\sum_{x,y\in S'}\pi(x\mid S')\,\pi(y\mid S')\exp\Bigl\{\frac{\beta^2\omega}2
+     \bigl(nR(x,y)^2-1\bigr)\Bigr\}.
+\]
+We split the last sum according to whether $|R(x,y)|<q_*$. On the
+first part, the exponent is at most
+\[
+ \Theta=\frac{\beta^2n\omega q_*^2}2 .
+\]
+On the second part, the exponent is at most $\beta^2n\omega/2=\beta^2\Lambda L/2$,
+and we use \eqref{eq:ref-trimmed}. Since $D_2>\beta^2\Lambda/2+1$, this
+gives
+\[
+ \frac{\E_{\widetilde J}W^2}{(\E_{\widetilde J}W)^2}
+ \le e^{\Theta}+4e^{(\beta^2\Lambda/2-D_2)L}
+ \le e^{\Theta}+4e^{-L}
+ \le 2e^{\Theta}
+\]
+once $L\ge\log4$. The Paley--Zygmund inequality
+$\PP(W\ge\E W/2)\ge(\E W)^2/(4\E W^2)$, valid for every nonnegative random
+variable $W$ with finite second moment, then implies that
+\begin{equation}\label{eq:ref-PZ}
+ \PP_{\widetilde J}\bigl(W\ge\E_{\widetilde J}W/2\bigr)\ge\frac{e^{-\Theta}}8 .
+\end{equation}
+
+Next, we raise this probability to $1/2$ at the cost of a lower threshold.
+Let $f(\widetilde J)=\log W$. Differentiating the finite sum defining $W$, we have
+\[
+ \frac{\partial f}{\partial\widetilde J_{ij}}=\frac{\beta}{W}\sqrt{\frac\omega n}
+   \sum_{x\in S'}\pi(x\mid S')\,e^{\beta\sqrt\omega H_n^{\widetilde J}(x)}x_ix_j .
+\]
+The right side is $\beta\sqrt{\omega/n}$ times an average of the numbers
+$x_ix_j\in\{-1,1\}$, so each coordinate of $\nabla f$ is at most
+$\beta\sqrt{\omega/n}$ in absolute value. Summing
+over the $n(n-1)/2$ coordinates, we find
+$|\nabla f|^2\le\beta^2\omega(n-1)/2=\sigma_W^2$; in particular, $f$ is
+$\sigma_W$-Lipschitz. Let $\bar f=\E_{\widetilde J}f$. By the second bound in
+\eqref{eq:inp-concentration} (\cref{inp:ob-concentration}), we have $\E_{\widetilde J}\exp\{\theta(f-\bar f)\}\le e^{\theta^2\sigma_W^2/2}$ for every
+$\theta\in\R$. The exponential Markov inequality then implies the two
+one-sided bounds
+\begin{equation}\label{eq:ref-one-sided}
+ \PP_{\widetilde J}(f-\bar f\ge a)\le e^{-a^2/(2\sigma_W^2)},\qquad
+ \PP_{\widetilde J}(f-\bar f\le-a)\le e^{-a^2/(2\sigma_W^2)}\qquad(a\ge0).
+\end{equation}
+Note that $W\ge\E_{\widetilde J}W/2$ if and only if $f\ge\log(\E_{\widetilde J}W/2)$. If
+$\log(\E_{\widetilde J}W/2)>\bar f$, then \eqref{eq:ref-PZ} and the first bound in
+\eqref{eq:ref-one-sided} with $a=\log(\E_{\widetilde J}W/2)-\bar f$ give
+\[
+ \frac{e^{-\Theta}}8\le\PP_{\widetilde J}\bigl(f\ge\log(\E_{\widetilde J}W/2)\bigr)
+ \le\exp\Bigl\{-\frac{(\log(\E_{\widetilde J}W/2)-\bar f)^2}{2\sigma_W^2}\Bigr\},
+\]
+so that $\bar f\ge\log(\E_{\widetilde J}W/2)-\sigma_W\sqrt{2(\Theta+\log8)}$. This lower
+bound for $\bar f$ also holds if $\log(\E_{\widetilde J}W/2)\le\bar f$. The second
+bound in \eqref{eq:ref-one-sided} with $a=\sigma_W\sqrt{2\log2}$ then implies
+that
+\[
+ \PP_{\widetilde J}\Bigl(f>\log(\E_{\widetilde J}W/2)-\sigma_W\sqrt{2(\Theta+\log8)}
+     -\sigma_W\sqrt{2\log2}\Bigr)\ge\frac12 .
+\]
+We estimate the loss in the threshold using $\sigma_W^2\le\beta^2n\omega/2$,
+$\sqrt{u+v}\le\sqrt u+\sqrt v$, and
+$\sqrt{\log8}+\sqrt{\log2}=(1+\sqrt3)\sqrt{\log2}<3$:
+\[
+ \sigma_W\sqrt{2\Theta}
+   +\sigma_W\bigl(\sqrt{2\log8}+\sqrt{2\log2}\bigr)
+ \le\frac{\beta^2n\omega q_*}{\sqrt2}+3\beta\sqrt{n\omega} .
+\]
+Recalling that $\log(\E_{\widetilde J}W/2)=\beta^2\omega(n-1)/4-\log2$, we conclude
+that, with conditional probability at least $1/2$,
+\begin{equation}\label{b:eq:general-coverage-W}
+ \log W\ge\frac{\beta^2\omega(n-1)}4-\beta^2n\omega q_*
+   -3\beta\sqrt{n\omega}-\log2 .
+\end{equation}
+The constants in \eqref{b:eq:general-coverage-W}, and the threshold for $n$
+beyond which it holds, do not depend on $J$ or $S$.
+
+\paragraph{Step 2: comparison with the rotation estimate.}
+By the linearity of $H_n^J$ in $J$, we have
+$H_n^{J'}=\sqrt{1-\omega}\,H_n^J+\sqrt\omega\,H_n^{\widetilde J}$. Because
+$1-\sqrt{1-\omega}>0$ and $H_n^J\le ne_1$ on $S'$, we have
+\[
+ \frac{Z_n^{J'}}{Z_n^J}
+ =\pi\Bigl(\exp\bigl\{-\beta\bigl(1-\sqrt{1-\omega}\bigr)H_n^J
+    +\beta\sqrt\omega H_n^{\widetilde J}\bigr\}\Bigr)
+ \ge\pi(S')\,e^{-\beta(1-\sqrt{1-\omega})ne_1}\,W .
+\]
+For $0\le\omega\le1$, we have
+$1-\sqrt{1-\omega}=\omega/(1+\sqrt{1-\omega})\le\omega/(2-\omega)
+\le\omega/2+\omega^2/2$; the last inequality is equivalent to
+$\omega(1-\omega)\ge0$. We take logarithms and insert
+$\pi(S')\ge e^{-D_1L}/2$, \eqref{b:eq:general-coverage-W}, and
+$\beta^2\omega(n-1)/4\ge\beta^2n\omega/4-\beta^2/8$. Recalling that
+$n\omega=\Lambda L$, we obtain, with conditional probability at least $1/2$,
+\[
+ \log Z_n^{J'}-\log Z_n^J
+ \ge n\omega\Bigl(\frac{\beta^2}4-\frac{\beta e_1}2-\beta^2q_*\Bigr)
+   -D_1L-\mathrm{Err}_n
+ =\bigl[(g_0-\beta^2q_*)\Lambda-D_1\bigr]L-\mathrm{Err}_n,
+\]
+where
+\[
+ \mathrm{Err}_n=\frac{\beta e_1\Lambda^2L^2}{2n}+3\beta\sqrt{\Lambda L}
+   +\frac{\beta^2}8+2\log2 .
+\]
+By the choices of $q_*$ and $\Lambda$, we have $\beta^2q_*<g_0/8$ and
+$D_1<g_0\Lambda/8-1$, so that
+\[
+ (g_0-\beta^2q_*)\Lambda-D_1>\frac78g_0\Lambda-\frac18g_0\Lambda
+ =\frac34g_0\Lambda .
+\]
+Since $L\to\infty$ and $L/n\to0$, we have $\mathrm{Err}_n=o(L)$; this is
+where the two conditions on the scale are used together. We have
+$\mathrm{Err}_n\le g_0\Lambda L/4$ for large $n$, and then
+\begin{equation}\label{eq:ref-gain}
+ \PP_{\widetilde J}\Bigl(\log Z_n^{J'}-\log Z_n^J\ge\frac{g_0\Lambda L}2\Bigr)\ge\frac12
+ \qquad\text{for every }J\in\mathcal E_n\cap\mathcal V_n .
+\end{equation}
+The threshold for $n$ depends only on $\beta$, $D_1$, and the sequence
+$(L_n)$.
+
+Since the event in \eqref{eq:ref-gain} does not involve $S$, we need no
+measurable choice of $S$ as a function of $J$ (in
+\cite[Section~6]{oai-barriers}, the first violating set in a fixed order of
+the subsets is chosen; either way works). By Fubini's theorem, the left side
+of \eqref{eq:ref-gain} is a measurable function of $J$. Integrating it over
+$J$, we obtain
+\[
+ \frac12\PP(\mathcal E_n\cap\mathcal V_n)
+ \le\PP_{J,\widetilde J}\Bigl(\log Z_n^{J'}-\log Z_n^J\ge\frac{g_0\Lambda L}2\Bigr).
+\]
+The right side is a probability under the joint law of $(J,\widetilde J)$, which is
+the setting of \cref{inp:ob-rotation}. Since $0<\omega<1/2$, the last bound
+of \cref{inp:ob-rotation}, with $t=\omega$ and $u=g_0\Lambda L/2=g_0n\omega/2$,
+bounds it by $\exp\{-u^2/(2\beta^2n\omega)\}=\exp\{-g_0^2\Lambda L/(8\beta^2)\}$.
+We conclude that
+\[
+ \PP(\mathcal V_n)\le\PP(\mathcal E_n^c)+\PP(\mathcal E_n\cap\mathcal V_n)
+ \le e^{-c_En}+2\exp\Bigl\{-\frac{g_0^2\Lambda L}{8\beta^2}\Bigr\}
+ \longrightarrow0 .
+\]
+This bound holds simultaneously for all subsets, without a union bound over
+them.
+
+\paragraph{Step 3: from pairs to targets.}
+Let $\mathcal C_n(D_1)=\mathcal V_n^c$, fix $J\in\mathcal C_n(D_1)$ and
+$S\subseteq\Sigma_n$, and let $U_S$ be the set of $x\in S$ with
+$\pi(\{z\in S:|R(x,z)|\ge q_*\})<e^{-D_3L}$. Suppose that
+$\pi(U_S)\ge e^{-D_1L}$. Since $U_S\subseteq S$, every $x\in U_S$
+satisfies $\pi(\{y\in U_S:|R(x,y)|\ge q_*\})<e^{-D_3L}$. This implies that
+\begin{align*}
+ \pi(\cdot\mid U_S)^{\otimes2}(|R|\ge q_*)
+ &=\frac1{\pi(U_S)^2}\sum_{x\in U_S}\pi(x)\,
+   \pi(\{y\in U_S:|R(x,y)|\ge q_*\})\\
+ &<\frac{e^{-D_3L}}{\pi(U_S)}
+ \le e^{-(D_3-D_1)L}<e^{-D_2L},
+\end{align*}
+where in the last step we used $D_3>D_1+D_2$. Then $U_S$ satisfies
+\eqref{eq:ref-pair-violation}, which contradicts $J\notin\mathcal V_n$.
+We conclude that $\pi(U_S)<e^{-D_1L}$ for every $S$, which is
+\eqref{b:eq:general-coverage}. Finally, for all sufficiently large $n$, the
+last display of Step~2 and $L\le n$ give
+\[
+ \PP\bigl(\mathcal C_n(D_1)^c\bigr)=\PP(\mathcal V_n)
+ \le e^{-c_En}+2\exp\Bigl\{-\frac{g_0^2\Lambda L}{8\beta^2}\Bigr\}
+ \le3e^{-D_4L},\qquad
+ D_4=\min\Bigl\{c_E,\frac{g_0^2\Lambda}{8\beta^2}\Bigr\}.
+\]
+The constant $D_4$ depends only on $\beta$ and $D_1$. This completes the
+proof.
+\end{proof}
+
+For $D>0$, we write $c(D)$ for the constant $D_3$ given by
+\cref{b:lem:coverage-extension} with $D_1=D$. It depends only on $\beta$ and
+$D$.
+
+\section{Parameters and exceptional triples}\label{sec:ref-parameters}
+
+\subsection{Exponents}
+
+We fix exponents $\lambda$ and $\xi$ of the scales such that
+\begin{equation}\label{eq:ref-exponents}
+ 0<\lambda<\xi<\frac14,\qquad 2\xi<3\lambda,
+\end{equation}
+and we assume the following upper bound on the mean bias
+$\Delta_{n,\beta}=P_\beta-p_n(\beta)$: there exists $C_b<\infty$ such that
+\begin{equation}\label{eq:ref-mean-input}
+ 0\le P_\beta-p_n(\beta)\le C_bn^{-3\lambda}
+ \qquad\text{for all sufficiently large }n.
+\end{equation}
+For \cref{thm:barrier-730}, we take $\lambda=7/30$ and $\xi=5/21$, and
+\eqref{eq:ref-mean-input} is \cref{inp:hb-rate}, with exponent $7/10=3\lambda$.
+Then \eqref{eq:ref-exponents} holds because $7/30<5/21<1/4$ and
+$2\xi=10/21<7/10=3\lambda$. The barrier exponent is one
+third of the exponent of the mean-bias input. \Cref{tab:ref-exponents}
+lists the powers of $n$ that appear in this section and in
+\cref{sec:induction,sec:barrier-proof}; the error terms of the static
+estimates are tabulated in \cref{sec:static}.
+
+\subsection{The fixed parameters}
+
+Let $q_*=q_*(\beta)$ be the overlap of \cref{b:lem:coverage-extension}.
+Recall from \cref{lem:st-fixed} that for each fixed large-overlap cutoff
+$b_*\in(0,1)$, there exists a small-overlap cutoff $\underline b(b_*)>0$, depending only
+on $\beta$ and $b_*$, such that the three-replica pressure deficit
+\eqref{b:eq:fixed-pressure-gap} holds for all feasible overlap matrices
+$D(r,q,\delta)$ with $q\ge b_*$, $|r+\delta|\le\underline b(b_*)$,
+$|r-\delta|\le\underline b(b_*)$, and $|q-\Gamma(q)|\le\nu_{\rm fix}(b_*)$. We fix signed-overlap cutoffs
+$b_1$ and $b_2$ with
+\[
+ 0<b_1<1,\quad b_1\le\underline b(q_*),\qquad
+ 0<b_2<b_1,\quad b_2\le\underline b(b_1),
+\]
+and then $t_0>0$ with
+\begin{equation}\label{b:dyn:fixed-cutoffs}
+ 4t_0<\min\{q_*,b_2,b_1^2/2\},\qquad 3t_0<q_\beta .
+\end{equation}
+In \cref{sec:induction}, the thresholds lie in $[t_0,2t_0]$, and the cells
+that we define below use the cutoff $3t_0$. We use the first condition in
+\eqref{b:dyn:fixed-cutoffs} to keep these values below $q_*$ and $b_2$, with
+room for the error terms of \cref{sec:induction}. It also gives
+$3t_0<b_1^2/2$, which we use there to bound the number of deleted
+references. The second condition ensures that the intervals $J_\beta$ and
+$I_\beta$ chosen next lie inside $(0,q_\beta)$, where $\Gamma(t)=t$ by
+\eqref{b:eq:identity-interval}. We fix compact intervals $J_\beta$ and
+$I_\beta$ such that
+\begin{equation}\label{eq:ref-intervals}
+ [t_0,2t_0]\subseteq\operatorname{int}J_\beta,\qquad
+ J_\beta\subseteq\operatorname{int}I_\beta,\qquad
+ I_\beta\subseteq(t_0/2,3t_0).
+\end{equation}
+The centers of all three-replica constraints met in \cref{sec:induction}
+lie in $J_\beta$. The local comparison of
+\cref{sec:fractional,sec:static} is applied only at centers in $J_\beta$,
+with its local cutoff chosen so small that all its windows lie in
+$I_\beta$. Let $m_\beta>0$ be the lower
+bound of \eqref{b:eq:main-analytic-constants} for
+$\alpha(r)^2\beta^6\E\chi(r,Y_r)^3$ on $I_\beta$; it is positive because
+$I_\beta$ is a compact subset of $(0,q_\beta)$.
+
+We fix the band of the local comparison of \cref{sec:cubic} at
+$\vartheta=1/2$ and $E=1/100$. Here $\vartheta$ is the ratio $(q-r)/h$ of
+that comparison and $E\rho_n\le|\delta|\le2E\rho_n$ is its range of
+imbalances. At these values \eqref{b:eq:os-band-checks} holds and
+$G(\vartheta,E)>1/3$. We fix the pressure coefficient $g$, a fraction
+$\varkappa\in(0,1)$, and the scale constant $R>0$ with
+\begin{align}
+ 0<g&<m_\beta E^2G(\vartheta,E),\label{b:dyn:finite-band-g}\\
+ R^3&>\frac{3C_b}{\varkappa g},\label{b:dyn:R-condition}
+\end{align}
+where $C_b$ is the constant of \eqref{eq:ref-mean-input}. Here $g$ is the
+coefficient of $\rho_n^3$ in the local fractional gap
+\eqref{b:eq:local-fractional-gap}, and $\varkappa$ is the fraction of this gap that
+is kept in the probability bounds of \cref{sec:static}. The scales are
+\begin{equation}\label{b:dyn:scales}
+ \rho_n=Rn^{-\lambda},\qquad \varepsilon_n=E\rho_n,\qquad
+ \eta_n=n^{-\xi},
+\end{equation}
+which are the scales of \cref{rem:st-scales}. With these choices, the data
+of the simultaneous estimate in \cref{sec:st-families} are the intervals
+$J_\beta\subseteq\operatorname{int}I_\beta$, the large-overlap cutoffs
+$q_*$ and $b_1$, the band $(\vartheta,E)$, the coefficient $g$, and the
+fraction $\varkappa$. The remaining constants of the static estimates (the local
+cutoff, the tolerance $\nu$ of the pair exclusions, the pressure deficits of
+the separated-overlap, fixed-scale, and pair regimes, the coefficient of the
+fractional tilt, and the denominator margin \eqref{b:eq:denominator-margin})
+are fixed in \cref{sec:fractional,sec:static} with positive slack. They
+depend only on $\beta$ and on the parameters above, and not on $n$.
+
+Finally, we fix integers
+\begin{equation}\label{b:dyn:BH}
+ H=\lceil2/b_1^2\rceil,\qquad B\ge H+2 .
+\end{equation}
+Here $H$ bounds the number of references deleted at the start of a block in
+\cref{sec:induction}, and $B$ is the number of levels in a block; $B$ is
+chosen in \cref{sec:barrier-proof}. After $B$, the constants
+$c_s,C_s$ of the schedule \eqref{eq:ref-schedule} below are fixed, and then
+the coefficient $A>0$ of the logarithmic time scale
+\[
+ L_n=An^\lambda
+\]
+is chosen in \cref{sec:barrier-proof}, with $A=A_\beta$ for \cref{thm:barrier-730}; the time horizon is $e^{L_n}$. The sequence $L_n$ tends to infinity
+and is $o(n)$, because $0<\lambda<1$; in particular,
+\cref{b:lem:coverage-extension} applies to it.
+
+\begin{table}[t]
+\centering\small
+\caption{The fixed parameters of the dynamical argument, in the order in
+which they are chosen. Every entry is fixed before $n\to\infty$; each
+depends only on $\beta$ and on the entries above it.}
+\label{tab:ref-parameters}
+\begin{tabular}{@{}>{$}l<{$}p{7.4cm}p{4.0cm}@{}}
+\toprule
+\text{Parameter} & Choice & Reference\\
+\midrule
+q_\beta & right end of $\operatorname{supp}\mu_\beta=[0,q_\beta]$ & \cref{inp:full-rsb}\\
+q_* & overlap of the overlap-neighborhood mass bound & \cref{b:lem:coverage-extension}\\
+b_1,\ b_2 & $b_1\le\underline b(q_*)$, $b_2\le\underline b(b_1)$, $0<b_2<b_1<1$ & \eqref{b:eq:fixed-pressure-gap}\\
+t_0 & $4t_0<\min\{q_*,b_2,b_1^2/2\}$, $3t_0<q_\beta$ & \eqref{b:dyn:fixed-cutoffs}\\
+J_\beta,\ I_\beta & compact intervals around $[t_0,2t_0]$ & \eqref{eq:ref-intervals}\\
+m_\beta & lower bound for the scalar coefficient on $I_\beta$ & \eqref{b:eq:main-analytic-constants}\\
+\vartheta,\ E & $\vartheta=1/2$, $E=1/100$ & \eqref{b:eq:os-band-checks}\\
+g & $0<g<m_\beta E^2G(\vartheta,E)$ & \eqref{b:dyn:finite-band-g}\\
+\varkappa & $0<\varkappa<1$ & \cref{sec:static}\\
+C_b & constant of the mean-bias input; for \cref{thm:barrier-730}, that of \cref{inp:hb-rate} & \eqref{eq:ref-mean-input}\\
+R & $R^3>3C_b/(\varkappa g)$ & \eqref{b:dyn:R-condition}\\
+\text{static constants} & local cutoff, $\nu$, deficits, fractional tilt, denominator margin & \cref{sec:fractional,sec:static}\\
+H & $H=\lceil2/b_1^2\rceil$ & \eqref{b:dyn:BH}\\
+\text{threshold constants} & widths and spacing of the threshold intervals & \cref{sec:induction}\\
+B & integer, $B\ge H+2$, block length & \cref{sec:barrier-proof}\\
+c_s,\ C_s & schedule of list sizes, $0\le s<B$ & \eqref{eq:ref-schedule}\\
+A & coefficient of $L_n=An^\lambda$ & \cref{sec:barrier-proof}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We note that the quantities that depend on $n$ are the scales $\rho_n$,
+$\varepsilon_n$, and $\eta_n$ of \eqref{b:dyn:scales}, the logarithmic time scale $L_n$, the
+number $N_{\rm lev}$ of levels (fixed in \cref{sec:induction}), the list
+sizes $K_s$ of \eqref{eq:ref-schedule}, and the total number $N$ of list
+entries. We never let a fixed parameter vary with $n$, and the threshold
+$\tau$ for the total variation distance does not enter until the last step
+of \cref{sec:barrier-proof}.
+
+\begin{table}[t]
+\centering\small
+\caption{Powers of $n$ at the scales \eqref{b:dyn:scales} and the logarithmic
+time scale $L_n=An^\lambda$, for general exponents and for \cref{thm:barrier-730}.}
+\label{tab:ref-exponents}
+\begin{tabular}{@{}>{$}l<{$}>{$}l<{$}>{$}l<{$}p{3.9cm}@{}}
+\toprule
+\text{Quantity} & \text{General} & \text{\cref{thm:barrier-730}} & Role\\
+\midrule
+P_\beta-p_n(\beta) & O(n^{-3\lambda}) & O(n^{-7/10}) & mean-bias input\\
+\rho_n & Rn^{-\lambda} & Rn^{-7/30} & overlap gap\\
+\eta_n & n^{-\xi} & n^{-5/21} & fixed-scale tolerance\\
+L_n & An^{\lambda} & A_\beta n^{7/30} & logarithmic time scale\\
+n\rho_n^3 & R^3n^{1-3\lambda} & R^3n^{3/10} & narrow triples\\
+n\eta_n^2 & n^{1-2\xi} & n^{11/21} & fixed-scale triples\\
+n\rho_n^3/L_n & (R^3/A)n^{1-4\lambda} & (R^3/A_\beta)n^{1/15} & \eqref{eq:ref-absorb}\\
+n\eta_n^2/L_n & n^{1-2\xi-\lambda}/A & n^{61/210}/A_\beta & \eqref{eq:ref-absorb}\\
+\eta_n/\rho_n & n^{\lambda-\xi}/R & n^{-1/210}/R & \cref{sec:induction}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Exceptional triples}
+
+The overlap constraints that we use in \cref{sec:induction} are of two
+kinds. The first kind states that when $x$ and ${\widetilde v}$ have a large overlap,
+their small overlaps with a third configuration $v$ are nearly equal. For a
+large-overlap cutoff $b_*\in(0,1)$ and a small-overlap cutoff $b'\in(0,1)$, we
+define
+\begin{equation}\label{eq:ref-fixed-violation}
+ \begin{aligned}
+ \mathcal B_n(b_*,b')=\bigl\{(v,x,{\widetilde v})\in\Sigma_n^3:{}
+   &R(x,{\widetilde v})\ge b_*,\ |R(v,x)|\le b',\ |R(v,{\widetilde v})|\le b',\\
+   &|R(v,x)-R(v,{\widetilde v})|>2\eta_n\bigr\}.
+ \end{aligned}
+\end{equation}
+This is the set excluded in \cite[Lemma~4.1]{oai-barriers}, with the
+tolerance $2n^{-1/100}$ there replaced by $2\eta_n$. We bound its Gibbs
+probability at this tolerance in \cref{sec:static} through the pressure
+estimate \eqref{b:eq:fixed-pressure-gap}, and not through
+\cite[Lemma~4.1]{oai-barriers}. A triple
+$(v,x,{\widetilde v})\notin\mathcal B_n(b_*,b')$ such that $R(x,{\widetilde v})\ge b_*$,
+$|R(v,x)|\le b'$, and $|R(v,{\widetilde v})|\le b'$ satisfies
+$|R(v,x)-R(v,{\widetilde v})|\le2\eta_n$.
+
+The second kind concerns overlaps near a level $r$ in the compact interval
+$J_\beta$. For $(v,x,{\widetilde v})\in\Sigma_n^3$, we write
+\begin{equation}\label{b:dyn:narrow-coordinates}
+ r=\frac{R(v,x)+R(v,{\widetilde v})}2,\qquad
+ \delta=\frac{R(v,x)-R(v,{\widetilde v})}2,\qquad
+ q=R(x,{\widetilde v}),
+\end{equation}
+so that the Gram matrix of $(v,x,{\widetilde v})$ is the matrix $D(r,q,\delta)$ of
+\cref{sec:static}, with off-diagonal entries $r+\delta$, $r-\delta$, and $q$.
+Let $\mathcal N_n$ be the set of triples with
+\[
+ r\in J_\beta,\qquad \varepsilon_n\le|\delta|\le2\varepsilon_n,\qquad
+ q\ge r+\rho_n .
+\]
+A triple outside $\mathcal N_n$ with $r\in J_\beta$ and
+$\varepsilon_n\le|\delta|\le2\varepsilon_n$ satisfies $R(x,{\widetilde v})<r+\rho_n$: if
+the overlaps of $v$ with $x$ and with ${\widetilde v}$ lie near a common level $r$ and
+differ by an amount of order $\varepsilon_n$, then the overlap of $x$ and ${\widetilde v}$
+cannot exceed $r$ by $\rho_n$. The set $\mathcal N_n$ corresponds to the set
+excluded in \cite[Lemma~7.1]{oai-barriers}. There, the gap is
+$\rho=n^{-1/10000}$, the imbalance is of order $\rho^{20}$, and the centers
+are restricted by the condition $\mu_\beta([r-\rho^8,r+\rho^8])\le\rho^4$ on
+the Parisi measure. Here the gap $\rho_n$ and the imbalance
+$\varepsilon_n=E\rho_n$ are of the same order, and there is no condition on
+the Parisi measure, because the local comparison of \cref{sec:fractional} is
+uniform over centers in $J_\beta$. The exceptional set is
+\begin{equation}\label{eq:ref-exceptional}
+ \mathcal B_n=\mathcal N_n\cup\mathcal B_n(q_*,b_1)\cup\mathcal B_n(b_1,b_2).
+\end{equation}
+It is a deterministic subset of $\Sigma_n^3$, and it is not closed under
+permutations or spin flips of the coordinates. In the dynamical argument, we
+evaluate $\mathcal B_n$ on triples in several orders and orientations; since
+$\pi^{\otimes3}$ is invariant under these operations, each of them costs only
+a fixed factor in \cref{lem:ref-families}.
+
+The Gibbs probability of $\mathcal B_n$ is controlled in \cref{sec:static},
+where different parts of it are handled by different estimates. The set
+$\mathcal N_n$ is the set of narrow triples of \cref{sec:st-families} for the
+interval of centers $J_\beta$. By \cref{lem:st-cover}, a narrow triple either
+has its pair $(x,{\widetilde v})$ excluded by the pair deficit
+\eqref{b:eq:pair-static-gap}, or its Gram matrix lies in the local family,
+for which we use the positive fractional moment
+\eqref{b:eq:local-fractional-gap}, or in the separated-overlap family, for
+which we use the stronger pressure deficit \eqref{b:eq:remote-pressure-gap}
+and ordinary Gaussian concentration. The sets $\mathcal B_n(q_*,b_1)$ and
+$\mathcal B_n(b_1,b_2)$ are contained in the set $\mathcal W_n$ of
+fixed-scale triples of \cref{sec:st-families}, which is controlled by
+\eqref{b:eq:fixed-pressure-gap} and the pair deficit. We need
+no fractional moment bound at a distant overlap $q$.
+
+\begin{lemma}[One disorder event for the exceptional triples]
+\label{lem:ref-single-event}
+Let $(\rho_n)$ and $(\eta_n)$ be deterministic positive sequences with
+$\rho_n\to0$ that satisfy \eqref{eq:st-S1}--\eqref{eq:st-S5}, and let
+$\varepsilon_n=E\rho_n$. Let
+$\mathcal B_n$ be the set \eqref{eq:ref-exceptional} defined with these
+sequences, and let $\mathcal A_n$ be the disorder event of
+\cref{b:lem:static-event} for these sequences and for the data of
+\cref{sec:st-families} fixed in \cref{tab:ref-parameters} (in particular the
+intervals $J_\beta$ and $I_\beta$ and the large-overlap cutoffs $q_*$ and
+$b_1$). Then $\PP(\mathcal A_n)\to1$, and there exist constants $C,c>0$ such
+that, for all sufficiently large $n$ and every $J\in\mathcal A_n$,
+\begin{equation}\label{b:dyn:uniform-gibbs}
+ \pi^{\otimes3}(\mathcal B_n)\le q_n,\qquad
+ q_n=C(n+1)^3\bigl(e^{-cn\rho_n^3}+e^{-cn\eta_n^2}+e^{-cn}\bigr).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cref{b:lem:static-event}, we have $\PP(\mathcal A_n^c)\to0$. Moreover,
+for large $n$ and every $J\in\mathcal A_n$,
+\eqref{b:eq:conditional-static-errors} bounds the Gibbs probability of the set
+$\mathcal N_n$ of narrow triples of \cref{sec:st-families} by
+$C(n+1)^3e^{-cn\rho_n^3}$, and that of the set $\mathcal W_n$ of fixed-scale
+triples of \cref{sec:st-families} by $C(n+1)^3e^{-cn\eta_n^2}$.
+
+It remains to compare $\mathcal B_n$ with these two sets, where our triples
+$(v,x,{\widetilde v})$ are the triples $(v,x,y)$ of \cref{sec:static}. The set
+$\mathcal N_n$ in \eqref{eq:ref-exceptional} is the set of narrow triples for
+the interval of centers $J_\beta$. Let $(v,x,{\widetilde v})\in\mathcal B_n(b_*,b')$ with
+$(b_*,b')=(q_*,b_1)$ or $(b_*,b')=(b_1,b_2)$. Then $R(x,{\widetilde v})\ge b_*$,
+$|R(v,x)|\le b'\le\underline b(b_*)$, $|R(v,{\widetilde v})|\le b'\le\underline b(b_*)$,
+and $|R(v,x)-R(v,{\widetilde v})|>2\eta_n$. Since $b_*$ is one of the cutoffs $q_*$ and
+$b_1$, the triple satisfies the conditions that define $\mathcal W_n$. This
+shows that $\mathcal B_n(q_*,b_1)\cup\mathcal B_n(b_1,b_2)\subseteq\mathcal W_n$.
+Summing the two bounds of the previous paragraph, we obtain
+$\pi^{\otimes3}(\mathcal B_n)\le C(n+1)^3(e^{-cn\rho_n^3}+e^{-cn\eta_n^2})$,
+which implies \eqref{b:dyn:uniform-gibbs}.
+\end{proof}
+
+We apply \cref{lem:ref-single-event} with the scales \eqref{b:dyn:scales}.
+Since $\lambda>0$, we have $\rho_n=Rn^{-\lambda}\to0$. These scales also satisfy
+\eqref{eq:st-S1}--\eqref{eq:st-S5}, as in
+\cref{rem:st-scales}(b). Indeed, by \eqref{eq:ref-mean-input} and
+\eqref{b:dyn:R-condition}, we have
+$\Delta_{n,\beta}/\rho_n^3\le C_b/R^3<\varkappa g/3$ for large $n$, which is
+\eqref{eq:st-S1}. Further, $n^{7/15}/(n^2\rho_n^6)=R^{-6}n^{6\lambda-23/15}$
+tends to zero because $6\lambda<3/2<23/15$; the quantities
+$n\rho_n^4=R^4n^{1-4\lambda}$ and $n\eta_n^4=n^{1-4\xi}$ grow faster than
+$\log n$ because $\lambda,\xi<1/4$; and $\rho_n^3/\eta_n^2=R^3n^{2\xi-3\lambda}$
+tends to zero because $2\xi<3\lambda$. From now on, $\mathcal B_n$,
+$\mathcal A_n$, and $q_n$ denote the objects of \cref{lem:ref-single-event} at
+the scales \eqref{b:dyn:scales}. In \cref{sec:bp-strong}, the lemma is
+applied with $\eta_n=\rho_n/1000$ instead.
+
+\begin{remark}[Two kinds of error]\label{rem:ref-two-errors}
+In the proof of \cref{thm:barrier-730}, we use two kinds of
+small quantities, and we never mix them. The bound
+\eqref{b:eq:static-event-failure} on the disorder probability
+$\PP(\mathcal A_n^c)$ includes a polynomial term from Chebyshev's inequality,
+and therefore it does not remain small after multiplication by a factor
+$e^{CL_n}$. For $\lambda=7/30$ and $\xi=5/21$, the terms
+$e^{-cn\rho_n^4}$ and $e^{-cn\eta_n^4}$ in it, which are
+$e^{-cR^4n^{1/15}}$ and $e^{-cn^{1/21}}$, also decay more slowly than
+$e^{-CL_n}=e^{-CAn^{7/30}}$ for every fixed $C>0$. We remove this disorder probability,
+together with the probabilities of the complements of the events of
+\cref{b:lem:coverage-extension}, once, before counting reference
+configurations or path positions. The conditional Gibbs bound $q_n$ in
+\eqref{b:dyn:uniform-gibbs}, in contrast, holds for every
+$J\in\mathcal A_n$, and it absorbs every factor
+$e^{CL_n}$. \Cref{tab:ref-exponents} shows that the exponents
+$n\rho_n^3$, $n\eta_n^2$, and $n$ exceed $L_n$ by a power of $n$. We verify
+in the proof of \cref{lem:ref-families} that
+\begin{equation}\label{eq:ref-absorb}
+ \lim_{n\to\infty}e^{CL_n}q_n=0\qquad\text{for every fixed }C>0 .
+\end{equation}
+In \cref{lem:ref-families}, only $q_n$ is multiplied by the number of
+reference configurations. The deterministic set $\mathcal B_n$ contains every
+exceptional triple that can arise for the allowed thresholds and paths, and \eqref{b:dyn:uniform-gibbs} bounds its mass under
+$\pi^{\otimes3}$ by $q_n$. We impose no condition
+on the disorder that depends on the thresholds of \cref{sec:induction}.
+\end{remark}
+
+\section{Fixed families of reference configurations}\label{sec:ref-families}
+
+The induction of \cref{sec:induction} selects references from lists of
+independent Gibbs samples, organized in blocks of $B$ consecutive levels.
+This is the construction of \cite[Section~8.3]{oai-barriers}. The selection
+cell at a level is determined by the references chosen at the preceding
+levels of the same block. The list sizes are chosen recursively over the $B$
+positions of a block, so that the depth of the recursion is the fixed number
+$B$ even though the number of levels tends to infinity. In
+\cite[Section~8.3]{oai-barriers}, the required properties of the lists are
+proved with probability tending to one jointly over the disorder, the lists,
+and the path. The proof there uses union bounds over path positions and over
+triples, and the bounds for the triples are averaged over the disorder. At
+our scales, the
+averaged bound available from \cref{b:lem:static-event} contains the disorder
+failure probability of \cref{rem:ref-two-errors}, and this term does not
+remain small after multiplication by the number $e^{O(L_n)}$ of reference
+configurations. We therefore fix the
+disorder first, in the event of \cref{lem:ref-single-event}, and use only
+the conditional bound \eqref{b:dyn:uniform-gibbs}. At such a disorder, we fix
+one realization of the lists, together with a set $V$ of exceptional
+targets, before any path is considered.
+
+\subsection{Lists, cells, and list sizes}
+
+Let $N_{\rm lev}=N_{\rm lev}(n)\ge1$ be the number of levels; it is fixed in
+\cref{sec:induction}. Level $j\in\{0,\ldots,N_{\rm lev}-1\}$ belongs to block
+$\lfloor j/B\rfloor$ and has position $s(j)=j-B\lfloor j/B\rfloor$ in its
+block. The list at level $j$ is an ordered tuple
+\[
+ \mathcal F_j=(y_{j,1},\ldots,y_{j,K_{s(j)}})\in\Sigma_n^{K_{s(j)}},
+\]
+whose coordinates we call the entries of $\mathcal F_j$; the sizes $K_s$ are
+defined in \eqref{eq:ref-schedule} below. We write
+\[
+ \mathcal F_j^\pm=\bigl\{\sigma y:\sigma\in\{-1,1\},\ y\text{ an entry of }
+   \mathcal F_j\bigr\}
+\]
+for the signed list. The family of reference configurations is
+$\mathcal F=(\mathcal F_0,\ldots,\mathcal F_{N_{\rm lev}-1})$, and
+$N=\sum_{j<N_{\rm lev}}K_{s(j)}$ is its total number of entries.
+
+For a level $j$, let $\mathcal T_j$ be the set of tuples $T=(u_i)_{i\in\mathcal I}$,
+where $\mathcal I$ is a set of levels of the block of $j$ that precede $j$, and $u_i$
+is an entry of $\mathcal F_i$ for each $i\in\mathcal I$. The cell of $T$ is
+\begin{equation}\label{eq:ref-cell}
+ S_T=\bigl\{x\in\Sigma_n:|R(u,x)|\le3t_0\text{ for every entry }u
+   \text{ of }T\bigr\}.
+\end{equation}
+The empty tuple has cell $S_\emptyset=\Sigma_n$, and it is the only element
+of $\mathcal T_j$ when $s(j)=0$. Spin flips of the entries do not change the
+cells. The references selected in \cref{sec:induction} at the levels of a
+block that precede $j$ form a tuple in $\mathcal T_j$, and the cells used
+there are among the cells $S_T$.
+
+The list sizes are chosen by the following schedule over positions
+$s=0,\ldots,B-1$. Recall that $c(D)$ denotes the constant $D_3$ of
+\cref{b:lem:coverage-extension} for $D_1=D$. We set $C_0=0$ and, recursively,
+\begin{equation}\label{eq:ref-schedule}
+ c_s=c(C_s+5),\qquad C_{s+1}=C_s+c_s+2,\qquad
+ K_s=\bigl\lceil e^{(c_s+1)L_n}\bigr\rceil .
+\end{equation}
+We have $C_s=\sum_{s'<s}(c_{s'}+2)$. The constants $c_s$ and $C_s$ depend only
+on $\beta$ and $s$, and only $K_s$ depends on $n$ and $A$. For $D>0$, let
+$\mathcal C_n(D)$ be the event of \cref{b:lem:coverage-extension} for the
+sequence $(L_n)$. On $\mathcal C_n(D)$, \eqref{b:eq:general-coverage} reads
+\begin{equation}\label{b:dyn:coverage}
+ \pi\bigl(\bigl\{x\in S:\pi(\{y\in S:|R(x,y)|\ge q_*\})<e^{-c(D)L_n}\bigr\}
+   \bigr)<e^{-DL_n}\qquad\text{for every }S\subseteq\Sigma_n .
+\end{equation}
+Only $B$ of these events are needed. We define the disorder event
+\begin{equation}\label{eq:ref-good-event}
+ \mathcal G_n=\mathcal A_n\cap\bigcap_{s=0}^{B-1}\mathcal C_n(C_s+5).
+\end{equation}
+It is measurable, and $\PP(\mathcal G_n)\to1$ by
+\cref{lem:ref-single-event,b:lem:coverage-extension}, since it is the
+intersection of a fixed number of events whose probabilities tend to one.
+
+\subsection{The family}
+
+\begin{lemma}[Fixed families of reference configurations]
+\label{lem:ref-families}
+Let $B\ge1$ be a fixed integer, let $(L_n)$ be a deterministic sequence with
+$L_n\to\infty$ and $L_n/n\to0$, and let $K_s$ and $\mathcal G_n$ be given by
+\eqref{eq:ref-schedule} and \eqref{eq:ref-good-event}. Let
+$N_{\rm lev}=N_{\rm lev}(n)\ge1$ be integers with
+$N_{\rm lev}\le e^{L_n}$, and assume that $q_n$ satisfies
+\eqref{eq:ref-absorb}. Then, for all sufficiently large $n$ and every
+$J\in\mathcal G_n$, there exist lists
+$\mathcal F_j\in\Sigma_n^{K_{s(j)}}$, $0\le j<N_{\rm lev}$, and a set
+$V\subseteq\Sigma_n$ with
+\begin{equation}\label{b:dyn:fixed-bank}
+ \pi(V)\le3e^{-4L_n},
+\end{equation}
+such that the following four properties hold.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item \emph{Overlap neighborhoods in every cell of the current block.} For
+every level $j$,
+every $T\in\mathcal T_j$, and every $x\in S_T\setminus V$, there exists an
+entry $y$ of $\mathcal F_j$ with $y\in S_T$ and $|R(x,y)|\ge q_*$.
+\item \emph{Comparison across the overlap $q_*$.} For every
+$x\in\Sigma_n\setminus V$, all levels $i\ne j$, and all
+$v\in\mathcal F_i^\pm$ and ${\widetilde v}\in\mathcal F_j^\pm$ with
+\[
+ R(x,{\widetilde v})\ge q_*,\qquad |R(v,x)|\le b_1,\qquad |R(v,{\widetilde v})|\le b_1,
+\]
+we have $|R(v,x)-R(v,{\widetilde v})|\le2\eta_n$.
+\item \emph{Comparison across the overlap $b_1$ for triples of entries.}
+For all pairwise distinct levels $i$, $a$, and $j$, and all
+$v\in\mathcal F_a^\pm$, $y\in\mathcal F_i^\pm$, and ${\widetilde v}\in\mathcal F_j^\pm$
+with
+\[
+ |R(y,{\widetilde v})|\ge b_1,\qquad |R(v,y)|\le b_2,\qquad |R(v,{\widetilde v})|\le b_2,
+\]
+we have $|R(v,y)-\sigma R(v,{\widetilde v})|\le2\eta_n$, where $\sigma\in\{-1,1\}$ is the
+sign of $R(y,{\widetilde v})$. In particular,
+$\bigl||R(v,y)|-|R(v,{\widetilde v})|\bigr|\le2\eta_n$.
+\item \emph{No exceptional narrow triple.} For every
+$x\in\Sigma_n\setminus V$, all levels $i\ne j$, and all
+$v\in\mathcal F_i^\pm$ and ${\widetilde v}\in\mathcal F_j^\pm$, we have
+$(v,x,{\widetilde v})\notin\mathcal N_n$. That is, if the coordinates
+\eqref{b:dyn:narrow-coordinates} of $(v,x,{\widetilde v})$ satisfy $r\in J_\beta$ and
+$\varepsilon_n\le|\delta|\le2\varepsilon_n$, then $R(x,{\widetilde v})<r+\rho_n$.
+\end{enumerate}
+If $L_n=An^\lambda$ for a fixed $A>0$, with $\lambda$ and $\xi$ as in
+\eqref{eq:ref-exponents}, then $L_n\to\infty$, $L_n/n\to0$, and
+\eqref{eq:ref-absorb} holds.
+\end{lemma}
+
+The threshold for $n$ depends on $\beta$, on the parameters of
+\cref{tab:ref-parameters}, and on the sequences $(L_n)$ and
+$(N_{\rm lev})$, but not on $J$. In \cref{sec:induction,sec:barrier-proof},
+the lemma is applied with $L_n=An^\lambda$ and the number of levels fixed
+there, which is at most a constant times $n^\lambda$.
+
+\begin{proof}
+The proof is an expectation argument over independent samples of the lists.
+We bound the expected Gibbs mass of the targets missed by the lists, that is,
+of the configurations $x$ such that, at some level $j$, some cell $S_T$
+containing $x$ contains no entry $y$ of $\mathcal F_j$ with
+$|R(x,y)|\ge q_*$. We also bound the probability that three list entries
+form an exceptional triple, and the expected Gibbs mass of the configurations
+that form an exceptional triple with two list entries. We then choose a realization at which the sum of the Gibbs mass of the union of these two sets and the indicator of that event is at most its mean.
+
+\paragraph{Step 1: random lists.}
+Fix $n$ and $J\in\mathcal G_n$, and write $L=L_n$. We let the entries
+$y_{j,k}$, $0\le j<N_{\rm lev}$, $1\le k\le K_{s(j)}$, be independent random
+configurations with law $\pi$, defined on an auxiliary probability space with
+probability $\PP_{\mathcal F}$ and expectation $\E_{\mathcal F}$. The
+disorder is fixed throughout, and the space $\Sigma_n^N$ of realizations is
+finite.
+
+\paragraph{Step 2: targets missed by the lists.}
+For a level $j$ and $T\in\mathcal T_j$, let $U_{j,T}$ be the set of
+$x\in S_T$ such that no entry $y$ of $\mathcal F_j$ satisfies $y\in S_T$ and
+$|R(x,y)|\ge q_*$, and let $V_1=\bigcup_j\bigcup_{T\in\mathcal T_j}
+U_{j,T}$. Fix $j$, let $s=s(j)$, and condition on the lists at the levels of
+the block of $j$ that precede $j$. This fixes $\mathcal T_j$ and the cells
+$S_T$, and leaves the $K_s$ entries of $\mathcal F_j$ independent with law
+$\pi$. For $T\in\mathcal T_j$ and $x\in S_T$, let
+$a_T(x)=\pi(\{y\in S_T:|R(x,y)|\ge q_*\})$. Then
+\[
+ \E_{\mathcal F}\bigl[\pi(U_{j,T})\bigm|\text{earlier lists}\bigr]
+ =\sum_{x\in S_T}\pi(x)\bigl(1-a_T(x)\bigr)^{K_s}.
+\]
+We split the sum according to whether $a_T(x)<e^{-c_sL}$. Recall that
+$J\in\mathcal C_n(C_s+5)$ and $c_s=c(C_s+5)$. By \eqref{b:dyn:coverage} with
+$S=S_T$, the first group has Gibbs mass less than $e^{-(C_s+5)L}$. For the
+second group, $(1-a_T(x))^{K_s}\le\exp\{-a_T(x)K_s\}\le
+\exp\{-e^{-c_sL}e^{(c_s+1)L}\}=e^{-e^L}$. The number of tuples is
+\[
+ |\mathcal T_j|\le\prod_{s'<s}\bigl(K_{s'}+1\bigr)
+ \le\prod_{s'<s}e^{(c_{s'}+2)L}=e^{C_sL},
+\]
+where we used $K_{s'}+1\le e^{(c_{s'}+1)L}+2\le e^{(c_{s'}+2)L}$, valid
+once $e^L\ge3$. Summing over $T\in\mathcal T_j$ and taking expectations, we
+obtain
+\[
+ \E_{\mathcal F}\,\pi\Bigl(\bigcup_{T\in\mathcal T_j}U_{j,T}\Bigr)
+ \le e^{C_sL}\bigl(e^{-(C_s+5)L}+e^{-e^L}\bigr)\le2e^{-5L},
+\]
+where the last inequality holds once $e^L\ge(C_s+5)L$ for every $s<B$.
+Summing over the $N_{\rm lev}\le e^L$ levels, we find
+\begin{equation}\label{eq:ref-miss-mass}
+ \E_{\mathcal F}\,\pi(V_1)\le2e^{-4L}.
+\end{equation}
+
+\paragraph{Step 3: exceptional triples.}
+Let $c_{\max}=\max_{s<B}c_s$. Using $N_{\rm lev}\le e^L$ and
+$K_s\le e^{(c_s+2)L}$, we find $N\le e^{C_NL}$ with $C_N=c_{\max}+3$.
+
+Let $\mathcal O$ be the event that there exist entries $y_1$, $y_2$, and
+$y_3$ of lists at three distinct levels, and signs
+$\sigma_1,\sigma_2,\sigma_3\in\{-1,1\}$, such that
+$(\sigma_1y_1,\sigma_2y_2,\sigma_3y_3)\in\mathcal B_n$. Fix a choice of three entries, specified by their levels and
+indices, and of signs. The three entries are independent with law $\pi$,
+because they belong to distinct levels, and $\pi$ is invariant under spin
+flips. The triple therefore has law $\pi^{\otimes3}$, and it lies in
+$\mathcal B_n$ with probability at most $q_n$ by
+\eqref{b:dyn:uniform-gibbs}. There are at most $N^3$ ordered choices of
+three entries and $8$ choices of signs, which gives
+\[
+ \PP_{\mathcal F}(\mathcal O)\le8N^3q_n .
+\]
+The configurations themselves need not be distinct; only their sampling
+indices are.
+
+Let $V_2$ be the set of $x\in\Sigma_n$ for which there exist entries
+$y$ and $y'$ of lists at two distinct levels, signs $\sigma,\sigma',
+\sigma''\in\{-1,1\}$, and an ordering of $\sigma y$, $\sigma'y'$, and
+$\sigma''x$ as a triple, such that this triple lies in $\mathcal B_n$. Let
+$x$ be a configuration with law $\pi$, independent of the lists. For a fixed
+ordered pair of entries at distinct levels, fixed signs, and a fixed
+ordering, the resulting triple has law $\pi^{\otimes3}$, and it lies in
+$\mathcal B_n$ with probability at most $q_n$. There are at most $N^2$
+ordered pairs of entries, $8$ choices of signs, and $6$ orderings, and a
+union bound yields
+\[
+ \E_{\mathcal F}\,\pi(V_2)
+ =\PP_{\mathcal F\otimes\pi}(x\in V_2)\le48N^2q_n .
+\]
+
+\paragraph{Step 4: choice of one realization.}
+Let $V=V_1\cup V_2$. Combining \eqref{eq:ref-miss-mass} with
+the two bounds of Step~3, we conclude that
+\[
+ \E_{\mathcal F}\bigl[\mathbf 1_{\mathcal O}+\pi(V)\bigr]
+ \le2e^{-4L}+\bigl(8N^3+48N^2\bigr)q_n
+ \le2e^{-4L}+56e^{3C_NL}q_n\le3e^{-4L},
+\]
+where the last inequality holds for all sufficiently large $n$ by
+\eqref{eq:ref-absorb} with $C=3C_N+4$. On the finite probability space of
+Step~1, some realization of the lists satisfies
+$\mathbf 1_{\mathcal O}+\pi(V)\le\E_{\mathcal F}[\mathbf 1_{\mathcal O}+\pi(V)]\le3e^{-4L}$.
+We fix it. Then $\pi(V)\le3e^{-4L}$, which is \eqref{b:dyn:fixed-bank}, and
+the realization does not belong to $\mathcal O$, since
+$\mathbf 1_{\mathcal O}\in\{0,1\}$ and $3e^{-4L}<1$.
+
+\paragraph{Step 5: the four properties.}
+Property~(i) holds because $V\supseteq V_1$. For~(ii), let $x$, $v$,
+and ${\widetilde v}$ be as there. The triple $(v,x,{\widetilde v})$ is one of the orderings in the
+definition of $V_2$, with $\sigma''=1$. Since $x\notin V_2$,
+it does not lie in $\mathcal B_n\supseteq\mathcal B_n(q_*,b_1)$. By the
+definition \eqref{eq:ref-fixed-violation} and the hypotheses of~(ii), this
+means that $|R(v,x)-R(v,{\widetilde v})|\le2\eta_n$. The same argument with
+$\mathcal N_n\subseteq\mathcal B_n$ proves~(iv). For~(iii), let $v$, $y$,
+${\widetilde v}$, and $\sigma$ be as there. Then $R(y,\sigma {\widetilde v})=|R(y,{\widetilde v})|\ge b_1$,
+$|R(v,y)|\le b_2$, and $|R(v,\sigma {\widetilde v})|\le b_2$. Since the realization does not belong to $\mathcal O$, the triple
+$(v,y,\sigma {\widetilde v})$ of signed entries from three distinct levels does not lie in
+$\mathcal B_n(b_1,b_2)$. This implies that
+$|R(v,y)-\sigma R(v,{\widetilde v})|\le2\eta_n$, and the last claim of~(iii) follows from
+$\bigl||R(v,y)|-|R(v,{\widetilde v})|\bigr|\le|R(v,y)-\sigma R(v,{\widetilde v})|$.
+
+\paragraph{Step 6: the time scale $L_n=An^\lambda$.}
+If $L_n=An^\lambda$ with $0<\lambda<1$, then $L_n\to\infty$ and
+$L_n/n\to0$. For a fixed $C>0$, we have
+\[
+ e^{CL_n}q_n=C'(n+1)^3\Bigl(e^{CAn^\lambda-cR^3n^{1-3\lambda}}
+   +e^{CAn^\lambda-cn^{1-2\xi}}+e^{CAn^\lambda-cn}\Bigr),
+\]
+with $C'$ the constant of \eqref{b:dyn:uniform-gibbs}. By
+\eqref{eq:ref-exponents}, we have $1-3\lambda>\lambda$ and
+$1-2\xi>1/2>\lambda$. Hence there exists $\lambda'>0$ such that each of the
+three exponents is at most $-n^{\lambda'}$ for all large $n$, and
+$(n+1)^3e^{-n^{\lambda'}}\to0$. This proves \eqref{eq:ref-absorb} and
+completes the proof.
+\end{proof}
+
+The proof gives slightly more than (ii)--(iv). For every $x\notin V$, no
+ordering of $x$ or $-x$ with two signed entries from distinct levels lies in
+$\mathcal B_n$, and no ordering of three signed entries from distinct levels
+lies in $\mathcal B_n$. Properties (ii)--(iv) are the instances of these
+statements used in \cref{sec:induction}.
+
+\begin{remark}[The same family for every path avoiding $V$]
+\label{rem:ref-every-path}
+The family $\mathcal F$ and the set $V$ of \cref{lem:ref-families} depend
+only on $J$, and properties (i)--(iv) are deterministic statements about
+$\mathcal F$, $V$, and configurations outside $V$. No path enters their
+construction. We may therefore apply them along any finite sequence
+$x_0,\ldots,x_m$ in $\Sigma_n\setminus V$ and for any choice of the
+thresholds of \cref{sec:induction}: properties (i), (ii), and (iv) hold at
+every $x_k$, simultaneously for all $k$, all levels, and all entries, and
+(iii) holds for all entries. This is the form in which we use the lemma in
+the induction of \cref{sec:induction}.
+
+The order of choices matters for the stationary sign test of
+\cref{sec:barrier-proof}. There, we bound the probability that the
+stationary discrete heat-bath chain visits $V$ at one of the indices
+$0,\ldots,m$ by $(m+1)\pi(V)$, using only that its law is $\pi$ at each fixed
+integer index. This union bound requires that $V$ is fixed before the chain
+is run. Note also that a
+reference selected along a path depends on the path and need not have law
+$\pi$; for this reason we state (ii)--(iv) for all entries of all lists, and
+not only for selected references. Finally, we choose the family separately
+at each $J\in\mathcal G_n$ and assert no measurable dependence on $J$.
+None is needed, because the quantities that we integrate over the disorder
+in \cref{sec:barrier-proof} do not depend on the family: they are the Gibbs
+masses of initial states whose transition law is close to $\pi$ in total
+variation.
+\end{remark}

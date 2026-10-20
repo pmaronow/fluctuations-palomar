@@ -1,0 +1,1289 @@
+\chapter{Short-time estimates for Gaussian hierarchies}\label{sec:flow}
+
+In this section, we prove the analytic estimates on Gaussian hierarchies that
+the three-replica covariance perturbation of \cref{sec:cubic} requires. Near the
+window where the covariance path is perturbed, the one-site recursion of that
+comparison is a composition of short semilinear parabolic flows on $\R^3$, one
+for each of the fixed number of stages of the perturbed path. We must differentiate its value
+four times in the width parameter $h$ of the window and twice in the
+parameter $k=\delta/h$, uniformly in the starting field. Several covariance
+matrices of the path are singular, and the stage of the terminal correction has
+a duration proportional to $hk^2$, which vanishes at $k=0$. We state and prove
+the estimates for a general finite composition of such flows on $\R^\ell$.
+
+The section has four main results. \Cref{lem:flow-step-limit} identifies the
+limit of finite Gaussian hierarchies (\cref{def:inp-hierarchy}) along
+refinements with the solution of a flow equation, with an error controlled by
+the $L^1$ distance between the masses. \Cref{prop:flow-uniform} bounds all mixed
+derivatives of the flow in the parameters $(h,k)$ and in the field, uniformly in
+the field, including the endpoint $h=0$ and stages of zero duration, and
+\cref{lem:flow-penalty} gives the corresponding bounds for the penalty obtained
+by weighting the squared covariance by the mass. \Cref{b:lem:os-prefix} and \cref{cor:flow-prefix}
+control the response of a Gaussian hierarchy to a small bounded change of its
+terminal function, with an error that does not depend on the number of levels.
+In \cref{sec:cubic}, we use the first three results to obtain \cref{b:lem:os-flow}, and
+\cref{cor:flow-prefix} is applied to the part of the hierarchy that precedes the
+window, in the proof of \cref{b:prop:os-expansion}. From earlier sections, we use
+the integration step and the hierarchies of \cref{sec:inputs}
+(\cref{def:inp-step,lem:inp-steps,def:inp-hierarchy}). The regularity and
+stability of the scalar Parisi equation (\cref{inp:ob-scalar}) enter only the
+proof of \cref{cor:flow-prefix}. The remaining tools are the Gaussian
+interpolation formula, It\^o's formula, and Gronwall's inequality.
+
+For the scalar Parisi equation, the approximation by step profiles and the
+bounds on spatial derivatives that are uniform in the profile are due to
+Auffinger and Chen \cite[Propositions~1--2]{auffinger-chen-2015}. The existence,
+uniqueness, and spatial smoothness of weak solutions were proved by Jagannath and
+Tobasco \cite[Theorem~1]{jagannath-tobasco-2016}. In our
+normalization, these facts and the Lipschitz dependence on the profile are
+stated in \cref{inp:ob-scalar}, which is \cite[Lemma~3.1]{oai-barriers}. Bovier
+and Klimovsky derived the matrix form of the Parisi equation for vector spins
+\cite[Section~6, Proposition~6.1 and (6.5)]{bovier-klimovsky-2009}. The
+arguments below use the Feynman--Kac representation for the linear equations
+obtained by differentiating the flow. We give the estimates for a vector
+equation whose diffusion matrices may be singular and whose coefficients depend
+on parameters, and we give in detail the bookkeeping of mixed derivatives in the
+parameters, which the later sections need.
+
+\paragraph{Notation.}
+Throughout this section, $\ell\ge1$ is an integer ($\ell=3$ in \cref{sec:cubic},
+one coordinate for each replica), $b>0$ ($b=\beta^2$ in all applications), and
+$x\in\R^\ell$ denotes the field variable, with coordinates indexed by
+$i,i'\in\{1,\dots,\ell\}$. We write $\langle\cdot,\cdot\rangle$ and
+$\abs{\cdot}$ for the Euclidean inner product and norm, $\abs{\Sigma}$ for the
+operator norm of a matrix, $U\mathbin{:}V=\sum_{i,i'}U_{ii'}V_{ii'}$ and
+$\norm{U}_F^2=U\mathbin{:}U$, and $\Sigma\succeq0$ when $\Sigma$ is symmetric
+and positive semidefinite; $\Sigma^{1/2}$ is its positive semidefinite square
+root, and $\mathbf g$ is a standard Gaussian vector in $\R^\ell$. For a multi-index
+$\iota\in\N^\ell$, $D^\iota$ is the corresponding derivative in $x$ and
+$\abs\iota$ its order; $\nabla$ and $D^2$ are the gradient and the Hessian in
+$x$. For $\varphi\colon\R^\ell\to\R$ and an integer $r\ge1$, we set
+$\norm{D^r\varphi}_\infty=\max_{\abs\iota=r}\sup_x\abs{D^\iota\varphi(x)}$, and
+for $2\le r\le\infty$ we let $\mathcal C^r$ be the set of
+$\varphi\in C^r(\R^\ell)$ with $\norm{D^{r'}\varphi}_\infty<\infty$ for all finite
+$1\le r'\le r$. A function in $\mathcal C^r$ grows at most linearly and need
+not itself be bounded. Parameter derivatives are taken in two real variables
+$(h,k)$: for $\gamma=(\gamma_h,\gamma_k)\in\N^2$, we write
+$\partial^\gamma=\partial_h^{\gamma_h}\partial_k^{\gamma_k}$,
+$\abs\gamma=\gamma_h+\gamma_k$, $\gamma'\le\gamma$ for the componentwise order,
+$\binom{\gamma}{\gamma'}=\binom{\gamma_h}{\gamma_h'}\binom{\gamma_k}{\gamma_k'}$,
+and $\gamma!=\gamma_h!\gamma_k!$. We say that the mixed derivative
+$\partial^\gamma D^\iota$ has \emph{weight} $\abs\iota+2\abs\gamma$. One parameter
+derivative counts as two spatial derivatives, because a parameter derivative of
+a covariance coefficient multiplies a second derivative in $x$.
+
+\section{Flows and the main estimates}\label{sec:flow-statements}
+
+\begin{definition}[Stage data and flows]\label{def:flow}
+Let $N\ge1$. A \emph{stage datum} consists of, for each $j\in\{1,\dots,N\}$, a
+matrix $B_j\succeq0$, a duration $\lambda_j\ge0$, and a measurable mass function
+$m_j\colon[0,1]\to[0,1]$. Stage $j$ occupies the interval $[j-1,j]$ of the
+variable $\tau\in[0,N]$. For a terminal function $f\in\mathcal C^2$, the
+\emph{flow equation} is
+\begin{equation}\label{eq:flow-equation}
+ -\partial_\tau F=\frac{b\lambda_j}{2}\Bigl\{B_j\mathbin{:}D^2F
+ +m_j(\tau-j+1)\bigl\langle\nabla F,B_j\nabla F\bigr\rangle\Bigr\}
+ \quad\text{on }(j-1,j)\times\R^\ell,
+\end{equation}
+for $j=1,\dots,N$, with $F(N,\cdot)=f$ and $F$ continuous on
+$[0,N]\times\R^\ell$. We call $F(0,\cdot)$ the \emph{output} of the flow.
+\end{definition}
+
+We solve the equation backward, from $\tau=N$ to $\tau=0$, as the Parisi
+equation \eqref{b:eq:Parisi-PDE} is solved backward from time one. Stage~$1$ is
+the outermost stage, nearest to the root of the hierarchy, and stage~$N$ is the
+innermost. On stage $j$ the Gaussian field has covariance $b\lambda_jB_j$ per unit
+of $\tau$; in the notation of \cref{def:inp-hierarchy}, the overlap covariance
+path increases by $\lambda_jB_j$ over stage $j$. For example, the Parisi equation
+for a distribution function $\alpha$ on an interval $[t_1,t_2]$ is the case
+$\ell=1$, $N=1$, $B_1=1$, $\lambda_1=t_2-t_1$, and
+$m_1(\tau)=\alpha(t_1+\tau(t_2-t_1))$, with $b=\beta^2$.
+
+\paragraph{Step flows.}
+We first define solutions for masses that are step functions. A \emph{step
+flow} is the flow of a stage datum in which, for each $j$, there exists a partition
+$0=\tau_{j,0}<\tau_{j,1}<\dots<\tau_{j,M_j}=1$ such that $m_j=\mu_{j,i}$ on
+$[\tau_{j,i-1},\tau_{j,i})$. With the integration step of
+\cref{def:inp-step}, we set $F(N,\cdot)=f$ and
+\begin{equation}\label{eq:flow-step-solution}
+ F(\tau,\cdot)=T_{\mu_{j,i},\,(j-1+\tau_{j,i}-\tau)b\lambda_jB_j}
+ F(j-1+\tau_{j,i},\cdot)
+ \quad\text{for } j-1+\tau_{j,i-1}\le\tau\le j-1+\tau_{j,i},
+\end{equation}
+proceeding from the piece $(N,M_N)$ to the piece $(1,1)$. The formulas for two
+consecutive pieces agree at their common endpoint, because
+$T_{m,0}\varphi=\varphi$. The output $F(0,x)$ is the value at $x$ of a finite Gaussian hierarchy:
+its levels, listed from the root, are the pieces $(j,i)$ in lexicographic order,
+and the level $(j,i)$ has covariance $b\lambda_jB_j(\tau_{j,i}-\tau_{j,i-1})$ and
+is integrated at mass $\mu_{j,i}$. By \cref{lem:flow-cole-hopf} below, $F$ is
+continuous and solves \eqref{eq:flow-equation} on each piece, where the mass is
+constant.
+
+If the masses $m_j$ are continuous and $\mathfrak p=(\tau_{j,i})$ is a family of
+partitions, the \emph{sampled masses} are $m_j^{\mathfrak p}=m_j(\tau_{j,i-1})$
+on $[\tau_{j,i-1},\tau_{j,i})$, and the \emph{mesh} $\abs{\mathfrak p}$ is the
+largest length $\tau_{j,i}-\tau_{j,i-1}$. If each $m_j$ is nondecreasing and
+$m_j(1)\le m_{j+1}(0)$ for $j<N$, then the sampled masses are nondecreasing from
+the root, as in an admissible path of \cref{def:inp-hierarchy}.
+
+\begin{lemma}[Step approximation]\label{lem:flow-step-limit}
+Fix a stage datum with matrices $B_j$ and durations $\lambda_j$, and a terminal
+function $f\in\mathcal C^2$. Let $L_f=\sup_x\abs{\nabla f(x)}$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Let $F$ and $\widetilde F$ be the step flows with step masses $m_j$ and
+ $\widetilde m_j$. Then $\sup_{\tau,x}\abs{\nabla F(\tau,x)}\le L_f$ and
+ \begin{equation}\label{eq:flow-L1}
+  \sup_{\tau,x}\abs{F(\tau,x)-\widetilde F(\tau,x)}
+  \le\frac{bL_f^2}{2}\sum_{j=1}^N\lambda_j\abs{B_j}
+  \int_0^1\abs{m_j(\tau)-\widetilde m_j(\tau)}\dd\tau.
+ \end{equation}
+ If $F'$ is the step flow with the masses $m_j$ and a terminal function
+ $f'\in\mathcal C^2$ such that $f-f'$ is bounded, then
+ $\sup_{\tau,x}\abs{F-F'}\le\sup_x\abs{f-f'}$.
+\item Let $m_j$ be measurable. For every sequence of step masses $m_j^{(l)}$ with
+ $\int_0^1\abs{m_j^{(l)}-m_j}\dd\tau\to0$ for each $j$, the step flows converge
+ uniformly on $[0,N]\times\R^\ell$ to a limit $F$ that does not depend on the
+ sequence. We call $F$ the \emph{flow} of the stage datum with terminal
+ function $f$. The three estimates of \textup{(a)} hold for these flows.
+\item Let $1\le N'<N$. Let $F_{\rm in}$ be the flow of stages $N'+1,\dots,N$
+ with terminal function $f$, and suppose that $f_{\rm in}=F_{\rm in}(N',\cdot)$
+ belongs to $\mathcal C^2$. Then $F$ coincides on $[0,N']\times\R^\ell$ with the
+ flow of stages $1,\dots,N'$ with terminal function $f_{\rm in}$.
+\item Suppose that $f\in\mathcal C^\infty$ and
+ $2\ell b\norm{D^2f}_\infty\sum_j\lambda_j\abs{B_j}\le1$. Then the flow $F$ of
+ \textup{(b)} has continuous and bounded spatial derivatives of every order
+ $r\ge1$, with $\norm{D^2F(\tau,\cdot)}_\infty\le2\norm{D^2f}_\infty$, and, for
+ the step flows $F^{(l)}$ of \textup{(b)} and every $\iota\ne0$,
+ \begin{equation}\label{eq:flow-L1-derivatives}
+  \sup_{\tau,x}\abs{D^\iota F^{(l)}(\tau,x)-D^\iota F(\tau,x)}
+  \le C\sum_{j=1}^N\lambda_j\int_0^1\abs{m^{(l)}_j-m_j}\dd\tau,
+ \end{equation}
+ where $C$ depends only on $\ell$, $b$, $\abs\iota$, $\max_j\abs{B_j}$,
+ $\sum_j\lambda_j\abs{B_j}$, and $\norm{D^{r}f}_\infty$ for $1\le r\le\abs\iota+1$.
+ If moreover each $m_j$ is continuous on $[0,1]$, then $F$ is continuously
+ differentiable in $\tau$ on each closed stage $[j-1,j]$, with one-sided
+ derivatives at its endpoints, and solves \eqref{eq:flow-equation}. It is the
+ unique such solution with bounded first and second spatial derivatives that is
+ of class $C^{1,2}$ on each closed stage.
+\end{enumerate}
+\end{lemma}
+
+In words, the hierarchy values converge along refinements of the masses, at a
+rate given by the $L^1$ distance between the masses, and the limit is the
+solution of the flow equation; for short flows the same holds for every spatial
+derivative. Part (c) says that the limiting flows compose stage by stage. Parts
+(a)--(c) hold for stages of any duration. The constant in \eqref{eq:flow-L1}
+involves only the gradient of $f$. To identify the gradient of the limit in (b),
+we also use the bound $K_f+L_f^2$ of \cref{lem:flow-spatial}(a) on the Hessians
+of the step flows, where $K_f=\sup_x\abs{D^2f(x)}$. This bound does not require
+short stages either. Part (d) is stated only for short flows, which are the only
+ones we need.
+
+\paragraph{Parameter-dependent data.}
+We now let the data depend on two parameters. Fix $N\ge1$, $h_1>0$, and
+$k_0>0$, and let $\mathcal U=[0,h_1]\times[-k_0,k_0]$. A function on $\mathcal U$
+is called \emph{smooth} if all its partial derivatives exist and are continuous
+on $\mathcal U$; at boundary points, the derivatives are one-sided. In
+particular, derivatives in $h$ at $h=0$ are right derivatives. We assume the
+following.
+\begin{enumerate}[label=\textup{(H\arabic*)}]
+\item\label{H1} For each $j$, the map $(h,k)\mapsto B_j(h,k)$ is smooth on
+ $\mathcal U$, with values in the positive semidefinite matrices.
+\item\label{H2} For each $j$, $\lambda_j(h,k)=h\kappa_j(h,k)$, where
+ $\kappa_j\colon\mathcal U\to[0,\infty)$ is smooth. The function $\kappa_j$
+ may vanish.
+\item\label{H3} For each $j$, $m_j\colon[0,1]\times\mathcal U\to[0,1]$ is
+ continuous, and all its derivatives in $(h,k)$ exist and are continuous on
+ $[0,1]\times\mathcal U$.
+\item\label{H4} The terminal function $f\colon\mathcal U\times\R^\ell\to\R$ is
+ smooth in the same sense, and $\partial^\gamma D^\iota f$ is bounded on $\mathcal U\times\R^\ell$
+ for every $(\gamma,\iota)\ne(0,0)$.
+\item\label{H5} The number $h_0\in(0,h_1]$ satisfies
+ $2\ell b\,h_0\Lambda_*\norm{D^2f}_\infty\le1$, where
+ $\Lambda_*=\max_{\mathcal U}\sum_j\kappa_j\abs{B_j}$ and
+ $\norm{D^2f}_\infty=\sup_{\mathcal U\times\R^\ell}\max_{i,i'}\abs{\partial_{ii'}f}$.
+\end{enumerate}
+Let $\mathcal U_0=[0,h_0]\times[-k_0,k_0]$. For $(h,k)\in\mathcal U_0$, let
+$F(\tau,h,k,x)$ be the flow, in the sense of \cref{lem:flow-step-limit}, of the
+stage datum $(B_j(h,k),\lambda_j(h,k),m_j(\cdot,h,k))_{j\le N}$ with terminal
+function $f(h,k,\cdot)$, and let $\mathcal B(h,k,x)=F(0,h,k,x)$ be its output.
+
+\begin{proposition}[Uniform bounds for short flows]\label{prop:flow-uniform}
+Assume \ref{H1}--\ref{H5}.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For each $(h,k)\in\mathcal U_0$, the function $F(\cdot,h,k,\cdot)$ is
+ continuously differentiable in $\tau$ on each closed stage, infinitely
+ differentiable in $x$, and it is the unique solution of \eqref{eq:flow-equation}
+ with bounded first and second spatial derivatives that is of class $C^{1,2}$ on
+ each closed stage.
+\item All partial derivatives $\partial^\gamma D^\iota F$ exist and are
+ continuous on $[0,N]\times\mathcal U_0\times\R^\ell$. For every
+ $(\gamma,\iota)\ne(0,0)$, there exists $C$ such that
+ \[
+  \sup_{[0,N]\times\mathcal U_0\times\R^\ell}\abs{\partial^\gamma D^\iota F}\le C,
+ \]
+ where $C$ depends only on $\ell$, $N$, $b$, $h_1$, $\gamma$, and $\abs\iota$,
+ on the suprema over $\mathcal U$ of $\abs{\partial^{\gamma'}(\kappa_jB_j)}$ and
+ over $[0,1]\times\mathcal U$ of $\abs{\partial^{\gamma'}(\kappa_jm_jB_j)}$, for
+ $\gamma'\le\gamma$, and on the suprema over $\mathcal U\times\R^\ell$ of
+ $\abs{\partial^{\gamma'}D^{\iota'}f}$ for $\gamma'\le\gamma$ and
+ $0<\abs{\iota'}+2\abs{\gamma'}\le\abs\iota+2\abs\gamma$.
+ Moreover, $\abs{F(\tau,h,k,x)}\le C_{\rm grow}(1+\abs x)$, where $C_{\rm grow}$
+ depends only on $\ell$, $N$, $b$, $h_1$, the supremum over $\mathcal U$ of
+ $\abs{\kappa_jB_j}$, the suprema over $\mathcal U\times\R^\ell$ of
+ $\abs{\nabla f}$ and $\abs{D^2f}$, and $\sup_{\mathcal U}\abs{f(h,k,0)}$.
+\item For $\gamma\ne0$, the derivative $\partial^\gamma F$ is continuously
+ differentiable in $\tau$ on each closed stage, and it solves the equation
+ obtained by applying $\partial^\gamma$ to \eqref{eq:flow-equation}, with
+ terminal value $\partial^\gamma f$.
+\item Let $\mathfrak p_l$ be partitions with $\abs{\mathfrak p_l}\to0$, and let
+ $F^{\mathfrak p_l}$ be the step flows with the sampled masses $m_j^{\mathfrak p_l}(\cdot,h,k)$.
+ Then $F^{\mathfrak p_l}\to F$ uniformly on $[0,N]\times\mathcal U_0\times\R^\ell$, and
+ $\partial^\gamma D^\iota F^{\mathfrak p_l}\to\partial^\gamma D^\iota F$ uniformly on compact
+ subsets of $[0,N]\times\mathcal U_0\times\R^\ell$, for every $(\gamma,\iota)$.
+\end{enumerate}
+\end{proposition}
+
+To bound a derivative $\partial^\gamma D^\iota\mathcal B$, we use only
+derivatives of the terminal function of weight at most $\abs\iota+2\abs\gamma$
+and $(h,k)$-derivatives of order at most $\gamma$ of the coefficients. In
+\cref{sec:cubic}, we need the derivatives $\partial_h^{\gamma_h}\partial_k^{\gamma_k}\mathcal B$ with
+$\gamma_h\le4$ and $\gamma_k\le2$ together with a few spatial derivatives; with at
+most eight spatial derivatives they have weight at most $20$, and their bounds
+use $(h,k)$-derivatives of the masses and of the terminal function of order at
+most six. The value $F$ itself grows at most linearly in $x$ and is
+not estimated, except through its derivatives and through bounded differences
+such as $F(\tau,h,k,x)-F(\tau,h',k',x)$.
+
+\begin{remark}[The coefficients at $h=0$]\label{rem:flow-first-order}
+Since $\lambda_j(0,k)=0$, we have $F(\tau,0,k,\cdot)=f(0,k,\cdot)$ for all
+$\tau$, and hence $\partial_k^{\gamma_k}\mathcal B(0,k,\cdot)=\partial_k^{\gamma_k}f(0,k,\cdot)$ for
+every $\gamma_k\ge0$.
+Writing $\bar m_j(k)=\int_0^1m_j(\tau,0,k)\dd\tau$ and evaluating $f$, $B_j$ and
+$\kappa_j$ at $(0,k)$, we have
+\begin{equation}\label{eq:flow-first-order}
+ \partial_h\mathcal B(0,k,x)=\partial_hf(0,k,x)+\frac b2\sum_{j=1}^N\kappa_j
+ \Bigl\{B_j\mathbin{:}D^2f(0,k,x)
+ +\bar m_j\bigl\langle\nabla f(0,k,x),B_j\nabla f(0,k,x)\bigr\rangle\Bigr\}.
+\end{equation}
+Indeed, at $h=0$ the equation of \cref{prop:flow-uniform}(iii) for
+$\gamma=(1,0)$ has no terms involving $\partial_hF$, since the coefficients of
+\eqref{eq:flow-equation} vanish, and its source is the derivative in $h$ of the
+right side of \eqref{eq:flow-equation} at $F=f(0,k,\cdot)$. Integrating it over
+$\tau\in[0,N]$, we obtain \eqref{eq:flow-first-order}.
+\end{remark}
+
+\begin{remark}[Singular matrices, zero durations, and regularization]
+\label{rem:flow-regularization}
+The hypotheses \ref{H1}--\ref{H5} and the constants in \cref{prop:flow-uniform}
+involve no lower bound on $B_j$ or on $\kappa_j$. In the proof, every Gaussian
+integral is parametrized by its covariance matrix
+$t\,bh\kappa_j(h,k)B_j(h,k)$, which is a smooth function of $(h,k)$ with values
+in the positive semidefinite matrices, including where it vanishes, and
+\cref{lem:flow-gauss} differentiates Gaussian integrals as functions of the
+covariance. No square root of a covariance or of a duration is differentiated.
+For instance, a stage with $\kappa_j(h,k)=ck^2$ has zero duration at $k=0$, and
+its contribution is differentiable in $k$ there through the polynomial $hk^2$.
+One may also replace each $B_j$ by $B_j+\eps\mathrm{Id}$ with $0<\eps\le1$. Let
+$K_*=\max_{\mathcal U}\sum_j\kappa_j$, and decrease $h_0$, if necessary, so that
+$2\ell b\,h_0(\Lambda_*+K_*)\norm{D^2f}_\infty\le1$. The regularized data then
+satisfy \ref{H1}--\ref{H5}, with upper bounds uniform in $\eps$. For parameters
+with $h\kappa_j(h,k)>0$, the diffusion matrix of stage $j$ is positive definite.
+Stages with $h\kappa_j(h,k)=0$, in particular all stages at $h=0$, still have zero
+diffusion, and the regularized equations are not uniformly parabolic on
+$\mathcal U_0$. The
+regularized flows satisfy the bounds of \cref{prop:flow-uniform} uniformly in
+$\eps$, and they converge to $F$ as $\eps\to0$, together with all derivatives
+$\partial^\gamma D^\iota$, uniformly on compact sets. Indeed, the difference
+between the regularized flow and $F$ satisfies the linear equation in the proof
+of \cref{lem:flow-step-limit}(a), with $B_j+\eps\mathrm{Id}$ in place of $B_j$ and with
+equal masses. Its source is
+$(b\lambda_j\eps/2)\{\mathrm{Id}\mathbin{:}D^2F+m_j\abs{\nabla F}^2\}$, which is bounded
+by $C\eps$. Then \cref{lem:flow-linear} shows that the values
+converge, and the compactness argument in the proof of
+\cref{prop:flow-uniform}(iv) identifies the limits of all derivatives. We do not
+use the regularization.
+\end{remark}
+
+\begin{remark}[Further parameters and restriction to a line]
+\label{rem:flow-uniformity}
+If the data depend on a further parameter in which no derivatives are needed
+(in \cref{sec:cubic}, the left endpoint of the window), and the suprema listed in
+\cref{prop:flow-uniform}(ii) and the number $\Lambda_*\norm{D^2f}_\infty$ are
+bounded uniformly in it, then the conclusions hold uniformly in that parameter;
+for the linear growth bound, $\sup_{\mathcal U}\abs{f(h,k,0)}$ must also be
+bounded uniformly in that parameter.
+The statements and the proofs of this section hold without change if $k$ is a
+vector of parameters ranging over a product of compact intervals, with
+multi-indices in place of $\gamma_k$; a further parameter in which derivatives
+are needed can be included in this way. For a vector $e\in\R^\ell$ and $z\in\R$,
+the restriction $z\mapsto\mathcal B(h,k,ze)$
+satisfies
+\[
+ \partial^\gamma\partial_z^r\bigl[\mathcal B(h,k,ze)\bigr]
+ =\sum_{\abs\iota=r}\frac{r!}{\iota!}\,e^\iota\,\partial^\gamma D^\iota\mathcal B(h,k,ze),
+\]
+where $\iota!=\prod_i\iota_i!$ and $e^\iota=\prod_ie_i^{\iota_i}$. Its derivatives
+obey the bounds of \cref{prop:flow-uniform}(ii), multiplied by
+$(\sum_i\abs{e_i})^r$.
+\end{remark}
+
+The last estimate of this section concerns the penalty. For a smooth function
+$Q_\star\colon\mathcal U\to\R^{\ell\times\ell}$ with symmetric values, let
+\[
+ Q(\tau)=Q_\star+\sum_{j'<j}\lambda_{j'}B_{j'}+(\tau-j+1)\lambda_jB_j
+ \qquad(j-1\le\tau\le j),
+\]
+where all functions are evaluated at $(h,k)$. This is the overlap covariance
+path through the stages, started at $Q_\star$. We set
+\begin{equation}\label{eq:flow-penalty}
+ \Pi(h,k)=\sum_{j=1}^N\int_{j-1}^jm_j(\tau-j+1)\,\partial_\tau\norm{Q(\tau)}_F^2\dd\tau
+ =2\sum_{j=1}^N\lambda_j\int_0^1m_j(\tau)\,Q(j-1+\tau)\mathbin{:}B_j\dd\tau.
+\end{equation}
+This is the contribution of the stages to the penalty $\int m\dd\norm{Q}_F^2$
+of \eqref{eq:inp-penalty}. For partitions $\mathfrak p$, the corresponding
+contribution of the step hierarchy with the sampled masses is
+\[
+ \Pi^{\mathfrak p}(h,k)=\sum_{j=1}^N\sum_{i=1}^{M_j}m_j(\tau_{j,i-1})
+ \Bigl(\norm{Q(j-1+\tau_{j,i})}_F^2-\norm{Q(j-1+\tau_{j,i-1})}_F^2\Bigr).
+\]
+
+\begin{lemma}[The penalty]\label{lem:flow-penalty}
+Assume \ref{H1}--\ref{H3}. Then $\Pi$ is smooth on $\mathcal U$, and for every
+$\gamma$ we have $\sup_{\mathcal U}\abs{\partial^\gamma\Pi}\le C$, where $C$
+depends only on $\ell$, $N$, $h_1$, $\gamma$, and the suprema over $\gamma'\le\gamma$
+of $\abs{\partial^{\gamma'}Q_\star}$, $\abs{\partial^{\gamma'}(\kappa_jB_j)}$ and
+$\abs{\partial^{\gamma'}(\kappa_jm_jB_j)}$. Moreover
+$\sup_{\mathcal U}\abs{\partial^\gamma(\Pi^{\mathfrak p}-\Pi)}\to0$ as
+$\abs{\mathfrak p}\to0$, for every $\gamma$.
+\end{lemma}
+
+\begin{proof}
+Since $m_j^{\mathfrak p}$ is constant on each piece, we have
+$\Pi^{\mathfrak p}=2\sum_j\lambda_j\int_0^1m_j^{\mathfrak p}(\tau)\,Q(j-1+\tau)\mathbin{:}B_j\dd\tau$,
+which is \eqref{eq:flow-penalty} with $m_j$ replaced by $m_j^{\mathfrak p}$. The
+integrand on stage $j$ is $Q(j-1+\tau)\mathbin{:}(h\kappa_jm_jB_j)$, where
+$Q(j-1+\tau)$ is a polynomial in $\tau$, $Q_\star$, and the matrices
+$h\kappa_{j'}B_{j'}$, and the $(h,k)$-derivatives of $m_j^{\mathfrak p}$ are those
+of $m_j$ evaluated at the left endpoints of the pieces. Differentiating under the integral sign, we
+find that $\Pi$ and $\Pi^{\mathfrak p}$ are smooth with the stated bounds. By
+\ref{H3}, every $(h,k)$-derivative of $m_j$ is uniformly continuous on the
+compact set $[0,1]\times\mathcal U$, and we have
+$\partial^{\gamma'}m_j^{\mathfrak p}\to\partial^{\gamma'}m_j$ uniformly as
+$\abs{\mathfrak p}\to0$. This implies the last statement.
+\end{proof}
+
+\section{Three tools}\label{sec:flow-tools}
+
+With the first tool, we differentiate a Gaussian integral with respect to its
+covariance, including at singular covariances.
+
+\begin{lemma}[Gaussian integrals as functions of the covariance]\label{lem:flow-gauss}
+Let $\Omega$ be a convex subset of a Euclidean space. Let $\mathcal F\colon\Omega\times\R^\ell\to\R$ be
+continuous and twice continuously differentiable in its second variable $y$,
+with $D^2_y\mathcal F$ continuous on $\Omega\times\R^\ell$, and suppose that there exists
+$c<\infty$ such that
+\begin{equation}\label{eq:flow-growth}
+ \abs{\mathcal F(\omega,y)}+\abs{\nabla_y\mathcal F(\omega,y)}+\abs{D^2_y\mathcal F(\omega,y)}
+ \le c\,e^{c\abs y}\qquad(\omega\in\Omega,\ y\in\R^\ell).
+\end{equation}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The map $(\omega,\Sigma)\mapsto\E\mathcal F(\omega,\Sigma^{1/2}\mathbf g)$ is continuous
+ on $\Omega\times\{\Sigma\succeq0\}$. This holds for every continuous $\mathcal F$ with
+ $\abs{\mathcal F}\le ce^{c\abs y}$.
+\item For $\omega\in\Omega$ and $\Sigma,\Sigma'\succeq0$, with
+ $\Sigma_t=\Sigma+t(\Sigma'-\Sigma)$,
+ \[
+  \E\mathcal F(\omega,\Sigma'^{1/2}\mathbf g)-\E\mathcal F(\omega,\Sigma^{1/2}\mathbf g)
+  =\frac12\int_0^1(\Sigma'-\Sigma)\mathbin{:}
+  \E D^2_y\mathcal F(\omega,\Sigma_t^{1/2}\mathbf g)\dd t.
+ \]
+\item Let $\omega\mapsto\Sigma(\omega)\succeq0$ be continuously differentiable on
+ $\Omega$, and suppose that $\partial_{\omega_a}\mathcal F$ exists, is continuous, and
+ satisfies $\abs{\partial_{\omega_a}\mathcal F}\le ce^{c\abs y}$. Then the function
+ $\omega\mapsto\E\mathcal F(\omega,\Sigma(\omega)^{1/2}\mathbf g)$ has a continuous partial
+ derivative in $\omega_a$, one-sided at boundary points of $\Omega$, and
+ \begin{equation}\label{eq:flow-gauss-derivative}
+  \partial_{\omega_a}\E\mathcal F(\omega,\Sigma(\omega)^{1/2}\mathbf g)
+  =\E\partial_{\omega_a}\mathcal F(\omega,\Sigma(\omega)^{1/2}\mathbf g)
+  +\frac12\,\partial_{\omega_a}\Sigma(\omega)\mathbin{:}
+  \E D^2_y\mathcal F(\omega,\Sigma(\omega)^{1/2}\mathbf g).
+ \end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For (a), recall that the positive square root is continuous on the positive
+semidefinite matrices. Indeed, if the spectra of $\Sigma$ and $\Sigma'$ lie in
+$[0,c']$, then $\abs{\Sigma^{1/2}-\Sigma'^{1/2}}\le2\sup_{[0,c']}\abs{\sqrt s-P(s)}
++\abs{P(\Sigma)-P(\Sigma')}$ for every polynomial $P$, and $\sqrt s$ is a uniform
+limit of polynomials on $[0,c']$. If $(\omega_n,\Sigma_n)\to(\omega,\Sigma)$, then
+$\mathcal F(\omega_n,\Sigma_n^{1/2}\mathbf g)\to\mathcal F(\omega,\Sigma^{1/2}\mathbf g)$ almost surely, and
+these random variables are dominated by $c\exp(cc'^{1/2}\abs{\mathbf g})$, where $c'$ bounds
+the spectra of all $\Sigma_n$. By dominated convergence, the expectations
+converge, which proves (a).
+
+For (b), let $\mathbf g'$ be a standard Gaussian vector independent of $\mathbf g$, and let
+$\zeta(t)=\sqrt t\,\Sigma'^{1/2}\mathbf g'+\sqrt{1-t}\,\Sigma^{1/2}\mathbf g$. The vector $\zeta(t)$ is
+centered Gaussian with covariance $\Sigma_t$, so it has the law of
+$\Sigma_t^{1/2}\mathbf g$. By the Gaussian interpolation formula
+\cite[Lemma~1.3.1]{talagrand-2011}, for $0<t<1$,
+\[
+ \frac{\dd}{\dd t}\E\mathcal F(\omega,\zeta(t))
+ =\frac12(\Sigma'-\Sigma)\mathbin{:}\E D_y^2\mathcal F(\omega,\zeta(t)).
+\]
+That lemma is stated for infinitely differentiable functions whose derivatives
+grow more slowly than $e^{a\abs y^2}$ for every $a>0$. For $\mathcal F(\omega,\cdot)$
+as in \eqref{eq:flow-growth}, we apply it to the convolution of $\mathcal F(\omega,\cdot)$
+with a smooth compactly supported mollifier, integrate the identity between two
+times in $(0,1)$, and let the mollifier shrink; both sides converge by dominated
+convergence. The right side of the displayed identity is continuous on $[0,1]$ by
+(a), applied to $D^2_y\mathcal F$. Integrating over $t\in[0,1]$, we obtain (b).
+
+For (c), fix $\omega$ and write $\Sigma=\Sigma(\omega)$ and
+$\Sigma_\eta=\Sigma(\omega+\eta e_a)$ for $\omega+\eta e_a\in\Omega$, where
+$e_a$ is the $a$th coordinate vector. Then
+\begin{multline*}
+ \E\mathcal F(\omega+\eta e_a,\Sigma_\eta^{1/2}\mathbf g)-\E\mathcal F(\omega,\Sigma^{1/2}\mathbf g)
+ =\int_0^\eta\E\partial_{\omega_a}\mathcal F(\omega+\eta'e_a,\Sigma_\eta^{1/2}\mathbf g)\dd\eta'\\
+ +\frac12\int_0^1(\Sigma_\eta-\Sigma)\mathbin{:}
+ \E D_y^2\mathcal F\bigl(\omega,(\Sigma+t(\Sigma_\eta-\Sigma))^{1/2}\mathbf g\bigr)\dd t,
+\end{multline*}
+where we used the fundamental theorem of calculus and Fubini's theorem for the
+first term and (b) for the second; the segment from $\Sigma$ to $\Sigma_\eta$
+consists of positive semidefinite matrices. We divide by $\eta$ and let
+$\eta\to0$. By (a), applied to $\partial_{\omega_a}\mathcal F$ and to the entries of
+$D^2_y\mathcal F$, the two integrands converge uniformly to their values at $\eta=0$,
+and we obtain \eqref{eq:flow-gauss-derivative}. The right side of
+\eqref{eq:flow-gauss-derivative} is continuous by (a).
+\end{proof}
+
+The second tool collects the properties of one integration step
+$T_{m,\Sigma}$ of \cref{def:inp-step} that we need. Recall that monotonicity, the
+translation identity, and the semigroup property are \cref{lem:inp-steps}(a)
+and (b).
+
+\begin{lemma}[One integration step]\label{lem:flow-cole-hopf}
+Let $\Sigma\succeq0$, let $m\in[0,1]$, and let $\varphi\in\mathcal C^2$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item We have $T_{m,\Sigma}\varphi\in\mathcal C^2$ and
+ $\sup_x\abs{\nabla T_{m,\Sigma}\varphi(x)}\le\sup_x\abs{\nabla\varphi(x)}$. If
+ $\varphi\in\mathcal C^r$, then $T_{m,\Sigma}\varphi\in\mathcal C^r$.
+\item The function $\psi(t,x)=T_{m,t\Sigma}\varphi(x)$, $t\ge0$, is continuous and
+ continuously differentiable in $t$, with a right derivative at $t=0$; its first
+ and second derivatives in $x$ are continuous in $(t,x)$; and
+ \begin{equation}\label{eq:flow-one-step-pde}
+  \partial_t\psi=\frac12\Bigl\{\Sigma\mathbin{:}D^2\psi
+  +m\bigl\langle\nabla\psi,\Sigma\nabla\psi\bigr\rangle\Bigr\}.
+ \end{equation}
+\item Let $\Omega$ be a compact convex subset of a Euclidean space, and let $\Sigma(\omega)\succeq0$,
+ $m(\omega)\in[0,1]$, and $\varphi(\omega,x)$ be smooth functions of
+ $\omega\in\Omega$ and of $(\omega,x)\in\Omega\times\R^\ell$, such that
+ $\partial^\gamma_\omega D^\iota\varphi$ is bounded for every $(\gamma,\iota)\ne(0,0)$.
+ Then $\psi(t,\omega,x)=T_{m(\omega),t\Sigma(\omega)}\varphi(\omega,\cdot)(x)$ is
+ infinitely differentiable in $(t,\omega,x)\in[0,1]\times\Omega\times\R^\ell$
+ (one-sided at the boundary), the function $\psi-\varphi$ is bounded, and every
+ derivative $\partial^\gamma_\omega D^\iota\psi$ with $(\gamma,\iota)\ne(0,0)$ is
+ bounded on $[0,1]\times\Omega\times\R^\ell$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Let $L_\varphi=\sup_x\abs{\nabla\varphi(x)}$, and, for fixed $x$, let
+$\mathcal Y_x=\varphi(x+\Sigma^{1/2}\mathbf g)-\varphi(x)$, so that $\abs{\mathcal Y_x}\le L_\varphi\abs{\Sigma^{1/2}\mathbf g}$.
+For $m>0$, we have
+$T_{m,\Sigma}\varphi(x)=\varphi(x)+m^{-1}\log\E e^{m\mathcal Y_x}$.
+
+For (a), since the derivatives of $x\mapsto e^{m\varphi(x+y)-m\varphi(x)}$ of
+order at most two are bounded by $C(1+\abs y)^2e^{L_\varphi\abs y}$, we may differentiate
+under the expectation. We obtain
+\begin{equation}\label{eq:flow-tilted-gradient}
+ \nabla T_{m,\Sigma}\varphi(x)
+ =\frac{\E\bigl[\nabla\varphi(x+\Sigma^{1/2}\mathbf g)\,e^{m\mathcal Y_x}\bigr]}{\E e^{m\mathcal Y_x}}.
+\end{equation}
+The right side is an average of values of $\nabla\varphi$ with respect to a
+probability measure, so its norm is at most $L_\varphi$.
+Differentiating further, we find that $D^\iota T_{m,\Sigma}\varphi(x)$, for
+$1\le\abs\iota\le r$, is a polynomial, with coefficients depending only on $\iota$
+and $m$, in the averages
+$\E[P(x+\Sigma^{1/2}\mathbf g)e^{m\mathcal Y_x}]/\E e^{m\mathcal Y_x}$ of products $P$ of the derivatives
+$D^{\iota'}\varphi$ with $1\le\abs{\iota'}\le\abs\iota$. These derivatives are
+bounded, and so are the averages. The case $m=0$ is the same without the
+exponential weights.
+
+For (b) and $m>0$, let $U(t,x)=\E\exp\{m\varphi(x+(t\Sigma)^{1/2}\mathbf g)\}$. The
+function $y\mapsto e^{m\varphi(x+y)}$ and its first two derivatives are bounded
+by $Ce^{m\abs{\varphi(x)}+L_\varphi\abs y}$, locally uniformly in $x$. By
+\cref{lem:flow-gauss}(a) and (b), with the covariances $t\Sigma$ and
+$t'\Sigma$, the function $U$ is continuous, continuously differentiable in $t$,
+and $\partial_tU=(1/2)\Sigma\mathbin{:}D^2U$. By \cref{lem:flow-gauss}(a),
+$\nabla U$ and $D^2U$ are continuous in $(t,x)$. Writing $\psi=m^{-1}\log U$, we
+have $\nabla U=mU\nabla\psi$ and $D^2U=mU\{D^2\psi+m\nabla\psi\nabla\psi^{\mathsf T}\}$,
+and \eqref{eq:flow-one-step-pde} follows. For $m=0$, we apply
+\cref{lem:flow-gauss}(b) to $\varphi$ directly.
+
+For (c), we write $m=m(\omega)$, $\Sigma=\Sigma(\omega)$, and
+$\mathcal Y=\varphi(\omega,x+(t\Sigma)^{1/2}\mathbf g)-\varphi(\omega,x)$. For every $m\ge0$,
+\begin{equation}\label{eq:flow-ch-integral}
+ \psi(t,\omega,x)-\varphi(\omega,x)
+ =\int_0^1\frac{\E\bigl[\mathcal Y\,e^{\rho m\mathcal Y}\bigr]}{\E e^{\rho m\mathcal Y}}\dd\rho.
+\end{equation}
+Indeed, for $m>0$ the integrand is the derivative of
+$\rho\mapsto m^{-1}\log\E e^{\rho m\mathcal Y}$, and for $m=0$ both sides equal $\E \mathcal Y$.
+We write $\widehat\varphi(\omega,x,y)=\varphi(\omega,x+y)-\varphi(\omega,x)$. The
+denominator is the Gaussian integral $\E\mathcal F(\omega,x,\rho;(t\Sigma)^{1/2}\mathbf g)$ of
+the function
+\[
+ \mathcal F(\omega,x,\rho;y)=\exp\bigl\{\rho\,m(\omega)\,\widehat\varphi(\omega,x,y)\bigr\},
+\]
+and the numerator is the Gaussian integral of $\widehat\varphi\,\mathcal F$. Every
+derivative of $\mathcal F$ and of $\widehat\varphi\,\mathcal F$ in $(\omega,x,\rho,y)$ is a
+polynomial in
+$\varphi(\omega,x+y)-\varphi(\omega,x)$, in the derivatives of $m$, and in the
+derivatives $\partial^{\gamma'}_\omega D^{\iota'}\varphi$ with
+$(\gamma',\iota')\ne(0,0)$ evaluated at $(\omega,x+y)$ and $(\omega,x)$, times
+the exponential factor. Since $\abs{\varphi(\omega,x+y)-\varphi(\omega,x)}\le
+L_\varphi\abs y$ with $L_\varphi=\sup\abs{\nabla_x\varphi}$, all these derivatives are bounded by
+$C(1+\abs y)^{C}e^{L_\varphi\abs y}$, uniformly in $(t,\omega,x,\rho)$. The covariance
+$(t,\omega)\mapsto t\Sigma(\omega)$ is smooth with positive semidefinite values.
+Applying \cref{lem:flow-gauss}(c) repeatedly, with the parameter
+$(t,\omega,x,\rho)$ in the convex set $[0,1]\times\Omega\times\R^\ell\times[0,1]$,
+we find that the numerator and the denominator are infinitely differentiable,
+and that each of their derivatives is a Gaussian integral of a function with the
+same bound; all these derivatives are bounded. The denominator is
+at least $\E e^{-L_\varphi\abs{(t\Sigma)^{1/2}\mathbf g}}$, which is bounded below by a positive
+constant uniformly in $t\le1$ and $\omega\in\Omega$, since $\Omega$ is compact.
+Then the right side of \eqref{eq:flow-ch-integral} is infinitely
+differentiable, with all its derivatives and the function itself bounded. The
+derivatives of $\varphi$ of order at least one are bounded by hypothesis, and
+this proves (c).
+\end{proof}
+
+The third tool is a bound for linear equations of the type
+\eqref{eq:flow-equation}. Its proof uses the stochastic representation of the
+solution and needs no lower bound on the diffusion matrix. If the
+diffusion matrix is degenerate, the representing diffusion moves in fewer
+directions.
+
+\begin{lemma}[A linear estimate]\label{lem:flow-linear}
+Let $T_*>0$ and suppose that $[0,T_*]$ is the union of finitely many closed
+intervals with disjoint interiors. Let $\mathcal A(t)\succeq0$ be constant on each
+of them. Let $\phi\colon[0,T_*]\times\R^\ell\to\R^\ell$ and
+$\Upsilon\colon[0,T_*]\times\R^\ell\to\R$ be bounded and measurable, with $\phi$
+Lipschitz in $x$ uniformly in $t$, and with $t\mapsto\sup_x\abs{\Upsilon(t,x)}$
+measurable. Let $\psi\colon[0,T_*]\times\R^\ell\to\R$ be continuous, with
+$\abs{\psi(t,x)}+\abs{\nabla\psi(t,x)}\le c(1+\abs x)$, and suppose that on each
+of the intervals $\psi$ coincides with a function of class $C^{1,2}$ and satisfies
+\[
+ -\partial_t\psi=\mathcal A(t)\mathbin{:}D^2\psi+\langle\phi,\nabla\psi\rangle+\Upsilon
+\]
+in its interior. Then, for every $t\in[0,T_*]$,
+\begin{equation}\label{eq:flow-linear}
+ \sup_x\abs{\psi(t,x)}\le\sup_x\abs{\psi(T_*,x)}
+ +\int_t^{T_*}\sup_x\abs{\Upsilon(t',x)}\dd t'.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Fix $t$ and $x$, let $W$ be a standard Brownian motion in $\R^\ell$, and let
+$\mathcal X$ solve
+\[
+ \mathcal X_{t'}=x+\int_t^{t'}\phi(t'',\mathcal X_{t''})\dd t''
+ +\int_t^{t'}\bigl(2\mathcal A(t'')\bigr)^{1/2}\dd W_{t''},
+ \qquad t\le t'\le T_*.
+\]
+Since the noise term does not depend on $\mathcal X$ and $\phi$ is bounded and Lipschitz
+in space, this equation has a unique continuous adapted solution, obtained
+pathwise by Picard iteration and Gronwall's inequality. On each of the finitely
+many intervals, It\^o's formula \cite[Theorem~3.3.6]{karatzas-shreve-1991} applies
+to the $C^{1,2}$ function that coincides with $\psi$ there. Adding the results and
+using the equation for $\psi$, we obtain
+\[
+ \psi(T_*,\mathcal X_{T_*})-\psi(t,x)
+ =-\int_t^{T_*}\Upsilon(t',\mathcal X_{t'})\dd t'
+ +\int_t^{T_*}\bigl\langle\nabla\psi(t',\mathcal X_{t'}),
+ \bigl(2\mathcal A(t')\bigr)^{1/2}\dd W_{t'}\bigr\rangle.
+\]
+We have $\E\sup_{t'}\abs{\mathcal X_{t'}}^2<\infty$ because $\phi$ is bounded, and the
+stochastic integral has mean zero because $\nabla\psi$ has linear growth. Taking expectations, we
+find
+\[
+ \psi(t,x)=\E\psi(T_*,\mathcal X_{T_*})+\E\int_t^{T_*}\Upsilon(t',\mathcal X_{t'})\dd t',
+\]
+and \eqref{eq:flow-linear} follows. This is the Feynman--Kac representation
+\cite[Theorem~5.7.6]{karatzas-shreve-1991}, which we derived directly because
+$\psi$ is of class $C^{1,2}$ only on each of the intervals.
+\end{proof}
+
+\section{Spatial derivatives and the step limit}\label{sec:flow-spatial}
+
+We first bound the spatial derivatives of step flows. The constants depend only
+on the durations and the matrices, not on the masses or the partitions.
+
+\begin{lemma}[Spatial bounds for step flows]\label{lem:flow-spatial}
+Let $F$ be a step flow with terminal function $f$.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If $f\in\mathcal C^2$, then, for every $\tau$,
+ \[
+  \sup_x\abs{\nabla F(\tau,x)}\le L_f,\qquad
+  \sup_x\abs{D^2F(\tau,x)}\le K_f+L_f^2,
+ \]
+ where $L_f=\sup_x\abs{\nabla f(x)}$, $K_f=\sup_x\abs{D^2f(x)}$, and $\abs{\cdot}$
+ is the operator norm. This holds for stages of any duration and any masses in
+ $[0,1]$.
+\item If $f\in\mathcal C^\infty$ and
+ $2\ell b\norm{D^2f}_\infty\sum_j\lambda_j\abs{B_j}\le1$, then
+ $\norm{D^2F(\tau,\cdot)}_\infty\le2\norm{D^2f}_\infty$ for every $\tau$.
+\item Under the hypotheses of \textup{(b)}, for every $r\ge3$ there exists $C$,
+ depending only on $\ell$, $b$, $r$, $\sum_j\lambda_j\abs{B_j}$, and
+ $\norm{D^{r'}f}_\infty$ for $2\le r'\le r$, such that
+ $\norm{D^rF(\tau,\cdot)}_\infty\le C$ for every $\tau$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The gradient bound in (a) follows from \cref{lem:flow-cole-hopf}(a), applied to
+each step of \eqref{eq:flow-step-solution}. For the Hessian, fix $(\tau,x)$ and a
+unit vector $v$. By \eqref{eq:flow-step-solution}, $F(\tau,x)$ is the root value
+of a finite hierarchy, whose levels are the pieces after $\tau$; if $\tau$ lies
+inside a piece, the first level is the remaining part of that piece. We list the
+levels from the root as $1,\dots,M$, with covariances $\Sigma_j$ and masses
+$\mu_j\in[0,1]$, and let $\Psi_M=f$ and $\Psi_{j-1}=T_{\mu_j,\Sigma_j}\Psi_j$, so
+that $\Psi_0=F(\tau,\cdot)$. Each $\Psi_j$ belongs to $\mathcal C^2$ by
+\cref{lem:flow-cole-hopf}(a). Let $z_0=x$, and given $z_0,\dots,z_{j-1}$, let $z_j$
+have the law $\mathcal K_{\mu_j,\Sigma_j,\Psi_j}(z_{j-1},\cdot)$ of
+\eqref{eq:inp-kernel}. The weights in \eqref{eq:flow-tilted-gradient} are the
+densities of this kernel, and therefore
+$\partial_v\Psi_{j-1}(z)=\E[\partial_v\Psi_j(z_j)\mid z_{j-1}=z]$.
+Differentiating \eqref{eq:flow-tilted-gradient} once more in the direction $v$,
+under the expectation as in the proof of \cref{lem:flow-cole-hopf}(a), we find
+that
+\[
+ \partial_v^2\Psi_{j-1}(z)=\E\bigl[\partial_v^2\Psi_j(z_j)\bigm|z_{j-1}=z\bigr]
+ +\mu_j\Var\bigl(\partial_v\Psi_j(z_j)\bigm|z_{j-1}=z\bigr).
+\]
+The process $\mathcal M_j=\partial_v\Psi_j(z_j)$ is a bounded martingale, by the
+Markov property, and the conditional variance in the display, evaluated at
+$z=z_{j-1}$, has expectation $\E(\mathcal M_j-\mathcal M_{j-1})^2$. Iterating the
+display from $j=1$ to $j=M$, we obtain
+\[
+ \partial_v^2F(\tau,x)=\E\,\partial_v^2f(z_M)
+ +\sum_{j=1}^M\mu_j\E\bigl(\mathcal M_j-\mathcal M_{j-1}\bigr)^2.
+\]
+Since $0\le\mu_j\le1$ and the increments of a martingale are orthogonal, the sum
+lies between $0$ and $\sum_j\E(\mathcal M_j-\mathcal M_{j-1})^2=\Var(\mathcal M_M)\le
+L_f^2$. We obtain $-K_f\le\partial_v^2F(\tau,x)\le K_f+L_f^2$ for every unit vector
+$v$, and since $D^2F(\tau,x)$ is symmetric, this is the Hessian bound. The bound
+does not depend on $M$, on the covariances, or on the order of the masses. This
+is the argument of the proof of \cref{b:lem:os-prefix} below, with a derivative
+in the field in place of a derivative in the terminal perturbation.
+
+For (b) and (c), we note that, by \cref{lem:flow-cole-hopf}(c) with a one-point
+parameter set, $F(\tau,\cdot)\in\mathcal C^\infty$ for every $\tau$, all spatial
+derivatives of $F$ are continuous, and on each closed piece they are continuously
+differentiable in $\tau$ and satisfy the equations obtained by differentiating
+\eqref{eq:flow-equation} in $x$. On each piece, each spatial derivative of
+$F$ is bounded. For $r\ge1$, let
+$\Theta_r(\tau)=\max_{\abs\iota=r}\sup_x\abs{D^\iota F(\tau,x)}$. It is bounded on
+$[0,N]$ and lower semicontinuous, hence measurable. On stage $j$ we write
+$\lambda(\tau)\abs{B(\tau)}=\lambda_j\abs{B_j}$.
+
+Differentiating \eqref{eq:flow-equation} in $x_i$ and $x_{i'}$, we find that
+$\psi=\partial_{ii'}F$ satisfies, on stage $j$,
+\[
+ -\partial_\tau\psi=\frac{b\lambda_j}{2}B_j\mathbin{:}D^2\psi
+ +b\lambda_jm_j\bigl\langle B_j\nabla F,\nabla\psi\bigr\rangle
+ +b\lambda_jm_j\bigl\langle\nabla\partial_iF,B_j\nabla\partial_{i'}F\bigr\rangle.
+\]
+We apply \cref{lem:flow-linear} with $\mathcal A=(b\lambda_j/2)B_j$, with the drift
+$\phi=b\lambda_jm_jB_j\nabla F$, which is bounded by (a) and Lipschitz in $x$
+since $D^2F$ is bounded on each piece, and with the last term as $\Upsilon$.
+Using $0\le m_j\le1$ and $\abs{\nabla\partial_iF}\le\sqrt\ell\,\Theta_2$, we find
+that $\abs\Upsilon\le\ell b\lambda_j\abs{B_j}\Theta_2^2$, and \cref{lem:flow-linear}
+yields
+\[
+ \Theta_2(\tau)\le \Xi(\tau),\qquad
+ \Xi(\tau)=\norm{D^2f}_\infty+\ell b\int_\tau^N\lambda(\tau')\abs{B(\tau')}\,
+ \Theta_2(\tau')^2\dd\tau'.
+\]
+If $\norm{D^2f}_\infty=0$, then $\Xi(\tau)\le C\int_\tau^N\Xi(\tau')\dd\tau'$, and
+Gronwall's inequality implies that $\Xi=0$. Otherwise $\Xi$ is positive and absolutely
+continuous, and $-\Xi'=\ell b\lambda\abs B\Theta_2^2\le\ell b\lambda\abs B\,\Xi^2$
+almost everywhere. Then $(1/\Xi)'\le\ell b\lambda\abs B$, and integrating from
+$\tau$ to $N$, we obtain
+\[
+ \frac1{\Xi(\tau)}\ge\frac1{\norm{D^2f}_\infty}-\ell b\sum_j\lambda_j\abs{B_j}
+ \ge\frac1{2\norm{D^2f}_\infty},
+\]
+where we used the hypothesis of (b) in the last step. This proves (b).
+
+For (c), let $\abs\iota=r\ge3$. By the Leibniz rule,
+\begin{multline*}
+ -\partial_\tau D^\iota F=\frac{b\lambda_j}{2}B_j\mathbin{:}D^2D^\iota F
+ +b\lambda_jm_j\bigl\langle B_j\nabla F,\nabla D^\iota F\bigr\rangle\\
+ +\frac{b\lambda_jm_j}{2}\sum_{0<\iota'<\iota}\binom{\iota}{\iota'}
+ \bigl\langle\nabla D^{\iota'}F,B_j\nabla D^{\iota-\iota'}F\bigr\rangle,
+\end{multline*}
+where $0<\iota'<\iota$ means $\iota'\le\iota$ componentwise with
+$\iota'\notin\{0,\iota\}$. The two factors in the last sum have orders
+$\abs{\iota'}+1$ and $r-\abs{\iota'}+1$, both between $2$ and $r$. In the terms
+with $\abs{\iota'}\in\{1,r-1\}$, one factor has order $r$ and the other order $2$;
+the remaining terms involve only orders between $3$ and $r-1$. By
+\cref{lem:flow-linear}, applied as before with the last sum as the source, we
+have
+\[
+ \Theta_r(\tau)\le\norm{D^rf}_\infty+C_{\ell,r}b\int_\tau^N\lambda(\tau')
+ \abs{B(\tau')}\Bigl\{\Theta_2\Theta_r+\sum_{q=3}^{r-1}\Theta_q\Theta_{r+2-q}\Bigr\}
+ (\tau')\dd\tau'.
+\]
+By (b) and induction on $r$, the sum over $q$ is bounded. Gronwall's inequality
+then bounds $\Theta_r$, with a constant of the stated type. This proves (c).
+\end{proof}
+
+\begin{proof}[Proof of \cref{lem:flow-step-limit}]
+We begin with (a). The gradient bound is \cref{lem:flow-spatial}(a). By
+\cref{lem:inp-steps}(a), each integration step is monotone and commutes with
+the addition of constants, which implies that it does not increase the supremum
+of the difference of two functions. Composing the steps, we find that
+$\sup\abs{F-F'}\le\sup\abs{f-f'}$. For \eqref{eq:flow-L1}, we refine the partitions
+so that both $m_j$ and $\widetilde m_j$ are constant on each piece; by
+\cref{lem:inp-steps}(b) this does not change $F$ or $\widetilde F$. Because $B_j$
+is symmetric, we have
+\[
+ m_j\langle\nabla F,B_j\nabla F\rangle-\widetilde m_j\langle\nabla\widetilde F,
+ B_j\nabla\widetilde F\rangle
+ =m_j\bigl\langle B_j(\nabla F+\nabla\widetilde F),\nabla(F-\widetilde F)\bigr\rangle
+ +(m_j-\widetilde m_j)\langle\nabla\widetilde F,B_j\nabla\widetilde F\rangle.
+\]
+Then $\mathcal D=F-\widetilde F$ satisfies, on stage $j$,
+\[
+ -\partial_\tau \mathcal D=\frac{b\lambda_j}{2}B_j\mathbin{:}D^2\mathcal D
+ +\frac{b\lambda_jm_j}{2}\bigl\langle B_j(\nabla F+\nabla\widetilde F),\nabla \mathcal D\bigr\rangle
+ +\frac{b\lambda_j}{2}(m_j-\widetilde m_j)\langle\nabla\widetilde F,B_j\nabla\widetilde F\rangle,
+\]
+with $\mathcal D(N,\cdot)=0$. By \cref{lem:flow-cole-hopf}(a) and (b), $\mathcal D$ is of class
+$C^{1,2}$ on each piece, $\nabla \mathcal D$ is bounded, and the drift is bounded and
+Lipschitz in $x$, since the Hessians of $F$ and $\widetilde F$ are bounded on each
+piece. The source is bounded by $(b/2)\lambda_j\abs{B_j}\abs{m_j-\widetilde m_j}L_f^2$,
+by the gradient bound. Then \cref{lem:flow-linear} implies \eqref{eq:flow-L1}.
+
+For (b), by \eqref{eq:flow-L1}, we see that the step flows $F^{(l)}$ of any
+sequence with $\int_0^1\abs{m_j^{(l)}-m_j}\to0$ form a Cauchy sequence for
+uniform convergence. Interlacing two such sequences gives another one, and we
+conclude that the limit does not depend on the sequence. The estimate
+\eqref{eq:flow-L1} and the bound on $\sup\abs{F-F'}$ pass to uniform limits. For the
+gradient, let $e_{l,l'}=\sup_{\tau,x}\abs{F^{(l)}-F^{(l')}}$, let $v$ be a unit
+vector, and let $a>0$. By Taylor's formula and the Hessian bound of
+\cref{lem:flow-spatial}(a), which holds for every $l$, the difference quotient
+$(F^{(l)}(\tau,x+av)-F^{(l)}(\tau,x))/a$ differs from $\partial_vF^{(l)}(\tau,x)$ by
+at most $(K_f+L_f^2)a/2$. Comparing the difference quotients of $F^{(l)}$ and
+$F^{(l')}$, we find that
+\[
+ \sup_{\tau,x}\abs{\partial_vF^{(l)}(\tau,x)-\partial_vF^{(l')}(\tau,x)}
+ \le\frac{2e_{l,l'}}a+(K_f+L_f^2)a.
+\]
+Choosing $a=e_{l,l'}^{1/2}$, we see that the gradients of the step flows are
+uniformly Cauchy. Their uniform limit is continuous, and by the fundamental
+theorem of calculus it is the gradient of $F$, which therefore satisfies
+$\abs{\nabla F}\le L_f$.
+
+For (c), let $F^{(l)}$ be step flows of stages $1,\dots,N$ with masses
+$m_j^{(l)}$ as in (b), and let $f_{\rm in}^{(l)}=F^{(l)}(N',\cdot)$, which is the
+output of the step flow of stages $N'+1,\dots,N$. Let $\bar F^{(l)}$ and $\bar F$ be the
+step flow of stages $1,\dots,N'$ with masses $m_j^{(l)}$ and terminal function
+$f_{\rm in}$, and its limit. On $[0,N']$, the function $F^{(l)}$ is the step flow
+of stages $1,\dots,N'$ with terminal function $f^{(l)}_{\rm in}$. By part (a), we have
+\[
+ \sup\abs{F^{(l)}-\bar F}\le\sup\abs{f^{(l)}_{\rm in}-f_{\rm in}}+\sup\abs{\bar F^{(l)}-\bar F}.
+\]
+Both terms tend to zero, by (b) for the stages $N'+1,\dots,N$ and for the stages
+$1,\dots,N'$. This proves (c).
+
+For (d), we first note that the hypothesis of \cref{lem:flow-spatial}(b) does
+not involve the masses and holds for every step flow. Using
+\cref{lem:flow-spatial}, we see that all spatial derivatives of the step flows are
+bounded by constants of the type stated there, uniformly in $l$. Let $l,l'$ be
+two indices, refine the partitions so that $m_j^{(l)}$ and $m_j^{(l')}$ are
+constant on each piece, and let $\mathcal D=F^{(l)}-F^{(l')}$. Then $\mathcal D$
+satisfies the equation in the proof of (a), with $F=F^{(l)}$,
+$\widetilde F=F^{(l')}$, and the masses $m_j^{(l)}$, $m_j^{(l')}$ in place of
+$m_j$, $\widetilde m_j$. For $\iota\ne0$, we apply $D^\iota$ to that equation and
+use the Leibniz rule. We find that
+\[
+ -\partial_\tau D^\iota\mathcal D=\frac{b\lambda_j}{2}B_j\mathbin{:}D^2D^\iota\mathcal D
+ +\frac{b\lambda_jm^{(l)}_j}{2}\bigl\langle B_j(\nabla F^{(l)}+\nabla F^{(l')}),
+ \nabla D^\iota\mathcal D\bigr\rangle+\Upsilon_\iota,
+\]
+where $\Upsilon_\iota$ is the sum of the terms
+$(b\lambda_jm^{(l)}_j/2)\binom\iota{\iota'}\langle B_jD^{\iota'}\nabla(F^{(l)}+F^{(l')}),
+\nabla D^{\iota-\iota'}\mathcal D\rangle$ with $0\ne\iota'\le\iota$ and of
+$(b\lambda_j/2)(m^{(l)}_j-m^{(l')}_j)D^\iota\langle\nabla F^{(l')},B_j\nabla F^{(l')}\rangle$.
+The terms with $\abs{\iota'}=1$ are linear in the derivatives of $\mathcal D$ of
+order $\abs\iota$, with coefficients bounded by $C\lambda_j\abs{B_j}$; the terms
+with $\abs{\iota'}\ge2$ involve derivatives of $\mathcal D$ of order less than
+$\abs\iota$; and the last term is bounded by
+$C\lambda_j\abs{B_j}\abs{m^{(l)}_j-m^{(l')}_j}$, with $C$ depending on the
+derivatives of $F^{(l')}$ of order at most $\abs\iota+1$. By
+\cref{lem:flow-linear}, induction on $\abs\iota$, and Gronwall's inequality, we
+have
+\[
+ \sup_{\tau,x}\abs{D^\iota\mathcal D(\tau,x)}
+ \le C\sum_j\lambda_j\int_0^1\abs{m^{(l)}_j-m^{(l')}_j}\dd\tau.
+\]
+It follows that every spatial derivative of the step flows converges uniformly,
+and the limit $F$ has continuous spatial derivatives of all orders, which are the
+limits of those of the step flows. Letting $l'\to\infty$ in the last
+display gives \eqref{eq:flow-L1-derivatives}, and the Hessian bound follows from
+\cref{lem:flow-spatial}(b).
+
+Now let each $m_j$ be continuous, and choose the step flows with the sampled
+masses $m_j^{\mathfrak p_l}$ for partitions with $\abs{\mathfrak p_l}\to0$; then
+$m_j^{\mathfrak p_l}\to m_j$ pointwise and in $L^1$. The step flows are
+continuous in $\tau$ and continuously differentiable on each piece, and, for
+$j-1\le\tau\le\tau_1\le j$, they satisfy
+\begin{multline*}
+ F^{(l)}(\tau,x)=F^{(l)}(\tau_1,x)\\
+ +\int_\tau^{\tau_1}\frac{b\lambda_j}{2}
+ \Bigl\{B_j\mathbin{:}D^2F^{(l)}+m_j^{\mathfrak p_l}(\tau'-j+1)
+ \bigl\langle\nabla F^{(l)},B_j\nabla F^{(l)}\bigr\rangle\Bigr\}(\tau',x)\dd\tau'.
+\end{multline*}
+By bounded convergence, the same identity holds for $F$ and $m_j$. Its integrand
+is continuous in $\tau'$, since $\nabla F$ and $D^2F$ are uniform limits of
+continuous functions and $m_j$ is continuous. This shows that $F$ is
+continuously differentiable in $\tau$ on $[j-1,j]$ and solves
+\eqref{eq:flow-equation}. For uniqueness, let $F'$ be another solution with the
+stated properties. The difference $\mathcal D=F-F'$ satisfies the equation in
+the proof of (a), with $\widetilde F=F'$, $\widetilde m_j=m_j$, and
+$\mathcal D(N,\cdot)=0$. Its drift is bounded and Lipschitz in $x$, since the first
+and second derivatives of $F$ and $F'$ are bounded, and $\mathcal D$ and
+$\nabla\mathcal D$ have linear growth.
+Then \cref{lem:flow-linear}, with $\Upsilon=0$, implies that $\mathcal D=0$.
+\end{proof}
+
+\section{Parameter derivatives}\label{sec:flow-parameters}
+
+We now prove \cref{prop:flow-uniform}. Throughout this section we assume
+\ref{H1}--\ref{H5}, and on stage $j$ we abbreviate
+\[
+ \mathcal A_j=\frac{bh}{2}\kappa_jB_j,\qquad
+ \mathcal V_j=\frac{bh}{2}\kappa_jm_jB_j,
+\]
+so that \eqref{eq:flow-equation} reads
+$-\partial_\tau F=\mathcal A_j\mathbin{:}D^2F+\langle\nabla F,\mathcal V_j\nabla F\rangle$.
+Both matrices are symmetric and depend on $(h,k)$, and $\mathcal V_j$ also depends
+on $\tau$ through the mass. Their derivatives
+$\partial^{\gamma'}\mathcal A_j=(b/2)\partial^{\gamma'}(h\kappa_jB_j)$ and
+$\partial^{\gamma'}\mathcal V_j$ are bounded by the suprema listed in
+\cref{prop:flow-uniform}(ii). Note that $\partial_h\mathcal A_j$ does not vanish
+at $h=0$; these derivatives are bounded but not small. The proof has two
+parts. In \cref{lem:flow-step-bounds}, we prove the bounds for the step flows
+with sampled masses, with constants that do not depend on the partitions. We
+then pass to the limit.
+
+\begin{lemma}[Uniform bounds for step flows]\label{lem:flow-step-bounds}
+Let $\mathfrak p$ be partitions, and let $F^{\mathfrak p}(\tau,h,k,x)$ be the step
+flow with the sampled masses $m_j^{\mathfrak p}(\cdot,h,k)$ and terminal function
+$f(h,k,\cdot)$, for $(h,k)\in\mathcal U_0$. Then $F^{\mathfrak p}$ is infinitely
+differentiable in $(h,k,x)$, its derivatives $\partial^\gamma D^\iota F^{\mathfrak p}$
+are continuous in $(\tau,h,k,x)$ and, on each closed piece, continuously
+differentiable in $\tau$, with $\partial_\tau$ commuting with $\partial^\gamma
+D^\iota$. For every $(\gamma,\iota)\ne(0,0)$, the function
+$\partial^\gamma D^\iota F^{\mathfrak p}$ is bounded on $[0,N]\times\mathcal
+U_0\times\R^\ell$ by a constant $C$ of the type stated in
+\cref{prop:flow-uniform}(ii), which does not depend on $\mathfrak p$.
+\end{lemma}
+
+\begin{proof}
+On the piece $(j,i)$, the step \eqref{eq:flow-step-solution} has mass
+$m_j(\tau_{j,i-1},h,k)$ and covariance $t\,bh\kappa_j(h,k)B_j(h,k)$, with
+$t=j-1+\tau_{j,i}-\tau\in[0,1]$. Both are smooth functions of $(h,k)$ on the
+compact convex set $\mathcal U_0$, and the covariance is positive semidefinite
+for $h\ge0$. Applying \cref{lem:flow-cole-hopf}(c) to the pieces one after
+another, from the innermost, we obtain the regularity statements. The
+commutation of $\partial_\tau$ with $\partial^\gamma D^\iota$ holds because
+$F^{\mathfrak p}$ is infinitely differentiable in $(\tau,h,k,x)$ on each closed
+piece. It remains to prove the bounds, which we do by induction. We drop the
+superscript $\mathfrak p$ and write $F_\gamma=\partial^\gamma F$ and
+\[
+ \Theta_{\gamma,r}(\tau)=\max_{\abs\iota=r}\sup_{x}
+ \abs{D^\iota F_\gamma(\tau,h,k,x)},
+\]
+for fixed $(h,k)\in\mathcal U_0$; all bounds below are uniform in $(h,k)$.
+
+\paragraph{Step 1: spatial derivatives.} For $\gamma=0$ and $r\ge1$, the bound
+on $\Theta_{0,r}$ is \cref{lem:flow-spatial}, which applies since
+$2\ell b\norm{D^2f}_\infty\sum_j\lambda_j\abs{B_j}\le2\ell b\,h_0\Lambda_*
+\norm{D^2f}_\infty\le1$ by \ref{H5}. We have $\Theta_{0,2}\le2\norm{D^2f}_\infty$.
+
+\paragraph{Step 2: the differentiated equations.} Let $\gamma\ne0$. Applying
+$\partial^\gamma$ to \eqref{eq:flow-equation} and separating the terms that
+contain $F_\gamma$, we find that, on each piece of stage $j$,
+\begin{equation}\label{eq:flow-Fgamma}
+ -\partial_\tau F_\gamma=\mathcal A_j\mathbin{:}D^2F_\gamma
+ +2\langle\mathcal V_j\nabla F,\nabla F_\gamma\rangle+\Upsilon_\gamma,
+\end{equation}
+with
+\begin{equation}\label{eq:flow-Ugamma}
+ \Upsilon_\gamma=\sum_{0\ne\gamma'\le\gamma}\binom{\gamma}{\gamma'}
+ \partial^{\gamma'}\!\mathcal A_j\mathbin{:}D^2F_{\gamma-\gamma'}
+ +\sum_{\substack{\gamma'+\gamma''+\gamma'''=\gamma\\ \gamma''\ne\gamma,\ \gamma'''\ne\gamma}}
+ \frac{\gamma!}{\gamma'!\,\gamma''!\,\gamma'''!}
+ \bigl\langle\nabla F_{\gamma''},\partial^{\gamma'}\!\mathcal V_j\nabla F_{\gamma'''}\bigr\rangle,
+\end{equation}
+where the second sum runs over the triples of multi-indices with
+$\gamma'+\gamma''+\gamma'''=\gamma$ other than $(0,\gamma,0)$ and $(0,0,\gamma)$; since
+$\gamma\ne0$, these are the triples with $\gamma''\ne\gamma$ and $\gamma'''\ne\gamma$.
+Every $F_{\gamma''}$, $F_{\gamma'''}$, and $F_{\gamma-\gamma'}$ appearing in
+$\Upsilon_\gamma$ has parameter order strictly less than $\abs\gamma$, and
+$F_0=F$ enters only through $\nabla F$ and $D^2F$. Applying $D^\iota$ with
+$\abs\iota=r$ to \eqref{eq:flow-Fgamma}, we obtain
+\begin{multline}\label{eq:flow-Fgamma-iota}
+ -\partial_\tau D^\iota F_\gamma=\mathcal A_j\mathbin{:}D^2D^\iota F_\gamma
+ +2\langle\mathcal V_j\nabla F,\nabla D^\iota F_\gamma\rangle\\
+ +2\sum_{0\ne\iota'\le\iota}\binom{\iota}{\iota'}
+ \bigl\langle\mathcal V_j\nabla D^{\iota'}F,\nabla D^{\iota-\iota'}F_\gamma\bigr\rangle
+ +D^\iota\Upsilon_\gamma,
+\end{multline}
+with terminal value $D^\iota F_\gamma(N,\cdot)=\partial^\gamma D^\iota f$.
+
+\paragraph{Step 3: derivative bounds by weight.} We prove the bound on
+$\Theta_{\gamma,r}$ by induction on $\abs\gamma$, and, for fixed $\gamma$, by
+induction on $r=0,1,2,\dots$. \Cref{tab:flow-weights} lists the terms of
+\eqref{eq:flow-Fgamma-iota} and the derivatives of $F$ that they contain. Let
+$\varpi=r+2\abs\gamma$ be the weight of $D^\iota F_\gamma$. We read off from the
+table that every derivative $\partial^{\gamma^\circ}D^{\iota^\circ}F$ other than
+the unknown $D^\iota F_\gamma$ has $\gamma^\circ\le\gamma$ and weight
+$\abs{\iota^\circ}+2\abs{\gamma^\circ}\le\varpi$. Moreover, either
+$\abs{\gamma^\circ}<\abs\gamma$, or $\gamma^\circ=\gamma$ and $\abs{\iota^\circ}\le r$.
+The terms with $\gamma^\circ=\gamma$ and $\abs{\iota^\circ}=r$ are those in the
+second row. They are linear in the derivatives of order $r$ of $F_\gamma$, with
+coefficients bounded by $2\ell r\abs{\mathcal V_j}\Theta_{0,2}$. In the fourth
+row, a parameter derivative is paid for by two spatial derivatives. Indeed, when
+$\partial^{\gamma'}$ falls on the coefficient $\mathcal A_j$ of $D^2$, the
+derivative $F_{\gamma-\gamma'}$ appears with $r+2$ spatial derivatives, and its
+weight $r+2+2(\abs\gamma-\abs{\gamma'})$ is at most $\varpi$ because
+$\abs{\gamma'}\ge1$.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{The terms of \eqref{eq:flow-Fgamma-iota}, for $\abs\iota=r$ and
+$\varpi=r+2\abs\gamma$. The second column lists the derivatives of $F$ that each term
+contains, and the third says how they are controlled.}\label{tab:flow-weights}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.33\textwidth}>{\raggedright\arraybackslash}p{0.36\textwidth}>{\raggedright\arraybackslash}p{0.23\textwidth}@{}}
+\toprule
+Term & Derivatives of $F$ & Control\\
+\midrule
+$\mathcal A_j\mathbin{:}D^2D^\iota F_\gamma$,
+$2\langle\mathcal V_j\nabla F,\nabla D^\iota F_\gamma\rangle$
+ & the unknown $D^\iota F_\gamma$ & operator of \cref{lem:flow-linear}\\
+$\langle\mathcal V_j\nabla D^{\iota'}F,\nabla D^{\iota-\iota'}F_\gamma\rangle$,
+$\abs{\iota'}=1$
+ & $D^2F$; derivatives of order $r$ of $F_\gamma$ (weight $\varpi$)
+ & Gronwall's inequality\\
+the same, $\abs{\iota'}\ge2$
+ & $D^{\abs{\iota'}+1}F$ (weight $\le r+1$); derivatives of order
+ $r-\abs{\iota'}+1<r$ of $F_\gamma$ & induction on $r$\\
+$\partial^{\gamma'}\mathcal A_j\mathbin{:}D^2D^\iota F_{\gamma-\gamma'}$,
+$\gamma'\ne0$
+ & order $r+2$ of $F_{\gamma-\gamma'}$, weight $\le\varpi$ & induction on $\abs\gamma$\\
+$\langle D^{\iota_1}\nabla F_{\gamma''},\partial^{\gamma'}\mathcal V_j
+D^{\iota_2}\nabla F_{\gamma'''}\rangle$, $\iota_1+\iota_2=\iota$
+ & orders $\abs{\iota_1}+1$, $\abs{\iota_2}+1\le r+1$ of $F_{\gamma''}$,
+ $F_{\gamma'''}$ with $\abs{\gamma''},\abs{\gamma'''}<\abs\gamma$; weights $<\varpi$
+ & induction on $\abs\gamma$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In the last row, $\gamma''=0$ or $\gamma'''=0$ is allowed; the corresponding
+factor is a spatial derivative of $F$ of order at most $r+1\le\varpi-1$, bounded in
+Step~1. By the induction hypothesis and Step~1, we conclude that all terms of
+\eqref{eq:flow-Fgamma-iota} other than those in the first two rows are bounded by
+a constant $c_0$. The coefficients in the second row are bounded by
+$c_1=2\ell r\max_j\sup\abs{\mathcal V_j}\cdot2\norm{D^2f}_\infty$.
+
+\paragraph{Step 4: the estimate.} We apply \cref{lem:flow-linear} to each
+$\psi=D^\iota F_\gamma$ with $\abs\iota=r$, with $\mathcal A=\mathcal A_j$ on stage
+$j$, the drift $\phi=2\mathcal V_j\nabla F$, and the source formed by all other
+terms of \eqref{eq:flow-Fgamma-iota}. The drift is bounded by Step~1, and it is
+Lipschitz in $x$ since $D^2F$ is bounded. By the regularity statement, $\psi$,
+$\nabla\psi$, and the source are bounded and continuous on each piece. Taking the
+maximum over $\abs\iota=r$, we find
+\[
+ \Theta_{\gamma,r}(\tau)\le\max_{\abs\iota=r}\sup_x\abs{\partial^\gamma D^\iota f}
+ +\int_\tau^N\bigl\{c_1\Theta_{\gamma,r}(\tau')+c_0\bigr\}\dd\tau',
+\]
+and by Gronwall's inequality we have
+$\Theta_{\gamma,r}\le(\max_{\abs\iota=r}\sup\abs{\partial^\gamma D^\iota f}+Nc_0)e^{Nc_1}$.
+For $r=0$ the second row is absent and $c_1=0$. This completes the induction.
+
+The constant obtained for $(\gamma,r)$ involves the bounds for the pairs
+$(\gamma^\circ,r^\circ)$ listed in \cref{tab:flow-weights}, the bounds on
+$\partial^{\gamma'}\mathcal A_j$ and $\partial^{\gamma'}\mathcal V_j$ for
+$\gamma'\le\gamma$, and the terminal values. Following the induction back, it
+depends only on $\ell$, $N$, $b$, $h_1$, $\gamma$, $r$, and the suprema of
+$\abs{\partial^{\gamma'}(\kappa_jB_j)}$, $\abs{\partial^{\gamma'}(\kappa_jm_jB_j)}$, and
+$\abs{\partial^{\gamma'}D^{\iota'}f}$ over $\gamma'\le\gamma$ and
+$0<\abs{\iota'}+2\abs{\gamma'}\le\varpi$, as claimed. None of them depends on
+$\mathfrak p$, since the sampled masses have the same values and
+$(h,k)$-derivatives as $m_j$ at the sampling points.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:flow-uniform}]
+Let $\mathfrak p_l$ be partitions with $\abs{\mathfrak p_l}\to0$, and let $F^{\mathfrak p_l}$
+be the step flows with the sampled masses. The proof has three steps: convergence
+of the values, convergence of the derivatives, and the equations.
+
+\paragraph{Step 1: values.} By \ref{H3}, $m_j$ is uniformly continuous on
+$[0,1]\times\mathcal U$, and we have
+$\varepsilon_l=\sup_{\mathcal U}\sum_j\int_0^1\abs{m_j^{\mathfrak p_l}-m_j}\dd\tau\to0$.
+Then \cref{lem:flow-step-limit}(a) and (b), applied at each $(h,k)$ with
+$\sum_j\lambda_j\abs{B_j}\le h_0\Lambda_*$, give
+\[
+ \sup_{[0,N]\times\mathcal U_0\times\R^\ell}\abs{F^{\mathfrak p_l}-F}
+ \le\frac b2\sup\abs{\nabla_xf}^2\,h_0\Lambda_*\,\varepsilon_l\longrightarrow0.
+\]
+
+\paragraph{Step 2: derivatives.} Fix $(\gamma,\iota)\ne(0,0)$. By
+\cref{lem:flow-step-bounds}, the functions $\partial^\gamma D^\iota F^{\mathfrak p_l}$ are
+bounded uniformly in $l$, and so are their first derivatives in $x$ and in
+$(h,k)$, whose weights are larger by one and by two, respectively. Their derivative in
+$\tau$ is given on each piece by \eqref{eq:flow-Fgamma-iota}, and it is also bounded
+uniformly in $l$, since it involves derivatives of weight at most
+$\abs\iota+2\abs\gamma+2$. Since $\partial^\gamma D^\iota F^{\mathfrak p_l}$ is also continuous in
+$\tau$, the family $\{\partial^\gamma D^\iota F^{\mathfrak p_l}\}_l$ is uniformly bounded and uniformly
+Lipschitz on $[0,N]\times\mathcal U_0\times\R^\ell$. By the Arzel\`a--Ascoli
+theorem and a diagonal argument over the compact sets
+$[0,N]\times\mathcal U_0\times\{\abs x\le R\}$, every subsequence has a further
+subsequence along which, for all $(\gamma,\iota)$ at once,
+$\partial^\gamma D^\iota F^{\mathfrak p_l}$ converges uniformly on compact sets to a continuous
+limit $L_{\gamma,\iota}$. We claim that $L_{\gamma,\iota}=\partial^\gamma
+D^\iota F$, so that the limits do not depend on the subsequence and the
+whole sequence converges. Indeed, $L_{0,0}=F$ by Step~1. If $\varphi_l\to\varphi$ and
+$\partial_a\varphi_l\to\psi$ uniformly on compact sets, where $\partial_a$ is a
+derivative in $h$, in $k$, or in a coordinate of $x$, then letting
+$l\to\infty$ in $\varphi_l(y+\eta e_a)-\varphi_l(y)=\int_0^\eta\partial_a\varphi_l(y+\eta'e_a)\dd\eta'$
+shows that $\partial_a\varphi=\psi$; at boundary points of $\mathcal U_0$, such as $h=0$,
+we take $\eta$ of the sign that keeps $y+\eta e_a$ in the domain. Induction on $\abs\gamma+\abs\iota$
+proves the claim. This proves (iv), the existence and continuity of all
+derivatives in (ii), and the bounds in (ii), which pass to the limit. For the
+linear growth, note that $\abs{F(\tau,h,k,x)-F(\tau,h,k,0)}\le\sup\abs{\nabla_xf}
+\abs x$, that $\abs{F(\tau,h,k,0)-f(h,k,0)}\le N\sup\abs{\partial_\tau F}$ is
+bounded by \eqref{eq:flow-equation} and the bounds on $\nabla F$ and $D^2F$, and
+that $\sup_{\mathcal U}\abs{f(h,k,0)}$ is finite, since $f(\cdot,\cdot,0)$ is
+continuous on the compact set $\mathcal U$. The constant obtained depends on this
+supremum in addition to the derivative bounds.
+
+\paragraph{Step 3: the equations.} Part (i) is \cref{lem:flow-step-limit}(d),
+whose hypothesis holds at each $(h,k)\in\mathcal U_0$ by \ref{H5}. For (iii), on
+stage $j$ and for $j-1\le\tau\le\tau_1\le j$, the step flows satisfy
+\[
+ F^{\mathfrak p_l}_\gamma(\tau)=F^{\mathfrak p_l}_\gamma(\tau_1)+\int_\tau^{\tau_1}
+ \bigl\{\mathcal A_j\mathbin{:}D^2F^{\mathfrak p_l}_\gamma
+ +2\langle\mathcal V_j^{\mathfrak p_l}\nabla F^{\mathfrak p_l},\nabla F^{\mathfrak p_l}_\gamma\rangle
+ +\Upsilon^{\mathfrak p_l}_\gamma\bigr\}(\tau')\dd\tau',
+\]
+where $F^{\mathfrak p_l}_\gamma=\partial^\gamma F^{\mathfrak p_l}$ and where $\mathcal V_j^{\mathfrak p_l}$ and
+$\Upsilon^{\mathfrak p_l}_\gamma$ are formed with the sampled masses. By \ref{H3}, the
+$(h,k)$-derivatives of $m_j^{\mathfrak p_l}$ converge pointwise to those of $m_j$,
+and by (iv) the derivatives of $F^{\mathfrak p_l}$ converge pointwise. All terms are bounded,
+and by bounded convergence the same identity holds for $F_\gamma=\partial^\gamma F$,
+with the masses $m_j$. Since its integrand is continuous in $\tau'$, the function
+$F_\gamma$ is continuously differentiable in $\tau$ on $[j-1,j]$ and satisfies
+\eqref{eq:flow-Fgamma}, which is the equation obtained by applying $\partial^\gamma$
+to \eqref{eq:flow-equation}. This proves (iii).
+\end{proof}
+
+\section{Response to a change of the terminal function}\label{sec:flow-response}
+
+We now compare a hierarchy with terminal function $f$ and the same hierarchy with
+terminal function $f+V$, for a bounded function $V$. The first-order change is
+the expectation of $V$ under the path law of the unperturbed hierarchy, and the
+error is quadratic in $\norm V_\infty$, with a constant that does not depend on
+the number of levels. For a hierarchy with $M$ levels, let $\Sigma_1,\dots,\Sigma_M
+\succeq0$ be the covariances and $m_1,\dots,m_M\in[0,1]$ the masses, listed from
+the root; the masses need not be ordered. For a function $f$ of linear growth, the
+partial values are $\Psi^f_M=f$ and $\Psi^f_{j-1}=T_{m_j,\Sigma_j}\Psi^f_j$ for
+$j=M,\dots,1$, as in \eqref{eq:inp-hierarchy-recursion}, and we write
+$\mathcal Hf=\Psi_0^f$. For $z_0\in\R^\ell$, we let $\E_f$ denote expectation for
+the Markov chain $z_0,z_1,\dots,z_M$ in which $z_j$ has law
+$\mathcal K_{m_j,\Sigma_j,\Psi^f_j}(z_{j-1},\cdot)$ given $z_0,\dots,z_{j-1}$.
+This is the path law of \cref{def:inp-hierarchy}(c), started at $z_0$ and without
+the terminal draw of spins.
+
+\begin{lemma}[Response of a hierarchy to its terminal function]\label{b:lem:os-prefix}
+Let $f$ have linear growth, and let $V\colon\R^\ell\to\R$ be bounded and
+measurable. Then, for every $z_0\in\R^\ell$,
+\[
+ \bigl\lvert\mathcal H(f+V)(z_0)-\mathcal Hf(z_0)-\E_f V(z_M)\bigr\rvert
+ \le\frac12\norm V_\infty^2.
+\]
+The bound does not depend on the number $M$ of levels or on the covariances.
+\end{lemma}
+
+The argument is the martingale argument that the proof of
+\cite[Lemma~3.1]{oai-barriers} uses to show that $\chi\le1-u^2$, and the
+differentiation of a hierarchy behind \cref{inp:ob-hierarchy-derivative}; we apply
+them to the terminal function instead of the field.
+
+\begin{proof}
+For $0\le t\le1$, let $\Psi^t_j=\Psi^{f+tV}_j$ be the partial values with
+terminal function $f+tV$. Using the monotonicity and the translation identity of
+\cref{lem:inp-steps}(a), we have $\abs{\Psi_j^t-\Psi_j^0}\le t\norm V_\infty$, and
+all integrals below are finite. Let $\E^t_j$ and $\Var_j^t$ denote the expectation and
+the variance under the kernel $\mathcal K_{m_j,\Sigma_j,\Psi^t_j}(z,\cdot)$ for a
+fixed starting point $z$. We claim that $t\mapsto\Psi^t_{j-1}(z)$ is twice
+continuously differentiable, with
+\begin{equation}\label{eq:flow-response-recursion}
+ \partial_t\Psi^t_{j-1}(z)=\E^t_j\bigl[\partial_t\Psi^t_j\bigr],\qquad
+ \partial_t^2\Psi^t_{j-1}(z)=\E^t_j\bigl[\partial_t^2\Psi^t_j\bigr]
+ +m_j\Var^t_j\bigl(\partial_t\Psi^t_j\bigr),
+\end{equation}
+where the expectation and the variance act on the function $y\mapsto\partial_t\Psi^t_j(y)$
+or $\partial^2_t\Psi^t_j(y)$. Indeed, let $\mathcal Z_t$ be random variables, twice
+differentiable in $t$ with $\abs{\partial_t\mathcal Z_t}+\abs{\partial^2_t\mathcal Z_t}$ bounded and
+$\E e^{\abs{\mathcal Z_0}}<\infty$, and let $\mathfrak a(t)=m^{-1}\log\E e^{m\mathcal Z_t}$ for some
+$m\in(0,1]$. Differentiation under the expectation gives
+$\mathfrak a'=\E[\partial_t\mathcal Z_t\,e^{m\mathcal Z_t}]/\E e^{m\mathcal Z_t}$ and
+\[
+ \mathfrak a''=\frac{\E[\partial_t^2\mathcal Z_t\,e^{m\mathcal Z_t}]}{\E e^{m\mathcal Z_t}}
+ +m\Bigl(\frac{\E[(\partial_t\mathcal Z_t)^2\,e^{m\mathcal Z_t}]}{\E e^{m\mathcal Z_t}}
+ -\Bigl(\frac{\E[\partial_t\mathcal Z_t\,e^{m\mathcal Z_t}]}{\E e^{m\mathcal Z_t}}\Bigr)^2\Bigr).
+\]
+For $m=0$ and $\mathfrak a(t)=\E\mathcal Z_t$, the same formulas hold without the variance term. We
+apply this with $\mathcal Z_t=\Psi^t_j(z+\Sigma_j^{1/2}\mathbf g)$ and $m=m_j$; the weights
+$e^{m_j\mathcal Z_t}/\E e^{m_j\mathcal Z_t}$ are the densities of the kernel
+$\mathcal K_{m_j,\Sigma_j,\Psi^t_j}(z,\cdot)$. Starting from $\partial_t\Psi^t_M=V$
+and $\partial^2_t\Psi^t_M=0$, induction on $M-j$ shows that the derivatives are
+bounded and proves \eqref{eq:flow-response-recursion}.
+
+Now let $z_0,\dots,z_M$ be the chain of the lemma for the terminal function $f+tV$,
+and let $\mathcal M_j=\partial_t\Psi^t_j(z_j)$. By the first identity in
+\eqref{eq:flow-response-recursion} and the Markov property, we have
+$\E^t[\mathcal M_j\mid z_0,\dots,z_{j-1}]=\mathcal M_{j-1}$. This implies that
+$(\mathcal M_j)$ is a martingale, with $\mathcal M_M=V(z_M)$ and
+$\mathcal M_0=\partial_t\mathcal H(f+tV)(z_0)$. Iterating the second identity in
+\eqref{eq:flow-response-recursion} from $\partial^2_t\Psi^t_M=0$, we obtain
+\[
+ \partial_t^2\mathcal H(f+tV)(z_0)=\sum_{j=1}^Mm_j\,\E^t\bigl(\mathcal M_j-\mathcal M_{j-1}\bigr)^2.
+\]
+Since $0\le m_j\le1$ and the increments of a martingale are orthogonal,
+\[
+ 0\le\partial_t^2\mathcal H(f+tV)(z_0)\le\sum_{j=1}^M\E^t\bigl(\mathcal M_j-\mathcal M_{j-1}\bigr)^2
+ =\E^tV(z_M)^2-\bigl(\E^tV(z_M)\bigr)^2\le\norm V_\infty^2.
+\]
+At $t=0$, we have $\partial_t\mathcal H(f+tV)(z_0)=\mathcal M_0=\E_fV(z_M)$. By
+Taylor's formula with integral remainder,
+\[
+ \mathcal H(f+V)(z_0)-\mathcal Hf(z_0)-\E_fV(z_M)
+ =\int_0^1(1-t)\,\partial_t^2\mathcal H(f+tV)(z_0)\dd t,
+\]
+which lies in $[0,\norm V_\infty^2/2]$. This completes the proof.
+\end{proof}
+
+We next apply \cref{b:lem:os-prefix} to the scalar hierarchy that integrates a
+block of $\mathfrak n$ identical coordinates over a time interval $[0,t_\star]$, and pass to
+a general distribution function. For a distribution function $\alpha$, an
+integer $\mathfrak n\ge1$, a time $t_\star\in(0,1]$, and $f\in\mathcal C^2(\R)$, let
+$\mathcal H^\alpha_{t_\star,\mathfrak n}f$ denote the value at $z=0$ of the flow of
+\cref{lem:flow-step-limit}(b) with $\ell=1$, $N=1$, $B_1=1$, $\lambda_1=t_\star$,
+mass $m_1(\tau)=\alpha(t_\star\tau)/\mathfrak n$, and terminal function $f$. If
+$\alpha_n$ are step distribution functions with $\int_0^1\abs{\alpha_n-\alpha}\dd t\to0$,
+then $\mathcal H^\alpha_{t_\star,\mathfrak n}f$ is the limit of the values at $z=0$ of the
+step flows with masses $\alpha_n(t_\star\tau)/\mathfrak n$. In the scalar time
+$t=t_\star\tau$, these step flows solve
+$-\partial_tF=(b/2)\{\partial_{zz}F+(\alpha_n(t)/\mathfrak n)(\partial_zF)^2\}$ on each
+interval where $\alpha_n$ is constant, with $F(t_\star,\cdot)=f$. For a general
+$\alpha$, we do not assert that the limiting flow is differentiable in time at
+the jumps of $\alpha$. Recall the function $\Phi=\Phi_\alpha$ and the diffusion
+$Y$ of \eqref{b:eq:scalar-diffusion}.
+
+\begin{corollary}[Response of the common part of a hierarchy]\label{cor:flow-prefix}
+Let $\alpha$ be a distribution function, let $\mathfrak n\ge1$ be an integer, and let
+$t_\star\in(0,1]$. Then $\mathcal H^\alpha_{t_\star,\mathfrak n}(\mathfrak n\Phi_\alpha(t_\star,\cdot))
+=\mathfrak n\Phi_\alpha(0,0)$. Moreover, let $V\in C^2(\R)$ with $V$, $V'$, and $V''$ bounded,
+and suppose that $\norm V_\infty\le\eps$. Then
+\[
+ \bigl\lvert\mathcal H^\alpha_{t_\star,\mathfrak n}\bigl(\mathfrak n\Phi_\alpha(t_\star,\cdot)+V\bigr)
+ -\mathfrak n\Phi_\alpha(0,0)-\E V(Y_{t_\star})\bigr\rvert\le\frac{\eps^2}{2}.
+\]
+\end{corollary}
+
+In \cref{sec:cubic}, we apply the corollary with $\mathfrak n=3$, with $t_\star$ the left
+endpoint of the window, and with $V$ the difference between the restriction of
+the local value to the diagonal and $3\Phi_\alpha(t_\star,\cdot)$, for which
+$\eps=Ch^2k^2$. The initial segment of the hierarchy then contributes $\E V(Y_{t_\star})+O(h^4k^4)$. Note that
+the law of $Y_{t_\star}$ does not depend on the perturbation.
+
+\begin{proof}
+Let $\alpha_n$ be step distribution functions with $t_\star$ among their breakpoints
+and $\int_0^1\abs{\alpha_n-\alpha}\dd t\to0$; for instance, let $\alpha_n$ be
+equal to $\alpha(t_{n,i-1})$ on $[t_{n,i-1},t_{n,i})$, where the $t_{n,i}$ are the
+points $i2^{-n}$ together with $t_\star$. Let $\Phi_n=\Phi_{\alpha_n}$, let $Y^n$ be
+the diffusion of $\alpha_n$, driven by the same Brownian motion as $Y$, and let
+$\mathcal H_n$ denote the step flow with masses $\alpha_n(t_\star\tau)/\mathfrak n$, that is,
+the finite hierarchy whose levels are the intervals between consecutive
+breakpoints of $\alpha_n$ in $[0,t_\star]$.
+
+\paragraph{Step 1: the step hierarchies.} By \eqref{eq:inp-scalar-recursion} and
+\cref{lem:inp-steps}(d), the partial values of $\mathcal H_n$ with terminal
+function $\mathfrak n\Phi_n(t_\star,\cdot)$ are $\mathfrak n\Phi_n(t_{n,i},\cdot)$, and in particular
+$\mathcal H_n(\mathfrak n\Phi_n(t_\star,\cdot))(0)=\mathfrak n\Phi_n(0,0)$. The level from
+$t_{n,i-1}$ to $t_{n,i}$ has mass $\alpha_n(t_{n,i-1})/\mathfrak n$ and partial value
+$\mathfrak n\Phi_n(t_{n,i},\cdot)$. Its kernel has the density
+$\exp\{\alpha_n(t_{n,i-1})(\Phi_n(t_{n,i},y)-\Phi_n(t_{n,i-1},z))\}$ with respect to
+$N(z,b(t_{n,i}-t_{n,i-1}))$. This is the kernel of the scalar recursion of
+$\alpha_n$ on the same interval.
+By \cref{inp:ob-scalar}(iii), the path law of this hierarchy, started at $0$, is
+the law of $(Y^n_{t_{n,i}})_{t_{n,i}\le t_\star}$. Then \cref{b:lem:os-prefix}, with
+$f=\mathfrak n\Phi_n(t_\star,\cdot)$ and $z_0=0$, gives
+\begin{equation}\label{eq:flow-prefix-step}
+ \bigl\lvert\mathcal H_n\bigl(\mathfrak n\Phi_n(t_\star,\cdot)+V\bigr)(0)-\mathfrak n\Phi_n(0,0)
+ -\E V(Y^n_{t_\star})\bigr\rvert\le\frac{\eps^2}{2}.
+\end{equation}
+
+\paragraph{Step 2: the limit.} By \cref{inp:ob-scalar}(i), $\abs{\partial_z\Phi_n}\le1$
+and $0<\partial_{zz}\Phi_n\le1$, and the same holds for $\Phi_\alpha$; hence the
+terminal functions below belong to $\mathcal C^2(\R)$, with gradients bounded by
+$\mathfrak n+\norm{V'}_\infty$. Using \cref{lem:flow-step-limit}(a), we find that
+\[
+ \abs{\mathcal H_n(\mathfrak n\Phi_n(t_\star,\cdot)+V)-\mathcal H_n(\mathfrak n\Phi_\alpha(t_\star,\cdot)+V)}
+ \le\mathfrak n\sup_z\abs{\Phi_n(t_\star,z)-\Phi_\alpha(t_\star,z)},
+\]
+which tends to zero by \cref{inp:ob-scalar}(ii). By \cref{lem:flow-step-limit}(b),
+$\mathcal H_n(\mathfrak n\Phi_\alpha(t_\star,\cdot)+V)(0)\to\mathcal H^\alpha_{t_\star,\mathfrak n}
+(\mathfrak n\Phi_\alpha(t_\star,\cdot)+V)$, since
+$\int_0^1\abs{\alpha_n(t_\star\tau)-\alpha(t_\star\tau)}\dd\tau\to0$. Also,
+\cref{inp:ob-scalar}(ii) implies that $\Phi_n(0,0)\to\Phi_\alpha(0,0)$. Finally, we write
+$u_n=\partial_z\Phi_n$ and $u=\partial_z\Phi_\alpha$. Since $\abs{u_n}\le1$,
+$\alpha\le1$, and $\abs{\partial_zu}\le1$, we have
+\[
+ \abs{\alpha_n(t)u_n(t,y')-\alpha(t)u(t,y)}
+ \le\abs{\alpha_n(t)-\alpha(t)}+\sup_{t,z}\abs{u_n-u}+\abs{y'-y},
+\]
+and the equations for $Y^n$ and $Y$ give, for $t\le t_\star$,
+\[
+ \abs{Y^n_t-Y_t}\le b\int_0^1\abs{\alpha_n-\alpha}\dd t'+b\sup\abs{u_n-u}
+ +b\int_0^t\abs{Y^n_{t'}-Y_{t'}}\dd t'.
+\]
+By Gronwall's inequality and \cref{inp:ob-scalar}(ii), $Y^n_{t_\star}\to Y_{t_\star}$
+almost surely, and $\E V(Y^n_{t_\star})\to\E V(Y_{t_\star})$ by bounded convergence.
+Taking $n\to\infty$ in \eqref{eq:flow-prefix-step} proves the second claim. The
+first claim follows in the same way from the identity
+$\mathcal H_n(\mathfrak n\Phi_n(t_\star,\cdot))(0)=\mathfrak n\Phi_n(0,0)$.
+\end{proof}
+
+\begin{remark}[A common block acts on the diagonal]\label{rem:flow-diagonal}
+Let $e\in\R^\ell$, and suppose that stage $j$ of a stage datum has $B_j=ee^{\mathsf T}$.
+Then the Gaussian increments of that stage are of the form $\zeta e$ with a
+centered Gaussian variable $\zeta$, and a point of the line $\{ze:z\in\R\}$ stays
+on it. It follows that, for $F\in\mathcal C^2(\R^\ell)$, the flow of this stage with
+terminal function $F$, evaluated at $ze$, is the scalar flow with $B_j=1$, the
+same $\lambda_j$ and $m_j$, and terminal function $z\mapsto F(ze)$, evaluated at
+$z$. This holds for step flows by \cref{lem:inp-steps}(e) and passes to the limit
+by \cref{lem:flow-step-limit}(b). In \cref{sec:cubic}, the part of the hierarchy
+before the window has $B=ee^{\mathsf T}$ with $e=(1,1,1)$ and masses $\alpha/3$,
+and its value is $\mathcal H^\alpha_{t_\star,3}$ applied to the restriction of the
+local value to the diagonal.
+\end{remark}

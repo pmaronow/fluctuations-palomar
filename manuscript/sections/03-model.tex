@@ -1,0 +1,367 @@
+\chapter{The model and the dynamics}\label{sec:model}
+
+This section fixes the model, the dynamics, and the conventions used in the rest of the paper.
+\Cref{sec:model-sk} defines the Sherrington--Kirkpatrick model, its Gibbs measure, the overlap, the log partition function $F_n$, the limiting pressure $P_\beta$, and the mean bias $\Delta_{n,\beta}$.
+\Cref{sec:model-completion} records exact identities for the Hamiltonian completed by an independent Gaussian variable (\cref{lem:model-completion}). They are used in \cref{sec:inputs} to translate imported results into our normalization, in \cref{sec:fractional} for fractional moments of constrained partition functions, in \cref{part:upper} for the Gaussian-query proposal, and in \cref{sec:fluct,sec:bias}.
+\Cref{sec:model-dynamics} defines heat-bath dynamics in discrete and continuous time and proves the elementary facts collected in \cref{lem:model-dynamics}: reversibility, Poissonization, and the contraction of total variation. These facts are used in \cref{sec:barrier-proof} to prove \cref{thm:barrier-730,b:cor:subcritical} and in \cref{part:upper} to prove \cref{thm:upper,cor:upper-discrete}.
+\Cref{sec:model-joint} defines the realized-start probability in which \cref{thm:barrier-730,thm:upper} are formulated, and \cref{lem:model-joint} relates statements about this probability to statements about the Gibbs mass of the corresponding initial states. \Cref{sec:model-asymptotics} fixes the asymptotic conventions, and \cref{sec:model-dictionary} compares our normalization with those of the works from which we import results.
+
+The model, the heat-bath dynamics, and the realized-start formulation are those of \cite[Section~1]{oai-barriers}. The facts proved in this section are standard. We include short proofs so that the conventions can be checked directly, including the clock and the order in which the disorder and the initial state are sampled.
+
+\section{The Sherrington--Kirkpatrick model}\label{sec:model-sk}
+
+We consider the zero-field Gaussian Sherrington--Kirkpatrick model, introduced in \cite{sk-original}.
+For an integer $n\ge2$, let $\Sigma_n=\{-1,1\}^n$. Its elements, usually denoted $x$, $y$, $z$, or $v$, are called configurations.
+The disorder is a family $J=(J_{ij})_{1\le i<j\le n}$ of independent standard Gaussian random variables, and we set $J_{ji}=J_{ij}$ and $J_{ii}=0$. We write $\PP_J$ and $\E_J$ for probability and expectation over $J$. Unsubscripted $\PP$, $\E$, and $\Var$ refer to all random variables under consideration, except those declared fixed. In \cref{sec:model-completion} they average over $(J,G)$, whereas in \cref{lem:model-dynamics} the disorder is held fixed and probabilities average over the chain and the independent clock.
+For $\beta>0$ and $x\in\Sigma_n$, we define the Hamiltonian, the partition function, and the log partition function by
+\begin{equation}\label{eq:common-model}
+ H_n(x)=\frac1{\sqrt n}\sum_{1\le i<j\le n}J_{ij}x_ix_j,\qquad
+ Z_n=\sum_{x\in\Sigma_n}e^{\beta H_n(x)},\qquad
+ F_n=\log Z_n.
+\end{equation}
+When the dependence on the disorder or on $\beta$ matters, we write $H_n^J$ and $Z_n=Z_{n,\beta}^J$.
+The Gibbs measure is the probability measure on $\Sigma_n$ given by
+\begin{equation}\label{b:eq:SK-model}
+ \pi(x)=\pi^J(x)=\pi^J_{n,\beta}(x)=\frac{e^{\beta H_n^J(x)}}{Z^J_{n,\beta}},\qquad x\in\Sigma_n.
+\end{equation}
+For a function $f$ on $\Sigma_n$ and a set $A\subseteq\Sigma_n$, we write $\langle f\rangle=\pi(f)=\sum_xf(x)\pi(x)$ and $\pi(A)=\sum_{x\in A}\pi(x)$.
+
+Three features of \eqref{eq:common-model} are used throughout. First, the inverse temperature multiplies $H_n$ and is not part of it. Second, $Z_n$ is a sum with respect to counting measure on $\Sigma_n$, with no factor $2^{-n}$. Third, $F_n$ is the logarithm of the partition function, not a free energy per spin. In physical terms, the energy is $-H_n$ and the free energy is $-F_n/\beta$; since $\beta$ is fixed, the factor $-1/\beta$ does not affect any exponent in this paper.
+
+The overlap of two configurations $x,y\in\Sigma_n$ is
+\[
+ R(x,y)=\frac1n\sum_{i=1}^nx_iy_i\in[-1,1].
+\]
+We have $R(x,x)=1$, $R(-x,y)=-R(x,y)$, and $H_n(-x)=H_n(x)$, the last because $H_n$ is quadratic in the spins. It follows that the Gibbs measure is invariant under the global spin reversal $x\mapsto-x$.
+The Hamiltonian is a centered Gaussian process indexed by $\Sigma_n$, with covariance
+\begin{equation}\label{eq:common-covariance}
+ \E H_n(x)H_n(y)=\frac{nR(x,y)^2-1}{2},\qquad x,y\in\Sigma_n.
+\end{equation}
+To see this, set $a_i=x_iy_i$. Using that $\E J_{ij}J_{kl}=\mathbf 1\{(i,j)=(k,l)\}$ for $i<j$ and $k<l$, and that $a_i^2=1$, we find
+\[
+ \E H_n(x)H_n(y)=\frac1n\sum_{i<j}a_ia_j
+ =\frac1{2n}\biggl(\Bigl(\sum_{i=1}^na_i\Bigr)^2-\sum_{i=1}^na_i^2\biggr)
+ =\frac{n^2R(x,y)^2-n}{2n}.
+\]
+We have $\Var H_n(x)=(n-1)/2$ for all $x$. The constant $-1/2$ in \eqref{eq:common-covariance} reflects the absence of diagonal terms in $H_n$; it is removed in \cref{sec:model-completion}.
+
+We write
+\[
+ p_n(\beta)=\frac1n\E F_n
+\]
+for the expected pressure. It is finite, since $\beta H_n(x_0)\le F_n\le n\log2+\beta\max_xH_n(x)$ for any fixed $x_0\in\Sigma_n$ and each $H_n(x)$ is Gaussian.
+In \cite[Theorems~1--2, (17)--(18)]{guerra-toninelli-2002}, Guerra and Toninelli proved that the sequence $n\,p_n(\beta)$ is superadditive in $n$ and that the limit
+\[
+ P_\beta=\lim_{n\to\infty}p_n(\beta)
+\]
+exists for every $\beta>0$ and equals the supremum of the sequence.
+% CHECK: arXiv:cond-mat/0204280v1, p. 6; their (1)-(3) at h=0 give Z_N(beta,0,J) = our Z_n (their H_N is minus ours) and alpha_N(beta,0) = our p_n(beta).
+We call
+\begin{equation}\label{eq:model-bias}
+ \Delta_{n,\beta}=P_\beta-p_n(\beta)
+\end{equation}
+the mean bias. We have $\Delta_{n,\beta}\ge0$ for all $n\ge2$, because $P_\beta$ is the supremum of the sequence $p_n(\beta)$; this is also a consequence of Guerra's bound \cite[Theorem~3]{guerra-2003}.
+The identification of $P_\beta$ with the minimum of the Parisi functional, due to Guerra \cite{guerra-2003} and Talagrand \cite{parisi-formula}, is stated in \cref{sec:inputs} as \cref{inp:parisi}, where the Parisi functional is also defined.
+
+\section{The completed Hamiltonian}\label{sec:model-completion}
+
+By \eqref{eq:common-covariance}, the covariance of $H_n$ differs from $nR(x,y)^2/2$ by a constant. Several of the results we import, and the Gaussian interpolation of \cref{sec:fractional}, are formulated for a Hamiltonian whose covariance is exactly $nR(x,y)^2/2$. Such a Hamiltonian is obtained by adding a single Gaussian variable, the same for every configuration.
+Let $G$ be a centered Gaussian random variable with variance $1/2$, independent of $J$, and set
+\begin{equation}\label{eq:model-completion}
+ H_n^c(x)=H_n(x)+G,\qquad
+ Z_n^c=\sum_{x\in\Sigma_n}e^{\beta H_n^c(x)}=e^{\beta G}Z_n,\qquad
+ F_n^c=\log Z_n^c=F_n+\beta G.
+\end{equation}
+We call $H_n^c$ the completed Hamiltonian and $F_n^c$ the completed log partition function.
+In \cite{oai-barriers,quantitative-parisi,hexagon-bias}, the variable $G$ arises from the diagonal of a symmetric Gaussian matrix. Let $J'_{11},\dots,J'_{nn}$ be independent standard Gaussian variables, independent of $J$, and let $W$ be the symmetric $n\times n$ matrix with $W_{ij}=J_{ij}/\sqrt n$ for $i\neq j$ and $W_{ii}=\sqrt{2/n}\,J'_{ii}$. Then
+\[
+ \frac12\sum_{i,j=1}^nW_{ij}x_ix_j=H_n(x)+\frac1{\sqrt{2n}}\sum_{i=1}^nJ'_{ii},
+\]
+and the last term has the law of $G$.
+
+\begin{lemma}[Exact identities for the completed Hamiltonian]\label{lem:model-completion}
+Fix $n\ge2$ and $\beta>0$. Then the following statements hold.
+\begin{enumerate}[label=(\alph*)]
+\item For all $x,y\in\Sigma_n$, we have $\E H^c_n(x)H^c_n(y)=nR(x,y)^2/2$.
+\item For every realization of $(J,G)$ and every $x\in\Sigma_n$, we have $e^{\beta H_n^c(x)}/Z_n^c=\pi^J(x)$.
+\item We have $\E F_n^c=\E F_n$ and $\Var F_n^c=\Var F_n+\beta^2/2$. Further, for every $t\in\R$, both sides of the following identity are finite, and
+\begin{equation}\label{eq:model-completion-laplace}
+ \log\E\exp\{t(F_n^c-\E F_n^c)\}=\log\E\exp\{t(F_n-\E F_n)\}+\frac{\beta^2t^2}{4}.
+\end{equation}
+\item Let $\ell\ge1$ be an integer, and let $A\subseteq\Sigma_n^\ell$ be a nonempty set of $\ell$-tuples of configurations. Define
+\[
+ Z_{\ell,n}(A)=\sum_{(x^1,\dots,x^\ell)\in A}\exp\biggl(\beta\sum_{a=1}^\ell H_n(x^a)\biggr),
+\]
+and define $Z_{\ell,n}^c(A)$ in the same way, with $H_n^c$ in place of $H_n$. Then $Z^c_{\ell,n}(A)=e^{\beta\ell G}Z_{\ell,n}(A)$ and $\E\log Z^c_{\ell,n}(A)=\E\log Z_{\ell,n}(A)$. For every $s\in\R$, both sides of the following identity are finite, and
+\begin{equation}\label{eq:model-completion-moment}
+ \E Z_{\ell,n}^c(A)^s=\exp\Bigl(\frac{\beta^2\ell^2s^2}{4}\Bigr)\,\E Z_{\ell,n}(A)^s.
+\end{equation}
+Equivalently, for every $s\neq0$,
+\[
+ \frac1{ns}\log\E Z_{\ell,n}^c(A)^s=\frac1{ns}\log\E Z_{\ell,n}(A)^s+\frac{\beta^2\ell^2s}{4n}.
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part (a) follows from \eqref{eq:common-covariance}, since $G$ is independent of $J$ and $\E G^2=1/2$. For part (b), the factor $e^{\beta G}$ appears in both $e^{\beta H_n^c(x)}$ and $Z_n^c$.
+
+For part (c), recall that $F_n$ is a function of $J$ and that $G$ is independent of $J$. Using $\E G=0$ and $\Var(\beta G)=\beta^2/2$, we have $\E F_n^c=\E F_n$ and $\Var F_n^c=\Var F_n+\beta^2/2$. Next, we check that all exponential moments of $F_n$ are finite. Fix $x_0\in\Sigma_n$. Since $e^{\beta H_n(x_0)}\le Z_n\le2^n\max_xe^{\beta H_n(x)}$, we have
+\[
+ e^{tF_n}\le2^{nt}\sum_{x\in\Sigma_n}e^{t\beta H_n(x)}\quad(t\ge0),\qquad
+ e^{tF_n}\le e^{t\beta H_n(x_0)}\quad(t<0).
+\]
+As each $H_n(x)$ is Gaussian, this implies that $\E e^{tF_n}<\infty$ for all $t\in\R$. By the independence of $F_n$ and $G$ and the identity $\E e^{t\beta G}=e^{\beta^2t^2/4}$, we have
+\[
+ \E\exp\{t(F_n^c-\E F_n^c)\}
+ =\E\exp\{t(F_n-\E F_n)\}\,\E e^{t\beta G}
+ =\E\exp\{t(F_n-\E F_n)\}\,e^{\beta^2t^2/4}.
+\]
+Taking logarithms gives \eqref{eq:model-completion-laplace}.
+
+For part (d), note that every term in the sum defining $Z_{\ell,n}^c(A)$ contains the factor $\exp(\beta\sum_{a=1}^\ell G)=e^{\beta\ell G}$, which proves $Z^c_{\ell,n}(A)=e^{\beta\ell G}Z_{\ell,n}(A)$. Fix a tuple $(x_0^1,\dots,x_0^\ell)\in A$. The bounds of part (c), with $\sum_aH_n(x_0^a)$ in place of $H_n(x_0)$ and $|A|$ in place of $2^n$, show that $\log Z_{\ell,n}(A)$ is integrable and that $\E Z_{\ell,n}(A)^s<\infty$ for every $s\in\R$, since $\sum_aH_n(x^a)$ is Gaussian for each tuple $(x^1,\dots,x^\ell)$. Taking logarithms and expectations in $Z^c_{\ell,n}(A)=e^{\beta\ell G}Z_{\ell,n}(A)$ and using $\E G=0$, we find $\E\log Z^c_{\ell,n}(A)=\E\log Z_{\ell,n}(A)$. The variable $\beta\ell sG$ is centered Gaussian with variance $\beta^2\ell^2s^2/2$, and it is independent of $Z_{\ell,n}(A)$. We conclude that
+\[
+ \E Z^c_{\ell,n}(A)^s=\E e^{\beta\ell sG}\,\E Z_{\ell,n}(A)^s=e^{\beta^2\ell^2s^2/4}\,\E Z_{\ell,n}(A)^s,
+\]
+which is \eqref{eq:model-completion-moment}. Dividing its logarithm by $ns$ gives the last display of the lemma.
+\end{proof}
+
+The constrained partition functions of \cref{sec:inputs,sec:fractional,sec:static}, in which the overlaps $R(x^a,x^b)$ of the $\ell$-tuple are prescribed, are of the form $Z_{\ell,n}(A)$. By part (b) of \cref{lem:model-completion} and the identity $Z^c_{\ell,n}(A)=e^{\beta\ell G}Z_{\ell,n}(A)$, Gibbs measures, constrained Gibbs probabilities $Z_{\ell,n}(A)/Z_n^\ell$, and expected logarithms are the same for the two Hamiltonians. Fractional moments are not: the correction $\beta^2\ell^2s/(4n)$ in the last display of the lemma is quadratic in $\ell$, because the same variable $G$ enters every replica, and it is kept explicitly in \cref{sec:fractional}. The identity \eqref{eq:model-completion-laplace} is the form in which the completion enters \cref{sec:fluct}, where the logarithmic-moment bounds of \cite{oai-fluctuations} are stated for $F_n^c$.
+
+\section{Heat-bath dynamics}\label{sec:model-dynamics}
+
+We use single-spin heat-bath dynamics, in the tradition of the stochastic Ising dynamics introduced by Glauber \cite{glauber-1963}. The clock and resampling conventions below are those of \cite[Section~1, pp.~2--3]{oai-barriers}.
+For $x\in\Sigma_n$, $i\in\{1,\dots,n\}$, and $\sigma\in\{-1,1\}$, let $x^{i,\sigma}$ be the configuration obtained from $x$ by setting its $i$th spin equal to $\sigma$. The local field at site $i$ and the heat-bath probabilities are
+\begin{equation}\label{eq:model-heat-bath}
+ h_i(x)=h_i^J(x)=\frac1{\sqrt n}\sum_{j\neq i}J_{ij}x_j,\qquad
+ p_i(\sigma\mid x)=p_i^J(\sigma\mid x)=\frac{e^{\beta\sigma h_i(x)}}{2\cosh(\beta h_i(x))}.
+\end{equation}
+The field $h_i(x)$ does not depend on $x_i$. Since $J_{ji}=J_{ij}$, the terms of $H_n$ that contain $x_i$ add up to $x_ih_i(x)$, and we have
+\begin{equation}\label{eq:model-site-split}
+ H_n(x)=x_ih_i(x)+H_n^{(i)}(x),\qquad
+ H_n^{(i)}(x)=\frac1{\sqrt n}\sum_{\substack{j<k\\ j,k\neq i}}J_{jk}x_jx_k,
+\end{equation}
+where $H_n^{(i)}(x)$ does not depend on $x_i$. It follows that $p_i(\sigma\mid x)=\pi(x^{i,\sigma})/(\pi(x^{i,1})+\pi(x^{i,-1}))$; that is, $p_i(\cdot\mid x)$ is the conditional law of the $i$th spin under $\pi$, given the other spins.
+
+The discrete heat-bath kernel is
+\begin{equation}\label{eq:common-kernel}
+ K(x,y)=K^J(x,y)=\frac1n\sum_{i=1}^n\sum_{\sigma\in\{-1,1\}}p_i(\sigma\mid x)\,\mathbf 1\{y=x^{i,\sigma}\},\qquad x,y\in\Sigma_n.
+\end{equation}
+In one step, a site $i$ is chosen uniformly at random and the $i$th spin is resampled from $p_i(\cdot\mid x)$. The new value may equal the old one, and in this case the update attempt leaves the configuration unchanged. Explicitly, for all $x\in\Sigma_n$ and all sites $i$,
+\begin{equation}\label{b:eq:discrete-kernel}
+ K(x,x^{i,-x_i})=\frac1n\,p_i(-x_i\mid x),\qquad
+ K(x,x)=\frac1n\sum_{i=1}^np_i(x_i\mid x),
+\end{equation}
+and $K(x,y)=0$ if $x$ and $y$ differ in more than one coordinate. The discrete heat-bath chain $(X_k)_{k\ge0}$ is the Markov chain on $\Sigma_n$ with transition matrix $K$.
+
+In continuous time, we define the generator and the transition probabilities by
+\begin{equation}\label{eq:common-semigroup}
+ \mathcal L=\mathcal L^J=n(K-I),\qquad P_t=P_t^J=e^{t\mathcal L},\quad t\ge0,
+\end{equation}
+and we call the Markov process $(X_t)_{t\ge0}$ with transition probabilities $P_t$ the continuous heat-bath process. In this process, each site carries an independent Poisson clock of rate one, and when the clock at site $i$ rings, the $i$th spin of the current configuration $x$ is resampled from $p_i(\cdot\mid x)$. Indeed, the generator of this description acts on functions $f\colon\Sigma_n\to\R$ by
+\[
+ \mathcal Lf(x)=\sum_{i=1}^n\sum_{\sigma\in\{-1,1\}}p_i(\sigma\mid x)\bigl(f(x^{i,\sigma})-f(x)\bigr)=n\bigl(Kf(x)-f(x)\bigr),
+\]
+where the second equality follows from \eqref{eq:common-kernel} and $\sum_\sigma p_i(\sigma\mid x)=1$. The total rate of update attempts is $n$, so that one unit of continuous time corresponds to $n$ update attempts on average. In both time conventions, an attempt that leaves the configuration unchanged is counted. We use the letter $t$ for continuous time and $k$ for the number of discrete steps, so that the notation $(X_t)$ or $(X_k)$ indicates which process is meant.
+
+For probability measures $\nu,\zeta$ on $\Sigma_n$, the total variation distance is
+\[
+ \norm{\nu-\zeta}_\TV=\frac12\sum_{x\in\Sigma_n}|\nu(x)-\zeta(x)|=\max_{A\subseteq\Sigma_n}|\nu(A)-\zeta(A)|,
+\]
+where the second equality is \cite[Proposition~4.2]{levin-peres-2017}. For $x\in\Sigma_n$, $t\ge0$, and integers $k\ge0$, we define
+\begin{equation}\label{eq:model-distances}
+ d^J(x,t)=\norm{P^J_t(x,\cdot)-\pi^J}_\TV,\qquad
+ d^J_{\rm disc}(x,k)=\norm{(K^J)^k(x,\cdot)-\pi^J}_\TV.
+\end{equation}
+These are the distances from equilibrium of the laws of the dynamics started at the fixed configuration $x$. No supremum over $x$ is taken.
+For the threshold $1/4$, we define the mixing times from $x$ by
+\begin{equation}\label{eq:model-mixing-time}
+ \begin{aligned}
+ T^J(x)&=\inf\{t\ge0:d^J(x,t)\le1/4\},\\
+ T^J_{\rm disc}(x)&=\min\{k\ge0:d^J_{\rm disc}(x,k)\le1/4\}.
+ \end{aligned}
+\end{equation}
+Both times are finite. Indeed, every single-site resampling probability is
+positive, so $K^n(x,y)>0$ for all $x,y\in\Sigma_n$: one may update each site
+once to its value in $y$. The minimum of these finitely many entries is
+positive. Writing $K^n$ as a mixture with a positive uniform component and
+using contraction shows that $d^J_{\rm disc}(x,k)\to0$; \eqref{eq:model-poisson}
+then gives $d^J(x,t)\to0$. By \cref{lem:model-dynamics}(d), the continuous
+sublevel set in \eqref{eq:model-mixing-time} is closed and upward closed.
+For every $t\ge0$, we have $T^J(x)\le t$ if and only if $d^J(x,t)\le1/4$,
+and $T^J(x)>t$ if and only if $d^J(x,t)>1/4$.
+The corresponding equivalences hold in discrete time.
+
+In the next lemma, we record classical facts about finite Markov chains for the kernels $K$ and $P_t$; see \cite[Proposition~1.20, Exercise~4.2, and Section~20.1]{levin-peres-2017}.
+
+\begin{lemma}[Elementary properties of heat-bath dynamics]\label{lem:model-dynamics}
+Fix $n\ge2$, $\beta>0$, and a realization of $J$. Then the following statements hold.
+\begin{enumerate}[label=(\alph*)]
+\item The kernel $K$ is reversible with respect to $\pi$, that is, $\pi(x)K(x,y)=\pi(y)K(y,x)$ for all $x,y\in\Sigma_n$. In particular, $\pi K=\pi$.
+\item For every $t\ge0$,
+\begin{equation}\label{eq:model-poisson}
+ P_t=\sum_{k=0}^\infty e^{-nt}\frac{(nt)^k}{k!}\,K^k.
+\end{equation}
+If $(X_k)_{k\ge0}$ is the discrete heat-bath chain started at $x$ and $(N_t)_{t\ge0}$ is a Poisson process of rate $n$, independent of $(X_k)_{k\ge0}$, then $\PP(X_{N_t}=y)=P_t(x,y)$ for all $y\in\Sigma_n$ and $t\ge0$.
+\item For every $t\ge0$, the kernel $P_t$ is reversible with respect to $\pi$, and $\pi P_t=\pi$. In particular, $\sum_x\pi(x)P_t(x,\cdot)=\pi$ and $\sum_x\pi(x)K^k(x,\cdot)=\pi$ for all $t\ge0$ and $k\ge0$.
+\item For every transition matrix $Q$ on $\Sigma_n$ and all probability measures $\nu,\zeta$ on $\Sigma_n$, we have $\norm{\nu Q-\zeta Q}_\TV\le\norm{\nu-\zeta}_\TV$. For every $x\in\Sigma_n$, the functions $k\mapsto d^J_{\rm disc}(x,k)$ and $t\mapsto d^J(x,t)$ are nonincreasing, and $t\mapsto d^J(x,t)$ is continuous.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For part (a), the identity is trivial if $x=y$, and both sides vanish by \eqref{b:eq:discrete-kernel} if $x$ and $y$ differ in more than one coordinate. Suppose that $y=x^{i,-x_i}$ for some $i$. Then $h_i(y)=h_i(x)$ and $H_n^{(i)}(y)=H_n^{(i)}(x)$. Using \eqref{eq:model-heat-bath}, \eqref{eq:model-site-split}, and \eqref{b:eq:discrete-kernel}, we find
+\[
+ \pi(x)K(x,y)=\frac{e^{\beta H_n^{(i)}(x)}}{nZ_n}\cdot\frac{e^{\beta x_ih_i(x)}e^{\beta y_ih_i(x)}}{2\cosh(\beta h_i(x))}.
+\]
+The right side is symmetric in $x$ and $y$, which proves the identity. Summing the identity $\pi(x)K(x,y)=\pi(y)K(y,x)$ over $x$ and using $\sum_xK(y,x)=1$, we obtain $\pi K=\pi$.
+
+For part (b), since the matrices $ntK$ and $ntI$ commute, we have $e^{tn(K-I)}=e^{-nt}e^{ntK}$, and expanding $e^{ntK}$ in its power series gives \eqref{eq:model-poisson}. For the second statement, recall that $N_t$ has the Poisson law with mean $nt$ and is independent of $(X_k)_{k\ge0}$. Conditioning on $N_t$, we find
+\[
+ \PP(X_{N_t}=y)=\sum_{k=0}^\infty\PP(N_t=k)\,K^k(x,y)=\sum_{k=0}^\infty e^{-nt}\frac{(nt)^k}{k!}\,K^k(x,y)=P_t(x,y).
+\]
+
+For part (c), we first show by induction on $k$ that $\pi(x)K^k(x,y)=\pi(y)K^k(y,x)$ for all $k\ge0$. The case $k=0$ is trivial. If the identity holds for $k$, then by part (a) we have
+\[
+ \pi(x)K^{k+1}(x,y)=\sum_z\pi(z)K(z,x)K^k(z,y)=\sum_zK(z,x)\,\pi(y)K^k(y,z)=\pi(y)K^{k+1}(y,x).
+\]
+By \eqref{eq:model-poisson}, $P_t$ is a convex combination of the matrices $K^k$, with weights that do not depend on $x$ or $y$. This implies that $\pi(x)P_t(x,y)=\pi(y)P_t(y,x)$, and summing over $x$ gives $\pi P_t=\pi$. Summing the identity for $K^k$ over $x$ in the same way, we find $\pi K^k=\pi$.
+
+For part (d), for each $y$ we have $|\nu Q(y)-\zeta Q(y)|\le\sum_x|\nu(x)-\zeta(x)|Q(x,y)$. Summing over $y$ and using $\sum_yQ(x,y)=1$ gives the first claim. Applying it with $Q=K$, $\nu=K^k(x,\cdot)$, and $\zeta=\pi$, and recalling that $\pi K=\pi$, we find
+\[
+ d^J_{\rm disc}(x,k+1)=\norm{K^k(x,\cdot)K-\pi K}_\TV\le d^J_{\rm disc}(x,k).
+\]
+Similarly, for $u\ge0$ we have $P_{t+u}=P_tP_u$ and $\pi P_u=\pi$, and the first claim with $Q=P_u$ implies that $d^J(x,t+u)\le d^J(x,t)$. Finally, by \eqref{eq:model-poisson}, every entry of $P_t$ is a continuous function of $t$. As a finite sum of absolute values of such functions, $d^J(x,t)$ is continuous in $t$.
+\end{proof}
+
+We can realize the continuous heat-bath process started at $x$ as $(X_{N_t})_{t\ge0}$, with $(X_k)_{k\ge0}$ and $(N_t)_{t\ge0}$ as in part (b) of \cref{lem:model-dynamics}. Indeed, the superposition of the $n$ independent rate-one clocks is a Poisson process of rate $n$. At each of its points, the site that rings is uniform on $\{1,\dots,n\}$ and independent of the past; see \cite[Section~20.1, pp.~280--281]{levin-peres-2017}.
+
+We use part (d) of \cref{lem:model-dynamics} to turn a lower bound on the distance at one time into lower bounds at all earlier times. If $t\le t'$ and $d^J(x,t')>a$, then $d^J(x,t)>a$, and likewise in discrete time. This is the property used in the proof of \cref{b:cor:subcritical}, and parts (b) and (c) are used in the proof of \cref{thm:barrier-730}. We note that part (c) concerns deterministic times. It says that a chain started from $\pi$ has law $\pi$ at every fixed time. It says nothing about the law of the chain at a random time that depends on the trajectory.
+
+\section{The realized-start experiment}\label{sec:model-joint}
+
+In \cref{thm:barrier-730,thm:upper}, the initial state of the dynamics is a Gibbs sample for the realized disorder, and it is held fixed when the distance from equilibrium is evaluated. We make this precise in the following definition.
+
+\begin{definition}[Realized-start probability]\label{def:model-joint}
+Fix $n\ge2$ and $\beta>0$. Let $\PP_{J,X_0\sim\pi^J}$ be the joint law of a pair $(J,X_0)$ obtained by first sampling the disorder $J$ and then sampling $X_0$ from $\pi^J$. That is, for every Borel set $B\subseteq\R^{n(n-1)/2}$ and every $x\in\Sigma_n$,
+\[
+ \PP_{J,X_0\sim\pi^J}\{J\in B,\ X_0=x\}=\E_J\bigl[\pi^J(x)\,\mathbf 1\{J\in B\}\bigr].
+\]
+For a deterministic time $t\ge0$ and a threshold $a\in\R$, the realized-start probability is
+\begin{equation}\label{eq:common-joint}
+ \PP_{J,X_0\sim\pi^J}\{d^J(X_0,t)>a\}
+ =\E_J\sum_{x\in\Sigma_n}\pi^J(x)\,\mathbf 1\{d^J(x,t)>a\}
+ =\E_J\,\pi^J\{x\in\Sigma_n:d^J(x,t)>a\},
+\end{equation}
+and the discrete realized-start probability is defined in the same way, with $d^J_{\rm disc}(X_0,k)$ for a deterministic integer $k\ge0$ in place of $d^J(X_0,t)$.
+\end{definition}
+
+The first equality in \eqref{eq:common-joint} is the definition of the joint law, and the second is the definition of $\pi^J(\cdot)$ for sets. The quantity $d^J(X_0,t)$ is the distance from $\pi^J$ of the law at time $t$ of the dynamics started at $X_0$. Its randomness comes only from $J$ and $X_0$, since the randomness of the dynamics is integrated in $P_t^J(X_0,\cdot)$.
+
+We evaluate the distance before averaging over the initial state. If we averaged over the initial state first, the law at time $t$ would be $\sum_x\pi^J(x)P^J_t(x,\cdot)=\pi^J$ by part (c) of \cref{lem:model-dynamics}, and its distance from $\pi^J$ would be zero at every time. The realized-start probability measures instead how much Gibbs mass lies on initial states from which the dynamics is still far from equilibrium at time $t$. This is the formulation of \cite[Section~1, following Theorem~1.1, p.~3]{oai-barriers}. It is not a worst-case statement: a lower bound on $\max_xd^J(x,t)$ gives no information about the Gibbs mass of the initial states from which the dynamics mixes slowly.
+
+We note that all quantities in \eqref{eq:common-joint} are measurable. Since $\Sigma_n$ is finite, the Gibbs weights $\pi^J(x)$ and the entries of $K^J$ are continuous functions of $J$, and so are the entries of $(K^J)^k$ and of $P_t^J=e^{tn(K^J-I)}$. It follows that for all $x$, $t$, and $k$, the maps $J\mapsto d^J(x,t)$ and $J\mapsto d^J_{\rm disc}(x,k)$ are continuous, the sets $\{J:d^J(x,t)>a\}$ are open, and $J\mapsto\pi^J\{x:d^J(x,t)>a\}$ is Borel measurable. No measurable selection of initial states or of auxiliary objects is needed to define these probabilities.
+
+\begin{lemma}[Equivalent forms of a realized-start statement]\label{lem:model-joint}
+Fix $\beta>0$ and $a\in\R$, and let $(t_n)_{n\ge2}$ be deterministic times. Set
+\[
+ M_n(J)=\pi^J\{x\in\Sigma_n:d^J(x,t_n)>a\}.
+\]
+Then the following three statements are equivalent.
+\begin{enumerate}[label=(\alph*)]
+\item $\PP_{J,X_0\sim\pi^J}\{d^J(X_0,t_n)>a\}\to1$ as $n\to\infty$.
+\item $\E_JM_n\to1$ as $n\to\infty$.
+\item $M_n\to1$ in probability over the disorder; that is, $\PP_J\{M_n>1-\eps\}\to1$ for every $\eps>0$.
+\end{enumerate}
+The same holds with $d^J_{\rm disc}(x,k_n)$, for deterministic integers $k_n\ge0$, in place of $d^J(x,t_n)$. If these statements hold both in continuous and in discrete time, then $\PP_{J,X_0\sim\pi^J}\{d^J(X_0,t_n)>a,\ d^J_{\rm disc}(X_0,k_n)>a\}\to1$, and the Gibbs mass of the set of $x$ that satisfy both inequalities tends to one in probability over the disorder.
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:common-joint}, statements (a) and (b) are the same. Fix $\eps\in(0,1)$. Since $0\le1-M_n\le1$, by Markov's inequality we have
+\[
+ \PP_J\{1-M_n\ge\eps\}\le\frac{\E_J(1-M_n)}{\eps},
+\]
+and splitting the expectation according to whether $1-M_n<\eps$, we also find
+\[
+ \E_J(1-M_n)\le\eps+\PP_J\{1-M_n\ge\eps\}.
+\]
+By the first inequality, (b) implies (c). By the second inequality, (c) implies $\limsup_n\E_J(1-M_n)\le\eps$ for every $\eps\in(0,1)$, and hence (b) holds. The argument in discrete time is identical.
+
+For the last statement, let $M'_n$ be the Gibbs mass of $\{x:d^J_{\rm disc}(x,k_n)>a\}$, and let $M''_n$ be the Gibbs mass of the set of $x$ satisfying both inequalities. By a union bound for $\pi^J$, we have $1-M''_n\le(1-M_n)+(1-M'_n)$. Statement (b) holds for $M_n$ and for $M'_n$, and this implies that $\E_J(1-M''_n)\to0$. By the definition of the joint law, $\E_JM''_n$ is the joint probability that $X_0$ satisfies both inequalities, and the equivalence of (b) and (c) for $M''_n$ yields the second assertion.
+\end{proof}
+
+The complementary events satisfy the same equivalences. For deterministic
+$t_n$ and a fixed $a$, the probability
+$\PP_{J,X_0\sim\pi^J}\{d^J(X_0,t_n)\le a\}$ tends to one if and only if
+$\PP_{J,X_0\sim\pi^J}\{d^J(X_0,t_n)>a\}$ tends to zero. By
+\eqref{eq:common-joint}, this is equivalent to $\E_JM_n\to0$, and hence to
+$M_n\to0$ in probability, since $0\le M_n\le1$. Equivalently, the Gibbs
+mass of $\{x:d^J(x,t_n)\le a\}$ tends to one in probability over the disorder.
+This is the form used in \cref{thm:upper}. The same statements hold in
+discrete time.
+
+By \cref{lem:model-joint}, each of the two conclusions of \cref{thm:barrier-730} is equivalent to the convergence to one, in probability over the disorder, of the Gibbs mass of the initial states that satisfy it, and the two conclusions also hold simultaneously. We use the lemma for each fixed threshold; it gives no uniformity in the threshold and no almost sure statement in the disorder.
+
+\section{Asymptotic conventions}\label{sec:model-asymptotics}
+
+The definitions above hold for every $\beta>0$. From now on, unless stated otherwise, $\beta>1$ is fixed before $n\to\infty$, and all limits are taken as $n\to\infty$. We use the following conventions.
+
+\paragraph{Eventual statements.} A statement holds \emph{for all sufficiently large $n$}, or \emph{eventually}, if there exists $n_0$ such that it holds for all $n\ge n_0$. The threshold $n_0$ may depend on $\beta$ and on the fixed parameters named in the statement, such as an accuracy parameter $\eta$ or $\eps$ or a threshold $\tau$. It never depends on the disorder, on a configuration, or on a time.
+
+\paragraph{Constants.} We write $c,C,c_\beta,C_\beta,\dots$ for positive finite constants. They depend only on $\beta$ and on fixed parameters that are listed explicitly, and never on $n$, on the disorder, or on configurations. Within a proof, the value of an unnamed constant may change from line to line. Named constants, such as the coefficient $A_\beta$ of \cref{thm:barrier-730}, keep their meaning throughout. When several parameters are chosen, we say in which order they are fixed. A statement made ``for every fixed $\tau$'' asserts nothing uniform in $\tau$.
+
+\paragraph{Power exponents.} For a positive sequence $(a_n)$ and $r\in\R$, we write $a_n=n^{r+o(1)}$ if, for every fixed $\eta>0$, we have $n^{r-\eta}\le a_n\le n^{r+\eta}$ for all sufficiently large $n$, with a threshold that may depend on $\eta$. For example, $\Var(F_n)=n^{1/3+o(1)}$ means that for every fixed $\eta>0$, eventually $n^{1/3-\eta}\le\Var(F_n)\le n^{1/3+\eta}$.
+For nonnegative random variables $U_n$, we write $U_n=n^{r+o_\PP(1)}$ if $\PP\{n^{r-\eta}\le U_n\le n^{r+\eta}\}\to1$ for every fixed $\eta>0$. The notation $|F_n-\E F_n|=n^{1/6+o_\PP(1)}$ means
+\begin{equation}\label{eq:common-fluctuation-window}
+ \PP\bigl\{n^{1/6-\eta}\le|F_n-\E F_n|\le n^{1/6+\eta}\bigr\}\longrightarrow1\quad\text{for every fixed }\eta>0.
+\end{equation}
+This is a statement about the typical size of $F_n-\E F_n$. It does not follow from $\Var(F_n)=n^{1/3+o(1)}$, since a variance estimate does not exclude that $|F_n-\E F_n|$ is much smaller than $n^{1/6}$ with probability bounded away from zero.
+
+\section{Normalizations in the cited works}\label{sec:model-dictionary}
+
+The works from which we import results use several normalizations. Three operations relate them to ours, and they act differently.
+\begin{enumerate}[label=(\roman*)]
+\item Replacing the counting measure on $\Sigma_n$ by the uniform probability measure replaces $Z_n$ by $2^{-n}Z_n$, $F_n$ by $F_n-n\log2$, and $p_n(\beta)$ and $P_\beta$ by $p_n(\beta)-\log2$ and $P_\beta-\log2$. This is a deterministic shift. It changes neither Gibbs measures, nor variances, nor the centered variable $F_n-\E F_n$, nor the mean bias $\Delta_{n,\beta}$.
+\item Completing the Hamiltonian as in \cref{sec:model-completion} adds the random variable $\beta G$ to $F_n$. By \cref{lem:model-completion}, it changes neither Gibbs measures nor expected logarithms, but it adds $\beta^2/2$ to the variance, adds $\beta^2t^2/4$ to the logarithm of the Laplace transform of the centered variable, and multiplies the $s$th moment of an $\ell$-replica partition function by $e^{\beta^2\ell^2s^2/4}$.
+\item The energy normalization of \cite[Section~7.1]{quantitative-parisi} divides log partition functions and the Parisi functional by $\beta$ and multiplies the cumulative profile by $\beta$. It also rescales the spatial variable of the Parisi equation, which changes spatial derivatives of the Parisi solution by powers of $\beta$.
+\end{enumerate}
+\Cref{tab:model-dictionary} lists the conventions of the works cited most often. In it, $\Phi_\alpha$ and $\mathcal P_\beta$ are the solution of the Parisi equation and the Parisi functional of \cref{sec:inputs}, with terminal value $\Phi_\alpha(1,z)=\log(2\cosh z)$.
+
+\begin{table}[ht]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.36\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}}
+\toprule
+Work & Model and pressure & Completion and other conventions\\
+\midrule
+OpenAI, barriers \cite[Section~1, (1.1), pp.~2--3; Section~2, (2.1), (2.12)--(2.14)]{oai-barriers}
+& As here: $H_n^J$, $Z^J_{n,\beta}=\sum_xe^{\beta H_n^J(x)}$, $\pi^J$, $R$, $p_n(\beta)$; the same $\Phi_\alpha$ and $\mathcal P_\beta$.
+& Adds $(2n)^{-1/2}\sum_iJ_{ii}$, with new independent $J_{ii}$, in free-energy calculations only; this variable has the law of $G$. The kernels $K^J$ and $P^J_t$ and the distances $d^J$, $d^J_{\rm disc}$ are as here.\\
+\addlinespace
+OpenAI, fluctuations \cite[Section~1, p.~1; Section~5.2, p.~48; Section~7, p.~66]{oai-fluctuations}
+& Writing $\widetilde H_n$, $\widetilde Z_n$, $\widetilde F_n$ for the $H_n$, $Z_n$, $F_n$ of that work: $g_{ij}=J_{ij}$, $\sigma=x$, $\widetilde H_n=\beta H_n$, $\widetilde Z_n=2^{-n}\sum_\sigma e^{\widetilde H_n(\sigma)}=2^{-n}Z_n$, $\widetilde F_n=F_n-n\log2$.
+& $\widetilde F_n^c=\widetilde F_n+D$ with $D\sim N(0,\beta^2/2)$, which has the law of $\beta G$; hence $\widetilde F_n^c-\E\widetilde F_n^c$ has the law of $F_n^c-\E F_n^c$. $T=\beta^2$; the terminal value is $\log\cosh z$.\\
+\addlinespace
+Aronow and Lopatto \cite[(1.1)--(1.3), p.~4; Section~7.1, pp.~53--54; (7.64), p.~93]{quantitative-parisi}
+& $N=n$, $g_{ij}=J_{ij}$, $\sigma=x$; $F_{N,\beta}=F_n$ and $p_{N,\beta}=p_n(\beta)$; $a=\alpha$ and $u_a=\Phi_\alpha$, with the same functional $\mathcal P_\beta$.
+& $D_N=\operatorname{Tr}W/2$ has the law of $G$, and $F^c_{N,\beta}=F_n+\beta D_N$. In Section~7: $\gamma=\beta\alpha$, $u^{\rm en}_\gamma(q,x)=\beta^{-1}\Phi_\alpha(q,\beta x)$, the functional of $\gamma$ is $\beta^{-1}\mathcal P_\beta(\alpha)$, and $X_{N,\beta}=F_n/\beta$. The lower bound $\gamma\ge\lambda$ on the cumulative profile is $\alpha\ge\lambda/\beta$; the profile $\max\{\alpha,3s\}$ corresponds to $\lambda=3\beta s$.\\
+\addlinespace
+Aronow and Lopatto \cite[Section~1.1, p.~1; Section~3.1, p.~33]{hexagon-bias}
+& As in \cite{quantitative-parisi}: $F_{N,\beta}=F_n$, $p_{N,\beta}=p_n(\beta)$, and $u_\alpha=\Phi_\alpha$; $\alpha_\beta$ is the distribution function of the Parisi measure.
+& $D_N$ and $F^c_{N,\beta}=F_n+\beta D_N$ as in \cite{quantitative-parisi}. The mean bias $P_\beta-p_{N,\beta}$ is $\Delta_{n,\beta}$.\\
+\bottomrule
+\end{tabular}
+\caption{Normalizations of the works cited most often, compared with \eqref{eq:common-model} and \eqref{eq:model-completion}. In the second and third columns, the symbol of the cited work appears on the left of each identity. In \cite{oai-barriers,quantitative-parisi,hexagon-bias}, $P_\beta$ is defined as the infimum of $\mathcal P_\beta$; it equals our $P_\beta$ by \cref{inp:parisi}.}
+\label{tab:model-dictionary}
+\end{table}
+
+OpenAI's upper-bound paper uses the same normalization
+\cite[Section~2]{oai-typical-upper}. Its completion matrix $W(G)$ is the
+matrix $W$ of \cref{sec:model-completion}; its $\widehat H_G$, $F(G)$, and
+$\pi_G$ are our $H_n^c$, $F_n^c$, and $\pi^J$, respectively. The diagonal
+contributes only the common Gaussian variable $G$ of
+\eqref{eq:model-completion}, so the heat-bath kernels also agree by
+\eqref{eq:model-heat-bath}. The primitive matrix representation used in
+\cref{part:upper} is given in \cref{u:sec:primitive}.
+
+We record the consequences for the results of this paper. The barrier preprint \cite{oai-barriers} uses our normalization, and its results apply without translation. The fluctuation preprint \cite{oai-fluctuations} places $\beta$ inside the Hamiltonian and uses the uniform prior. Since $\widetilde F_n-\E\widetilde F_n=F_n-\E F_n$ in the notation of \cref{tab:model-dictionary}, its fluctuation theorem has the same meaning in our normalization, and its logarithmic-moment bounds concern the variable $F_n^c-\E F_n^c$, whose Laplace transform is related to that of $F_n-\E F_n$ by \eqref{eq:model-completion-laplace}. The works \cite{quantitative-parisi,hexagon-bias} use our normalization of the model. The variance--bias inequality of \cite[Remark~7.14, (7.68)]{quantitative-parisi} and the deduction in \cite[Section~1.6]{hexagon-bias} are stated directly for $\Var F_n$ and $\Delta_{n,\beta}$. The additive term $\beta^2/2$ that appears there is the variance of $\beta G$ from part (c) of \cref{lem:model-completion}, not the effect of a change of prior. Neither the completion nor the choice of prior changes any exponent in \cref{f:main} or \cref{cor:mean-bias}.

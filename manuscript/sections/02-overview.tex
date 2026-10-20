@@ -1,0 +1,1422 @@
+\chapter{Overview of the proofs}\label{sec:overview}
+
+This section gives an overview of the proofs of \cref{thm:barrier-730} and
+\cref{thm:upper}, and a shorter account of the parts of the paper that concern
+\cref{f:main} and \cref{cor:mean-bias}. Every claim made here is proved later in
+the paper, or quoted there with its source.
+\Cref{sec:ov-sign,sec:ov-architecture,sec:ov-scales} explain the reduction to
+paths, the architecture of the proof in \cite{oai-barriers}, which we follow,
+and the balance of scales that gives the exponent $7/30$.
+\Cref{sec:ov-cubic,sec:ov-static,sec:ov-dynamics} describe the cubic pressure
+deficit (\cref{sec:scalar,sec:flow,sec:cubic}), the passage to Gibbs
+probabilities (\cref{sec:fractional,sec:static}), and the dynamical argument
+(\cref{sec:references,sec:induction,sec:barrier-proof}). \Cref{sec:ov-upper}
+concerns \cref{part:upper}, and \cref{sec:ov-fluct} concerns
+\cref{part:fluct}. \Cref{tab:ov-dependencies} shows how the sections depend on
+each other.
+
+Throughout this section, $\beta>1$ is fixed. In
+\cref{sec:ov-sign,sec:ov-architecture,sec:ov-scales,sec:ov-cubic,sec:ov-static,sec:ov-dynamics},
+$\pi=\pi^J$ is the Gibbs measure at a fixed disorder. We write $\lambda$ for
+the exponent of the barrier, and we use an upper bound
+$\Delta_{n,\beta}\le C_bn^{-3\lambda}$ on the mean bias
+$\Delta_{n,\beta}=P_\beta-n^{-1}\E F_n$. For \cref{thm:barrier-730}, we take
+$\lambda=7/30$ and the bound $\Delta_{n,\beta}\le C_bn^{-7/10}$ of
+\cref{inp:hb-rate}. The exponent of the upper bound is $1-\omega$, for a fixed
+$\omega\in(0,1/4)$, and \cref{sec:ov-upper} uses the notation of
+\cref{part:upper}.
+
+\begin{table}[!t]
+\centering
+\scriptsize
+\caption{The main results of
+\cref{sec:model,sec:inputs,sec:scalar,sec:flow,sec:cubic,sec:fractional,sec:static,sec:references,sec:induction,sec:barrier-proof,u:sec:setup,u:sec:proposal,u:sec:fine,u:sec:concentration,u:sec:coarse,u:sec:connections,u:sec:proof,sec:fluct,sec:bias},
+the sections whose results they use, and the sections in which they are used.
+}\label{tab:ov-dependencies}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.5\textwidth}>{\raggedright\arraybackslash}p{0.1\textwidth}>{\raggedright\arraybackslash}p{0.13\textwidth}@{}}
+\toprule
+Section & Main results & Uses & Used in\\
+\midrule
+\ref{sec:model} Model & realized-start probability, \cref{lem:model-joint};
+ heat-bath dynamics, \cref{lem:model-dynamics}; completed Hamiltonian,
+ \cref{lem:model-completion} & --- & \ref{sec:inputs}, \ref{sec:fractional},
+ \ref{sec:references}, \ref{sec:barrier-proof}, \ref{u:sec:setup},
+ \ref{u:sec:connections}, \ref{u:sec:proof}, \ref{sec:fluct}, \ref{sec:bias}\\
+\ref{sec:inputs} Inputs & matrix comparison, \cref{inp:ob-matrix}; upper
+ bound on the mean bias, \cref{inp:hb-rate}; variance and profile bounds,
+ \cref{inp:qp-rate,inp:qp-floor}; pair, fixed-scale, and separated-overlap bounds,
+ \cref{inp:ob-pair-gap,inp:ob-fixed-gap,inp:ob-remote}; overlap-neighborhood
+ masses, \cref{inp:ob-coverage} & \ref{sec:model}, literature &
+ \ref{sec:scalar}--\ref{sec:references}, \ref{sec:barrier-proof},
+ \ref{u:sec:setup}, \ref{u:sec:coarse}, \ref{u:sec:connections}\\
+\ref{sec:scalar} Scalar problem & stationarity identities, \cref{b:lem:os-scalar-jets};
+ the constant $m_\beta$, \cref{cor:sc-mbeta} & \ref{sec:inputs} & \ref{sec:cubic},
+ \ref{sec:fractional}, \ref{sec:references}, \ref{u:sec:setup},
+ \ref{u:sec:coarse}\\
+\ref{sec:flow} Flows & uniform short-time bounds, \cref{prop:flow-uniform};
+ response to the terminal function, \cref{b:lem:os-prefix,cor:flow-prefix} &
+ \ref{sec:inputs} & \ref{sec:cubic}\\
+\ref{sec:cubic} Cubic deficit & local expansion, \cref{b:prop:os-expansion};
+ deficit on a band, \cref{prop:cub-band} & \ref{sec:inputs}--\ref{sec:flow} & \ref{sec:fractional}, \ref{sec:references}\\
+\ref{sec:fractional} Fractional moments & fractional comparison,
+ \cref{b:prop:fractional-matrix}; local fractional bound, \cref{lem:fr-local-gap}
+ & \ref{sec:model}--\ref{sec:scalar}, \ref{sec:cubic} & \ref{sec:static}\\
+\ref{sec:static} Static event & simultaneous disorder event, \cref{b:lem:static-event}
+ & \ref{sec:inputs}, \ref{sec:fractional} & \ref{sec:references}, \ref{sec:barrier-proof}\\
+\ref{sec:references} References & overlap-neighborhood masses,
+ \cref{b:lem:coverage-extension}; fixed families of references,
+ \cref{lem:ref-families} & \ref{sec:model}--\ref{sec:scalar}, \ref{sec:cubic}--\ref{sec:static} & \ref{sec:induction}, \ref{sec:barrier-proof}\\
+\ref{sec:induction} Induction & constraints along a path, \cref{prop:ind-induction};
+ a common time, \cref{cor:ind-witness} & \ref{sec:references} & \ref{sec:barrier-proof}\\
+\ref{sec:barrier-proof} Barrier proof & sign obstruction, \cref{prop:bp-obstruction};
+ \cref{thm:barrier-730,b:cor:subcritical,thm:barrier-strong} &
+ \ref{sec:model}, \ref{sec:inputs}, \ref{sec:static}--\ref{sec:induction} &
+ \ref{u:sec:proof}\\
+\ref{u:sec:setup} Upper-bound setup & primitive disorder and Gaussian bounds,
+ \cref{u:lem:goe-norm,u:lem:pressure-tail}; the scalar process beyond the
+ support, \cref{u:prop:scalar,u:lem:cross,u:lem:tails} & \ref{sec:model},
+ \ref{sec:inputs}, \ref{sec:scalar} & \ref{u:sec:proposal}--\ref{u:sec:proof}\\
+\ref{u:sec:proposal} Proposal & Gaussian assembly, \cref{u:lem:assembly};
+ spin laws, \cref{u:def:laws}; growing mesh, \cref{u:lem:quad} &
+ \ref{u:sec:setup} & \ref{u:sec:fine}--\ref{u:sec:connections}\\
+\ref{u:sec:fine} Fine entropy & reference law, \cref{u:lem:reference};
+ forward entropy, \cref{u:lem:forward-kl,u:prop:fine-kl} &
+ \ref{u:sec:setup}, \ref{u:sec:proposal} & \ref{u:sec:coarse},
+ \ref{u:sec:connections}\\
+\ref{u:sec:concentration} Concentration & fixed Gram stability,
+ \cref{u:lem:gram}; weighted concentration, \cref{u:lem:weighted} &
+ \ref{u:sec:setup}, \ref{u:sec:proposal} & \ref{u:sec:coarse}\\
+\ref{u:sec:coarse} Coarse domination & weighted energy,
+ \cref{u:lem:weighted-energy}; joint cancellation,
+ \cref{u:lem:joint,u:lem:lag}; likelihood bound, \cref{u:prop:coarse} &
+ \ref{sec:inputs}, \ref{sec:scalar}, \ref{u:sec:setup}--\ref{u:sec:concentration} &
+ \ref{u:sec:connections}\\
+\ref{u:sec:connections} Connections & smoothing and coverage,
+ \cref{u:lem:smoothing,u:lem:coverage}; boundary mass, \cref{u:lem:boundary};
+ connecting sequence, \cref{u:prop:sequence}; witness decay,
+ \cref{u:prop:witness} & \ref{sec:model}, \ref{sec:inputs},
+ \ref{u:sec:setup}--\ref{u:sec:fine}, \ref{u:sec:coarse}
+ & \ref{u:sec:proof}\\
+\ref{u:sec:proof} Upper-bound proof & pruning, \cref{u:lem:pruning};
+ \cref{thm:upper,cor:upper-discrete,cor:two-sided}; parameters,
+ \cref{u:prop:range} & \ref{sec:model}, \ref{sec:barrier-proof},
+ \ref{u:sec:setup}, \ref{u:sec:connections} & ---\\
+\ref{sec:fluct} Fluctuations & the bound of \cite{oai-fluctuations},
+ \cref{f:window}; log-concave augmentation, \cref{f:logconcave}; \cref{f:main}
+ & \ref{sec:model} & \ref{sec:bias}\\
+\ref{sec:bias} Mean bias & variance--bias inequality,
+ \cref{prop:bias-variance-deficit}; \cref{cor:mean-bias} & \ref{sec:model}, \ref{sec:fluct} & ---\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{The sign test}\label{sec:ov-sign}
+
+Recall from \cref{lem:model-joint} that \cref{thm:barrier-730} states that
+the Gibbs mass of the initial configurations from which the chain is at total
+variation distance greater than $\tau$ from $\pi$ at time
+$e^{A_\beta n^{7/30}}$ tends to one in probability over the disorder. Since $\pi$ is stationary, the chain started from a Gibbs sample has
+law $\pi$ at every deterministic time (\cref{lem:model-dynamics}), and the law
+averaged over the initial configuration carries no information. A lower bound
+on the distance must come from a property of almost every individual initial
+configuration that the dynamics forgets slowly.
+
+The property we use is the sign of an overlap. As in
+\cite[Section~8]{oai-barriers}, we choose for each $x\in\Sigma_n$ a reference
+configuration $v(x)$, with $R(v(x),x)\ge q_*$ for all $x$ outside a set of small
+Gibbs mass, where $q_*\in(0,1)$ is a fixed overlap (\cref{def:ind-algorithm}). Since $H_n(-y)=H_n(y)$, the half-space
+$\{y:R(v(x),y)\le0\}$ has Gibbs mass at least $1/2$. If the law $\nu_x$ of the
+chain started at $x$ is within $\tau$ of $\pi$ in total variation, then the
+half-space has mass at least $1/2-\tau$ under $\nu_x$. Multiplying by
+$\pi(x)$ and summing over $x$, we find that
+\begin{equation}\label{eq:ov-half-space}
+ \Bigl(\frac12-\tau\Bigr)\,\pi\bigl\{x:d^J_{\rm disc}(x,k)\le\tau\bigr\}
+ \le\PP\bigl\{R(v(X_0),X_k)\le0\bigr\},
+\end{equation}
+where $(X_k)_{k\ge0}$ is the discrete chain with $X_0\sim\pi$
+(see \eqref{eq:bp-half-space}). This is the reduction of
+\cite[(8.1)--(8.3)]{oai-barriers}. The half-space depends on the
+initial configuration, so that the distance on the left side is evaluated
+before the average over $X_0$, while the right side is a probability for the
+stationary chain. Since one update changes every overlap by at most $2/n$, a
+chain that enters the half-space must cross every overlap level between $q_*$
+and $0$.
+
+We show that these crossings cannot occur along paths that avoid a fixed set
+of small Gibbs mass. We call a sequence $x_0,\dots,x_m$ a path if all overlaps
+change by at most $2/n$ from one element to the next \eqref{eq:ind-jump}, so
+that every trajectory of the discrete chain is a path. Let $L=An^\lambda$ be
+the logarithmic time scale, for a coefficient $A>0$ fixed below, so that $e^L$
+is the time horizon, and let $T_n=\lceil n^2e^L\rceil$ be the budget of update
+attempts. For every
+disorder in an event $\mathcal G_n$ with $\PP(\mathcal G_n)\to1$, we construct
+the map $x\mapsto v(x)$ and a set $V\subseteq\Sigma_n$ with
+$\pi(V)\le3e^{-4L}$ such that
+\begin{equation}\label{eq:ov-obstruction}
+ R\bigl(v(x_0),x_m\bigr)>0\qquad\text{for every path }x_0,\dots,x_m
+ \text{ with }m\le T_n\text{ that avoids }V
+\end{equation}
+(\cref{lem:ref-families,prop:bp-obstruction,lem:bp-coefficient}). Given
+\eqref{eq:ov-obstruction}, a chain with $R(v(X_0),X_k)\le0$ for some
+$k\le T_n$ visits $V$ at one of the times $0,\dots,k$. Since $X_a$ has law
+$\pi$ for every deterministic $a$, a union bound implies that
+\[
+ \PP\bigl\{R(v(X_0),X_k)\le0\bigr\}\le(k+1)\pi(V)\le3(k+1)e^{-4L}
+\]
+(see \eqref{b:dyn:stationary-sign}). This is the only place where we use
+stationarity, and we use it only at deterministic times. For this reason the
+map $v$ and the set $V$ must be fixed before the chain is run, and they may not
+depend on its trajectory. In continuous time, the number of updates up to time
+$e^L$ is a Poisson variable with mean $ne^L$, and by Markov's inequality it
+exceeds $T_n$ with probability at most $1/n$. We conclude that
+\[
+ \pi\bigl\{x:d^J(x,e^L)\le\tau\bigr\}\le\frac{3(T_n+1)e^{-4L}+1/n}{1/2-\tau}
+\]
+for every disorder in $\mathcal G_n$ (\cref{prop:bp-quenched}), and the right
+side tends to zero. When we integrate over the disorder, $\PP(\mathcal G_n^c)$
+is added once. The threshold $\tau$ enters only through the factor
+$1/(1/2-\tau)$, which is why one coefficient serves every fixed $\tau<1/2$ and
+both clocks.
+
+\section{Overlap constraints and reference configurations}\label{sec:ov-architecture}
+
+We follow the architecture of the proof of \cite[Theorem~1.1]{oai-barriers},
+which proves a barrier at the time $\exp(n^{1/10000})$ and the threshold
+$\tau=1/4$.
+
+\paragraph{Overlap constraints.} For $(v,x,{\widetilde v})\in\Sigma_n^3$, we write
+\[
+ r=\frac{R(v,x)+R(v,{\widetilde v})}2,\qquad\delta=\frac{R(v,x)-R(v,{\widetilde v})}2,\qquad q=R(x,{\widetilde v}),
+\]
+so that the overlap matrix of $(v,x,{\widetilde v})$ is the matrix $D(r,q,\delta)$ of
+\eqref{eq:inp-triple}. We use two kinds of constraints. The constraints of the
+first kind act at fixed scales. For fixed cutoffs $0<b_2<b_1<1$
+(\cref{tab:ref-parameters}), they state that if $R(x,{\widetilde v})\ge q_*$ and
+$\abs{R(v,x)},\abs{R(v,{\widetilde v})}\le b_1$, then $\abs{R(v,x)-R(v,{\widetilde v})}\le2\eta_n$, and
+similarly with the cutoffs $(b_1,b_2)$ in place of $(q_*,b_1)$. The triples
+that violate them form the sets $\mathcal B_n(q_*,b_1)$ and
+$\mathcal B_n(b_1,b_2)$ of \eqref{eq:ref-fixed-violation}. In words, a large
+overlap between $x$ and ${\widetilde v}$ forces their small overlaps with
+$v$ to agree. The
+constraints of the second kind act at the scale $\rho$, near a level $r$ in a
+compact interval $J_\beta\subset(0,q_\beta)$. With $\varepsilon=E\rho$ and
+$E=1/100$, they state that no triple satisfies
+\[
+ r\in J_\beta,\qquad\varepsilon\le\abs\delta\le2\varepsilon,\qquad q\ge r+\rho.
+\]
+Such triples are called narrow, and they form the set $\mathcal N_n$
+(\cref{sec:ref-parameters}). Equivalently, if $R(x,{\widetilde v})\ge r+\rho$, then
+$\abs{R(v,x)-R(v,{\widetilde v})}$ does not lie in $[2\varepsilon,4\varepsilon]$. We
+exclude a band, rather than a half-line, for the following reason. Along a
+path, every overlap changes by at most $2/n<2\varepsilon$ in one step, and the
+difference $\abs{R(v,x_k)-R(v,{\widetilde v})}$ cannot pass from below $2\varepsilon$ to
+above $4\varepsilon$ without lying in the band at some time. As long as the path
+keeps a large overlap with ${\widetilde v}$, a narrow constraint keeps its overlap with $v$
+within $2\varepsilon$ of $R(v,{\widetilde v})$ (\cref{lem:ind-search}).
+
+\paragraph{Constrained pressures.} In
+\cref{sec:inputs,sec:scalar,sec:flow,sec:cubic,sec:fractional,sec:static}, we
+write the three configurations as $(v,x,y)$. For a feasible overlap matrix
+$D$, the probability that three independent samples from $\pi$ have overlap
+matrix $D$ is $Z_{3,n}(D)/Z_n^3$, where $Z_{3,n}(D)$ is the partition function
+restricted to the triples with overlap matrix $D$ (\cref{def:inp-constrained}).
+There are at most $(n+1)^3$ feasible matrices, and it suffices to bound each
+numerator from above and the denominator from below. Upper bounds for the
+numerators come from Guerra's hierarchical interpolation~\cite{guerra-2003}
+and its extension by Talagrand to replicas with prescribed overlaps
+\cite[Section~3]{parisi-formula}, \cite[Propositions~3.4 and~4.4]{talagrand-2007}.
+We use it in the form of \cite[Proposition~2.3]{oai-barriers}, stated as
+\cref{inp:ob-matrix}. For every admissible path $(Q,m)$ of $3\times3$
+covariance matrices, with positive semidefinite increments and nondecreasing
+masses, the comparison with zero terminal multiplier bounds the constrained
+pressure $p_{3,n}(D)=n^{-1}\E\log Z_{3,n}(D)$ by the trial value
+\[
+ p_{3,n}(D)\le\mathcal T_D(Q,m,0)
+ =\Psi(Q,m,0)-\frac{\beta^2}{4}\int m\dd\norm Q_F^2
+   +\frac{\beta^2}{4}\norm{D-Q_N}_F^2
+\]
+(\cref{def:inp-trial,inp:ob-matrix}). The last term is the cost of an endpoint
+$Q_N$ that differs from $D$.
+
+The baseline is the path of \cref{lem:inp-blocks}, built from the Parisi
+distribution function $\alpha=\alpha_\beta$. Below the level $r$, the three
+fields share their increments, at mass $\alpha/3$. Between $r$ and $q$, the
+fields of $x$ and $y$ share their increments, at mass $\alpha/2$, while the
+field of $v$ evolves alone, and above $q$ the three fields evolve
+independently. The endpoint of this path is $D(r,q,0)$, and its trial value is
+exactly $3P_\beta$. A perturbation of the baseline with endpoint
+$D(r,q,\delta)$ and a smaller trial value proves a pressure deficit. Whether
+such a perturbation exists is decided by the scalar Parisi problem. Let $u$ be
+the spatial derivative of the solution of the Parisi equation, let $Y$ be the
+associated diffusion, and let $\Gamma(t)=\E u(t,Y_t)^2$. It was proved in
+\cite[Proposition~3.2]{oai-barriers} that $\Gamma(q)=q$ at every point $q$ of
+the support of the Parisi measure, and by
+\cite[Theorem~1.1]{full-rsb}, the support is $[0,q_\beta]$. We conclude that
+$\Gamma(t)=t$ on $[0,q_\beta]$ (\cref{cor:inp-identity}). For two
+configurations, we have the pair bound
+$p_{2,n}(D_2(q))\le2P_\beta-(\Gamma(q)-q)^2/2$ of
+\cite[Lemma~4.3]{oai-barriers} (\cref{inp:ob-pair-gap}). This deficit
+vanishes on the support, and
+constraints at overlaps inside $(0,q_\beta)$ require the three-replica
+perturbations of \cite[Sections~4 and~7]{oai-barriers} and of
+\cref{sec:cubic}.
+
+\paragraph{Reference configurations and crossings.} In the dynamical argument,
+$v$ and ${\widetilde v}$ are reference configurations and $x$ is a configuration of the
+path. We take the references from lists of independent Gibbs samples, which
+are fixed before any path is considered (\cref{sec:ref-families}). Suppose that
+a path $x_0,\dots,x_m$ that avoids $V$ satisfies $R(v(x_0),x_m)\le0$. We
+proceed through levels $i=0,1,\dots,N_{\rm lev}-1$, with thresholds
+$r_0<r_1<\cdots$ in an interval $[t_0,2t_0]\subset J_\beta$
+(\cref{def:ind-algorithm}). At level $0$, the reference is $v_0=v(x_0)$, and
+$k_0$ is the first time with $R(v_0,x_k)\le r_0$. At level $j\ge1$, a bound
+on the Gibbs mass of overlap neighborhoods supplies a new reference $v_j$ with
+$R(v_j,x_{k_{j-1}})\ge q_*$ (\cref{b:lem:coverage-extension}, which extends
+\cite[Proposition~6.1]{oai-barriers}). We then search backward in time from
+$k_{j-1}$ for the last time $k_j$ with $R(v_j,x_k)\le r_j$. During the
+search, the constraints keep the overlaps of the path with the earlier
+references close to their values at $k_{j-1}$. The overlap
+with $v_0$ stays close to $r_0<q_*$, while $R(v_0,x_0)\ge q_*$, so that the
+search finds the crossing before it reaches time $0$ (\cref{lem:ind-crossing}).
+After the last level, at the single time $k_{N_{\rm lev}-1}$, the overlaps
+of the path with many references lie close to their thresholds. The
+thresholds are drawn at random, and a count over the time index shows that this
+is impossible when $m\le T_n$.
+
+As in \cite[Sections~8.3 and~8.4]{oai-barriers}, the references are arranged
+in blocks of $B$ levels. Within a block, a new reference has small overlaps with
+the earlier references of the block, and it deletes every retained reference
+with which its overlap exceeds $b_1$ in absolute value. Such conflicts occur
+only at the first level of a block, and they never reach the first $B-H\ge2$
+levels of the preceding block (\cref{lem:ind-deletion}).
+
+\section{The exponent}\label{sec:ov-scales}
+
+Three requirements fix the scales, which are listed in \cref{tab:ov-scales}.
+The order in which the parameters are chosen is recorded in
+\cref{tab:ref-parameters,tab:bp-order}.
+
+\begin{table}[!t]
+\centering
+\small
+\caption{The scales of the proof of \cref{thm:barrier-730} and their roles.
+Here $R$, $E=1/100$, $S$, and $A_\beta$ are constants fixed before $n\to\infty$. The
+last five rows are the rates of decay of the error terms of
+\cref{b:lem:static-event}, without constants and polynomial factors; see
+\cref{tab:st-errors,tab:ref-exponents}.}\label{tab:ov-scales}
+\begin{tabular}{@{}ll>{\raggedright\arraybackslash}p{0.5\textwidth}@{}}
+\toprule
+Quantity & $\lambda=7/30$ & Role\\
+\midrule
+$\rho_n$ & $Rn^{-7/30}$ & gap $q-r$ of the narrow constraints;
+ length of a threshold interval\\
+$\varepsilon_n=E\rho_n$ & $ERn^{-7/30}$ & overlap imbalance
+ $\varepsilon_n\le\abs\delta\le2\varepsilon_n$; radius of the windows\\
+$\eta_n$ & $n^{-5/21}$ & tolerance of the fixed-scale constraints\\
+$s_n=S\rho_n$ & $SRn^{-7/30}$ & order of the fractional moment\\
+$L_n$ & $A_\beta n^{7/30}$ & logarithmic time scale; logarithm of
+ the list sizes\\
+\midrule
+$n\rho_n^3$ & $R^3n^{3/10}$ & Gibbs probability of narrow triples\\
+$n\eta_n^2$ & $n^{11/21}$ & Gibbs probability of fixed-scale triples\\
+$n\rho_n^4$ & $R^4n^{1/15}$ & disorder failure of a local or
+ separated-overlap bound\\
+$n\eta_n^4$ & $n^{1/21}$ & disorder failure of a fixed-scale bound\\
+$n^2\rho_n^6/n^{7/15}$ & $R^6n^{2/15}$ & disorder failure of the
+ denominator (polynomial)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The denominator.} On the disorder event of \cref{sec:static}, we
+have $F_n\ge n(P_\beta-c_0\rho^3)$, so that
+$Z_n^3\ge e^{3n(P_\beta-c_0\rho^3)}$. To obtain this bound from
+Chebyshev's inequality with a fixed margin, we choose constants
+$a_0<c_0$ such that $\Delta_{n,\beta}\le a_0\rho^3$
+for all large $n$. Since $\E F_n=n(P_\beta-\Delta_{n,\beta})$, the distance from
+the mean of $F_n$ to the threshold is then at least
+$n(c_0-a_0)\rho^3$. The bounds on the numerators keep a deficit
+$\varkappa g\rho^3$, where $g\rho^3$ is a lower bound, uniform over the band, for the
+deficit per spin of the three-replica pressure near a level $r$
+(\cref{sec:ov-cubic,sec:ov-static}) and $\varkappa\in(0,1)$ is fixed. The ratio
+$Z_{3,n}(D)/Z_n^3$ is then at most $e^{-n(\varkappa g-3c_0)\rho^3}$, which is
+small when $3c_0<\varkappa g$. Constants $a_0<c_0<\varkappa g/3$
+with these properties exist if and only if
+\[
+ \limsup_{n\to\infty}\frac{\Delta_{n,\beta}}{\rho^3}<\frac{\varkappa g}3
+\]
+(see \eqref{eq:st-S1}). With $\Delta_{n,\beta}\le C_bn^{-7/10}$, this holds
+for $\rho=Rn^{-7/30}$ if $R^3>3C_b/(\varkappa g)$ (see
+\eqref{b:dyn:R-condition}). By Chebyshev's inequality and the bound
+$\Var F_n\le C_vn^{7/15}$ of \cref{inp:qp-rate}, the lower bound on $F_n$ fails
+with probability at most a constant times $n^{7/15}/(n^2\rho^6)$, which is
+$O(n^{-2/15})$. We note that \cref{f:main} is not used in the proofs of
+\cref{thm:barrier-730,thm:barrier-strong}.
+
+\paragraph{The count.} The thresholds lie in the intervals
+$I_i=[t_0+3i\rho,t_0+(3i+1)\rho]$, of length $\rho$ and spacing $3\rho$. There
+are $N_{\rm lev}=MB$ levels, arranged in $M=\lfloor t_0/(3B\rho)\rfloor$
+blocks (see \eqref{b:dyn:threshold-intervals}). In \cref{sec:ov-dynamics}, we
+explain why a path of length $m$ that avoids $V$ and violates
+\eqref{eq:ov-obstruction} produces, for every array of thresholds, a time
+$k\le m$ at which $M$ overlaps lie in windows of radius
+$\Psi_0=2\varepsilon+2\eta_n+2/n$ around their thresholds
+(\cref{cor:ind-witness}). For independent thresholds, uniform on their
+intervals, this event has probability at most
+\begin{equation}\label{eq:ov-count}
+ (m+1)\gamma_n^M,\qquad
+ \gamma_n=\frac{2\Psi_0}\rho\longrightarrow4E=\frac1{25}
+\end{equation}
+(see \eqref{b:dyn:window-weights} and \eqref{b:dyn:prefix-count}). If this quantity
+is less than one, such a path cannot exist. Note that $M$ is of order
+$1/\rho$, so that we may take $\log m$ of order $n^\lambda$. This leads to the
+time horizon $e^L$ with the logarithmic time scale $L=An^\lambda$, for every
+$A<t_0\log25/(3BR)$ (see \eqref{b:dyn:coefficient}). The count requires the
+ratio $\gamma_n$ of the length of a window to the length $\rho$ of a threshold
+interval to stay below one. With $\varepsilon=E\rho$, the overlap
+imbalance is of the largest permitted order, and this ratio stays below a
+fixed bound. The gap satisfies $q-r\ge\rho$, and the weakest local deficit
+occurs at the corner $q-r=\rho$, $\abs\delta=E\rho$ of the band of
+\cref{sec:ov-cubic}.
+
+In summary, the upper bound $n^{-3\lambda}$ on the mean bias allows
+$\rho\asymp n^{-\lambda}$, there are then of order $n^\lambda$ levels, and the
+count allows $\log t$ of order $n^\lambda$: the exponent of the barrier is one
+third of the exponent of the upper bound on the mean bias. For the upper bound
+$n^{-7/10}$ of \cref{inp:hb-rate}, this gives the exponent $7/30$ of
+\cref{thm:barrier-730}.
+
+\paragraph{The union bounds and the exponent $1/4$.} The proof uses two kinds
+of union bound. In the disorder event, each of at most $(n+1)^3$ bounds on
+constrained partition functions near a level $r$ fails with probability at
+most $e^{-cn\rho^4}$ (\cref{sec:ov-static}). The sufficient condition
+$n\rho^4/\log n\to\infty$ makes this polynomial union bound vanish (see
+\eqref{eq:st-S3}). At a fixed disorder, we multiply a count $e^{CL}$ of reference
+configurations and path positions by Gibbs probabilities bounded by
+$C'(n+1)^3e^{-cn\rho^3}$, and it suffices that $cn\rho^3-CL-3\log(n+1)\to\infty$.
+Under the stronger condition $n\rho^3/L\to\infty$, we have this for every fixed $C$.
+For $\rho=Rn^{-\lambda}$ and $L=An^\lambda$, both sufficient conditions hold
+when $\lambda<1/4$. At $\lambda=1/4$, the quantity $n\rho^4=R^4$ is bounded, and
+the polynomial union bound in the disorder event is ineffective, whether or
+not the conditional union bound can be absorbed by a choice of constants. The
+argument gives no exponent of $1/4$ or more, whatever the upper bound on
+the mean bias (\cref{tab:bp-exponents}). We note that a
+mean bias of order $n^{-3/4}$, as predicted by Franz, Parisi, and
+Ricci-Tersenghi~\cite{franz-parisi-ricci-2026}, would correspond exactly to this
+threshold (\cref{sec:open}).
+
+\section{The cubic deficit}\label{sec:ov-cubic}
+
+We now describe the pressure deficit for the narrow constraints. We fix the
+compact intervals $J_\beta\subset\operatorname{int}I_\beta$ with
+$I_\beta\subset(0,q_\beta)$ of \cref{sec:ref-parameters}; the general
+statements of \cref{sec:fractional,sec:static} write them as
+$\mathcal J\subset\operatorname{int}I$. For a center $r\in J_\beta$, the gap
+$d=q-r$, and the overlap imbalance $\delta$, we need a trial value for
+$D(r,q,\delta)$ below $3P_\beta$ by a fixed multiple of $\rho^3$, uniformly
+over $r\in J_\beta$ and over the band
+$\{\rho\le d\le d_0,\ E\rho\le\abs\delta\le2E\rho\}$. The local cutoff $d_0$ is
+chosen so small that every local window lies in $I_\beta$.
+
+\paragraph{The obstacle.} In \cite[Section~7]{oai-barriers}, the field of $x$
+receives $\delta$ times a Gaussian combination of the field increments in a
+window $[r-h,r+h]$, and the field of $y$ receives $-\delta$ times the same
+combination. The resulting excess covariance in the antisymmetric direction
+$\mathbf e_x-\mathbf e_y$ contributes to the endpoint cost $(\beta^2/4)\norm{D-Q_N}_F^2$, and the expansion of
+the trial value has the remainder $C(\abs\delta^3h^{-3/2}+\delta^4h^{-2})$
+(see \eqref{eq:inp-remote}), which is small compared with the gain only if
+$\abs\delta$ is much smaller than $h^{3/2}$, while $h$ is smaller than $q-r$.
+In \cite{oai-barriers}, $h=\rho^8$ and $\abs\delta$ is of order $\rho^{20}$,
+and the resulting deficit is of order $\rho^{43}$ \cite[(7.32)]{oai-barriers}.
+When $\abs\delta$ and $q-r$ are both of order $\rho$, however, the mismatch and
+the remainder are as large as the gain.
+
+\paragraph{The observation.} For the perturbation constructed below, at
+centers in the interior of the support, the terms of order at most two in the
+width parameter $h$ of the window cancel exactly. The reason is the first stationarity identity
+$\beta^2\E\chi(t,Y_t)^2=1$, where $\chi$ is the second spatial derivative of
+the Parisi solution. This identity is the derivative of $\Gamma(t)=t$, and it
+expresses the marginal stability of the Parisi solution. The deficit is then of
+third order in $h$. To find it, we need a perturbed path whose endpoint
+is exactly $D(r,q,\delta)$, so that we incur no mismatch cost, and an expansion of
+its trial value to third order with a remainder of fourth order.
+
+\paragraph{The perturbed path.} We fix a ratio $\vartheta\in(0,1/2]$; the
+dynamical argument uses $\vartheta=1/2$. Given $(r,d,\delta)$, let $h=d/\vartheta$
+be the width parameter of the window, $q_0=r-h$ its left endpoint, and $k=\delta/h$ the
+relative imbalance (see \eqref{b:eq:os-parameters}). The perturbed path has the five
+stages of \cref{tab:cub-stages}. In the baseline, the first four stages are
+the following: the three fields share their increments on $[q_0,r]$, the
+fields of $x$ and $y$ share theirs on $[r,q]$ while $v$ evolves alone, and all
+three are independent on $[q,q_0+2h]$. To perturb them, we add $\delta\,\Xi$ to the
+field of $x$ and subtract it from the field of $y$, where
+\[
+ \Xi=\frac1h\bigl\{\omega_0(g_1-g_2-g_x-g_y)+\omega_1g_v\bigr\},\qquad
+ \omega_0=\frac1{2-\vartheta},\qquad\omega_1=\frac{1-\vartheta}{2-\vartheta},
+\]
+and $g_1,g_2,g_v,g_x,g_y$ are the field increments of the window
+(see \eqref{eq:cub-contrast}). The weights are fixed, and the contrast extends past
+the time $q$ at which $x$ and $y$ separate. By \eqref{eq:cub-contrast-moments},
+the perturbation changes the covariance of the window in two ways: it shifts
+the overlaps of $v$ with $x$ and with $y$ by $+\delta$ and $-\delta$, and it
+adds an excess covariance of order $\delta^2/h$ in the antisymmetric
+direction $\mathbf e_x-\mathbf e_y$. A fifth
+stage, the terminal correction, removes this excess exactly. It lasts a time
+proportional to $hk^2$, and it uses the positive semidefinite rate
+$\mathrm{Id}-(\mathbf e_x-\mathbf e_y)(\mathbf e_x-\mathbf e_y)^{\mathsf T}/4$ in place of
+$\mathrm{Id}$. Every increment of the path is positive semidefinite, the masses are
+nondecreasing, and the endpoint is exactly $D(r,q,\delta)$
+(\cref{lem:cub-identities,lem:cub-path}). From
+\cite[Section~7]{oai-barriers} we keep the hierarchy in which the masses are
+divided by the sizes of the common blocks, the antisymmetric Gaussian
+contrast, and the source of the deficit in the identity
+$\beta^2\E\chi(r,Y_r)^2=1$.
+
+\paragraph{The reduction.} We split the trial value $\mathcal T(q_0,h,k)$
+into the initial segment $[0,q_0]$, on which the three fields share every
+increment, and the local window. Let $V(q_0,h,k,z)$ be the difference between
+the value of the local window on the diagonal $\{z_v=z_x=z_y=z\}$ and its
+unperturbed value $3\Phi(q_0,z)$ (see \eqref{eq:cub-V}), and let $\Delta\Pi$ be
+the change of the penalty $\int m\dd\norm{Q}_F^2$. The initial segment responds
+to the change $V$ of its terminal function linearly, up to an error
+$\norm{V}_\infty^2/2$ that does not depend on the number of levels
+(\cref{b:lem:os-prefix,cor:flow-prefix}). Since $\norm{V}_\infty\le Ch^2k^2$,
+we have
+\[
+ \mathcal T(q_0,h,k)-3P_\beta=\E V(q_0,h,k,Y_{q_0})-\frac{\beta^2}4\Delta\Pi
+ +O(h^4k^4)
+\]
+(\cref{cor:cub-prefix}). The expectation is taken under the law of the scalar
+diffusion at the fixed time $q_0$, which does not depend on $(h,k)$; this is
+why we expand at a fixed left endpoint. The local window is a composition of
+five short semilinear parabolic flows on $\R^3$, some with singular diffusion
+matrices. In \cref{sec:flow} we bound their mixed derivatives in $(h,k)$,
+uniformly in the field and including $h=0$ (\cref{prop:flow-uniform}). Using
+these bounds, we find that
+\begin{equation}\label{eq:ov-pointwise}
+ V(q_0,h,k,z)=\frac{\beta^4\chi_0^2}4\Delta\Pi
+ +\beta^6h^3\bigl\{\alpha(q_0)^2\chi_0^3\,C_\chi(k)
+ +\alpha(q_0)\,w_0^2\,C_w(k)\bigr\}+O(h^4k^2)
+\end{equation}
+(\cref{b:lem:os-flow,prop:cub-pointwise}). Here $\chi_0=\chi(q_0,z)$ and
+$w_0=w(q_0,z)$ are the second and third spatial derivatives of the Parisi
+solution, and $C_\chi$ and $C_w$ are the trace polynomial and the Wick
+polynomial of \eqref{b:eq:os-R} and \eqref{b:eq:os-W}. When the mass is frozen
+at $\alpha(q_0)$ on the window, the stages are Gaussian integration steps, and
+three formal steps with explicit coefficient matrices give the coefficients of
+order two and three (\cref{lem:cub-three-steps,lem:cub-centered,prop:cub-frozen}).
+The variation of $\alpha$ on the window contributes, at order three, exactly
+the corresponding part of $\beta^4\chi_0^2\Delta\Pi/4$ (\cref{lem:cub-mass}).
+
+\paragraph{The cancellations.} The penalty enters the trial value twice:
+directly, with the factor $-\beta^2/4$, and through $V$, with the factor
+$\beta^4\chi(q_0,Y_{q_0})^2/4$. After the expectation, the sum is
+$(\beta^2/4)(\beta^2\E\chi(q_0,Y_{q_0})^2-1)\Delta\Pi$, which vanishes by the
+first stationarity identity. Since $\Delta\Pi$ is of order $h^2$,
+this removes every term of order $h^2$, as well as the terms of order $h^3$ that involve
+$\alpha'(q_0)$. The second stationarity identity
+$\E w(t,Y_t)^2=2\alpha(t)\E\chi(t,Y_t)^3$ implies that the expectation of the
+braces in \eqref{eq:ov-pointwise} equals
+$\alpha(q_0)^2\E\chi(q_0,Y_{q_0})^3\{C_\chi(k)+2C_w(k)\}$. We conclude that
+\begin{equation}\label{eq:ov-expansion}
+ \Bigl|\mathcal T(q_0,h,k)-3P_\beta
+ -\alpha(r)^2\beta^6\E\chi(r,Y_r)^3\,h^3P_\vartheta(k)\Bigr|\le Ch^4k^2,
+ \qquad P_\vartheta=C_\chi+2C_w
+\end{equation}
+(\cref{b:prop:os-expansion}, with $q_0+h=r$). Both identities hold on
+$(0,q_\beta)$ (\cref{b:lem:os-scalar-jets}), and both were known; see
+\cite[proof of Lemma~7.2]{quantitative-parisi} and \cite[Lemma~2.5]{full-rsb}.
+The use of the second identity in a covariance expansion is new. The
+polynomial $P_\vartheta$ is even, with coefficients
+$c_2(\vartheta)=2\vartheta(\vartheta-1)/(\vartheta-2)^2<0$,
+$c_4(\vartheta)<0$, and $c_6(\vartheta)>0$ (see \eqref{eq:cub-c}). For
+$\vartheta=1/2$,
+\[
+ P_{1/2}(k)=-\frac29k^2-\frac{62}{243}k^4+\frac{6952}{19683}k^6
+\]
+(see \eqref{eq:cub-P-half}), and \cref{sec:cub-coefficients} lists the traces from
+which this polynomial can be recomputed by hand.
+
+\paragraph{The deficit on the band.} In the variables $d$ and $\delta$, we
+have $-h^3P_\vartheta(k)=\mathcal G_\vartheta(d,\abs\delta)$, where
+\[
+ \mathcal G_\vartheta(d,x)=-\frac{c_2}\vartheta\,x^2d-\vartheta c_4\frac{x^4}d
+ -\vartheta^3c_6\frac{x^6}{d^3}
+\]
+(see \eqref{eq:cub-G-function}). The leading term is
+$2(1-\vartheta)(2-\vartheta)^{-2}\delta^2d$, which is $4\delta^2d/9$ for
+$\vartheta=1/2$. The deficit is quadratic in the overlap imbalance and
+linear in the gap $q-r$; its minimum on the band is a positive multiple of
+$\rho^3$, and it can be larger away from the corner. The scalar factor
+$\alpha(r)^2\beta^6\E\chi(r,Y_r)^3$ is bounded below on $I_\beta$ by a constant
+$m_\beta>0$, since $\alpha>0$ on $(0,q_\beta]$ and
+$\E\chi(r,Y_r)^3\ge\beta^{-3}$ (\cref{cor:sc-mbeta}). For $E=1/100$, the
+function $\mathcal G_\vartheta$ is increasing in $d$ and in $\abs\delta$ on the
+band, and it attains its minimum at the corner $(\rho,E\rho)$
+(\cref{lem:cub-band}). Choosing $d_0$ so small that the remainder in
+\eqref{eq:ov-expansion} is absorbed, we obtain, for every fixed
+$g'<m_\beta E^2G(\vartheta,E)$,
+\begin{equation}\label{eq:ov-band}
+ p_{3,n}\bigl(D(r,q,\delta)\bigr)\le\mathcal T(q_0,h,k)\le3P_\beta-g'\rho^3
+\end{equation}
+for every feasible matrix in the band, all $n$, and all $0<\rho\le d_0$,
+uniformly over $r\in J_\beta$ (\cref{prop:cub-band}). Here $G(\vartheta,E)$ is the value of
+$E^{-2}\rho^{-3}\mathcal G_\vartheta$ at the corner, and $G(1/2,1/100)>1/3$.
+Since the second stationarity identity fails at $t=q_\beta$, where the Parisi
+measure has an atom (\cref{rem:sc-upper-atom}), the centers lie in compact
+subintervals of $(0,q_\beta)$; no other condition on the Parisi measure near
+$r$ is needed, in contrast with \cite[Lemma~7.1]{oai-barriers}.
+
+\section{From pressures to Gibbs probabilities}\label{sec:ov-static}
+
+\paragraph{The obstacle.} The bound \eqref{eq:ov-band} concerns the quenched
+pressure $n^{-1}\E\log Z_{3,n}(D)$. However, Gaussian concentration of this
+Lipschitz function of the disorder (\cref{rem:inp-lipschitz}) turns a mean
+deficit of order $\rho^3$ only into the probability bound $e^{-cn\rho^6}$, and
+$n\rho^6$ tends to zero; for $\rho=Rn^{-7/30}$, it is $R^6n^{-2/5}$.
+
+\paragraph{Fractional moments.} To overcome this obstacle, we bound positive
+fractional moments of order $s=S\rho$, for a small constant $S>0$. Suppose that
+\begin{equation}\label{eq:ov-fractional}
+ \frac1{ns}\log\E Z_{3,n}(D)^s\le3P_\beta-g\rho^3 .
+\end{equation}
+Applying Markov's inequality to $Z_{3,n}(D)^s$, we find that
+\[
+ \PP\bigl\{n^{-1}\log Z_{3,n}(D)>3P_\beta-\varkappa g\rho^3\bigr\}
+ \le e^{-(1-\varkappa)gS\,n\rho^4},
+\]
+and $n\rho^4$ grows like a power of $n$ (Step~2 of the proof of
+\cref{b:lem:static-event}). To prove \eqref{eq:ov-fractional}, we adapt the
+matrix comparison of \cite[Proposition~2.3]{oai-barriers} to moments of order
+$s$, as in the positive-moment interpolation of Aronow and Lopatto
+\cite[Section~2.3]{quantitative-parisi}: the disorder is integrated at the outer
+mass $s$, instead of by an expectation. In this way we find that the trial
+value of every admissible path whose masses are all at least $s$ bounds
+$(ns)^{-1}\log\E Z_{\ell,n}(D)^s+\beta^2\ell^2s/(4n)$
+(\cref{b:prop:fractional-matrix}). The interpolation is carried out for the
+completed Hamiltonian $H_n+G$ of \cref{sec:model}, whose covariance is exactly
+$nR(x,y)^2/2$. The correction $\beta^2\ell^2s/(4n)$ is quadratic in the number
+$\ell$ of configurations, because the same variable $G$ enters every
+configuration (\cref{lem:model-completion}). Since this correction is
+nonnegative, it can be discarded.
+
+\paragraph{The profile $\max\{\alpha,3s\}$.} The masses of the perturbed path
+on its initial segment are $\alpha(t)/3$, and $\alpha(t)\to0$ as $t\to0$, so
+that the requirement that all masses are at least $s$ fails near the origin.
+To overcome this, we replace $\alpha$ by $\max\{\alpha,3s\}$ on the initial
+segment. By the trial bound of Aronow and Lopatto
+\cite[Lemma~7.2]{quantitative-parisi}, the Parisi functional of this profile
+exceeds $P_\beta$ by at most $Cs^5$ (\cref{inp:qp-floor,lem:fr-floor}), which
+is much smaller than $\rho^3$. The profile differs from $\alpha$ only on an
+interval $[0,Cs]$, far from the window, which starts at $q_0\ge\min I_\beta>0$. We
+show that its effect on the response of the initial segment to $V$ is at most
+$C\norm{V'}_\infty\norm{\max\{\alpha,3s\}-\alpha}_{L^1}\le C\delta^2s^2/h$
+(\cref{lem:fr-prefix-response}). On the band this is at most a constant times
+$S^2\rho^3$, and we make it small by the choice of $S$
+(see \eqref{b:eq:coarse-floor-error}). Together with \eqref{eq:ov-band}, this
+proves \eqref{eq:ov-fractional} for every fixed $g<m_\beta E^2G(\vartheta,E)$,
+for all $n$ and all small $\rho$, uniformly over the band
+(\cref{lem:fr-local-gap}).
+
+\paragraph{The other regimes.} Every narrow triple falls into one of three
+regimes (\cref{lem:st-cover}). In the local regime $q-r\le d_0$, we use
+\eqref{eq:ov-fractional}. In the regime $q-r>d_0$ of separated overlaps, with
+$\abs{q-\Gamma(q)}$ small, we use the quadratic deficit $c_{\rm sep}\delta^2$ of
+\cref{lem:st-remote}, which we derive from
+\cite[Section~7, Steps~1--7]{oai-barriers} with fixed parameters; its source is
+the decay $\beta^2\E[\chi(q,Y_q)\chi(r,Y_r)]\le1-c(q-r)$ of the mixed
+susceptibility \cite[(7.31)]{oai-barriers}. Since $\delta^2$ is of order
+$\rho^2$, Gaussian concentration suffices there. In the
+remaining pair regime, the two configurations with the larger overlap $q$ have
+$\abs{q-\Gamma(q)}>\nu$ for a fixed $\nu>0$, so that the pair deficit
+$(\Gamma(q)-q)^2/2$ of \cite[Lemma~4.3]{oai-barriers} (\cref{lem:st-pair}) applies. For
+the fixed-scale constraints, we use the three-replica deficit
+$c_{\rm fix}\delta^2$ of \cite[(4.20)]{oai-barriers} (\cref{lem:st-fixed}) at
+the tolerance $\abs\delta\ge\eta_n$. In the separated-overlap, pair, and
+fixed-scale regimes, the mechanisms are those of \cite{oai-barriers}; what
+changes are the scales at which the pressure deficits are converted into
+probability bounds.
+
+\paragraph{One disorder event.} The disorder event $\mathcal A_n$ of
+\cref{b:lem:static-event} requires the lower bound on $F_n$ of
+\cref{sec:ov-scales} and upper bounds on all constrained partition functions
+of the local, separated-overlap, fixed-scale, and pair families; these are
+deterministic families of at most $C(n+1)^3$ matrices. The event
+$\mathcal A_n$ fails with probability at most
+\[
+ C\frac{n^{7/15}}{n^2\rho^6}+C(n+1)^3\bigl(e^{-cn\rho^4}+e^{-cn\eta_n^4}\bigr)
+ +C(n+1)e^{-cn}
+\]
+(see \eqref{b:eq:static-event-failure}), which is $O(n^{-2/15})$ for
+$\lambda=7/30$. For every disorder in $\mathcal A_n$,
+dividing the numerators by the denominator, we find that
+\[
+ \pi^{\otimes3}(\mathcal N_n)\le C(n+1)^3e^{-cn\rho^3},\qquad
+ \pi^{\otimes3}(\mathcal W_n)\le C(n+1)^3e^{-cn\eta_n^2},
+\]
+where $\mathcal W_n$ is the set of fixed-scale triples
+(see \eqref{b:eq:conditional-static-errors}). We keep two kinds of error apart
+(\cref{rem:st-two-levels}). Our estimate for the disorder failure probability
+$\PP(\mathcal A_n^c)$ contains a polynomial term, and we use this estimate
+once, additively, at the end of the proof. The Gibbs
+probabilities at a fixed disorder in $\mathcal A_n$ decay at least as fast as
+$e^{-cn^{1-3\lambda}}$, and only these are multiplied by the numbers $e^{O(L)}$
+of reference configurations and path positions. This separation replaces the
+conversion \cite[Lemma~4.2]{oai-barriers} of pressure bounds into probability
+bounds, whose finite-size error $n^{-1/24}$ is far too large at the scale
+$\rho^3$.
+
+\section{The dynamical argument}\label{sec:ov-dynamics}
+
+\paragraph{Fixed families of references.} The dynamical argument starts from
+two inputs at a fixed disorder. The first is the bound on the Gibbs mass of
+overlap neighborhoods: for every $S\subseteq\Sigma_n$, all $x\in S$ outside a
+set of Gibbs mass less than $e^{-D_1L}$ have Gibbs mass at least $e^{-D_3L}$ of
+configurations $z\in S$ with $\abs{R(x,z)}\ge q_*$. We prove it by the argument
+of \cite[Proposition~6.1]{oai-barriers}, at every scale $L\to\infty$ with
+$L=o(n)$ (\cref{b:lem:coverage-extension}). The second input is the bound
+$\pi^{\otimes3}(\mathcal B_n)\le q_n$ for the exceptional triples
+$\mathcal B_n=\mathcal N_n\cup\mathcal B_n(q_*,b_1)\cup\mathcal B_n(b_1,b_2)$ on
+the event $\mathcal A_n$, where
+$q_n=C(n+1)^3(e^{-cn\rho^3}+e^{-cn\eta_n^2}+e^{-cn})$ satisfies
+$e^{CL}q_n\to0$ for every fixed $C$ (\cref{lem:ref-single-event}).
+
+In \cite[Section~8.3]{oai-barriers}, the properties of the lists of references
+are proved with probability tending to one jointly over the disorder, the
+lists, and the path, with bounds averaged over the disorder. At our scales,
+such an averaged bound contains the disorder failure probability, which does
+not remain small after multiplication by $e^{O(L)}$. For this reason, we fix
+the disorder first. At each
+disorder in $\mathcal G_n$, we sample the lists, with
+$\lceil e^{(c_s+1)L}\rceil$ independent Gibbs samples at the levels of
+position $s$ in a block. The expected Gibbs mass of the configurations at which
+some cell contains no suitable entry is at most $2e^{-4L}$. The expected number
+of exceptional triples of list entries, and the expected Gibbs mass of the
+configurations that form one with two entries, are at most $e^{O(L)}q_n$. We fix
+a realization at which the sum of such quantities is at most its mean
+(\cref{lem:ref-families}). Outside a set $V$ with $\pi(V)\le3e^{-4L}$, it has
+properties (P1)--(P4) of \cref{sec:ind-setting}: every cell supplies a new
+reference for each configuration in it, the fixed-scale constraints hold across $q_*$ and across $b_1$, and
+no configuration outside $V$ forms a narrow triple with two signed entries.
+The family and $V$ depend only on $J$ (\cref{rem:ref-every-path}).
+
+\paragraph{The accumulation of errors.} In
+\cite[(8.19)--(8.20)]{oai-barriers}, the overlaps of every retained reference
+with the current configuration and with the later references are controlled
+within $6j\varepsilon$ after $j$ levels. These errors accumulate, and the final
+count of \cite[(8.29)]{oai-barriers} requires $N_{\rm lev}\varepsilon$ to be
+much smaller than $\rho$. Since $N_{\rm lev}$ is of order $1/\rho$, this forces
+$\varepsilon$ to be much smaller than $\rho^2$. Our choice $\varepsilon=E\rho$,
+at which the narrow constraints have a deficit of order $\rho^3$, is far outside
+this range.
+
+\paragraph{Next retained references.} To overcome this, we compare each
+retained reference $v_i$ with the next retained reference $v_{a_j(i)}$, where
+$a_j(i)$ is the smallest retained level larger than $i$ after level $j$
+(\cref{sec:ind-algorithm}). We call the overlap $c_j(i)=R(v_i,v_{a_j(i)})$ the
+center of $v_i$. When $v_{i+1}$ is selected at the time $k_i$, we have
+$R(v_{i+1},x_{k_i})\ge q_*$ and $R(v_i,x_{k_i})\in[r_i-2/n,r_i]$, and the
+fixed-scale constraint across $q_*$ implies that
+$\abs{c_j(i)-r_i}\le2\eta_n+2/n$. The center changes only when a deletion
+removes the next retained reference of $i$. The next retained reference is then
+the first reference of the following block, which is never deleted, and the
+center moves by at most $2\varepsilon+2\eta_n$. We show by induction that, for
+every retained $i<j$,
+\[
+ \abs{c_j(i)-r_i}\le2\varepsilon+4\eta_n+\frac2n,\qquad
+ \abs{R(v_i,x_{k_j})-c_j(i)}<2\varepsilon
+\]
+(\cref{def:ind-invariant,prop:ind-induction}). The errors are of order
+$\varepsilon$ at every level, and they do not grow with the number of levels.
+
+The narrow constraints preserve these windows during the backward search
+(\cref{lem:ind-search}). Suppose that some window fails at a time between
+$k_j$ and $k_{j-1}$, and let $k$ be the largest such time and $v_i$ a
+reference whose window fails at $k$. All windows hold at time $k+1$, and since
+one step changes overlaps by at most $2/n$, the overlap $R(v_i,x_k)$ differs
+from $c_j(i)$ by an amount in $[2\varepsilon,2\varepsilon+2/n)$. Let
+$a=a_j(i)$. Then $R(v_a,x_k)$ is close to $r_a$ or larger: if $a=j$, because the
+backward search has not yet reached the crossing of $r_j$, and otherwise
+because the window of $v_a$ holds at time $k+1$. Since $r_a-r_i\ge2\rho$ and
+all errors are of order $\varepsilon$, we find that $R(v_a,x_k)\ge r+\rho$, where $r$ is the mean of $R(v_i,x_k)$ and
+$R(v_i,v_a)=c_j(i)$. The triple $(v_i,x_k,v_a)$ is then narrow, which (P4)
+excludes because $x_k\notin V$. In other words, the next retained reference
+supplies the large overlap that the narrow constraint needs, and the spacing
+$3\rho$ of the threshold intervals makes this overlap large enough.
+
+\paragraph{The count.} At the time $k_*=k_{N_{\rm lev}-1}$, the first
+reference $v_{\ell B}$ of each block $\ell$ still has its original next retained
+reference $v_{\ell B+1}$, because the first two levels of a block are never
+deleted. By its window, we have $\abs{R(v_{\ell B},x_{k_*})-r_{\ell B}}<\Psi_0$ for
+$\ell=0,\dots,M-1$ (\cref{cor:ind-witness}). The reference of each level depends
+only on the thresholds of the earlier levels (\cref{lem:ind-predictable}); this
+is why a selected reference whose crossing fails is kept. Removing the windows
+one at a time, from the largest level down, we find that for each fixed time
+$k$ the $M$ windows hold with probability at most $\gamma_n^M$ over independent
+uniform thresholds (\cref{lem:bp-product}). Summing over $k\le m$, we have the
+bound \eqref{eq:ov-count}. If $(m+1)\gamma_n^M<1$, some threshold array admits no such
+time, which contradicts the existence of a path that violates
+\eqref{eq:ov-obstruction} (\cref{prop:bp-obstruction}). In \cite[(8.29)]{oai-barriers}, the count is a union over
+subsets of retained levels; here the windows sit at the deterministic first
+levels of the blocks, and we count only $M$ of them. Further, since the
+static estimates are uniform over the interval $J_\beta$, we need no random
+event that restricts the thresholds, such as \cite[(8.12)]{oai-barriers}.
+
+\paragraph{Quantitative and almost-sure forms.} With the lower bound on $F_n$
+from the small-deviation inequality of Paouris and Valettas
+\cite[Theorem~2.1 and Remark~2.4(3)]{paouris-valettas-2018} instead of
+Chebyshev's inequality, with $\eta_n=\rho_n/1000$, and with
+$A<t_0\log(250/11)/(3BR)$, the disorder event fails with probability at most
+$Ce^{-cn^{1/15}}$, and on it the initial configurations from which the
+distance stays at least $1/2-Ce^{-cn^{7/30}}$ up to the time horizon
+$e^{An^{7/30}}$ have Gibbs mass at least $1-Ce^{-cn^{7/30}}$, for all
+$n\ge n_1(C_{\rm rate})$ and every single-site generator with rates at most a
+fixed $C_{\rm rate}$ that leaves $\pi$ stationary (\cref{thm:barrier-strong}).
+By the same theorem, we have the relaxation time bound
+$e^{An^{7/30}}/(Cn^{7/30})$ for the reversible ones and, by the
+Borel--Cantelli lemma, the almost sure form for every coupling of the
+disorders of different sizes.
+
+\section{The upper bound}\label{sec:ov-upper}
+
+We follow the architecture of the proof of
+\cite[Theorem~1]{oai-typical-upper}, which proves \cref{thm:upper} for the
+saving $\omega=1/40000000$. The proof has four steps. A finite-chain argument
+reduces a bound for typical initial configurations to a lower bound on the
+stationary flow across every cut whose two sides both have appreciable Gibbs
+mass. A random disorder and a random configuration are then constructed
+jointly, by Gaussian queries of the disorder matrix that follow the scalar
+Parisi diffusion. The law of this pair is compared with the Gibbs joint law in
+two ways: through its relative entropy, and through an upper bound on its
+likelihood ratio outside a rare event. A Gaussian smoothing of the disorder
+reverses the entropy comparison, so that the constructed configuration reaches
+every set of appreciable Gibbs mass. Finally, a sequence of such
+configurations, built from rotated Gaussian inputs, connects the two sides of
+a cut of small flow while avoiding its boundary, which is impossible. In
+\cite{oai-typical-upper}, the parameters are fixed numbers, and the exponent
+is not optimized.
+
+To reach every $\omega<1/4$, two estimates must be close to sharp: the
+relative entropy of the proposal at the longer horizon, and the likelihood
+bound at the shorter horizon, together with the probability of its
+exceptional event. The first is described in the paragraph on the forward
+entropy below, and the second in the paragraph on coarse domination. The other
+steps follow \cite{oai-typical-upper}, with the changes of parameters that
+these two estimates allow.
+
+\paragraph{Notation.} Let $g\in\R^{n\times n}$ have independent standard
+Gaussian entries, with law $\gamma_n$, and let
+$W(g)=(g+g^{\mathsf T})/\sqrt{2n}$. With $J_{ij}=(g_{ij}+g_{ji})/\sqrt2$ and
+$J'_{ii}=g_{ii}$, the matrix $W(g)$ is the matrix $W$ of
+\cref{sec:model-completion}, and $H^c_g(x)=x^{\mathsf T}W(g)x/2$ is the
+completed Hamiltonian of the disorder $J(g)$. We write $F^c(g)$ for the
+completed log partition function, $\pi_g=\pi^{J(g)}$, $P^g_t=P^{J(g)}_t$, and
+\[
+ \Pi_n(\dd g,x)=\gamma_n(\dd g)\,\pi_g(x)
+\]
+for the Gibbs joint law. Its $(J(g),x)$ marginal is the realized-start law
+$\PP_{J,X_0\sim\pi^J}$ of \cref{def:model-joint}. For $S\subseteq\Sigma_n$,
+the stationary flow across $S$ is
+\[
+ \mathcal Q_g(S,S^c)=\sum_{x\in S,\,y\notin S}\pi_g(x)\,\mathcal L^{J(g)}(x,y),
+\]
+where $\mathcal L^{J(g)}(x,x^{i,-x_i})=p_i^{J(g)}(-x_i\mid x)$ is the rate of
+a flip at site $i$ (\cref{sec:model-dynamics}). The exponents of the proof
+are fixed numbers, written in sans-serif ($\ex a,\ex q,\ex k_{\rm f},\dots$);
+they are chosen after $\beta$ and $\omega$, and they are listed in
+\cref{tab:ov-upper-exponents}. Constants $C_\beta,c_\beta>0$ depend only on
+$\beta$ and on the exponents.
+
+\begin{table}[!t]
+\centering
+\small
+\caption{The exponents of the proof of \cref{thm:upper}, as functions of
+$\varepsilon=\varepsilon_\omega=(1/4-\omega)/20$, their values for
+$\omega=1/5$, and their roles. They are fixed after $\beta$ and $\omega$, and
+before $n\to\infty$; see \cref{u:sec:parameters,u:sec:budget}.}
+\label{tab:ov-upper-exponents}
+\begin{tabular}{@{}lll>{\raggedright\arraybackslash}p{0.5\textwidth}@{}}
+\toprule
+Exponent & Value & $\omega=1/5$ & Role\\
+\midrule
+$\ex a$ & $1/2$ & $1/2$ & mesh $h=n^{-\ex a}$\\
+$\ex f$ & $1/2$ & $1/2$ & fine horizon $V_{\ex f}\approx\ex f\log n$\\
+$\ex b$ & $1/2-14\varepsilon$ & $93/200$ & coarse horizon $V_{\ex b}\approx\ex b\log n$\\
+$\ex k_{\rm f}$ & $1/2-2\varepsilon$ & $99/200$ & forward entropy $n^{1-\ex k_{\rm f}}$\\
+$\ex D$ & $1/4-\varepsilon$ & $99/400$ & smoothing $\delta=n^{-\ex D}$\\
+$\ex u_{\rm E}$ & $1/4-2\varepsilon$ & $49/200$ & reverse entropy $n^{1-\ex u_{\rm E}}$\\
+$\ex d$ & $\varepsilon/2$ & $1/800$ & masses $n^{-\ex d}$ of the cuts\\
+$\ex e$ & $1/4-3\varepsilon$ & $97/400$ & crossing probability $e^{-2n^{1-\ex e}}$\\
+$\ex w$ & $1/8-3\varepsilon$ & $47/400$ & weighted errors $n^{-\ex w}$\\
+$\ex z$ & $1/4-8\varepsilon$ & $23/100$ & accuracy $n^{-\ex z}$ of the row averages\\
+$\ex k_{\rm b}$ & $1/4-9\varepsilon$ & $91/400$ & likelihood bound $e^{n^{1-\ex k_{\rm b}}}$\\
+$\ex s_{\rm b}$ & $1/4-5\varepsilon$ & $19/80$ & failure $e^{-n^{1-\ex s_{\rm b}}}$ of the coarse proposal\\
+$\ex s_{\rm seq}$ & $1/4-4\varepsilon$ & $6/25$ & failure $e^{-n^{1-\ex s_{\rm seq}}}$ of the sequence\\
+$\ex r$ & $1/4-15\varepsilon/2$ & $37/160$ & Hamming radius $R_n=\lceil n^{1-\ex r}\rceil$\\
+$\ex u_{\rm F}$ & $1/4-39\varepsilon/4$ & $361/1600$ & threshold $n^{1-\ex u_{\rm F}}$ for sums of local fields\\
+$\ex q$ & $1/4-10\varepsilon$ & $9/40$ & flow threshold $\phi_n=e^{-n^{1-\ex q}}$\\
+$\ex z_{\rm P}$ & $3/10$ & $3/10$ & pressure event $F^c\le nP_\beta+n^{1-\ex z_{\rm P}}$\\
+$\ex g_{\rm rot}$ & $3/5$ & $3/5$ & grid of $\ell_n+1\approx e^{n^{\ex g_{\rm rot}}}$ angles\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{From balanced-cut flow to mixing.} By \cref{lem:model-joint},
+\cref{thm:upper} states that the Gibbs mass of the configurations $x$ with
+$d^{J(g)}(x,e^{n^{1-\omega}})>1/4$ tends to zero in probability over $g$. The
+reduction to flows is the finite-chain lemma
+\cite[Lemma~8]{oai-typical-upper}, which we prove as \cref{u:lem:pruning}.
+Let $0<\epsilon<1/3$ and $\phi>0$, and suppose that
+$\mathcal Q_g(S,S^c)>\phi$ for every set $S$ with
+$\epsilon\le\pi_g(S)\le1-\epsilon$. Then, for every $t>0$,
+\begin{equation}\label{eq:ov-pruning}
+ \sum_{x\in\Sigma_n}\pi_g(x)\,d^{J(g)}(x,t)
+ \le\frac{n\sqrt{2\log2}}{\phi\sqrt t}+2\epsilon .
+\end{equation}
+Here $n$ bounds the total jump rate out of a configuration, and $n\log2$
+bounds the entropy of $\pi_g$. The proof removes, one at a time, sets of at
+most half of the remaining mass whose flow to the rest is less than $\phi$
+times their mass. The hypothesis prevents the removed mass from reaching $\epsilon$.
+On the remaining set, the flow bound gives a Poincar\'e inequality, by the
+argument of Lawler and Sokal \cite[Theorem~3.5]{lawler-sokal-1988}, and the
+entropy dissipation of the full chain
+\cite[Lemmas~2.5 and~2.7]{diaconis-saloff-coste-1996} bounds the average of
+the distances from fixed initial configurations. The trajectory need not
+stay in the remaining set. Initial configurations from which the chain is
+slow are allowed, and a set of them costs at most its Gibbs mass. For this
+reason only cuts of mass at least $\epsilon$ enter, and the conclusion
+concerns typical initial configurations; at large $\beta$, the worst-case
+mixing time is exponential \cite[Theorem~1.1]{sellke-2025}.
+
+We apply \eqref{eq:ov-pruning} with $\epsilon=n^{-\ex d}$,
+$\phi=\phi_n=e^{-n^{1-\ex q}}$, and $t=e^{n^{1-\omega}}$. By Markov's inequality
+in the Gibbs draw, we find that the joint probability that
+$d^{J(g)}(x,t)>1/4$ is at most
+\[
+ \gamma_n(\mathcal W_n)+2e^{-n}
+ +4n\sqrt{2\log2}\,e^{n^{1-\ex q}-n^{1-\omega}/2}+8n^{-\ex d}
+\]
+(\cref{u:sec:proof}). Since $\omega<\ex q$, the third term tends to zero.
+The term $2e^{-n}$ bounds the probability that
+$\norm{W(g)}_{\rm op}>12$ (\cref{u:lem:goe-norm}), and
+\[
+ \begin{split}
+ \mathcal W_n=\bigl\{g:{}&\norm{W(g)}_{\rm op}\le12,\text{ and there exists }S
+ \subseteq\Sigma_n\\
+ &\text{with }n^{-\ex d}\le\pi_g(S)\le1-n^{-\ex d}\text{ and }
+ \mathcal Q_g(S,S^c)\le\phi_n\bigr\}
+ \end{split}
+\]
+is the event that a cut of small flow exists. The rest of the proof shows
+that $\gamma_n(\mathcal W_n)\to0$ (\cref{u:prop:witness}).
+
+\paragraph{The proposal.} The flow bound is proved with a random pair $(g,x)$
+whose law is close to $\Pi_n$. Its construction is that of
+\cite[Section~4]{oai-typical-upper}, which is related to the iterative
+construction of solutions of the TAP equations by Bolthausen
+\cite{bolthausen-2014} and to the incremental approximate message passing algorithm of
+Montanari \cite{montanari-2021}. Let $\alpha_\beta$ be the Parisi distribution
+function; the Parisi measure has support $[0,q_\beta]$ (\cref{inp:full-rsb}).
+In the variance
+time $v=\beta^2t$, the scalar diffusion of \cref{sec:inputs} solves
+\[
+ \dd Y_v=\dd M_v+\bar\alpha(v)\,m(v,Y_v)\dd v,\qquad Y_0=0,
+\]
+where $M$ is a standard Brownian motion, $\bar\alpha(v)=\alpha_\beta(v/\beta^2)$,
+and $m(v,y)=u_{\alpha_\beta}(v/\beta^2,y)$ is the spatial derivative of the
+Parisi solution. The magnetization $m_v=m(v,Y_v)$ is a martingale, with
+$\dd m_v=\chi_v\dd M_v$, where $\chi_v=\chi(v,Y_v)$ is the second spatial
+derivative. Beyond $v_*=\beta^2q_\beta$, we continue the process with
+$\bar\alpha=1$, $m(v,y)=\tanh y$, and $\chi(v,y)={\rm sech}^2y$; the continued
+potential solves the same equation (\cref{u:sec:scalar}). We define
+\[
+ p(v)=\E\chi_v,\qquad r(v)=\E\chi_v^2,\qquad
+ \rho(v)=\beta\sqrt{r(v)},\qquad \sigma(v)=\sqrt{1-\rho(v)^2}.
+\]
+By \cref{cor:inp-identity}, we have $r=\beta^{-2}$ on $[0,v_*]$, so that
+$\rho=1$ and $\sigma=0$ there. After $v_*$, the functions $p$ and $r$ decay at
+the rate $e^{-v/2}$ up to a factor $\sqrt{1+v}$
+(\cref{u:prop:scalar,u:lem:tails}), and at a horizon $V$ of order $\log n$ the
+magnetization is close to $\pm1$.
+
+In the proposal, we run one copy of the continued scalar process for each
+coordinate, driven by noise extracted from the matrix $W=W(g)$. We cut the time
+axis into cells $[t_j,t_{j+1}]$ with
+\[
+ t_0=0,\qquad h_j=he^{t_j/4},\qquad t_{j+1}=t_j+h_j,\qquad h=n^{-\ex a}.
+\]
+At the query $j\ge1$, we take the increment of the vector of magnetizations
+over the previous cell, normalized as
+$\mathcal T_j=(m(t_j)-m(t_{j-1}))/s_j$ with $s_j^2=\int_{t_{j-1}}^{t_j}r$, and
+we orthogonalize it against the earlier query directions in the inner product
+$n^{-1}\langle u,v\rangle$. This gives a direction $u_j$, and we read the
+column $Wu_j$. Its component orthogonal to $u_1,\dots,u_j$, together with an
+independent Gaussian completion inside their span, is a vector $e_j$ that is
+standard Gaussian given the past. The vector $e_j$ becomes the standardized
+increment of the query paths $B_i$ over the next cell $[t_j,t_{j+1}]$, which
+is filled with independent Brownian bridges. Each coordinate is driven by
+$M_i=\int\rho\dd B_i+\int\sigma\dd D_i$, where the $D_i$ are independent
+Brownian motions. Up to $v_*$, the matrix drives the process alone; after
+$v_*$, the query noise is mixed with independent noise. By Gaussian orthogonal
+invariance, the unread part of $W$ is a compressed Gaussian orthogonal
+ensemble, independent of the past. Then the matrix assembled from the answers
+and the remaining Gaussian variables has the law of $W(g)$ under $\gamma_n$,
+independently of the initial data, and the pairs $(B_i,D_i)$ are independent
+pairs of Brownian motions (\cref{u:lem:assembly}). At the horizon $V$, the
+spin is linked to the terminal magnetizations by the density
+$\prod_i(1+x_im_i(V))$ relative to an independent uniform spin
+(\cref{u:def:laws}). The output $Q_V$ is the law of $(g,x)$, where $g$ is
+obtained from $W$ by adding an independent antisymmetric Gaussian matrix, so
+that $W(g)=W$. Its marginals are
+$\gamma_n$ and the uniform law, but $x$ is correlated with $g$.
+
+The construction has two equivalent forms: in one, the matrix is assembled
+from the answers to the queries, and in the other, the same recursion reads a
+given matrix and given completions (\cref{u:def:laws,u:lem:assembly}). The main
+structural fact is that, under the linked law, the rows $(x_i,Y_i,B_i,D_i)$,
+$i=1,\dots,n$, are independent, with an explicit one-row law $\nu_V$.
+Apart from the Gaussian variables that the recursion never reads, the
+statistics of the proposal used below are averages of $n$ independent rows, or
+explicit functions of such averages.
+
+We use two horizons on the same mesh: the fine horizon $V_{\ex f}$ and the
+coarse horizon $V_{\ex b}$, the first times $t_j$ beyond $\ex f\log n$ and
+$\ex b\log n$, with $\ex b<\ex f$ (\cref{u:lem:quad}). The two runs read the
+same inputs, so that the coarse run is an initial segment of the fine run. The
+growing cells are new compared with \cite{oai-typical-upper}, where the cells
+have equal length $n^{-1/16}$. Since $r(t_j)$ decays like $e^{-t_j/2}$, the
+lengths $h_j$ grow as the profile decays, and $h_j^2r(t_j)$ stays of order
+$h^2$ at most. The number of queries is at most $8n^{\ex a}$ for every horizon
+(\cref{u:lem:quad}), and the errors of the mesh add up to $O(h)$, uniformly in
+the horizon. Unequal cells require some care in the estimates: $\mathcal T_j$
+is an increment over the previous cell, $e_j$ belongs to the next cell, and the
+ratio $h_j/h_{j-1}=e^{h_{j-1}/4}$ enters the bounds.
+
+\paragraph{The forward entropy.} The first comparison is
+\begin{equation}\label{eq:ov-forward-kl}
+ \KL(Q_V\Vert\Pi_n)\le nj(V)-n\log2+\E F^c(g)-\beta\,\E H^c_g(x),
+ \qquad j(V)=\frac12\int_0^V\rho(v)^2\varkappa(v)\dd v,
+\end{equation}
+where $\varkappa(v)=\E[\chi_v^2/(1-m_v^2)]$ and the last expectation is under
+the proposal (\cref{u:lem:forward-kl}). The quantity $j(V)$ is the
+information per spin that the proposal acquires through the matrix. To see
+this, we move the part of the linking density that comes from the independent
+noise $D$ into a reference law, as in \cite[Section~4]{oai-typical-upper}, whose $(g,x)$ marginal is $\gamma_n$ times the
+uniform law. The logarithm of the remaining density is a sum of $n$
+independent rows, each with mean $j(V)$ (\cref{u:lem:reference}). The factor
+$\rho^2$ is the share of the matrix in the driving noise. Changing the
+reference to $\Pi_n$, whose density is $2^ne^{\beta H^c_g(x)-F^c(g)}$, gives
+\eqref{eq:ov-forward-kl}.
+
+The terms of \eqref{eq:ov-forward-kl} are related by the scalar identity
+\cite[Lemma~4]{oai-typical-upper}: for every $V\ge v_*$,
+\begin{equation}\label{eq:ov-scalar-identity}
+ j(V)-\log2+P_\beta-\beta e(V)=\frac{\beta^2}4p(V)^2,
+ \qquad e(V)=\beta\int_0^Vr(v)p(v)\dd v
+\end{equation}
+(\cref{u:prop:scalar}). Here $e(V)$ is the energy per spin of the proposal,
+and the identity balances the information paid through the matrix against the
+energy gained. By Guerra's bound and \cref{lem:model-completion}, we have
+$\E F^c(g)\le nP_\beta$ (\cref{inp:parisi}). The expected energy satisfies
+\[
+ \frac1n\E H^c_g(x)\ge e(V)-C_\beta\Bigl[h+\frac{(N+1)(1+V)+\sqrt N}n
+ +\frac{(N+1)^2VR_V}{n^2}\Bigr],
+\]
+where $N$ is the number of queries and $R_V=(\min_{[0,V]}r)^{-1}$
+(\cref{u:lem:fine-energy}). Inserting these bounds into
+\eqref{eq:ov-forward-kl}, and using $p(V)^2\le C_\beta e^{-V}$, we find that
+\[
+ \KL(Q_V\Vert\Pi_n)\le C_\beta\Bigl[nh+ne^{-V}+(N+1)(1+V)+\sqrt N
+ +\frac{(N+1)^2VR_V}n\Bigr].
+\]
+At the fine horizon, the five terms have the powers $1-\ex a$, $1-\ex f$,
+$\ex a$, $\ex a/2$, and $2\ex a+\ex f/2-1$ of $n$, up to logarithms, and we
+obtain $\KL(Q_F\Vert\Pi_n)\le C_\beta n^{1-\ex k_{\rm f}}$ for the fine
+output $Q_F$ whenever $\ex a>\ex f/4$, $\ex a+\ex f/2<1$, and
+$\ex k_{\rm f}<\min(\ex a,\ex f,1-\ex a)$ (\cref{u:prop:fine-kl}).
+
+This is the first place where a sharp estimate is needed. In
+\cite[Proposition~5]{oai-typical-upper}, the relative entropy is at most
+$2n^{1-l/2}$ for $0<l\le1/100$; the energy is computed on the event where the
+empirical Gram matrix of the queries is close to the identity, and the
+information is concentrated separately. Here the expected energy is computed
+directly, through an exact conditional identity for the third moments of a
+single query (\cref{u:lem:onequery}), and no Gram event enters. The saving
+$\ex k_{\rm f}$ can then be taken arbitrarily close to $1/2$, and $1/2$ is the
+limit of the estimate: the error $nh$ of the mesh and the number $n^{\ex a}$
+of queries balance at $\ex a=1/2$. For $\ex a=\ex f=1/2$, we have
+$\KL(Q_F\Vert\Pi_n)\le C_\beta n^{1/2+2\varepsilon_\omega}$, where
+$\varepsilon_\omega=(1/4-\omega)/20$.
+
+\paragraph{Coarse domination.} The second comparison is a bound on the
+likelihood of the coarse proposal. There exists an event $E_B$ of the
+coarse proposal, with $\PP(E_B^c)\le e^{-n^{1-\ex s_{\rm b}}}$, such that the
+output restricted to $E_B$ has a kernel $q_B^{\rm good}(g,x)$ with respect to
+$\gamma_n$ that satisfies
+\begin{equation}\label{eq:ov-coarse-kernel}
+ q_B^{\rm good}(g,x)\le e^{-nP_\beta+n^{1-\ex k_{\rm b}}}e^{\beta H^c_g(x)}
+ =e^{n^{1-\ex k_{\rm b}}+F^c(g)-nP_\beta}\,\pi_g(x)
+\end{equation}
+for all $x$ and almost every $g$ (\cref{u:prop:coarse}). When
+$F^c(g)\le nP_\beta+n^{1-\ex z_{\rm P}}$, this is a bound by
+$e^{o(n^{1-\ex q})}$ times the Gibbs measure once $\ex q<\ex k_{\rm b}$ and
+$\ex q<\ex z_{\rm P}$. Since the log density of $\Pi_n$ relative to $\gamma_n$
+times the uniform law is $n\log2+\beta H^c_g(x)-F^c(g)$, it suffices to show
+that, on $E_B$,
+\begin{equation}\label{eq:ov-coarse-target}
+ \frac1nI^{(n)}-\log2-\frac\beta nH^c_g(x)\le-P_\beta+n^{-\ex k_{\rm b}},
+\end{equation}
+where $I^{(n)}=\sum_iI_{V,i}$ is the logarithm of the density of the proposal
+relative to the reference law of the paragraph on the forward entropy, at
+$V=V_{\ex b}$. Integrating \eqref{eq:ov-coarse-target} against the reference
+law, we obtain \eqref{eq:ov-coarse-kernel}; the factor $2^n$ cancels the
+uniform spin weight $2^{-n}$.
+
+The obstacle is the accuracy. By \eqref{eq:ov-scalar-identity}, the left
+side of \eqref{eq:ov-coarse-target} has mean close to $-P_\beta$, and we must
+show that it deviates by at most $n^{-\ex z}$, for an exponent
+$\ex z>\ex k_{\rm b}>\ex q>\omega$, outside an event of probability
+$e^{-n^{1-\ex s_{\rm b}}}$, with $\ex s_{\rm b}<1/4$. If the information and
+the energy are concentrated separately, as in
+\cite[Proposition~5]{oai-typical-upper}, each row has variance of order one,
+and a deviation $n^{-\ex z}$ has probability of order
+$e^{-n^{1-2\ex z}}$. In the parameter system below, the resulting requirement
+$2\ex z<\ex s_{\rm b}$, together with $\omega<\ex q<\ex k_{\rm b}<\ex z$ and $\ex s_{\rm b}<1/4$ would
+confine $\omega$ below $1/8$. We avoid this loss with three observations.
+
+The first is algebraic. We write $H^c_g(x)/n=E_{\rm qry}+Z$, where $E_{\rm qry}$
+is the energy carried by the queried columns and $Z$ collects the diagonal
+entries $\langle u_j,Wu_j\rangle/n$ and the unread block. The queried energy is
+an explicit function of the empirical Gram and cross matrices of the vectors
+$\mathcal T_j$, $e_j$, and $x$, whose population values are known. Its
+linearization in the errors of these matrices is itself an average of
+independent rows: it equals $n^{-1}\sum_i\zeta_{h,i}$, where
+\[
+ \zeta_h=\sum_jw_j(A_{t_j}-A_{t_{j-1}})+\sum_js_j(x-m_{t_j})e_j-\frac{e_h}2,
+ \qquad A_v=xm_v-\frac{m_v^2}2,
+\]
+for a row with spin $x$, magnetization $m$, and query endpoints $e_j$, with
+deterministic weights $w_j$ and $e_h=\E\zeta_h$
+(\cref{u:lem:telescope}). The remainder of the linearization is quadratic in a
+weighted measure $W_{\rm wt}$ of the errors (\cref{u:lem:weighted-energy}).
+This gives
+\[
+ \frac1nI^{(n)}-\frac\beta nH^c_g(x)
+ =\frac1n\sum_{i=1}^n\bigl(I_{V,i}-\beta\zeta_{h,i}\bigr)
+ +O\bigl(D_*W_{\rm wt}^2\bigr)-\beta Z,
+\]
+where $D_*=1+\lceil\log_2N\rceil$.
+
+The second observation is a pathwise cancellation between information and
+energy (\cref{u:lem:joint}). On a mesh of vanishing size, $\zeta_h$ becomes
+$\zeta_\infty=Z_V-e(V)/2$, where
+$Z_V=\beta\int_0^Vp\dd A+\int_0^V\sqrt r\,(x-m)\dd B$. For every $V\ge v_*$,
+we have exactly
+\begin{equation}\label{eq:ov-joint}
+ I_V-\beta\zeta_\infty=\log2-P_\beta-\frac{\beta^2}4p(V)^2
+ +\frac{\beta^2p(V)}2(x-m_V)^2 .
+\end{equation}
+In other words, the stochastic integrals of the information and of the
+energy cancel along every path. Note that the expectation of
+\eqref{eq:ov-joint} is \eqref{eq:ov-scalar-identity}. To prove \eqref{eq:ov-joint}, we use It\^o's
+formula for the Parisi solution along the scalar process
+(\cref{u:lem:ito}). Before $v_*$, it shows that
+$\beta^2pA+xY-U(v,Y)$ has differential $\beta\dd Z_v$, where $U$ is the
+potential, and that the driver $B$ equals $M$; at $v_*$, the identity
+$\log(1+x\tanh y)=xy-\log\cosh y$ matches the two sides; after $v_*$, the
+difference $I_v-\beta Z_v$ moves only through $\beta^2p(v)(x-m_v)^2/2$. The
+last term of \eqref{eq:ov-joint} does not have variance of order $h$: its
+centered version $T_V$ has variance
+$\beta^4p(V)^2\{4p(V)-3r(V)-p(V)^2\}/4\le\beta^4p(V)^3$, which is positive at
+every fixed $V$. Its amplitude is at most $2\beta^2p(V)=O_\beta(n^{-\ex b/2})$,
+however, and it is absorbed deterministically when $\ex z<\ex b/2$.
+
+The third observation concerns the difference between the mesh and its limit.
+The residual $R_h=Z_V-\zeta_h-e_h/2$ has mean $3(e(V)-e_h)/2=O_\beta(h)$, and
+its centered moment generating function is at most $e^{C_\beta\theta^2h}$ for
+$\abs\theta\le c_\beta/h$, uniformly in the horizon and in the number of cells
+(\cref{u:lem:lag}). On the growing mesh, the lag of the magnetization inside a
+cell of length $h_j$ contributes $h_j^2r(t_j)$, which is at most of order
+$h^2$, and
+there are at most $8/h$ cells. Since the rows are independent, we conclude that the average of
+$I_{V,i}-\beta\zeta_{h,i}$ exceeds $\log2-P_\beta+C_\beta n^{-\ex z}$ with
+probability at most $2e^{-c_\beta n^{1+\ex a-2\ex z}}$ (\cref{u:lem:row}). The
+loss is $2\ex z-\ex a<0$, in place of $2\ex z$.
+
+It remains to make $W_{\rm wt}^2$ smaller than $n^{-\ex z}$ and to control
+$Z$. We have $W_{\rm wt}\le C_\beta n^{-\ex w}\log^Cn$ except with
+probability
+\[
+ 2\exp\bigl\{C_\beta n^{\ex a}-c_\beta n^{1-\max\{2\ex w,\ex w+\ex b/4\}}/\log^Cn\bigr\}
+\]
+(\cref{u:lem:weighted}). The Gram--Schmidt step is a Cholesky factorization,
+and its errors involve the triangular truncation $\Upt$, which keeps the
+strict upper triangle and half of the diagonal. As in
+\cite[Section~4]{oai-typical-upper}, a dyadic decomposition of the triangle
+costs only powers of $D_*$. The quantity $W_{\rm wt}$ measures the errors
+through their projections onto dyadic intervals $I$ of query indices, weighted
+by the population vectors. These projections are built from martingale
+increments over the previous cells, and their variances are bounded by a
+polylogarithmic multiple of the total length $d_I=\sum_{j\in I}h_{j-1}$ of
+these cells. We divide each projection by $\sqrt{d_I}$ before applying a
+variance-sensitive Bernstein inequality. Then the variance parameter is
+polylogarithmic, and the inverse profile
+$R_V\le C_\beta n^{\ex b/2}\sqrt{\log n}$ enters only the scale of the
+exponential tail; this gives the loss $\ex w+\ex b/4$ beside $2\ex w$. The
+half of the diagonal is a martingale plus a centered random drift, and both
+have variance $O(d_I)$, with no power of $R_V$. At each dyadic depth, the
+lengths $d_I$ add up to $t_N$, so that the squared errors, before the
+normalization, add up without a
+loss in the number of queries. The fixed Gram event
+$\norm{\mathcal T^{\mathsf T}\mathcal T/n-I}\le(16D_*^2)^{-1}$, together with
+its cross block, fails with probability whose exponent loses $\ex b/2$
+(\cref{u:lem:gram}). Given the scalar paths and the spins, $Z$ is a centered
+Gaussian variable, since the scalar recursion and the link never read the
+diagonal entries or the unread block. Its conditional variance is at most
+$C_\beta n^{-1}\{h+\tau^2+p(t_N)^2\}$ when $\norm{c-s}\le\tau$, where
+$c_j=n^{-1}\langle u_j,x\rangle$ and $s_j$ is the population value of
+$n^{-1}\langle\mathcal T_j,x\rangle$ (\cref{u:lem:weighted-energy}). The cruder bound $1/(2n)$ would
+again lose $2\ex z$.
+
+Collecting these estimates, we obtain \eqref{eq:ov-coarse-target} with
+$\PP(E_B^c)\le e^{-n^{1-\ex s_{\rm b}}}$ whenever
+\begin{gather*}
+ \max\{2\ex w,\ex w+\ex b/4,\ex b/2,2\ex z-\ex a,2\ex z-2\ex w,2\ex z-\ex b\}
+ <\ex s_{\rm b},\\
+ \ex b/4<\ex a<1-\ex s_{\rm b},\qquad
+ \ex k_{\rm b}<\ex z<\min(\ex a,\ex b/2,2\ex w).
+\end{gather*}
+This is the second place where a sharp estimate is needed. The failure bound
+holds for the proposal law averaged over the disorder; no bound is asserted
+for each fixed disorder.
+
+\paragraph{Smoothing, coverage, and the connecting sequence.} A bound on
+$\KL(Q_F\Vert\Pi_n)$ does not imply that the proposal reaches a given set of
+appreciable Gibbs mass. To reverse the comparison, we follow
+\cite[Section~5]{oai-typical-upper}. Conditionally on the spin $x$, the
+disorder under $\Pi_n$ has density proportional to
+$e^{-\norm g_F^2/2+\beta H^c_g(x)-F^c(g)}$, and since $F^c$ is convex and
+$H^c_g(x)$ is linear in $g$, this law is $1$-strongly log-concave. The
+transport inequality of Bogachev, Kolesnikov, and Medvedev
+\cite[Corollary~3.10]{bogachev-kolesnikov-medvedev-2005} bounds the squared
+Wasserstein distance from it by twice the relative entropy
+(\cref{u:lem:transport}). We smooth the disorder by
+$g\mapsto\sqrt{1-\delta}\,g+\sqrt\delta\,z$, with $\delta=n^{-\ex D}$ and an
+independent standard Gaussian matrix $z$. As in
+\cite[Lemma~11]{lugosi-neu-2022}, the transport bound turns the forward
+entropy into a reverse entropy for the smoothed laws, at the cost of a factor
+$\delta^{-1}$. Let $g_\star,g_\circ$ be independent with law $\gamma_n$, let
+$g_{\rm base}=\sqrt{1-\delta}\,g_\star+\sqrt\delta\,g_\circ$, and let
+$\nu^{\rm sm}_{g_{\rm base}}$ be the law of the spin of the fine proposal run
+on the matrix $\sqrt{1-\delta}\,g_{\rm base}+\sqrt\delta\,z$, with fresh
+auxiliary inputs. Then
+\[
+ \E\KL\bigl(\pi_{g_\star}\Vert\nu^{\rm sm}_{g_{\rm base}}\bigr)
+ \le\frac{\beta^2(n-1)}2\delta+\delta^{-1}\KL(Q_F\Vert\Pi_n)
+\]
+(\cref{u:lem:smoothing}). Both terms are of order $n^{1-\ex D}$ and
+$n^{1-\ex k_{\rm f}+\ex D}$, and the relative entropy is at most
+$n^{1-\ex u_{\rm E}}$ with probability tending to one when
+$\ex u_{\rm E}<\min(\ex D,\ex k_{\rm f}-\ex D)$. On this event, using the
+inequality for the binary relative entropy, we find that, simultaneously for
+all $S\subseteq\Sigma_n$,
+\[
+ \pi_{g_\star}(S)\ge n^{-\ex d}\quad\Longrightarrow\quad
+ \nu^{\rm sm}_{g_{\rm base}}(S)\ge
+ \exp\bigl\{-n^{\ex d}\bigl(n^{1-\ex u_{\rm E}}+\log2\bigr)\bigr\}
+\]
+(\cref{u:lem:coverage}). The set $S$ may depend on $g_\star$. Two independent
+fine spins with law $\nu^{\rm sm}_{g_{\rm base}}$ fall on opposite sides of
+every cut with both masses at least $n^{-\ex d}$ with probability
+$\varpi_n\ge e^{-2n^{1-\ex e}}$ when $\ex e+\ex d<\ex u_{\rm E}$.
+
+Suppose now that $g_\star\in\mathcal W_n$, and let $S_{g_\star}$ be the first
+cut of small flow in a fixed order. The following argument is that of
+\cite[Section~6]{oai-typical-upper}. If the two fine spins lie on opposite
+sides of $S_{g_\star}$, we join them by a sequence of configurations with
+short steps. Every such sequence comes close to the boundary of the cut. An
+enlargement of the boundary has small Gibbs mass, and the likelihood bound
+keeps the intermediate configurations out of it. We now describe the three
+ingredients.
+
+\emph{The excluded set.} Since $\norm{W(g_\star)}_{\rm op}\le12$, every
+one-spin energy change is at most $24\sqrt n$, and every flip rate is at least
+$e^{-24\beta\sqrt n}/2$. Then the vertex boundary of $S_{g_\star}$ has Gibbs mass
+at most $4\phi_ne^{24\beta\sqrt n}$. We enlarge it by the Hamming radius
+$R_n=\lceil n^{1-\ex r}\rceil$, and to compare Gibbs weights on the
+enlargement, we also exclude configurations $x$ for which
+\[
+ \sum_i\bigl(\mathbf 1_A(i)-\mathbf 1_B(i)\bigr)
+     (W(g_\star)x)_i\ge n^{1-\ex u_{\rm F}}
+\]
+for some $A,B\subseteq[n]$ with $|A|,|B|\le R_n$.
+The expected Gibbs mass of the resulting set
+$\mathcal E_n(g_\star)$ is at most
+$e^{-n^{1-\ex q}/2}$ when $0<\ex q<\ex u_{\rm F}<\ex r<1$,
+$2\ex u_{\rm F}-\ex r<\ex q$, and $\ex q<1/2$ (\cref{u:lem:boundary}). The
+bound on the local fields uses the transport inequality for the conditional
+disorder law given the spin. The cut is selected from $g_\star$ alone, and we
+also restrict to the event $F^c(g_\star)\le nP_\beta+n^{1-\ex z_{\rm P}}$,
+which fails with probability at most $e^{-c_\beta n^{1-2\ex z_{\rm P}}}$
+(\cref{u:lem:pressure-tail}).
+
+\emph{The sequence.} With independent standard Gaussian matrices $g_1,g_2$,
+we set
+\[
+ g_\theta=\sqrt{1-\delta}\,g_{\rm base}
+ +\sqrt\delta\,(\cos\theta\,g_1+\sin\theta\,g_2),\qquad
+ 0\le\theta\le\pi/2,
+\]
+and we rotate two independent copies of the other Gaussian inputs of the
+proposal in the same way. For each fixed $\theta$, the matrix $g_\theta$ has
+law $\gamma_n$, and the rotated inputs have their original law. We run the
+coarse proposal at the $\ell_n+1$ points of a grid of spacing of order
+$e^{-n^{\ex g_{\rm rot}}}$, and the fine proposal only at the two endpoints
+$\theta=0$ and $\theta=\pi/2$. Given $(g_\star,g_\circ)$, the two fine spins
+are independent with law $\nu^{\rm sm}_{g_{\rm base}}$. The sequence consists
+of the first fine spin, the coarse spins in the order of the grid, and the
+second fine spin. On an event whose complement has probability at most
+$e^{-n^{1-\ex s_{\rm seq}}}$, the following holds (\cref{u:prop:sequence}):
+\begin{itemize}
+\item every coarse spin avoids $\mathcal E_n(g_\star)$: by the regression
+$g_\theta=(1-\delta)g_\star+\sqrt{\delta(2-\delta)}\,Z_\theta$, with
+$Z_\theta$ independent of $g_\star$, the conditional expectation of
+$e^{\beta H^c_{g_\theta}(x)}$ given $g_\star$ is at most
+$e^{O_\beta(n\delta)}e^{\beta H^c_{g_\star}(x)}$ when
+$\norm{W(g_\star)}_{\rm op}\le12$, and
+\eqref{eq:ov-coarse-kernel} bounds the probability of hitting the excluded
+set by $e^{-n^{1-\ex q}/4}$ when $\ex q<\min(\ex k_{\rm b},\ex z_{\rm P},\ex D)$
+(\cref{u:lem:transfer});
+\item consecutive coarse magnetizations differ by at most
+$e^{-n^{\ex g_{\rm rot}}/2}$ when $\ex a<\ex g_{\rm rot}$, because the
+recursion amplifies differences of its inputs by at most
+$e^{C_\beta n^{\ex a}\log n}$ on the Gram events at both ends of a grid step
+(\cref{u:lem:stability});
+\item every spin, coarse or fine, is within squared Euclidean distance $R_n/4$
+of its coarse magnetization when $\ex r<\ex b/2$.
+The fine and coarse runs share their paths up to $V_{\ex b}$;
+the expected squared discrepancy per coordinate is
+$p(V_{\ex b})\le C_\beta n^{-\ex b/2}$. The expected total
+squared Euclidean distance is $np(V_{\ex b})=o(R_n)$;
+independence across rows gives the tail in \cref{u:lem:pinning}.
+\end{itemize}
+On this event, we have that every step of the sequence has Hamming length at
+most $R_n$, and every step contains a coarse spin. The union over the grid costs a factor
+$e^{O(n^{\ex g_{\rm rot}})}$, which is absorbed when
+$\ex g_{\rm rot}<1-\ex s_{\rm b}$, and the comparison of the failures requires
+$\ex r<\ex s_{\rm b}$, $\ex q<\ex s_{\rm b}$, and
+$\ex s_{\rm b}<\ex s_{\rm seq}$.
+
+The fine proposal enters only through its relative entropy, which has no
+exceptional event, and through the two endpoint spins, which are joined to the
+grid by pinning. Every event in the union over the grid concerns the coarse
+proposal, so that the sequence needs no Gram event of the fine proposal and
+only the failure bound $e^{-n^{1-\ex s_{\rm b}}}$ of the coarse one.
+
+\emph{The contradiction.} If the fine spins lie on opposite sides of
+$S_{g_\star}$, some step of the sequence crosses the cut. A shortest path
+across this step meets the boundary, so that the coarse endpoint of the step
+lies within distance $R_n$ of the boundary, in $\mathcal E_n(g_\star)$. On
+the event of the sequence, this is impossible. Given an outer pair
+$(g_\star,g_\circ)$ in the event of the coverage bound, with $g_\star$ in
+$\mathcal W_n$ and in the pressure event, we conclude that $\varpi_n$ is at most the
+conditional probability that the sequence fails. Integrating over the outer
+pair, and paying the coverage and pressure exceptions once, we find that
+\begin{equation}\label{eq:ov-witness}
+ \gamma_n(\mathcal W_n)\le
+ C_\beta\bigl(n^{\ex u_{\rm E}-\ex D}+n^{\ex u_{\rm E}-\ex k_{\rm f}+\ex D}\bigr)
+ +e^{-c_\beta n^{1-2\ex z_{\rm P}}}
+ +e^{2n^{1-\ex e}-n^{1-\ex s_{\rm seq}}}
+\end{equation}
+(\cref{u:prop:witness}), which tends to zero when $\ex s_{\rm seq}<\ex e$.
+
+\paragraph{The parameters.} The exponents of \cref{tab:ov-upper-exponents}
+are affine functions of $\varepsilon_\omega=(1/4-\omega)/20\in(0,1/80)$, and
+they satisfy every condition stated above, with strict inequalities, for
+every $\omega\in(0,1/4)$ (\cref{u:prop:range}). The complete list of
+conditions is given in \cref{u:sec:budget}. Four chains among them limit
+the saving:
+\begin{gather*}
+ \ex k_{\rm f}<\min(\ex a,\ex f,1-\ex a)\le\frac12,\qquad
+ \ex e+\ex d<\ex u_{\rm E}<\min(\ex D,\ex k_{\rm f}-\ex D)
+ \le\frac{\ex k_{\rm f}}2,\\
+ \ex q<\ex s_{\rm b}<\ex s_{\rm seq}<\ex e,\qquad
+ \omega<\ex q .
+\end{gather*}
+They come from the forward entropy, from smoothing and coverage, from the
+connecting sequence, and from \eqref{eq:ov-pruning}. Together they give
+\[
+ \omega<\ex q<\ex s_{\rm b}<\ex s_{\rm seq}<\ex e<\ex u_{\rm E}
+ <\frac{\ex k_{\rm f}}2\le\frac14 .
+\]
+The conditions of coarse domination fit inside the third chain: the family
+has $\ex q<\ex k_{\rm b}<\ex z<\ex b/2<\ex s_{\rm b}$, with consecutive gaps
+$\varepsilon_\omega$, $\varepsilon_\omega$, $\varepsilon_\omega$, and
+$2\varepsilon_\omega$, and a loss $2\ex z$ in place of $2\ex z-\ex a$ would
+not fit. For $\omega=1/5$, we have $\varepsilon_\omega=1/400$,
+the chain reads
+\[
+ \frac15<\frac9{40}<\frac{19}{80}<\frac6{25}<\frac{97}{400}<\frac{49}{200}
+ <\frac{99}{400},
+\]
+and \eqref{eq:ov-witness} becomes
+$C_\beta n^{-1/400}+e^{-c_\beta n^{2/5}}+\exp\{2n^{303/400}-n^{19/25}\}$.
+
+Both arguments stop at the exponent $1/4$. The proof of
+\cref{thm:barrier-730} needs $n\rho^4/\log n\to\infty$ for the overlap scale
+$\rho$, and the proof of \cref{thm:upper} needs the chain of inequalities
+$\omega<\ex q<\ex s_{\rm b}<\ex s_{\rm seq}<\ex e<\ex u_{\rm E}
+<\ex k_{\rm f}/2\le1/4$ of \cref{u:sec:budget}. We do not know whether this
+coincidence has a common explanation.
+
+
+\section{Fluctuations and the mean bias}\label{sec:ov-fluct}
+
+\Cref{f:main} is OpenAI's theorem \cite[Theorem~1.1]{oai-fluctuations}. We
+give no new proof of it; our contribution concerning it and
+\cref{cor:mean-bias} is described in \cref{sec:formal}. In
+\cite{oai-fluctuations}, the theorem is reduced to a two-sided bound on a positive logarithmic moment. Let $F_n^c=F_n+\beta G$ be
+the completed log partition function, and let $K_n(t)=\log\E\exp\{t(F_n^c-\E F_n^c)\}$.
+For fixed $m\in(0,1/300)$ and $s_n=n^{-1/6+5m}$, it is proved in
+\cite[Proposition~7.5]{oai-fluctuations} that
+$cn^{20m}\le K_n(s_n)\le Cn^{100m}$ for all sufficiently large $n$
+(\cref{f:window}); \cref{sec:fl-route} summarizes this proof with locators.
+OpenAI bounds $K_n(s_n)$ by comparison with finite Gaussian hierarchies along
+overlap quantiles. The error
+of such a comparison is small when its minimizers satisfy a two-sided linear
+bound. This bound follows from a one-site cavity estimate
+\cite[Proposition~4.1]{oai-fluctuations}, from the asymptotic linearity of the
+rescaled overlap quantiles of the minimizers
+\cite[Theorem~5.1]{oai-fluctuations}, and from finite propagation through a bounded number of successive comparisons
+\cite[Proposition~6.6]{oai-fluctuations}. The lower bound uses a chord
+inequality at $\varepsilon=n^{-1/3}$, and the upper bound an iteration in
+$\varepsilon$ with a low-field perturbation
+\cite[Sections~7.1--7.4]{oai-fluctuations}.
+
+A bound on $K_n$ at one tilt does not control $\Var(F_n)$ by itself, since a
+rare deviation can dominate an exponential moment or a variance. The additional
+input is that the sum of $F_n^c$ and a random variable with the exponential law
+of rate one, independent of $(J,G)$, has a log-concave density
+(\cref{f:logconcave}). This observation is
+due to Aronow and Lopatto \cite[Proposition~5.1]{quantitative-parisi}, and
+\cite[Lemma~7.6]{oai-fluctuations} states it in the present setting. For a
+log-concave law with standard deviation $\sigma$, the centered logarithmic
+moment is bounded at tilts below $c/\sigma$ and grows at least linearly in
+$t\sigma$ at larger tilts $t$, and every interval of length $2r$ has
+probability at most $Cr/\sigma$ (\cref{f:one-dim}). We deduce that
+$\Var(F_n)=n^{1/3+o(1)}$ and, using the bound on intervals, the lower bound on
+$\abs{F_n-\E F_n}$ in \eqref{f:typical} (\cref{sec:fl-logconcave,sec:fl-endgame},
+following \cite[Sections~7.5 and~7.6]{oai-fluctuations}).
+
+\Cref{cor:mean-bias} is the lower bound $n^{-5/6-\varepsilon}$ on the mean
+bias. It follows from the variance--bias inequality
+$\Delta_{n,\beta}\ge c_\beta((\Var(F_n)+\beta^2/2)/n)^{5/4}$ of Aronow and
+Lopatto \cite[Lemma~7.4 and Remark~7.14]{quantitative-parisi}
+(\cref{prop:bias-variance-deficit}). Inserting
+$\Var(F_n)\ge n^{1/3-4\varepsilon/5}$ from \cref{f:main}, we find that
+$\Delta_{n,\beta}\ge c_\beta n^{-5/6-\varepsilon}$ for all sufficiently large
+$n$. Together with the upper bound $\Delta_{n,\beta}\le C_bn^{-7/10}$ of
+\cref{inp:hb-rate}, which determines the exponent of \cref{thm:barrier-730}, this
+shows that if $\Delta_{n,\beta}=n^{-a+o(1)}$ for some $a$, then
+$7/10\le a\le5/6$. Both deductions are already recorded in
+\cite[Section~1.6]{hexagon-bias}.

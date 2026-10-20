@@ -1,0 +1,144 @@
+module
+
+public import ComparisonActualHighWallGammaHighSecondBoundedDegree
+public import ComparisonActualGeneralResourceGammaRestorationReadout
+public import ComparisonActualHighWallRawResourcePairBudget
+public import ComparisonSignedCavityGeneratedPairedFrozenScale
+
+@[expose] public section
+
+noncomputable section
+set_option maxHeartbeats 18000000
+open MeasureTheory ProbabilityTheory Filter Set
+open scoped BigOperators Topology NNReal
+namespace OAI.SKFluctuations.Cavity
+open Hierarchy Hierarchy.ClockTree LaplaceWindowFormalization
+
+theorem eventually_actual_high_wall_resource_gamma_high_second_from_minimum
+    (degree rBound : ℕ) (Bclock Cmass Rmacro F : ℝ) (hCm : 0 ≤ Cmass)
+    {m delta cl cu Az C0 Ct D : ℝ}
+    (hm : 0 < m) (hdelta : 0 < delta) (hroom : delta < 3*m)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az) (hC0 : 0 < C0) (hCt : 0 ≤ Ct)
+    (hmacro : 0 < Rmacro) (hRhalf : Rmacro ≤ 1/2)
+    (hFmass : 1+2*cu ≤ F) (hFradius : 1+1/Rmacro ≤ F) :
+    ∃C : ℝ,0 < C ∧ ∀ᶠn : ℕ in atTop,
+      ∀M : ActualHighWallOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock,
+        M.xs=M.data.d →
+      ∀(L : ℕ) (us : List PositiveMass),
+        (∀u∈us,u.val ≤ 1) → (∀u∈uniformMasses L,u∈us) → ((L+1:ℕ):ℝ)⁻¹ ≤ M.xs →
+      ∀ᶠjGrid : ℕ in atTop,
+        let as:=finiteCutMasses us jGrid
+        let W:=M.data.d
+        ∀(T : ClockTree (Spin n×Bool) as) (i star U kGen : ℕ)
+          (seed : List NativeResourceMark) (P : NativeResourceTerm i star T),
+          NativeActualResourceGenerated i star U seed kGen T P → P.resources.length ≤ degree →
+          i ≤ star → star < U → U ≤ as.length → T.leaves ≤ rBound →
+          W ≤ Rmacro/2 → (Az+1/cl)*(1+Cmass)*W ≤ Rmacro/4 →
+          partitionPoint 0 as i ≤ Cmass*M.xs → partitionPoint 0 as star ≤ Cmass*W →
+        let R:=M.data.highErrorEnvelope M.alpha as U
+        |(W⁻¹)^kGen*actualGeneralResourceGammaSecondRestoration M.bf M.hf U P true| ≤
+          |P.coefficient| *C*nativeResourceScale M.xs W 1 seed*W^2*
+            (T.forkCost R+edgeBudget 0 as R) := by
+  obtain ⟨Cl,hCl,HL⟩:=eventually_actual_high_wall_generated_high_second_bounded_degree
+    (D:=D) degree rBound Bclock Cmass Rmacro F hCm hm hdelta hroom
+    hcl hcu hAz hC0 hCt hmacro hRhalf hFmass hFradius
+  obtain ⟨A,hA,HA⟩:=eventually_actual_high_wall_raw_resource_pair_budget
+    (D:=D) (degree+1) (by omega) Bclock Cmass hCm hm hdelta hroom hcl hcu hAz hC0 hCt
+  let C:=A^degree*((max Bclock 0)*Cl)+1
+  have hA0 : 0 < A:=zero_lt_one.trans_le hA
+  have hC : 0 < C:=by dsimp only [C];positivity
+  refine ⟨C,hC,?_⟩
+  filter_upwards [HL,HA] with n hnL hnA
+  intro M hwork L us hus hret hmesh
+  filter_upwards [hnL M hwork L us hus hret hmesh,
+    hnA M hwork L us hus hret hmesh] with jGrid hjL hjA
+  dsimp only at hjL hjA ⊢
+  intro T i star U kGen seed P hP hdegree hi hs hlen hT hmacroW hsmall hmi hms
+  let as:=finiteCutMasses us jGrid
+  let W:=M.data.d
+  let R:=M.data.highErrorEnvelope M.alpha as U
+  let scale:=sourceMonomialScale M.xs W (nativeGeneratedCompleteInitial P.live.test i)
+  let cost:=T.forkCost R+edgeBudget 0 as R
+  let price:=(max Bclock 0)*Cl*W^2*cost
+  have ho:=finiteCutMasses_ordered us hus jGrid
+  have hx:=M.hxs
+  have hxW:=hwork.le
+  have hW:=M.data.hd
+  have hR j : 0 ≤ R j:=by
+    dsimp only [R,ActualHighWallData.highErrorEnvelope,nativeOriginalHighErrorEnvelope]
+    split_ifs
+    · exact le_rfl
+    · exact mul_nonneg (actualLowErrorComparisonConstant_nonneg _ M.data.hTpos.le)
+        (add_nonneg (Real.sqrt_nonneg _) (by positivity))
+  have hcost : 0 ≤ cost:=add_nonneg (T.forkCost_nonneg hR) (edgeBudget_nonneg ho hR)
+  have hprice : 0 ≤ price:=by dsimp only [price];positivity
+  have hscale : 0 ≤ scale:=by dsimp only [scale,sourceMonomialScale];positivity
+  have hlive : P.live.test.edges.length ≤ degree:=by
+    have HH:=P.live.realizes.length_eq
+    have HL : P.live.tags.length ≤ P.resources.length:=by
+      simp only [NativeResourceTerm.resources,List.length_append]
+      omega
+    simp only [List.length_map,NativeResourceMonomial.tags] at HH HL
+    omega
+  have Hlive:=hjL T i star U kGen seed P hP hlive hi hs hlen hT hmacroW hsmall hmi hms
+  have Hpair:=hjA U i star T P (by omega) (by omega) (by omega) (by simpa only [hwork] using hmi) hms
+    1 1 (by norm_num) (by norm_num)
+  have Hkernel :
+      let b:=fun j=>(M.bf (partitionPoint 0 as j):ℝ)
+      let h:=fun j=>(M.hf (partitionPoint 0 as j):ℝ)
+      let K:=nativeContinuumMixedClock n M.bf M.hf as
+      let C:=nativePhysicalResourceCenter n M.bf M.hf as
+      let q : ℕ→RestCoordinate n→ℝ:=fun j=>Sum.elim (fun _=>b j) (fun _=>h j)
+      let G:=nativeActualResourceCanonicalShape P.live hi (hs.trans_le hP.highCut_le_length)
+      |nativeGammaProjectedSecondRestoration true T P.live.test.target star U q b h K
+        (restCenteredFixedForkKernel n b C star 0)
+        (G.canonicalHighWallSource M (fun _=>NativeSourceFactorForm.centered)).restProduct| ≤
+        nativeResourceScale M.xs W 1 P.live.tags*price := by
+    dsimp only
+    change |nativeGammaProjectedHighSecondRestoration T P.live.test.target star U _ _ _ _ _ _| ≤ _
+    have Heq:=funext (actual_general_resource_canonical_rest_product_eq_live P.live hi
+      (hs.trans_le hP.highCut_le_length) M.bf M.hf)
+    change ((nativeActualResourceCanonicalShape P.live hi (hs.trans_le hP.highCut_le_length)).canonicalHighWallSource M
+        (fun _=>NativeSourceFactorForm.centered)).restProduct=
+      nativeRestGeneratedTestValue T P.live.test
+        (fun s t=>deletedOverlap n (joinSpin (s,false)) (joinSpin (t,false)))
+        (nativePhysicalResourceCenter n M.bf M.hf as) at Heq
+    rw [Heq,actual_general_generated_high_second_fixed_fork_kernel M.bf M.hf (M.data.bf_monotone M.alpha) (M.data.hf_monotone M.alpha) T ho star U P.live.test,abs_mul,
+      abs_of_nonneg (NNReal.coe_nonneg _)]
+    have Hb : (M.bf (partitionPoint 0 as star):ℝ) ≤ max Bclock 0:=by
+      have HH:=M.data.total_clock_le M.alpha (partitionPoint 0 as star) (partitionPoint_mem as ho star)
+      exact (le_add_of_nonneg_left (NNReal.coe_nonneg _)).trans
+        (HH.trans (M.hT.trans (le_max_left Bclock 0)))
+    have Hlive' : |actualGeneralGeneratedHighSecond M.bf M.hf T star U P.live.test| ≤
+        Cl*scale*W^2*cost:=by
+      convert Hlive using 1
+      dsimp only [scale,cost,W,R,as]
+      simp only [hwork,sourceMonomialScale_self]
+    have HH:=mul_le_mul Hlive' Hb (NNReal.coe_nonneg _) (by
+      exact mul_nonneg (mul_nonneg (mul_nonneg hCl.le hscale) (sq_nonneg W)) hcost)
+    have Hscale:=P.live.canonical_live_scale_le hx hxW
+    have Hscale':=mul_le_mul_of_nonneg_right Hscale hprice
+    apply le_trans _ Hscale'
+    convert HH using 1
+    all_goals dsimp only [price,scale,cost,W,R,as]
+    all_goals ring_nf
+  have Hdepth : seed.length+kGen ≤ degree:=by rw [←hP.total_factor_depth];exact hdegree
+  have Hnorm:=actual_general_resource_gamma_second_restoration_normalized_profile_le M.bf M.hf
+    (M.data.bf_monotone M.alpha) (M.data.hf_monotone M.alpha) hP Hdepth ho hi hs
+    true hA hx hxW hprice (by simpa only [hwork] using Hpair) Hkernel
+  have hseed : 0 ≤ nativeResourceScale M.xs W 1 seed:=by
+    unfold nativeResourceScale
+    apply List.prod_nonneg
+    intro z hz
+    obtain ⟨mark,hm,rfl⟩:=List.mem_map.mp hz
+    exact (mark.savedScale_pos hx hW zero_lt_one).le
+  have HC : A^degree*((max Bclock 0)*Cl) ≤ C:=by dsimp only [C];linarith
+  have Hfinal:=mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right
+    (mul_le_mul_of_nonneg_left HC (abs_nonneg P.coefficient)) hseed)
+    (mul_nonneg (sq_nonneg W) hcost)
+  apply Hnorm.trans
+  convert Hfinal using 1
+  all_goals dsimp only [price,cost,W,R,as]
+  all_goals ring_nf
+
+end OAI.SKFluctuations.Cavity

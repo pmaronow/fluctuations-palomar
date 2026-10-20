@@ -1,0 +1,242 @@
+{
+  "source_repository": "https://github.com/pmaronow/fluctuations-temp",
+  "source_commit": "b124b86fac33622be83156c57a0b494534e54798",
+  "source_commit_evidence": "All 10,692 original proof hashes match source Git blobs at b124b86fac33622be83156c57a0b494534e54798. The manuscript has a separate source revision recorded below.",
+  "status": "Final source provenance complete; verification of this content snapshot is pending.",
+  "lean_sources": {
+    "entry_points": [
+      "Challenge",
+      "Solution",
+      "Audit"
+    ],
+    "proof_entry_points": [
+      "SKBarriers2.Main.SevenThirty",
+      "SKConstants.Completion.Main.Theorem",
+      "SKProof.OriginalQUnconditionalMain",
+      "SKProof.MeanBiasLowerBound"
+    ],
+    "module_count": 10695,
+    "module_count_status": "Confirmed against PKG1 final import graph and final package inventory: 10,692 inherited modules plus Challenge, Solution and Audit, in 24 Lake libraries.",
+    "lake_library_count": 24,
+    "inherited_proof_modules": 10692,
+    "module_counts_by_source_family": {
+      "all-lean": 3698,
+      "barriers": 269,
+      "fluctuations": 4618,
+      "glauber": 1306,
+      "openai-barriers": 551,
+      "openai-fluctuations": 242,
+      "packet": 8
+    },
+    "byte_identical_before_comment_scrub": 9751,
+    "adapted_before_comment_scrub": 941,
+    "unchanged_inherited_modules": 4515,
+    "adapted_inherited_modules": 6177,
+    "file_identity_record": "submission/source-manifest.json",
+    "new_submission_interfaces": {
+      "Audit.lean": "423626952fd8636b6ae7d0c2136b26dd78dc446fb2762096d53616ece8e57acc",
+      "Challenge.lean": "cfb9e89f1163f844b1632ad7ad603dcf42c16d8a43ade763d85c2e0425e8e688",
+      "Solution.lean": "ede030b0c4b9528ac6146b47a20ed31c48724408eb83a0fa3b868137054348fa"
+    },
+    "inherited_source_identity": "All original and final SHA-256 hashes are populated in submission/source-manifest.json. Final byte-identical/adapted classifications include both phase 1 namespace/import changes and phase 2 comment-only changes.",
+    "adaptation_summary": [
+      "939 retained upper-bound modules isolate OAI declaration/reference identifiers as SKConstantsOAI; physical SKConstants.Upstream.OAI module names are retained.",
+      "Two upper-bound modules substitute imports to reuse the shared all-lean Brownian/Kolmogorov foundations. Twenty duplicate source port modules are omitted.",
+      "The fluctuation development retains the existing SKFluctuationsOAI physical-module prefix and public OAI declaration namespaces.",
+      "The combined Lake configuration registers the Paper root as well as descendants. Challenge defines the statements independently using only Mathlib; Solution and Audit expose and audit exactly five claims.",
+      "The authored-comment scrub changes 5,766 Lean files (5,764 inherited files and the two submission interfaces Challenge and Solution). PKG2S/APPLY compares 13,054,723 tokens in changed files with zero mismatches; its 4,915 protected files are unchanged. Blank lines left by erased comments were then deleted; code stripped of comments and whitespace remains unchanged.",
+      "Phase 3 adds auxiliary-proof cache resets at the two merged source-family boundaries in Challenge. This restores the original generated proof names used in numeral instances. Mathematical declarations, imports, theorem types, and Comparator configuration are unchanged.",
+      "An explanatory two-line comment documents the auxiliary-proof cache reset. This comment changes no declaration, import, theorem type, or kernel rule."
+    ],
+    "unreachable_sources": [],
+    "unresolved_imports": [],
+    "external_import_count": 478,
+    "file_identity_record_sha256": "d4fef9498d946399916924827edf3082421b900b87071541e77ac92e2f9e03bc",
+    "comment_curation": {
+      "changed_lean_files": 5766,
+      "excluded_lean_files": 4915,
+      "token_comparison_count": 13054723,
+      "equivalence_evidence": "/home/ubuntu/work/reports/pkg/APPLY/equivalence.json",
+      "equivalence_evidence_sha256": "659d25515691d210f8c4b7215e70d401c1c5f4617b1926e8e603280838e6aa21"
+    },
+    "attribution_header_correction": {
+      "files": 396,
+      "code_unchanged": true,
+      "note": "The 396 upstream header sentences explicitly say their namespace OAI is renamed SKConstantsOAI in this distribution. Independent comparison of comment-free, whitespace-free content confirmed that the notice correction changed no code."
+    }
+  },
+  "controls_sha256": {
+    "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a",
+    "lake-manifest.json": "e7c0bf11d9514627cd0b14b697a54d5ceda589c50df23ca4ad73c2f4bec02829",
+    "lakefile.toml": "6e2ac5c9cc9f3569ba4754e8905748647b5f710532582d3781840c2639e363bb",
+    "comparator.json": "549b031caa5821153f01571b28d4789a8fb55ae685a69e4b25e02ae764e111bb"
+  },
+  "toolchain": {
+    "lean": "leanprover/lean4:v4.35.0-rc2",
+    "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55"
+  },
+  "upstream_sources": [
+    {
+      "repository": "https://github.com/leanprover-community/mathlib4",
+      "commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+      "selection": "Pinned dependency, not copied into the source package; see lake-manifest.json."
+    },
+    {
+      "repository": "https://github.com/openai/math",
+      "commit": "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb",
+      "selection": "vendor/openai-math/, vendor/openai-fluctuations/, and adapted SKConstants/Upstream/OAI sources; source headers identify individual paths.",
+      "notices": "LICENSES/openai-math-*/"
+    },
+    {
+      "repository": "https://github.com/openai/math",
+      "commit": "1581d4cbdd69a0faf34b2089614fe2a814316a6a",
+      "selection": "Additional upper-bound donor modules identified in retained source headers.",
+      "notices": "LICENSES/openai-math-glauber/"
+    },
+    {
+      "repository": "https://github.com/pmaronow/all-lean",
+      "commit": null,
+      "selection": "3,698 selected modules from the consolidated barriers/vendor/all-lean tree at the top-level source commit. No single all-lean commit is asserted for this multi-origin tree.",
+      "overlay_repository": "https://github.com/pmaronow/sk-mean-bias-palomar",
+      "overlay_commit": "7601a9d5ade08066632bc68b9a615e163f2dd02c",
+      "notices": "LICENSES/all-lean/"
+    },
+    {
+      "repository": "https://github.com/savarin/lean-stochastic-calculus",
+      "selection": "57 selected calculus modules under vendor/all-lean/StochasticCalculus/, inherited through the consolidated all-lean tree. License and notice copies are under vendor-licenses/StochasticCalculus/ and LICENSES/StochasticCalculus/.",
+      "distribution_record": "The retained source metadata and notices identify historical distribution through pmaronow/all-lean@91b0f7aece4af24622757e7fbf7b967a84d14a6a; this context is preserved.",
+      "notices": "LICENSES/StochasticCalculus/ and LICENSES/all-lean/"
+    }
+  ],
+  "licenses": {
+    "file_identity_record": "LICENSES/manifest.json",
+    "file_identity_record_sha256": "61e3f1492fb9541c6cdc68869f1d679f70277e763b4b3200cca63a393140a539",
+    "note": "All 56 listed licenses and notices are copied verbatim from the three source developments. Original references retain their original distribution context."
+  },
+  "manuscript": {
+    "source_directory": "hexagon-two-sided/source",
+    "source_pdf": "hexagon-two-sided/sk_two_sided.pdf",
+    "source_repository_commit": "6744068262347b4b585311fed608c9038e3e6e5b",
+    "source_revision_note": "Author-supplied source of record: fluctuations-temp branch glauber-upper-2026-10-19, commit 6744068262347b4b585311fed608c9038e3e6e5b. Relative to manuscript revision 16439e59a49ad25657eb2362ae077e2594d98ec3, only the main.tex title-page layout changes. The supplied PDF is replaced; the other 28 included manuscript files are unchanged. Incoming file hashes were verified; the source revision could not be fetched anonymously.",
+    "unchanged_files_sha256": {
+      "abstract.tex": "bbcbf99640242be5f7e9dbe3e6b77862082cb40c411ab257842178aefa1f11a3",
+      "formal-status.tex": "2fe062ca45123efe71fcece64ab986a59cca3935dd5c7b02f0431cf18fb43055",
+      "macros.tex": "4e25be2f1d1a771cd1b14cf0e5327b6399dece6c6e6892869cd7acf587516fde",
+      "main.bbl": "5308b728594dd66cf37484f142b3c2daf2acd78e4198d3dc8b514258aadb4745",
+      "main.pdf": "783f123d6587790842a335cb1d6e31100f80d900f24f76522e9d8971dc3afa26",
+      "main.tex": "53b1f1e15c8be8783908456dcca17b650538cc7b0a733b5ce63fb37b1ce788fb",
+      "refs.bib": "2de718084efbd82c0ce5aec755ab24df20ce96f0519d8cf3ed7580c11d176a55",
+      "sections/01-introduction.tex": "6744d6f2afe41daafac17bb0393b76ddb269ec6a9633b770699ba56874a845ec",
+      "sections/02-overview.tex": "9551016e97915191a7bfa8bc3ca2b49ca2ba375c8ebf69432d016b61e5b6b70b",
+      "sections/03-model.tex": "b5dba1e0716837136c5706da30588c1af91c558c68efcd4d9cd83e74588d01d7",
+      "sections/04-inputs.tex": "f5bb0f51b210d098a221089a51908eb7f8a0721a45edb3d826681ee77b1c7a14",
+      "sections/05-scalar.tex": "e0df5857b0723d839984be8149425638c641e9fb13734928d7ce4df699e81d5d",
+      "sections/06-flow.tex": "e91ce641a0285d5d7d7757b0a0322e132cdbb2715dfa1b5cd1eb448a2c892891",
+      "sections/07-cubic.tex": "158f966c1f87afe6fdc55af3c7ba38a22be1f70e655686e71dc88a9f0c1ebb94",
+      "sections/08-fractional.tex": "12d33ec19ebf4e0483739645e837549c7c21ca9358a0b23f79d8d78bbd6d22f7",
+      "sections/09-static.tex": "a856d050e2ad87156271b887a3a97d4209056025392443ccf3c3d92cd1fef52a",
+      "sections/10-references.tex": "650dbe1d257d99ea8a9a42d557914d3154ca94a5890d5ad83de016e1b4594a33",
+      "sections/11-induction.tex": "f4b8ead581d9f6d1bda5cb3ebd28ab012a937e58d03a3c6a830e4f17a467b38e",
+      "sections/12-barrier-proof.tex": "32d99767df72a25f32d00e6f9231d51749c60d208605ac64bd8684130441562c",
+      "sections/13-upper-setup.tex": "91956e65b430c316cf904d0b912bc3f93dc7f55054efb1c6ea84f9e590898b8c",
+      "sections/14-upper-proposal.tex": "f96a099b2843a4f6a18a323bb6610c72fc4ce90dfee0ec75fe27648d6d8e2f86",
+      "sections/15-upper-fine.tex": "4f23e16020bc6b69bb819f02a745ecee75c49bd67b3f37755867a85fabd68cab",
+      "sections/16-upper-concentration.tex": "17388599aa03868e0307e53370bbc8d8f0dd2a1e97f6bbe5afbe3566d0a72887",
+      "sections/17-upper-coarse.tex": "c6832a40ad4319d041f0cf63535036691a06b6b8235692e431f3c3231e7ddf92",
+      "sections/18-upper-connections.tex": "b30a83356b086098a9a9015f10abf56ac9fa441a263eb149cc6384196a5d2f9e",
+      "sections/19-upper-proof.tex": "3816ab2c5754a956ebe3819d9a54f0c747f6367f601ce0109be5671feaad353d",
+      "sections/20-fluctuations.tex": "d4cebd7936af03bfa8a7088aed677b308c7577e8e270819c1920c4aa8d72e9f2",
+      "sections/21-mean-bias.tex": "8417b3caa21fc54816b10d07dcba8b70b57dcd7cad83e42c401e8992f9a9e391",
+      "sections/22-formal.tex": "8791a50fcf11808e2f88fb9cd8d5800a107938f62e5bff1ca31de9bb8e8de223",
+      "sections/23-open.tex": "e13a82e75e48ed00530c212b07918629b3a4e75ca808b648681d4f1666eedf0d"
+    },
+    "adapted_files": {},
+    "current_source_validation": {
+      "included_files": 30,
+      "source_bytes_identical": true,
+      "source_repository_commit": "6744068262347b4b585311fed608c9038e3e6e5b",
+      "scalar_source_restored_sha256": "e0df5857b0723d839984be8149425638c641e9fb13734928d7ce4df699e81d5d",
+      "supplied_pdf_sha256": "783f123d6587790842a335cb1d6e31100f80d900f24f76522e9d8971dc3afa26",
+      "note": "The incoming main.tex and main.pdf exactly match the author-supplied SHA-256 values; the other 28 included manuscript files remain byte-identical to the prior source of record. No new TeX build or anonymous Git verification of the source revision is claimed.",
+      "main_tex_sha256": "53b1f1e15c8be8783908456dcca17b650538cc7b0a733b5ce63fb37b1ce788fb",
+      "unchanged_other_files": 28,
+      "source_revision_author_supplied": true
+    },
+    "omission_note": "The absent, unused refs-add-W3.bib fragment is excluded from the file inventory; the manuscript uses refs.bib and the retained main.bbl.",
+    "historical_build_receipt_scope": "The PKG2D TeX and normalized-text comparison receipts concern its staging directory. They do not certify a TeX rebuild of the exact unadapted source released here."
+  },
+  "claim_map": "submission/claims.json",
+  "claim_map_sha256": "93ae5b8b1856953bb9e4f6456627d2fb9927c5b06dac6d72df6b03d34bf93cb3",
+  "verifier": {
+    "repository": "https://github.com/PalomarRegistry/PalomarSubmission",
+    "commit": "d4e41c1d5b0d114c4859e6e5831dc6d3ad1d0d44",
+    "metadata_validation": "Validation of this content snapshot is pending.",
+    "package_proof_validation": "PENDING: confirm the unchanged built Solution closure, run default lake build and strict Audit, and rerun the full official protected Comparator with all three kernels.",
+    "formalization_sha256": "62434e88cf5d081e436c91e624f35129c2c95ee6068afdf00efcb68d06c16f55",
+    "verification_record": "verification/README.md",
+    "release_correspondence": "The records commit will identify the verified public root content commit. Earlier local checks are historical and do not certify this content snapshot."
+  },
+  "statement_review_continuity": {
+    "early_review_report": "/home/ubuntu/work/reports/pkg/PKG4A/report.md",
+    "verdict": "FAITHFUL WITH NOTES",
+    "reviewed_sha256": "4480c5a0610abe28f0e7987b80b63f117583a92a38c61dcc0d1bb78ed086a587",
+    "current_sha256": "cfb9e89f1163f844b1632ad7ad603dcf42c16d8a43ade763d85c2e0425e8e688",
+    "change": "The authored-comment scrub removed comments and blank lines only. Two auxiliary-proof cache resets restore original source-family boundaries without changing mathematical declarations. The final two-line explanatory comment changes only comments; removing it recovers the previously verified Challenge bytes.",
+    "post_scrub_reviewed_sha256": "43cd24bf2da6478304a30433cc0bd0b2667a3765df82bf97c26d831ca56590a2",
+    "mathematical_declarations_unchanged": true,
+    "pre_explanatory_comment_sha256": "f4d2c6444591c6a33e1367d47b9f956ead148895e3ac8e31edb8885c63b90e2e",
+    "bytes_identical_to_pkg4_after_removing_exactly_two_cache_commands_and_explanatory_comment": true,
+    "challenge_identity_history": [
+      {
+        "snapshot": "Early statement review",
+        "sha256": "4480c5a0610abe28f0e7987b80b63f117583a92a38c61dcc0d1bb78ed086a587",
+        "change": "Original reviewed interface"
+      },
+      {
+        "snapshot": "After authored-comment scrub",
+        "sha256": "43cd24bf2da6478304a30433cc0bd0b2667a3765df82bf97c26d831ca56590a2",
+        "change": "Comments and blank lines only"
+      },
+      {
+        "snapshot": "Prior local three-kernel verification",
+        "sha256": "f4d2c6444591c6a33e1367d47b9f956ead148895e3ac8e31edb8885c63b90e2e",
+        "change": "Two auxiliary-proof cache reset commands; mathematical declarations unchanged"
+      },
+      {
+        "snapshot": "Current interface",
+        "sha256": "cfb9e89f1163f844b1632ad7ad603dcf42c16d8a43ade763d85c2e0425e8e688",
+        "change": "Only the exact two-line explanatory comment added"
+      }
+    ]
+  },
+  "phase3_completion": {
+    "source_commit_confirmed": true,
+    "comment_scrub_confirmed": true,
+    "final_source_hashes_complete": true,
+    "interface_and_control_hashes_complete": true,
+    "source_count_and_closure_confirmed": true,
+    "independent_review": "/home/ubuntu/work/reports/pkg/PKG4/report.md",
+    "independent_review_sha256": "c40c18c26496eb26486d36ebe7d07269d07cfb0630c5738ecbf24a9d0633a861",
+    "review_findings_resolved": [
+      "Completed final provenance and classifications after the scrub and header corrections.",
+      "Retained the exact unadapted scalar manuscript source as explicitly directed by the orchestrator; removed the portability adaptation claim and its hash.",
+      "Removed the absent bibliography fragment from the included file inventory.",
+      "Corrected StochasticCalculus implementation and license/notice locations.",
+      "Confirmed all 396 corrected namespace-adaptation headers and unchanged code."
+    ],
+    "auxiliary_cache_boundary_repair": true,
+    "verification_status": "PENDING",
+    "verification_record": "verification/README.md"
+  },
+  "auxiliary_cache_boundary_repair": {
+    "evidence": "/home/ubuntu/work/reports/pkg/PKG3/diagnostics/repair-result.json",
+    "evidence_sha256": "78c9e573a12125e17df8142a9e37509d01d730c9d160d91efee9a1b8c8d2eb36",
+    "boundaries": [
+      "SKConstants",
+      "OAI.SKFluctuations"
+    ],
+    "inserted_commands": 2,
+    "mathematical_source_unchanged": true,
+    "diagnostic_statement_and_reachable_helper_comparison": "PASS; no kernel replay claimed by this diagnostic"
+  }
+}

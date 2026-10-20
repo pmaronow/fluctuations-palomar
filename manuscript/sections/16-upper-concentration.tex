@@ -1,0 +1,523 @@
+\chapter{Concentration on the growing mesh}\label{u:sec:concentration}
+
+In this section, we prove the concentration estimates used in
+\cref{u:sec:coarse}. We use the population identities of
+\cref{u:sec:proposal-entries} and the product law of the linked rows from
+\cref{u:def:laws}. \Cref{u:lem:gram} controls the two blocks of the empirical
+matrix. \Cref{u:lem:weighted} controls the weighted errors that enter the
+energy expansion in \cref{u:lem:weighted-energy}.
+
+Throughout, $V=V_{\ex{b}}$ and $N=N_{\ex{b}}$. All probability bounds are
+under the linked row law, averaged over the disorder. The equality of
+laws in \cref{u:sec:proposal-laws} transports them to the source and
+replay experiments. Estimates involving only the paths are proved under
+the original law of the Brownian paths, which is also their linked marginal.
+Stochastic integrals use the spin-free filtration described there.
+
+\section{Errors and dyadic depth}\label{u:sec:gram}
+
+We first define the errors used in both concentration estimates.
+For vectors in $\R^n$, we write
+$\langle u,v\rangle_n=n^{-1}\sum_{i=1}^n u_iv_i$.
+Let $\mathcal T_j$ and $e_j$ be the query vectors of
+\cref{u:sec:proposal}, and define
+\begin{equation}\label{u:eq:empirical-errors}
+\begin{aligned}
+ A_{\mathcal T}&=(\langle\mathcal T_i,\mathcal T_j\rangle_n),
+ &q&=(\langle\mathcal T_j,x\rangle_n),
+ &v&=(\langle e_j,x\rangle_n),
+ &H&=(\langle\mathcal T_i,e_j\rangle_n),\\
+ E_A&=A_{\mathcal T}-I,
+ &E_q&=q-s,
+ &E_v&=v-b,
+ &E_H&=H-H_0.
+\end{aligned}
+\end{equation}
+Here $v$ is an empirical vector. We use $\|\cdot\|$ for the Euclidean
+norm of a vector and the operator norm of a matrix. Let
+$D_*=1+\lceil\log_2N\rceil$ be the dyadic depth. We work in the case
+$N\ge1$, which holds eventually; when there are no queries, the empty
+matrix formulas are interpreted accordingly.
+
+\begin{lemma}[Fixed Gram stability]\label{u:lem:gram}
+For $n\ge1$ and $1\le N<n$, let $R=R_V\ge1$ and
+$D_*=1+\lceil\log_2N\rceil$. For a linked row
+$Z=(\mathcal T,e,x)$, define
+$\widehat\Sigma_n=n^{-1}\sum_iZ_iZ_i^{\mathsf T}$ and
+$\Sigma=\E ZZ^{\mathsf T}$. Then
+\begin{equation}\label{u:eq:fixed-gram}
+ \PP\left\{\|E_A\|\vee\|E_H\|>(16D_*^2)^{-1}\right\}
+ \le 2\,9^{2N+1}
+ \exp\left\{-\frac{n}{2^{24}RD_*^4\log(2+R)}\right\}.
+\end{equation}
+The blocks $E_A$ and $E_H$ are coordinate compressions of
+$\widehat\Sigma_n-\Sigma$.
+\end{lemma}
+
+\begin{proof}
+We bound the fourth moment of a row projection using its second moment
+and its sub-Gaussian tail. We then use a net to control the empirical
+covariance matrix.
+
+Let $a=(a_{\mathcal T},a_e,a_x)$ be a deterministic unit vector, and
+write $F=a^{\mathsf T}Z$. By the martingale representation, the
+normalized $\mathcal T$ projections have sub-Gaussian proxy $R$ times
+the squared coefficient norm. The $e$ projections are Gaussian, and
+$x$ is a centered sign. By H\"older's inequality with exponents three,
+which allows dependence within a row, we have that $F$ has proxy at
+most $3R$. By the
+population identities in \cref{u:sec:proposal-entries} and
+$(u+v+w)^2\le3(u^2+v^2+w^2)$, we also have that $\E F^2\le3$.
+
+Let $Y=F/\sqrt3$ and $Z'=F/\sqrt{3R}$. These have proxies $R$ and $1$,
+respectively, and $\E Y^2\le1$. We split $\E(YZ')^2$ at
+$(Z')^2=Q=16\log(2+R)$. The lower part is at most $Q$. For the upper
+part, we have
+\[
+ \E Y^4\le16R^2,\qquad
+ \E\bigl[(Z')^4\mathbf 1_{\{(Z')^2>Q\}}\bigr]
+ \le2e^{-Q/2}(Q^2+4Q+8).
+\]
+By Cauchy--Schwarz, the upper part is at most
+$4\sqrt2R(Q+3)/(R+2)^4<2$. Hence
+$\E(YZ')^2\le20\log(2+R)$ and
+$\E F^4\le180R\log(2+R)$. Integrating the Gaussian tail, we also have
+$\|F^2\|_{\psi_1}\le18R$, where the Orlicz norm is defined below.
+This implies that $X=F^2-\E F^2$ has variance at most
+$M^2=180R\log(2+R)$ and Orlicz norm at most $S=36R$.
+
+Let $H=4S\log(2+S)$. We split the $l$th moment at $H$. The lower
+part is at most $M^2H^{l-2}$, and the upper part is at most
+\[
+ 2H^l(2+S)^{-4}+2l!(2S)^l(2+S)^{-2}.
+\]
+For $M,S\ge1$, the two upper terms are bounded by $8H^{l-2}$ and
+$8l!H^{l-2}$, respectively. Their sum with the lower part is at most
+$13l!M^2H^{l-2}$. Expanding the centered exponential series, we find
+\[
+ \log\E e^{\theta X}
+ \le\frac{26M^2\theta^2}{2(1-H|\theta|)}.
+\]
+Multiplying the moment generating functions of the rows, with
+$\theta=t/(26M^2+Ht)$ and both signs, we obtain the two-sided tail
+$2e^{-nt^2/[2(26M^2+Ht)]}$ for the empirical mean. The variance
+parameter is $4680R\log(2+R)$, and the scale is
+\[
+ 144R\log(2+36R)\le720R\log(2+R).
+\]
+At tolerance $\varepsilon_0/2$, where
+$\varepsilon_0=(16D_*^2)^{-1}\le1$, the rate is at least
+$n\varepsilon_0^2/[40320R\log(2+R)]$.
+
+A deterministic $1/4$ net of the unit sphere in dimension $2N+1$ has
+size at most $9^{2N+1}$. The operator norm of a symmetric matrix is at
+most twice the largest absolute value of its quadratic form on this
+net. Since $40320\cdot256<2^{24}$, we obtain \eqref{u:eq:fixed-gram}
+from the union bound over the net. Here we used that the rows have the
+product law of \cref{u:def:laws}, and that coordinate inclusions and
+projections have norm one.
+\end{proof}
+
+\section{Weighted dyadic concentration}\label{u:sec:weighted}
+
+We next prove the weighted estimate. Four elementary estimates will
+control products, stochastic integrals with random brackets, weighted
+squares, and empirical means. We use them in \cref{u:lem:weighted},
+first for each dyadic node and then for the sum over the tree.
+
+We write $\operatorname{SG}(s^2)$ for the centered bound
+$\E e^{\theta X}\le e^{s^2\theta^2/2}$ for every real $\theta$, and let
+\[
+ \|X\|_{\psi_1}
+ =\inf\{s>0:\E e^{|X|/s}\le2\}.
+\]
+The latter is a norm, so its triangle inequality holds also for
+dependent random variables.
+
+\begin{lemma}[Products of sub-Gaussian variables]
+\label{u:lem:subgaussian-products}
+Let $R\ge1$ and $u,s\ge0$. If $\E Y^2\le u^2$, $Y$ is
+$\operatorname{SG}(Ru^2)$, and $Z$ is $\operatorname{SG}(s^2)$, then
+\begin{equation}\label{u:eq:subgaussian-products}
+\begin{aligned}
+ \E(YZ)^2&\le20u^2s^2\log(2+R),\\
+ \|YZ\|_{\psi_1}&\le10us\sqrt R,\qquad
+ \|YZ-\E YZ\|_{\psi_1}\le20us\sqrt R.
+\end{aligned}
+\end{equation}
+The variables $Y$ and $Z$ may be dependent.
+\end{lemma}
+
+\begin{proof}
+If $us=0$, the assertions are immediate. Otherwise, we normalize to
+$u=s=1$. By a union bound, we have that
+$\PP(|YZ|>t)\le4e^{-t/(2\sqrt R)}$. Integrating this tail yields
+the two Orlicz bounds. To bound the second moment, we split at
+$Z^2=Q=16\log(2+R)$. The lower part is at most $Q\E Y^2$. For the
+upper part, we use Cauchy--Schwarz, and the Gaussian tails give
+\[
+ \E Y^4\le16R^2,\qquad
+ \E[Z^4\mathbf 1_{\{Z^2>Q\}}]
+ \le2e^{-Q/2}(Q^2+4Q+8).
+\]
+The upper part is at most $4\sqrt2R(Q+3)/(R+2)^4<2$ for $R\ge1$.
+In the last inequality, we used $Q+3\le9(R+2)$ and
+$R/(R+2)^3\le1/27$. We note that the bound on the second moment uses
+both the second moment of $Y$ and the two tails. This proves
+\eqref{u:eq:subgaussian-products}.
+\end{proof}
+
+\begin{lemma}[A tail bound from the bracket]\label{u:lem:bracket-tail}
+Let $\widetilde M$ be a continuous local martingale starting at zero,
+and suppose that $\|\langle\widetilde M\rangle_V\|_{\psi_1}\le A$.
+Then, for $t,u>0$,
+\begin{equation}\label{u:eq:bracket-tail}
+\begin{aligned}
+ \PP(|\widetilde M_V|>t)
+ &\le\PP(\langle\widetilde M\rangle_V>u)+2e^{-t^2/(2u)},\\
+ \|\widetilde M_V\|_{\psi_1}&\le5\sqrt{2A}.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We stop at bracket level $u$ and use the exponential supermartingale
+with parameters $t/u$ and $-t/u$. On
+$\{\langle\widetilde M\rangle_V\le u\}$, we have the first inequality.
+For the second, we take $u=t\sqrt{A/2}$ so that the resulting tail is
+bounded by $4e^{-t/\sqrt{2A}}$. Integrating it, we find that
+$\|\widetilde M_V\|_{\psi_1}\le5\sqrt{2A}$. If $A=0$, the martingale is
+zero and the claim is immediate.
+\end{proof}
+
+\begin{lemma}[Weighted squares]\label{u:lem:jensen-weights}
+Suppose that each $Y_j$ is $\operatorname{SG}(s^2)$, where $s>0$,
+and that $p_j\ge0$ and $\sum_jp_j\le1$. Then
+\begin{equation}\label{u:eq:jensen-weights}
+ \E\exp\left\{\frac{\sum_jp_jY_j^2}{6s^2}\right\}\le2.
+\end{equation}
+The variables $Y_j$ may be dependent.
+\end{lemma}
+
+\begin{proof}
+For a single $Y_j$, we integrate its Gaussian tail and bound the
+expectation by $1+2\int_1^\infty t^{-3}\dd t=2$. By Jensen's inequality, with the
+unused weight assigned to zero, we obtain \eqref{u:eq:jensen-weights}.
+\end{proof}
+
+\begin{lemma}[Variance-sensitive Bernstein bound]\label{u:lem:bernstein}
+Suppose that $\E X=0$, $\E X^2\le M^2$,
+$\PP(|X|>t)\le2e^{-t/S}$, and $M,S\ge1$.
+Let $H=4S\log(2+S)$. Then, for integers $l\ge2$,
+\begin{equation}\label{u:eq:bernstein-moments}
+ \E|X|^l\le13l!M^2H^{l-2}.
+\end{equation}
+If $X_1,\ldots,X_n$ are independent copies of $X$, then
+\begin{equation}\label{u:eq:bernstein}
+\begin{aligned}
+ \log\E e^{\theta X}
+ &\le\frac{26M^2\theta^2}{2(1-H|\theta|)},
+ &&|\theta|<H^{-1},\\
+ \PP\left(\left|\frac1n\sum_iX_i\right|>\eta\right)
+ &\le2\exp\left\{-\frac{n\eta^2}{2(26M^2+H\eta)}\right\},
+ &&\eta>0.
+\end{aligned}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+This is the Bernstein inequality in the form of
+\cite[Theorem~2.10]{boucheron-lugosi-massart-2013}; we include the
+calculation to record the constants needed here. In passing from the
+tail to the factorial moments, we keep the variance.
+
+Splitting the $l$th moment at $H$ and integrating the upper tail, we have
+\[
+ \E|X|^l
+ \le M^2H^{l-2}+2H^l(2+S)^{-4}
+       +2l!(2S)^l(2+S)^{-2}
+ \le13l!M^2H^{l-2}.
+\]
+The boundary term is at most $8H^{l-2}$, and the last term is at most
+$8l!H^{l-2}$; here we used $H\ge2S$ and
+$\log(2+S)\le(2+S)/2$. Expanding the exponential series, which is
+absolutely convergent, and using centering, we conclude that the first
+inequality in \eqref{u:eq:bernstein} holds. For the empirical mean, we use independence
+to multiply the moment generating functions.
+Taking $\theta=\eta/(26M^2+H\eta)$, with both
+signs, gives the second inequality.
+\end{proof}
+
+\begin{lemma}[Duration-normalized weighted concentration]
+\label{u:lem:weighted}
+Let $m_0=2^{\lceil\log_2N\rceil}$ and $D_*=1+\log_2m_0$.
+Pad the errors and $s,b$ by zeros, and $A_{\mathcal T}$ by an identity,
+to dimension $m_0$. Dummy coordinates have duration zero. Let
+$\mathcal D$ be the complete dyadic tree on $\{1,\ldots,m_0\}$, and
+let $P_I$ denote coordinate projection onto $I$. Define
+\begin{equation}\label{u:eq:weighted-definitions}
+\begin{aligned}
+ d_I&=\sum_{j\in I\cap[1,N]}h_{j-1},
+ &U_{\rm dur}&=t_N,\\
+ \mathcal N_w(X)^2&=\sum_{I\in\mathcal D}\|XP_Iw\|^2,
+ &L&=\Upt(E_A),
+\end{aligned}
+\end{equation}
+where $\Upt$ keeps the strict upper triangle and half its diagonal, and
+let
+\[
+\begin{aligned}
+ W_{\rm wt}^2={}&\|E_q\|^2+\|E_v\|^2
+ +\mathcal N_s(L)^2+\mathcal N_s(L^{\mathsf T})^2\\
+ &+\mathcal N_b(L)^2+\mathcal N_s(E_H)^2
+ +\mathcal N_s(E_H^{\mathsf T})^2.
+\end{aligned}
+\]
+The duration $d_I$ is that of the previous posterior cells; the query
+endpoint $e_j$ has denominator $\sqrt{h_j}$ from the next cell.
+Let $R=R_V\ge1$, $B_*=\max(1,\beta e^{1/8})$, and
+\begin{equation}\label{u:eq:weighted-parameters}
+\begin{aligned}
+ \ell_R&=\log(2+R),
+ &M_*^2&=25B_*^2D_*^2\ell_R,\\
+ S_*&=20B_*D_*\sqrt R,
+ &\mathsf v&=26M_*^2,
+ &H_*&=4S_*\log(2+S_*).
+\end{aligned}
+\end{equation}
+For every $n,N\ge1$, every deterministic grid with used cells at most
+one and $h_j/h_{j-1}\le e^{1/4}$, and every $\eta>0$, under the
+linked row product law,
+\begin{equation}\label{u:eq:weighted-tail}
+ \PP\left\{W_{\rm wt}>2\eta\sqrt{2+5D_*U_{\rm dur}}\right\}
+ \le2(10m_0-3)5^{m_0}
+ \exp\left\{-\frac{n\eta^2}{2(\mathsf v+H_*\eta)}\right\}.
+\end{equation}
+With this failure bound, the following estimates hold simultaneously:
+\begin{equation}\label{u:eq:weighted-node-bounds}
+\begin{aligned}
+ &\|E_q\|,\|E_v\|\le2\eta,\\
+ &\|LP_Is\|,\|L^{\mathsf T}P_Is\|,\|LP_Ib\|,
+   \|E_HP_Is\|,\|E_H^{\mathsf T}P_Is\|
+   \le2\eta\sqrt{d_I}\quad(I\in\mathcal D).
+\end{aligned}
+\end{equation}
+Zero-duration nodes have zero error and are omitted when dividing by
+$\sqrt{d_I}$. On the growing grid with $h=n^{-\ex{a}}$,
+$V=V_{\ex{b}}$, and $\ex{a}>\ex{b}/4$, there exists a fixed finite $C$
+such that
+\begin{align}
+ \PP\{W_{\rm wt}>C_\beta n^{-\ex{w}}\log^C n\}
+ &\le2\exp\left\{C_\beta n^{\ex{a}}
+ -\frac{c_\beta n^{1-\max\{2\ex{w},\ex{w}+\ex{b}/4\}}}
+ {\log^C n}\right\},\label{u:eq:weighted-growing}\\
+ \PP\{\|E_A\|\vee\|E_H\|>(16D_*^2)^{-1}\}
+ &\le2\exp\left\{C_\beta n^{\ex{a}}
+ -\frac{c_\beta n^{1-\ex{b}/2}}{\log^C n}\right\}.
+ \label{u:eq:gram-growing}
+\end{align}
+Constants are independent of deterministic row directions, tree nodes,
+the selected cut, and the rotation angle. The finite row estimate allows
+all $N$; its transport to the $n$-spin proposal uses $N<n$, which holds
+eventually on the parameter family since $\ex{a}<1$.
+\end{lemma}
+
+\begin{proof}
+We first estimate projections of a single row. We decompose each
+triangular projection by dyadic depth and separate its half diagonal.
+After dividing each interval projection by $\sqrt{d_I}$, we use
+\cref{u:lem:bernstein} and a sphere net. Summing the resulting squared
+bounds over the tree gives \eqref{u:eq:weighted-tail}.
+
+\paragraph{Row projections and the durations.}
+For a deterministic $\alpha$, the population identities and martingale
+representation in \cref{u:sec:proposal-entries} imply that
+\begin{equation}\label{u:eq:row-projections}
+\begin{aligned}
+ \E(\alpha^{\mathsf T}\mathcal T)^2&=\|\alpha\|^2,\\
+ \alpha^{\mathsf T}\mathcal T&\text{ is }
+       \operatorname{SG}(R\|\alpha\|^2),\qquad
+ \alpha^{\mathsf T}e\text{ is }
+       \operatorname{SG}(\|\alpha\|^2).
+\end{aligned}
+\end{equation}
+Indeed, $\alpha^{\mathsf T}\mathcal T$ is the integral with integrand
+$\alpha_j\chi_t/s_j$ on previous cell $j$; its bracket is bounded by
+$R\|\alpha\|^2$. For $u_j=w_js_j$ with $|w_j|\le B_*$, we have
+\begin{equation}\label{u:eq:weighted-row-increments}
+ Z_J=\sum_{j\in J}u_j\mathcal T_j
+ =\sum_{j\in J}w_j\int_{t_{j-1}}^{t_j}\chi_t\dd M_t
+ \text{ is }\operatorname{SG}(B_*^2d_I),\qquad J\subset I.
+\end{equation}
+The bracket bound is deterministic. This implies that the same estimate
+holds conditionally before its supporting future cells. Further,
+$\|P_Is\|^2\le d_I$, so $s^{\mathsf T}P_Ie$ is
+$\operatorname{SG}(d_I)$. The weights $b_j$ satisfy
+\begin{equation}\label{u:eq:adjacent-duration-weights}
+ b_j\le\beta\sqrt{h_jr(t_j)},\qquad
+ s_j\ge\sqrt{h_{j-1}r(t_j)},\qquad
+ \frac{b_j}{s_j}\le\beta\sqrt{\frac{h_j}{h_{j-1}}}
+ \le\beta e^{1/8}.
+\end{equation}
+Here we used the monotonicity of $r$ and $p\le1$. Note that the
+previous and next durations enter this calculation separately.
+
+\paragraph{The strict triangular part.}
+Fix a deterministic unit direction $\alpha$ in the padded dimension
+and one node $I$. At a dyadic depth, let $(A,B)$ range over the pairs of
+disjoint left and right children of its parents. The projections of
+the strict upper triangle at this level and of its transpose are,
+respectively,
+\[
+\begin{aligned}
+ N_+&=\sum_{(A,B)}Y_AZ_{B\cap I},
+ &Y_A&=\sum_{j\in A}\alpha_j\mathcal T_j,\\
+ N_-&=\sum_{(A,B)}Z_{A\cap I}Y_B,
+ &Y_B&=\sum_{j\in B}\alpha_j\mathcal T_j.
+\end{aligned}
+\]
+The first is the predictable integral with multiplier $Y_Aw_j\chi_t$
+on future cells $j\in B\cap I$. The second has multiplier
+$Z_{A\cap I}\alpha_j\chi_t/s_j$ on future cells $j\in B$.
+The future supports at one depth are disjoint. By conditional centering
+before each future support, the block products are orthogonal, although
+their past and future factors need not be independent. The isometry for
+$N_+$ and \cref{u:lem:subgaussian-products} for each product in $N_-$
+give
+\begin{equation}\label{u:eq:dyadic-level-variance}
+ \E N_+^2\le B_*^2d_I\sum_A\|P_A\alpha\|^2\le B_*^2d_I,
+ \qquad
+ \E N_-^2\le20B_*^2d_I\ell_R.
+\end{equation}
+Their brackets satisfy
+\begin{equation}\label{u:eq:dyadic-level-brackets}
+ \langle N_+\rangle\le B_*^2d_I\sum_AY_A^2,\qquad
+ \langle N_-\rangle
+ \le R\sum_B\|P_B\alpha\|^2Z_{A\cap I}^2.
+\end{equation}
+Using \cref{u:lem:jensen-weights} with weights $\|P_A\alpha\|^2$
+and $\|P_B\alpha\|^2$, respectively, we bound the Orlicz norms of
+both brackets by $6B_*^2Rd_I$. \Cref{u:lem:bracket-tail} then implies
+that the Orlicz norms of both projections are at most
+$18B_*\sqrt{Rd_I}$. There are $D_*-1$ depths, and we sum the bounds
+over them. By the triangle inequalities in $L^2$ and in the Orlicz
+norm, this costs at most a factor equal to the number of depths.
+
+\paragraph{The half diagonal.}
+In either orientation, the half diagonal is
+\begin{equation}\label{u:eq:half-diagonal}
+ Q_I=\frac12\sum_{j\in I}\frac{\alpha_jw_j}{s_j}
+       ((\Delta m_j)^2-s_j^2)=N_I+D_I,
+\end{equation}
+where
+\[
+\begin{aligned}
+ N_I&=\sum_{j\in I}\frac{\alpha_jw_j}{s_j}
+ \int_{t_{j-1}}^{t_j}(m_t-m_{t_{j-1}})\chi_t\dd M_t,\\
+ D_I&=\frac12\sum_{j\in I}\frac{\alpha_jw_j}{s_j}
+ \left(\int_{t_{j-1}}^{t_j}\chi_t^2\dd t-s_j^2\right),
+ \qquad \Delta m_j=m_{t_j}-m_{t_{j-1}}.
+\end{aligned}
+\]
+Both terms have mean zero, and $D_I$ is a centered random drift.
+By isometry,
+\[
+ \E N_I^2\le B_*^2\sum_{j\in I}\alpha_j^2h_{j-1}
+ \le B_*^2d_I.
+\]
+Let $S_j=\sup_{[t_{j-1},t_j]}|m_t-m_{t_{j-1}}|$. By the maximal
+inequality for the exponential martingale, we have
+$\PP(S_j>u)\le2e^{-u^2/(2h_{j-1})}$, so
+$\|S_j^2\|_{\psi_1}\le6h_{j-1}$. The bracket of $N_I$ is bounded
+by $B_*^2R\sum\alpha_j^2S_j^2$, whose Orlicz norm is at most
+$6B_*^2Rd_I$. By \cref{u:lem:bracket-tail}, we have
+$\|N_I\|_{\psi_1}\le18B_*\sqrt{Rd_I}$.
+For $q_j=\int_{t_{j-1}}^{t_j}\chi_t^2\dd t$, we have
+\[
+ \|q_j-s_j^2\|_2\le\|q_j\|_2
+ \le\int_{t_{j-1}}^{t_j}\sqrt{r(t)}\dd t
+ \le\sqrt{h_{j-1}}s_j,
+\]
+where we used $\chi^4\le\chi^2$. It follows that
+\begin{equation}\label{u:eq:half-diagonal-bounds}
+\begin{aligned}
+ \|D_I\|_2&\le\tfrac12B_*\sqrt{d_I},
+ &|D_I|&\le\tfrac12B_*\sqrt{Rd_I},\\
+ \E Q_I^2&\le\tfrac94B_*^2d_I,
+ &\|Q_I\|_{\psi_1}&\le20B_*\sqrt{Rd_I}.
+\end{aligned}
+\end{equation}
+These estimates keep track of the unequal durations of the cells. In
+particular, the variance bound involves $d_I$ without a power of $R$,
+which would be lost if each duration were replaced by the maximal one.
+
+\paragraph{The remaining projections and normalization.}
+The two projections of the full cross blocks are the centered products
+$(\alpha^{\mathsf T}\mathcal T)(s^{\mathsf T}P_Ie)$ and
+$(\alpha^{\mathsf T}e)(s^{\mathsf T}P_I\mathcal T)$. By
+\eqref{u:eq:row-projections}--\eqref{u:eq:adjacent-duration-weights}
+and \cref{u:lem:subgaussian-products}, their variances are at most
+$20d_I\ell_R$, and their Orlicz norms are at most $20\sqrt{Rd_I}$.
+Here the centering subtracts the block $H_0$.
+The two projections without intervals,
+$\alpha^{\mathsf T}(\mathcal T x-s)$ and
+$\alpha^{\mathsf T}(ex-b)$, have variance at most one and Orlicz
+norm at most $10\sqrt R$, since multiplication by the terminal sign
+preserves squares and absolute values.
+
+Combining \eqref{u:eq:dyadic-level-variance}--\eqref{u:eq:half-diagonal-bounds},
+we find that each of the five interval projections, after division by
+$\sqrt{d_I}$, and each of the two projections without intervals is
+centered and satisfies
+\begin{equation}\label{u:eq:normalized-moments}
+ \E X^2\le M_*^2,\qquad \|X\|_{\psi_1}\le S_*.
+\end{equation}
+For a single row, the five vectors indexed by an interval are
+\[
+\begin{gathered}
+ \Upt(\mathcal T\mathcal T^{\mathsf T}-I)P_Is,\qquad
+ \Upt(\mathcal T\mathcal T^{\mathsf T}-I)^{\mathsf T}P_Is,\qquad
+ \Upt(\mathcal T\mathcal T^{\mathsf T}-I)P_Ib,\\
+ (\mathcal T e^{\mathsf T}-H_0)P_Is,\qquad
+ (e\mathcal T^{\mathsf T}-H_0^{\mathsf T})P_Is.
+\end{gathered}
+\]
+To pad these vectors, we extend their errors by zero on the dummy
+coordinates. The identity matrix in their row formulas acts on the
+first $N$ coordinates.
+
+We have $M_*,S_*\ge1$ in \eqref{u:eq:normalized-moments}, even
+for arbitrarily small $d_I$. \Cref{u:lem:bernstein} therefore applies
+after the division by $\sqrt{d_I}$, although its hypotheses need not hold
+before this normalization.
+
+\paragraph{Nets and the growing grid.}
+Fix a deterministic $1/2$ net of the unit sphere of size at most
+$5^{m_0}$. For every vector $z$, we have
+$\|z\|\le2\max|\alpha^{\mathsf T}z|$, where the maximum is over
+this net. There are $2+5(2m_0-1)=10m_0-3$ vectors to control.
+Using \eqref{u:eq:bernstein} and the union bound, we conclude that
+\eqref{u:eq:weighted-node-bounds} holds. At every depth, the durations
+partition $t_N$, so $\sum_Id_I=D_*U_{\rm dur}$. Summing the squared
+errors before normalization, we obtain
+\[
+ W_{\rm wt}^2\le4\eta^2(2+5D_*U_{\rm dur}),
+\]
+which proves \eqref{u:eq:weighted-tail}. The union bound is over
+$(10m_0-3)5^{m_0}$ events, and the nets are in dimension $m_0$.
+
+For the stopped growing grid, \cref{u:lem:quad} implies that
+$N\le8n^{\ex{a}}$, $D_*=O(\log n)$, and
+$U_{\rm dur}\le V=O(\log n)$. By \cref{u:lem:tails}, we have
+$R\le C_\beta n^{\ex{b}/2}(\log n)^{1/2}$. Then
+$M_*^2$ is bounded by a fixed power of $\log n$, and
+$H_*\le C_\beta n^{\ex{b}/4}\log^C n$.
+Taking $\eta=n^{-\ex{w}}$ in \eqref{u:eq:weighted-tail} and using
+$x/(u+v)\ge(1/2)\min(x/u,x/v)$ yields
+\eqref{u:eq:weighted-growing}.
+To prove \eqref{u:eq:gram-growing}, we use \cref{u:lem:gram} for the
+compressions $E_A,E_H$. Its rate is $n/R$ divided by a fixed power of
+$\log n$, which gives the separate loss $\ex{b}/2$.
+By the equality of row laws in \cref{u:sec:proposal-laws}, all these
+bounds also hold under the linked source and replay laws.
+\end{proof}

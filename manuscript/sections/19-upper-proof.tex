@@ -1,0 +1,597 @@
+\chapter{Proof of the upper bound and the parameter system}\label{u:sec:proof}
+
+We prove \cref{thm:upper,cor:upper-discrete,cor:two-sided} from
+\cref{u:prop:witness,u:lem:goe-norm}. The finite-state argument of
+\cite[Section~7, Lemma~8]{oai-typical-upper} converts the exclusion of
+balanced cuts with small flow into a bound on the average distance from
+equilibrium. We give its proof, then establish the estimate for the
+discrete chain. In \cref{u:sec:budget}, we check the parameter
+comparisons used throughout \cref{part:upper}.
+
+Throughout, the disorder, Gibbs measure, and continuous-time semigroup
+are those of \cref{u:sec:primitive}. In particular,
+$\pi_g=\pi^{J(g)}$ and $P_t^g=P_t^{J(g)}$. The exponents are fixed before
+$n$ tends to infinity.
+
+\section{From balanced-cut flow to mixing}\label{u:sec:pruning}
+
+The next lemma is \cite[Lemma~8]{oai-typical-upper}, specialized to the
+heat-bath chain. Its proof uses the coarea argument for the reversible
+Cheeger inequality of Lawler and Sokal~\cite{lawler-sokal-1988} and
+entropy dissipation as in Diaconis and Saloff-Coste
+\cite{diaconis-saloff-coste-1996}. We keep track of the estimates on
+the Dirichlet form, since they are also used in
+\cref{u:sec:proof-discrete}.
+
+\begin{lemma}[Pruning and averaged mixing]\label{u:lem:pruning}
+Fix $n\ge2$, $\beta>0$, and $g$. Let $0<\epsilon<1/3$ and $\phi>0$.
+Suppose that
+\[
+ \mathcal Q_g(S,S^c)>\phi
+ \qquad\text{whenever }\epsilon\le\pi_g(S)\le1-\epsilon.
+\]
+Then, for every $t>0$,
+\begin{equation}\label{u:eq:averaged-mixing}
+ \sum_{x\in\Sigma_n}\pi_g(x)
+       \norm{P_t^g(x,\cdot)-\pi_g}_{\TV}
+ \le\frac{n\sqrt{2\log2}}{\phi\sqrt t}+2\epsilon.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+We first remove sets that fail an internal expansion inequality. On the
+remaining set, we prove a Poincar\'e inequality by integrating over level
+sets. Entropy dissipation for the full chain then gives a time at which
+the average distance is small; contraction gives the estimate at $t$.
+
+In this proof, we write $\pi=\pi_g$. For distinct configurations $x,y$,
+let $q(x,y)=\pi(x)p_i^{J(g)}(-x_i\mid x)$ if $y=x^{i,-x_i}$, and let
+$q(x,y)=0$ otherwise. By reversibility, $q(x,y)=q(y,x)$, and
+\[
+ \sum_{y\ne x}q(x,y)\le n\pi(x).
+\]
+We use the Dirichlet form
+\begin{equation}\label{u:eq:pruning-dirichlet}
+ \mathfrak D(u)=\sum_{\{x,y\}}q(x,y)(u(x)-u(y))^2
+              =-\langle u,\mathcal L^{J(g)}u\rangle_\pi,
+\end{equation}
+where each unordered pair of distinct configurations occurs once and
+$\langle u,v\rangle_\pi=\sum_x\pi(x)u(x)v(x)$.
+
+For disjoint sets $A,B\subseteq\Sigma_n$, we write
+\[
+ \mathcal Q_g(A,B)=\sum_{x\in A}\sum_{y\in B}q(x,y).
+\]
+This agrees with \eqref{u:eq:cut-flow} when $B=A^c$.
+
+\paragraph{Removing sets.}
+We start with $C=\Sigma_n$. Whenever a nonempty set $U\subset C$ satisfies
+\[
+ \pi(U)\le\pi(C)/2,
+ \qquad \mathcal Q_g(U,C\setminus U)<\phi\pi(U),
+\]
+we remove $U$ from $C$. The procedure terminates after finitely many
+removals. Let $A$ be the union of the sets removed up to any
+stage. Every edge from $A$ to its current complement was counted when
+its first endpoint was removed. Summing the inequalities at those
+stages, we have, whenever $A$ is nonempty,
+\[
+ \mathcal Q_g(A,\Sigma_n\setminus A)<\phi\pi(A).
+\]
+Suppose that the removed mass reaches $\epsilon$, and consider the first
+removal at which this happens. Before this removal, the removed mass
+was some $a<\epsilon$, and the newly removed set has mass at most
+$(1-a)/2$. After it, the removed mass is at most
+$(1+a)/2<(1+\epsilon)/2<1-\epsilon$. This contradicts the hypothesis on balanced
+cuts, because $\phi\pi(A)\le\phi$. We have proved that
+the terminal set satisfies $\pi(C)>1-\epsilon$ and
+\begin{equation}\label{u:eq:internal-expansion}
+ \mathcal Q_g(U,C\setminus U)\ge\phi\pi(U)
+ \quad\text{if }U\subset C\text{ and }\pi(U)\le\pi(C)/2.
+\end{equation}
+
+\paragraph{A Poincar\'e inequality on $C$.}
+We claim that, for every real function $u$ on $\Sigma_n$,
+\begin{equation}\label{u:eq:retained-poincare}
+ \sum_{y\in C}\pi(y)(u(y)-\bar u_C)^2
+ \le\frac{2n}{\phi^2}\mathfrak D(u),
+ \qquad
+ \bar u_C=\frac1{\pi(C)}\sum_{y\in C}\pi(y)u(y).
+\end{equation}
+Let $m$ be a weighted median of $u$ on $C$. Each of
+$w=(u-m)_+$ and $w=(m-u)_+$ has support of mass at most $\pi(C)/2$.
+Integrating \eqref{u:eq:internal-expansion} over the level sets of $w^2$,
+we find
+\[
+ \phi\sum_C\pi w^2
+ \le\sum_{\{x,y\}\subset C}q(x,y)|w(x)^2-w(y)^2|.
+\]
+By Cauchy--Schwarz, the right side is at most
+\[
+ \left(\sum_{\{x,y\}\subset C}q(x,y)(w(x)-w(y))^2\right)^{1/2}
+ \left(2n\sum_C\pi w^2\right)^{1/2}.
+\]
+Here we used $(w(x)+w(y))^2\le2(w(x)^2+w(y)^2)$ and the bound on the
+outgoing rates. Dividing and squaring, we find the desired estimate for $w$ when
+$\sum_C\pi w^2>0$; when this sum vanishes, the estimate is
+immediate. The sum of the energies of the two parts is at most
+$\mathfrak D(u)$. Since the weighted mean minimizes the squared error,
+\eqref{u:eq:retained-poincare} follows.
+
+\paragraph{Entropy dissipation.}
+For a fixed starting configuration $x$, define
+$f_s^x(y)=P_s^g(x,y)/\pi(y)$. We write
+\[
+ \Ent_\pi(f)=\sum_y\pi(y)f(y)\log f(y),\qquad
+ H(\pi)=-\sum_x\pi(x)\log\pi(x),
+\]
+where $\pi(f)=1$ and $0\log0=0$. Reversibility implies
+\begin{align*}
+ \frac{\dd}{\dd s}\Ent_\pi(f_s^x)
+ &=-\sum_{\{y,z\}}q(y,z)
+       (f_s^x(y)-f_s^x(z))(\log f_s^x(y)-\log f_s^x(z))\\
+ &\le-4\mathfrak D(\sqrt{f_s^x}).
+\end{align*}
+In the last step, we used
+$(a-b)(\log a-\log b)\ge4(\sqrt a-\sqrt b)^2$ for $a,b>0$.
+The initial entropy is $\log(1/\pi(x))$, and the final entropy is
+nonnegative. Integrating and averaging over $x\sim\pi$, we find
+\begin{equation}\label{u:eq:continuous-dissipation}
+ \int_0^t\sum_x\pi(x)\mathfrak D(\sqrt{f_s^x})\dd s
+ \le\frac14H(\pi).
+\end{equation}
+To justify the calculation when the density has zero entries, we start
+with $(1-\eta)f_0^x+\eta$ and let $\eta\downarrow0$. Since the state
+space is finite and entropy is continuous at zero, the integrated
+inequality passes to this limit.
+
+\paragraph{Averaging the distances.}
+By \eqref{u:eq:retained-poincare} and
+\eqref{u:eq:continuous-dissipation}, there
+exists $s\in(0,t]$ such that
+\begin{equation}\label{u:eq:continuous-variance}
+ \begin{split}
+  \sum_x\pi(x)r_x^2&\le\frac{nH(\pi)}{2t\phi^2},\\
+  r_x^2&=\sum_{y\in C}\pi(y)(\sqrt{f_s^x(y)}-a_x)^2,
+  \qquad
+  a_x=\frac1{\pi(C)}\sum_{y\in C}\pi(y)\sqrt{f_s^x(y)}.
+ \end{split}
+\end{equation}
+Using Cauchy--Schwarz and the fact that $a_x^2\pi(C)\le\sum_C\pi f_s^x\le1$, we have
+\[
+ \sum_C\pi|f_s^x-a_x^2|\le2r_x.
+\]
+Further, the normalization of the density gives
+$|\sum_C\pi(f_s^x-1)|\le\sum_{C^c}\pi(f_s^x+1)$.
+Comparing $f_s^x$ first with $a_x^2$ and then with $1$ on $C$,
+and adding the complement, we have
+\begin{equation}\label{u:eq:pruning-distance}
+ \sum_{\Sigma_n}\pi|f_s^x-1|
+ \le4r_x+2\sum_{C^c}\pi(f_s^x+1).
+\end{equation}
+By stationarity, we have $\sum_x\pi(x)f_s^x(y)=1$. It follows that the
+last sum in the preceding display, without its factor two, has
+average $2\pi(C^c)$ over $x\sim\pi$. Dividing
+\eqref{u:eq:pruning-distance} by two and using Cauchy--Schwarz in $x$,
+we obtain
+\[
+ \sum_x\pi(x)\norm{P_s^g(x,\cdot)-\pi}_{\TV}
+ \le\frac{\sqrt{2nH(\pi)}}{\phi\sqrt t}+2\epsilon.
+\]
+Since $|\Sigma_n|=2^n$, we have $H(\pi)\le n\log2$. Total variation
+contracts under $P_{t-s}^g$ by \cref{lem:model-dynamics}, which gives
+\eqref{u:eq:averaged-mixing} at time $t$.
+\end{proof}
+
+\section{Proof of the main theorem}\label{u:sec:proof-upper}
+
+We now combine the witness estimate with \cref{u:lem:pruning}. Recall
+that $\epsilon_n=n^{-\ex d}$, $\phi_n=e^{-n^{1-\ex q}}$, and
+$\mathcal W_n(\epsilon_n,\phi_n)$ is the event that $\norm{W(g)}_{\mathrm{op}}
+\le12$ and some $\epsilon_n$-balanced cut has flow at most $\phi_n$.
+
+\begin{proof}[Proof of \cref{thm:upper}]
+Fix $\beta>1$ and $0<\omega<1/4$, and take the affine family of
+\cref{u:sec:parameters} with $\varepsilon_\omega=(1/4-\omega)/20$.
+The comparisons verified in \cref{u:sec:budget} imply all hypotheses
+of the preceding estimates. By \cref{u:prop:witness}, we have
+\begin{equation}\label{u:eq:witness-family}
+ \gamma_n(\mathcal W_n(\epsilon_n,\phi_n))
+ \le C_\beta n^{-\varepsilon_\omega}+e^{-c_\beta n^{2/5}}
+       +\exp\{2n^{3/4+3\varepsilon_\omega}
+                    -n^{3/4+4\varepsilon_\omega}\}=o(1).
+\end{equation}
+Outside this event and $\{\norm{W(g)}_{\mathrm{op}}>12\}$, every
+$\epsilon_n$-balanced cut has flow greater than $\phi_n$. For all
+sufficiently large $n$, we have $0<\epsilon_n<1/3$. We use
+\eqref{u:eq:averaged-mixing} with
+\[
+ \epsilon=\epsilon_n,\qquad \phi=\phi_n,
+ \qquad t=e^{n^{1-\omega}}.
+\]
+Using Markov's inequality in the Gibbs draw and
+\cref{u:lem:goe-norm}, we find
+\begin{equation}\label{u:eq:joint-bad-start}
+ \begin{split}
+ &\Pi_n\bigl\{(g,x):
+       \norm{P_{e^{n^{1-\omega}}}^g(x,\cdot)-\pi_g}_{\TV}>1/4\bigr\}\\
+ &\quad\le\gamma_n(\mathcal W_n(\epsilon_n,\phi_n))+2e^{-n}
+       +4n\sqrt{2\log2}\,
+          e^{n^{1-\ex q}-\frac12n^{1-\omega}}+8n^{-\ex d}.
+ \end{split}
+\end{equation}
+The right side tends to zero, since $\ex d>0$ and
+$\ex q-\omega=10\varepsilon_\omega>0$. By the dictionary in
+\cref{u:sec:primitive}, the $(J(g),x)$-marginal of $\Pi_n$ is
+$\PP_{J,X_0\sim\pi^J}$. This proves the assertion under the joint law.
+Here the Gibbs draw is held fixed when the distance is formed, and
+the semigroup has rate one per site.
+\end{proof}
+
+\section{Proof of the discrete-time corollary}\label{u:sec:proof-discrete}
+
+We use the retained set and the Poincar\'e inequality from the proof of
+\cref{u:lem:pruning}. What changes is the entropy dissipation
+inequality, which we prove for one step of the discrete heat-bath chain. The subsequent averaging argument
+is that of \cite[Section~7, Lemma~8]{oai-typical-upper}.
+
+\begin{proof}[Proof of \cref{cor:upper-discrete}]
+Fix $\beta>1$ and $0<\omega<1/4$, and choose the same exponents as
+in the proof of \cref{thm:upper}. We first fix a disorder $g$
+outside the exceptional events of that proof. We abbreviate
+$\pi=\pi_g$ and $K=K^{J(g)}$. For a function $u$ on $\Sigma_n$, define
+\[
+ Q_i u(x)=\sum_{\sigma\in\{-1,1\}}
+                  p_i^{J(g)}(\sigma\mid x)u(x^{i,\sigma}).
+\]
+Each $Q_i$ is conditional expectation given all spins except the
+$i$th, and $K=n^{-1}\sum_iQ_i$. In $L^2(\pi)$, the operators $Q_i$
+are orthogonal projections. By \eqref{u:eq:pruning-dirichlet},
+\begin{equation}\label{u:eq:discrete-dirichlet}
+ \mathfrak D(u)=\sum_{i=1}^n\langle u,(I-Q_i)u\rangle_\pi.
+\end{equation}
+
+Let $f\ge0$ satisfy $\pi(f)=1$. The convexity of $s\log s$ implies that
+$\Ent_\pi(Kf)\le n^{-1}\sum_i\Ent_\pi(Q_i f)$.
+We claim that
+\[
+ \Ent_\pi(f)-\Ent_\pi(Q_i f)
+ \ge\langle\sqrt f,(I-Q_i)\sqrt f\rangle_\pi.
+\]
+Indeed, on each fiber obtained by fixing all spins except the $i$th,
+write $a=Q_i f$. For $s\ge0$ and $a>0$,
+\[
+ s\log(s/a)-s+a\ge(\sqrt s-\sqrt a)^2.
+\]
+This follows by writing the difference as
+$2a\sqrt{s/a}(\sqrt{s/a}\log\sqrt{s/a}-\sqrt{s/a}+1)\ge0$,
+with its continuous interpretation at $s=0$. Averaging on the fiber
+eliminates $-s+a$. The resulting squared error is at least the squared
+error about the fiber mean $Q_i\sqrt f$. Fibers with $a=0$ have $f=0$
+throughout and contribute zero. Averaging over the other spins proves
+the claim. Combining it with \eqref{u:eq:discrete-dirichlet}, we have
+\begin{equation}\label{u:eq:discrete-entropy-step}
+ \Ent_\pi(f)-\Ent_\pi(Kf)
+ \ge\frac1n\mathfrak D(\sqrt f).
+\end{equation}
+
+For $f_k^x(y)=K^k(x,y)/\pi(y)$, reversibility gives
+$f_{k+1}^x=Kf_k^x$. Telescoping \eqref{u:eq:discrete-entropy-step}
+and averaging over $x\sim\pi$, we obtain, for every integer $m\ge1$,
+\begin{equation}\label{u:eq:discrete-dissipation}
+ \sum_{k=0}^{m-1}\sum_x\pi(x)\mathfrak D(\sqrt{f_k^x})
+ \le nH(\pi)\le n^2\log2.
+\end{equation}
+Since the disorder lies outside the exceptional events, the hypothesis
+on balanced cuts holds with $\phi=\phi_n$ and $\epsilon=\epsilon_n$, and
+it gives the same set $C$ and inequality
+\eqref{u:eq:retained-poincare}. Then there exists
+$k\in\{0,\ldots,m-1\}$ such that
+\[
+ \sum_x\pi(x)\sum_{y\in C}\pi(y)
+       (\sqrt{f_k^x(y)}-a_x)^2
+ \le\frac{2n^2H(\pi)}{m\phi_n^2},\qquad
+ a_x=\frac1{\pi(C)}\sum_{y\in C}\pi(y)\sqrt{f_k^x(y)}.
+\]
+Using \eqref{u:eq:pruning-distance}, stationarity, and
+Cauchy--Schwarz, we find
+\[
+ \sum_x\pi(x)d^{J(g)}_{\mathrm{disc}}(x,k)
+ \le\frac{2n\sqrt{2H(\pi)}}{\phi_n\sqrt m}+2\epsilon_n.
+\]
+Using that the distance contracts under $K^{m-k}$, we find
+\begin{equation}\label{u:eq:discrete-averaged-mixing}
+ \sum_x\pi_g(x)d^{J(g)}_{\mathrm{disc}}(x,m)
+ \le\frac{2\sqrt{2\log2}\,n^{3/2}e^{n^{1-\ex q}}}{\sqrt m}
+       +2n^{-\ex d}.
+\end{equation}
+Let $m=\lfloor e^{n^{1-\omega}}\rfloor$. For all sufficiently large
+$n$, we have $m\ge e^{n^{1-\omega}}/2$. The first term in
+\eqref{u:eq:discrete-averaged-mixing} is at most
+\[
+ Cn^{3/2}\exp\{n^{1-\ex q}-\tfrac12n^{1-\omega}\},
+\]
+which tends to zero because $\omega<\ex q$. By Markov's inequality in
+the Gibbs draw, we obtain
+\begin{equation}\label{u:eq:discrete-bad-start}
+ \begin{split}
+ &\Pi_n\{(g,x):d^{J(g)}_{\mathrm{disc}}(x,m)>1/4\}\\
+ &\quad\le\gamma_n(\mathcal W_n(\epsilon_n,\phi_n))+2e^{-n}
+       +Cn^{3/2}e^{n^{1-\ex q}-\frac12n^{1-\omega}}
+       +8n^{-\ex d}=o(1).
+ \end{split}
+\end{equation}
+Using the marginal identity for $\Pi_n$, we conclude that \cref{cor:upper-discrete} holds.
+\end{proof}
+
+\section{Proof of the two-sided corollary}\label{u:sec:proof-two-sided}
+
+The two-sided statement uses the lower bound at threshold $1/4$ and
+the two upper bounds just proved.
+
+\begin{proof}[Proof of \cref{cor:two-sided}]
+Fix $\beta>1$ and $0<\omega<1/4$, and let $A_\beta$ be the coefficient
+in \cref{thm:barrier-730}. With $\tau=1/4$, that theorem implies
+\[
+ \PP_{J,X_0\sim\pi^J}
+   \{d^J(X_0,e^{A_\beta n^{7/30}})>1/4\}\longrightarrow1.
+\]
+By the definition of the mixing time in \eqref{eq:model-mixing-time} and
+\cref{lem:model-dynamics}, this event is
+$\{T^J(X_0)>e^{A_\beta n^{7/30}}\}$. Intersecting it with the event
+of probability tending to one in \cref{thm:upper} proves the
+continuous-time assertion.
+
+For the discrete chain, by \eqref{eq:barrier-730-discrete} at $\tau=1/4$,
+we have, with probability tending to one,
+\[
+ d^J_{\mathrm{disc}}(X_0,\lfloor e^{A_\beta n^{7/30}}\rfloor)>1/4.
+\]
+Since $k\mapsto d^J_{\mathrm{disc}}(X_0,k)$ is nonincreasing, this
+implies $T^J_{\mathrm{disc}}(X_0)>\lfloor e^{A_\beta n^{7/30}}\rfloor$.
+On the event in \cref{cor:upper-discrete}, we also have
+$T^J_{\mathrm{disc}}(X_0)\le\lfloor e^{n^{1-\omega}}\rfloor$.
+The probability of their intersection tends to one, as desired.
+\end{proof}
+
+\section{The parameter system}\label{u:sec:budget}
+
+We verify all comparisons used in the preceding chapters. Fix
+$0<\omega<1/4$ and define
+$\varepsilon_\omega=(1/4-\omega)/20$. Then
+$0<\varepsilon_\omega<1/80$ and
+$\omega=1/4-20\varepsilon_\omega$.
+The affine family from \cref{u:sec:parameters} is
+\begin{equation}\label{u:eq:parameter-family}
+ \begin{aligned}
+ \ex a&=\tfrac12,&
+ \ex f&=\tfrac12,&
+ \ex k_{\rm f}&=\tfrac12-2\varepsilon_\omega,\\
+ \ex D&=\tfrac14-\varepsilon_\omega,&
+ \ex u_{\rm E}&=\tfrac14-2\varepsilon_\omega,&
+ \ex d&=\tfrac12\varepsilon_\omega,\\
+ \ex e&=\tfrac14-3\varepsilon_\omega,&
+ \ex b&=\tfrac12-14\varepsilon_\omega,&
+ \ex z&=\tfrac14-8\varepsilon_\omega,\\
+ \ex w&=\tfrac18-3\varepsilon_\omega,&
+ \ex k_{\rm b}&=\tfrac14-9\varepsilon_\omega,&
+ \ex s_{\rm b}&=\tfrac14-5\varepsilon_\omega,\\
+ \ex s_{\rm seq}&=\tfrac14-4\varepsilon_\omega,&
+ \ex r&=\tfrac14-\tfrac{15}2\varepsilon_\omega,&
+ \ex u_{\rm F}&=\tfrac14-\tfrac{39}4\varepsilon_\omega,\\
+ \ex q&=\tfrac14-10\varepsilon_\omega,&
+ \ex z_{\rm P}&=\tfrac3{10},&
+ \ex g_{\rm rot}&=\tfrac35.
+ \end{aligned}
+\end{equation}
+An optional intermediate loss $\ex s_{\rm F}$ can be chosen to satisfy
+$2\ex u_{\rm F}-\ex r<\ex s_{\rm F}<\ex q$. We leave it unspecified;
+only the strict comparison $2\ex u_{\rm F}-\ex r<\ex q$ enters the
+probability estimates.
+
+The sufficient system consists of the positivity of the exponents and
+\begin{equation}\label{u:eq:comparison-system}
+ \begin{gathered}
+  \ex a>\ex f/4,\qquad \ex a>\ex b/4,\qquad
+  \ex a+\ex f/2<1,\\
+  \ex k_{\rm f}<\min(\ex a,\ex f,1-\ex a),\qquad \ex b<\ex f,\\
+  0<\ex k_{\rm b}<\ex z<\min(\ex a,\ex b/2,2\ex w),\\
+  \max\{2\ex w,\ex w+\ex b/4,\ex b/2,
+          2\ex z-\ex a,2\ex z-2\ex w,2\ex z-\ex b\}<\ex s_{\rm b},\\
+  \ex a<1-\ex s_{\rm b},\qquad
+  \ex e+\ex d<\ex u_{\rm E}<\min(\ex D,\ex k_{\rm f}-\ex D),\\
+  \ex q<\ex u_{\rm F}<\ex r<\ex b/2,\qquad
+  2\ex u_{\rm F}-\ex r<\ex q,\qquad \ex q<1/2,\\
+  \ex q<\min(\ex k_{\rm b},\ex D,\ex z_{\rm P}),\qquad
+  0<\ex z_{\rm P}<1/2,\\
+  \ex q<\ex s_{\rm b},\qquad \ex r<\ex s_{\rm b},\qquad
+  \ex a<\ex g_{\rm rot}<1-\ex s_{\rm b},\\
+  \ex s_{\rm b}<\ex s_{\rm seq}<\ex e,\qquad \omega<\ex q.
+ \end{gathered}
+\end{equation}
+All exponents are below one whenever a growing cutoff or a tail
+estimate requires this. The scalar, Gram, concentration, regression,
+and finite-chain arguments show that these comparisons suffice.
+
+We list the powers used in those arguments in
+\cref{u:tab:budget}. A rate is the power in a negative logarithm.
+Polylogarithmic denominators in rates are retained until a strict
+comparison absorbs them. Query counts and expectation bounds may
+have fixed polylogarithmic numerators. The last column gives the
+instance $\omega=1/5$, $\varepsilon_\omega=1/400$.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.43\textwidth}ll@{}}
+\caption{Powers in the parameter system.}\label{u:tab:budget}\\
+\toprule
+Quantity & Family power & $\omega=1/5$\\
+\midrule
+\endfirsthead
+\toprule
+Quantity & Family power & $\omega=1/5$\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Query count $N_{\ex f},N_{\ex b}$ & $1/2$ & $1/2$\\
+Fine maximum-cell saving & $3/8$ & $3/8$\\
+Coarse maximum-cell saving & $3/8+7\varepsilon_\omega/2$ & $307/800$\\
+Fine $nh$, $ne^{-V_{\ex f}}$, $N_{\ex f}(1+V_{\ex f})$ & $1/2$ & $1/2$\\
+Fine $\sqrt{N_{\ex f}}$, $N_{\ex f}^2V_{\ex f}R_{V_{\ex f}}/n$ & $1/4$ & $1/4$\\
+Fine KL cutoff $1-\ex k_{\rm f}$ & $1/2+2\varepsilon_\omega$ & $101/200$\\
+Weighted variance loss $2\ex w$ & $1/4-6\varepsilon_\omega$ & $47/200$\\
+Weighted scale loss $\ex w+\ex b/4$ & $1/4-13\varepsilon_\omega/2$ & $187/800$\\
+Fixed Gram loss $\ex b/2$ & $1/4-7\varepsilon_\omega$ & $93/400$\\
+Weighted raw rate $1-2\ex w$ & $3/4+6\varepsilon_\omega$ & $153/200$\\
+Weighted scale raw rate $1-\ex w-\ex b/4$ & $3/4+13\varepsilon_\omega/2$ & $613/800$\\
+Fixed Gram raw rate $1-\ex b/2$ & $3/4+7\varepsilon_\omega$ & $307/400$\\
+Joint lag / diagonal base rate $1+\ex a-2\ex z$ & $1+16\varepsilon_\omega$ & $26/25$\\
+Gaussian coefficient rate $1+2\ex w-2\ex z$ & $3/4+10\varepsilon_\omega$ & $31/40$\\
+Gaussian terminal rate $1+\ex b-2\ex z$ & $1+2\varepsilon_\omega$ & $201/200$\\
+Coarse one-run rate $1-\ex s_{\rm b}$ & $3/4+5\varepsilon_\omega$ & $61/80$\\
+Weighted quadratic energy saving $2\ex w$ & $1/4-6\varepsilon_\omega$ & $47/200$\\
+Coarse log-density cost $1-\ex k_{\rm b}$ & $3/4+9\varepsilon_\omega$ & $309/400$\\
+Both expected reverse-KL costs & $3/4+\varepsilon_\omega$ & $301/400$\\
+Outer reverse-KL cutoff $1-\ex u_{\rm E}$ & $3/4+2\varepsilon_\omega$ & $151/200$\\
+Both outer Markov decay savings & $\varepsilon_\omega$ & $1/400$\\
+Raw crossing exponent $1-\ex u_{\rm E}+\ex d$ & $3/4+5\varepsilon_\omega/2$ & $121/160$\\
+Crossing envelope $1-\ex e$ & $3/4+3\varepsilon_\omega$ & $303/400$\\
+Total sequence failure rate $1-\ex s_{\rm seq}$ & $3/4+4\varepsilon_\omega$ & $19/25$\\
+Pinning/radius power $1-\ex r$ & $3/4+15\varepsilon_\omega/2$ & $123/160$\\
+Flow / good-output hit rate $1-\ex q$ & $3/4+10\varepsilon_\omega$ & $31/40$\\
+Sparse-field threshold $1-\ex u_{\rm F}$ & $3/4+39\varepsilon_\omega/4$ & $1239/1600$\\
+Hamming-ball entropy power $1-\ex r$ & $3/4+15\varepsilon_\omega/2$ & $123/160$\\
+Bad-field rate $1+\ex r-2\ex u_{\rm F}$ & $3/4+12\varepsilon_\omega$ & $39/50$\\
+Intermediate bad-field rate (optional) & see text & $(31/40,39/50)$\\
+Target pressure cutoff / rate & $7/10,\ 2/5$ & $7/10,\ 2/5$\\
+Regression log-cost $1-\ex D$ & $3/4+\varepsilon_\omega$ & $301/400$\\
+Rotation logarithmic grid size & $3/5$ & $3/5$\\
+Physical time exponent $1-\omega$ & $3/4+20\varepsilon_\omega$ & $4/5$\\
+\end{longtable}
+\endgroup
+In the optional row, the last entry is the interval of allowed values.
+In the family, that interval is
+$(3/4+10\varepsilon_\omega,3/4+12\varepsilon_\omega)$.
+
+For example, $\max\{2\ex w,\ex w+\ex b/4\}=2\ex w$, since the
+difference of the two entries is $\varepsilon_\omega/2$. The weighted
+variance rate and the fixed-Gram rate exceed the one-run rate by
+$\varepsilon_\omega$ and $2\varepsilon_\omega$, respectively. Each of
+these rates exceeds the net exponent $\ex a=1/2$ with a fixed positive
+gap. We first establish the coarse event with rate $1-\ex s_{\rm b}$,
+then take a union over the rotation grid. Since
+$\ex s_{\rm seq}-\ex s_{\rm b}=\varepsilon_\omega$ and
+$\ex e-\ex s_{\rm seq}=\varepsilon_\omega$, the grid union and the
+comparison with the rare crossing each retain a strict gap. The
+target pressure failure, whose rate is $2/5$, is charged once outside
+that comparison.
+
+The parameter instance at $\omega=1/5$ is
+\begin{equation}\label{u:eq:parameter-instance}
+ \begin{aligned}
+ \omega&=\tfrac15,& \ex q&=\tfrac9{40},&
+ \ex a&=\tfrac12,& \ex f&=\tfrac12,\\
+ \ex k_{\rm f}&=\tfrac{99}{200},& \ex D&=\tfrac{99}{400},&
+ \ex u_{\rm E}&=\tfrac{49}{200},& \ex d&=\tfrac1{800},\\
+ \ex e&=\tfrac{97}{400},& \ex b&=\tfrac{93}{200},&
+ \ex z&=\tfrac{23}{100},& \ex w&=\tfrac{47}{400},\\
+ \ex k_{\rm b}&=\tfrac{91}{400},& \ex s_{\rm b}&=\tfrac{19}{80},&
+ \ex s_{\rm seq}&=\tfrac6{25},& \ex r&=\tfrac{37}{160},\\
+ \ex u_{\rm F}&=\tfrac{361}{1600},& \ex z_{\rm P}&=\tfrac3{10},&
+ \ex g_{\rm rot}&=\tfrac35.
+ \end{aligned}
+\end{equation}
+Some of the tight comparisons are listed below; the slack is the
+right side minus the left side.
+\begin{equation}\label{u:eq:representative-slacks}
+\begin{array}{@{}lcc@{}}
+\toprule
+\text{Comparison}&\text{Family slack}&\omega=1/5\\
+\midrule
+ \ex k_{\rm f}<\ex a&2\varepsilon_\omega&1/200\\
+ \ex u_{\rm E}<\ex D,\ \ex u_{\rm E}<\ex k_{\rm f}-\ex D
+     &\varepsilon_\omega&1/400\\
+ \ex e+\ex d<\ex u_{\rm E}&\varepsilon_\omega/2&1/800\\
+ \ex z<\ex b/2&\varepsilon_\omega&1/400\\
+ \ex z<2\ex w&2\varepsilon_\omega&1/200\\
+ 2\ex w<\ex s_{\rm b}&\varepsilon_\omega&1/400\\
+ \ex w+\ex b/4<\ex s_{\rm b}&3\varepsilon_\omega/2&3/800\\
+ \ex b/2<\ex s_{\rm b}&2\varepsilon_\omega&1/200\\
+ 2\ex z-2\ex w<\ex s_{\rm b}&5\varepsilon_\omega&1/80\\
+ \ex q<\ex k_{\rm b}&\varepsilon_\omega&1/400\\
+ \ex q<\ex u_{\rm F}&\varepsilon_\omega/4&1/1600\\
+ \ex u_{\rm F}<\ex r&9\varepsilon_\omega/4&9/1600\\
+ \ex r<\ex b/2&\varepsilon_\omega/2&1/800\\
+ 2\ex u_{\rm F}-\ex r<\ex q&2\varepsilon_\omega&1/200\\
+ \ex s_{\rm b}<\ex s_{\rm seq},\ \ex s_{\rm seq}<\ex e
+     &\varepsilon_\omega&1/400\\
+ \omega<\ex q&10\varepsilon_\omega&1/40\\
+\bottomrule
+\end{array}
+\end{equation}
+The least slack in the full comparison list at this instance is
+$1/1600$. The witness estimate specializes to
+\begin{equation}\label{u:eq:witness-instance}
+ \gamma_n(\mathcal W_n(\epsilon_n,\phi_n))
+ \le C_\beta n^{-1/400}+e^{-c_\beta n^{2/5}}
+       +\exp\{2n^{303/400}-n^{19/25}\}=o(1).
+\end{equation}
+The bound \eqref{u:eq:joint-bad-start} further adds the norm exception
+$2e^{-n}$, the term
+$4n\sqrt{2\log2}\exp\{n^{31/40}-n^{4/5}/2\}$, and
+$8n^{-1/800}$.
+
+\begin{proposition}[Every fixed saving below one quarter]\label{u:prop:range}
+The family \eqref{u:eq:parameter-family} satisfies every sufficient
+comparison in \eqref{u:eq:comparison-system} for every
+$0<\varepsilon_\omega<1/80$. Hence \cref{thm:upper} holds for every
+fixed $0<\omega<1/4$. These estimates do not reach $\omega=1/4$.
+\end{proposition}
+
+\begin{proof}
+All parameters and all differences between the right and left sides
+of \eqref{u:eq:comparison-system} are affine in $\varepsilon_\omega$,
+after expanding each maximum and minimum into its constituent
+comparisons. Using \eqref{u:eq:parameter-family}, we find that all endpoint values
+at $0$ and $1/80$ are nonnegative and that no difference is identically
+zero. Each interior value is a strict convex combination of these two
+endpoint values, at least one of which is positive. Every comparison
+is therefore strict. This also proves that
+$\omega=1/4-20\varepsilon_\omega$ is positive; zero values at the excluded
+endpoints are allowed. The optional $\ex s_{\rm F}$ can be chosen
+between $2\ex u_{\rm F}-\ex r$ and $\ex q$, whose difference is
+$2\varepsilon_\omega$.
+
+In particular, $\ex q-\omega=10\varepsilon_\omega>0$.
+By \cref{u:prop:witness} and \eqref{u:eq:joint-bad-start}, we conclude
+that the asserted range holds. All constants
+are chosen after $\omega$ and $\beta$ are fixed.
+
+We now explain the obstruction in these estimates. Fine entropy requires
+$\ex k_{\rm f}<\min(\ex a,1-\ex a)\le1/2$.
+Reverse smoothing and coverage require
+\[
+ \ex e+\ex d<\ex u_{\rm E}
+ <\min(\ex D,\ex k_{\rm f}-\ex D)
+ \le\ex k_{\rm f}/2<1/4.
+\]
+The connecting sequence needs
+$\ex q<\ex s_{\rm b}<\ex s_{\rm seq}<\ex e$, and mixing needs
+$\omega<\ex q$. For any parameters satisfying these strict estimates,
+we have $\omega<1/4$, independently of the affine family.
+At $\varepsilon_\omega=0$, the fine, coverage, concentration, and
+crossing gaps vanish. Constants and logarithms cannot be absorbed by
+the arguments above. This is an obstruction to these estimates; it
+does not give a lower bound or an optimality statement for the SK
+dynamics.
+\end{proof}
+
+A calculation in exact rational arithmetic checks the comparisons; it
+lists each affine slack and its values at $0$, $1/80$, and $1/400$.
+With an optional intermediate loss chosen inside the stated interval,
+the calculation checks 114 strict comparisons and 37 identities for
+the powers in \cref{u:tab:budget}. The proof of \cref{u:prop:range}
+does not rely on this calculation: the endpoint argument there gives
+the comparisons on the whole open interval.

@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "LowerUpperBounds.theorem_1_1",
+    "LowerUpperBounds.corollary_1_2",
+    "LowerUpperBounds.theorem_1_3",
+    "LowerUpperBounds.theorem_1_6",
+    "LowerUpperBounds.corollary_1_7"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

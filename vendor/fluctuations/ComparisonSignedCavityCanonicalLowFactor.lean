@@ -1,0 +1,159 @@
+module
+
+public import ComparisonSignedCavityCanonicalContinuumMoments
+public import ComparisonSignedCavityCanonicalRestMoments
+
+@[expose] public section
+
+noncomputable section
+set_option maxHeartbeats 15000000
+namespace OAI.SKFluctuations.Cavity
+open Set Filter MeasureTheory ProbabilityTheory Hierarchy LaplaceWindowFormalization
+open scoped Topology NNReal ENNReal BigOperators
+
+def ActualNaturalBoundaryShape.prependSourceEdge {n a : ℕ} {as : List PositiveMass}
+    {T : ClockTree (Spin n×Bool) as} (G : ActualNaturalBoundaryShape n a T)
+    (c d : T.Slot) (hcd : c≠d) : ActualNaturalBoundaryShape n (a+1) T where
+  α:=Fin.cases 0 G.α
+  β:=Fin.cases 0 G.β
+  i:=Fin.cases c G.i
+  j:=Fin.cases d G.j
+  distinct:=fun e=>Fin.cases hcd G.distinct e
+  lowInGrid:=fun e=>Fin.cases (T.splitIndex_le_clockLength c d) G.lowInGrid e
+
+def sourceInitialAfterStar {a : ℕ} (initial : Finset (Fin a)) : Finset (Fin (a+1)) :=
+  initial.image Fin.succ
+
+theorem source_factor_scale_after_star_zero {a : ℕ} (x W : ℝ) (initial : Finset (Fin a)) :
+    sourceFactorScale x W (sourceInitialAfterStar initial) 0=W := by
+  classical
+  have H : (0:Fin (a+1))∉sourceInitialAfterStar initial := by
+    simp only [sourceInitialAfterStar,Finset.mem_image]
+    rintro ⟨i,_,H⟩
+    have HH:=congrArg Fin.val H
+    simp only [Fin.val_succ,Fin.val_zero] at HH
+    omega
+  simp only [sourceFactorScale,H,ite_false]
+
+theorem source_factor_scale_after_star_succ {a : ℕ} (x W : ℝ)
+    (initial : Finset (Fin a)) (e : Fin a) :
+    sourceFactorScale x W (sourceInitialAfterStar initial) e.succ=sourceFactorScale x W initial e := by
+  classical
+  simp only [sourceFactorScale,sourceInitialAfterStar,Finset.mem_image]
+  have H : (∃i∈initial,i.succ=e.succ) ↔ e∈initial := by
+    constructor
+    · rintro ⟨i,hi,he⟩
+      have Hie : i=e:=Fin.ext (by
+        have HH:=congrArg Fin.val he
+        simp only [Fin.val_succ] at HH
+        omega)
+      exact Hie ▸ hi
+    · intro he
+      exact ⟨e,he,rfl⟩
+  simp only [H]
+
+theorem source_monomial_scale_after_star {a : ℕ} (x W : ℝ) (initial : Finset (Fin a)) :
+    sourceMonomialScale x W (sourceInitialAfterStar initial)=W*sourceMonomialScale x W initial := by
+  rw [←source_factor_scale_product,Fin.prod_univ_succ,source_factor_scale_after_star_zero]
+  simp_rw [source_factor_scale_after_star_succ]
+  rw [source_factor_scale_product]
+
+theorem native_ordered_source_center_eq_completed (n : ℕ) (bf hf : ℝ→ℝ≥0)
+    (hb : MonotoneOn bf (Icc (0:ℝ) 1)) (hh : MonotoneOn hf (Icc (0:ℝ) 1))
+    {u : ℝ} (hu : u∈Icc (0:ℝ) 1) :
+    orderedPathS (n+1) bf hf u=
+      pathPairMoment (uniformWeight (n+1)) (finiteFeature (n+1))
+        (completedPathClock (n+1) bf hf) (orderedOverlap (n+1)) u := by
+  by_cases hup : 0<u
+  · exact orderedPathPair_eq_completed (n+1) (by omega) bf hf hb hh _ ⟨hup,hu.2⟩
+  · have hu0 : u=0:=le_antisymm (le_of_not_gt hup) hu.1
+    subst u
+    simp [orderedPathS,orderedPathPair,pathPairMoment]
+
+theorem canonical_source_prepend_bond_product {n a : ℕ} {as : List PositiveMass}
+    {T : ClockTree (Spin n×Bool) as} (G : ActualNaturalBoundaryShape n a T)
+    {m delta cl cu Az C0 Ct D Bclock : ℝ}
+    (M : NativeOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock)
+    (f : Fin a→NativeSourceFactorForm) (c d : T.Slot) (hcd : c≠d) (σ : T.Assignment) :
+    ((G.prependSourceEdge c d hcd).canonicalMinimumSource M (Fin.cases .bondCentered f)).product σ=
+      (M.bf (partitionPoint 0 as (T.splitIndex c d)):ℝ)*
+        (deletedOverlap n (joinSpin (T.atSlot σ c)) (joinSpin (T.atSlot σ d))-
+          pathPairMoment (uniformWeight (n+1)) (finiteFeature (n+1))
+            (completedPathClock (n+1) M.bf M.hf) (orderedOverlap (n+1))
+            (partitionPoint 0 as (T.splitIndex c d)))*(G.canonicalMinimumSource M f).product σ := by
+  unfold ActualNaturalBoundaryShape.product fullBoundaryAffineProduct
+  rw [Fin.prod_univ_succ]
+  simp only [ActualNaturalBoundaryShape.canonicalMinimumSource,
+    ActualNaturalBoundaryShape.prependSourceEdge,ActualNaturalBoundaryShape.sourceLowMass,
+    Fin.cases_zero,Fin.cases_succ,NativeSourceFactorForm.intercept,NativeSourceFactorForm.slope]
+  congr 1
+  unfold fullBoundaryAffineFactor
+  have HE : deletedOverlap n (joinSpin (T.atSlot σ d)) (joinSpin (T.atSlot σ c))=
+      deletedOverlap n (joinSpin (T.atSlot σ c)) (joinSpin (T.atSlot σ d)) := by
+    simp only [deletedOverlap,mul_comm]
+  rw [HE]
+  ring
+
+theorem eventually_actual_minimum_bare_canonical_low_factor_even_moment
+    (aDegree dOrder rBound : ℕ) (hd : 0<dOrder)
+    (Bclock Temp Cmass : ℝ) (hTemp : 0 ≤ Temp) (hCmass : 0 ≤ Cmass)
+    {m delta cl cu Az C0 Ct D : ℝ}
+    (hm : 0 < m) (hdelta : 0 < delta) (hroom : delta < 3*m)
+    (hcl : 0 < cl) (hcu : 0 < cu) (hAz : 0 ≤ Az) (hC0 : 0 < C0) (hCt : 0 ≤ Ct) :
+    ∃ Cp : ℝ,0 < Cp ∧ ∀ᶠn : ℕ in atTop,
+      ∀M : NativeOverlapMinimum (n+1) m delta cl cu Az C0 Ct D Bclock,
+        (∀u,M.b u=Temp) → (∀u,M.h u=0) → M.xs ≤ 1 →
+      ∀(L : ℕ) (us : List PositiveMass),
+        (∀u∈us,u.val ≤ 1) → (∀u∈uniformMasses L,u∈us) → ((L+1:ℕ):ℝ)⁻¹ ≤ M.xs →
+      ∀ᶠjGrid : ℕ in atTop,
+        let as:=finiteCutMasses us jGrid
+        let b:=fun j=>(M.bf (partitionPoint 0 as j):ℝ)
+        let h:=fun j=>(M.hf (partitionPoint 0 as j):ℝ)
+        let S:=fun j=>orderedPathS (n+1) M.bf M.hf (partitionPoint 0 as j)
+        let K:=fun j=>h j+b j*S j
+        let Mclock:=4*NativeOverlapMinimum.bareSourceClockConstant cl Az D+2*Temp
+        ∀(U : ℕ) (T : ClockTree (Spin n×Bool) as) (l t : ℝ),
+          l∈Icc (0:ℝ) 1 → t∈Icc (0:ℝ) 1 → T.leaves ≤ rBound →
+        ∀(G : ActualNaturalBoundaryShape n aDegree T) (f : Fin aDegree→NativeSourceFactorForm)
+          (initial : Finset (Fin aDegree)) (W : ℝ),M.xs ≤ W →
+          (∀e,G.sourceLowMass e ≤ Cmass*sourceFactorScale M.xs W initial e) →
+        ∀c d : T.Slot,c≠d → partitionPoint 0 as (T.splitIndex c d) ≤ Cmass*W →
+          T.disorderExpect (fullWeight n) (fullFeature n) 0
+            (cutFullVariance n (fun j=>Sum.elim (fun _=>b j) (fun _=>h j)) U l t b h K)
+            (fun σ=>|(G.canonicalMinimumSource M f).product σ*
+              (b (T.splitIndex c d)*(deletedOverlap n (joinSpin (T.atSlot σ c))
+                (joinSpin (T.atSlot σ d))-S (T.splitIndex c d)))|^(2*dOrder)) 0 ≤
+            (Real.exp (wholeLawRowComparisonConstant rBound*Mclock)*Cp^(aDegree+1)*
+              (W*sourceMonomialScale M.xs W initial))^(2*dOrder) := by
+  obtain ⟨Cp,hCp,HP⟩:=eventually_actual_minimum_bare_canonical_continuum_square_even_moment
+    (D:=D) (aDegree+1) dOrder rBound (by omega) hd Bclock Temp Cmass hTemp hCmass
+    hm hdelta hroom hcl hcu hAz hC0 hCt
+  refine ⟨Cp,hCp,?_⟩
+  filter_upwards [HP] with n hnP
+  intro M hb hh hxs1 L us hus hret hmesh
+  filter_upwards [hnP M hb hh hxs1 L us hus hret hmesh] with jGrid hgridP
+  dsimp only at hgridP ⊢
+  intro U T l t hl ht hT G f initial W hxW hmass c d hcd hmassNew
+  let as:=finiteCutMasses us jGrid
+  have ho:=finiteCutMasses_ordered us hus jGrid
+  have had:=comparisonVariableEndpoint_clocks_admissible M.context.hc M.context.hk M.context.hkc
+    M.context.hm M.context.hM M.b M.h M.context.hd.ne' M.hlam.le M.hlb M.hb M.hh M.hh0 M.alpha
+  have Hcenter:=native_ordered_source_center_eq_completed n M.bf M.hf
+    (toNNReal_monotoneOn had.1) (toNNReal_monotoneOn had.2.1)
+    (partitionPoint_mem as ho (T.splitIndex c d))
+  have Hgeo : ∀e,(G.prependSourceEdge c d hcd).sourceLowMass e ≤
+      Cmass*sourceFactorScale M.xs W (sourceInitialAfterStar initial) e := by
+    intro e
+    refine Fin.cases ?_ (fun e=>?_) e
+    · simpa only [ActualNaturalBoundaryShape.sourceLowMass,ActualNaturalBoundaryShape.prependSourceEdge,
+        Fin.cases_zero,source_factor_scale_after_star_zero] using hmassNew
+    · simpa only [ActualNaturalBoundaryShape.sourceLowMass,ActualNaturalBoundaryShape.prependSourceEdge,
+        Fin.cases_succ,source_factor_scale_after_star_succ] using hmass e
+  have H:=hgridP U T l t hl ht hT (G.prependSourceEdge c d hcd)
+    (Fin.cases .bondCentered f) (sourceInitialAfterStar initial) W hxW Hgeo
+  simp_rw [canonical_source_prepend_bond_product] at H
+  rw [←Hcenter] at H
+  rw [source_monomial_scale_after_star] at H
+  simpa only [mul_assoc,mul_left_comm,mul_comm] using H
+
+end OAI.SKFluctuations.Cavity

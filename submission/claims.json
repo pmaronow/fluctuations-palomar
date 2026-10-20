@@ -1,0 +1,89 @@
+{
+  "scope": "Exactly five manuscript result groups; other retained declarations are proof infrastructure. Corollaries 1.4 and 1.5 and the strong forms are not advertised formal claims.",
+  "claim_groups": 5,
+  "comparator_theorem_exports": 5,
+  "manuscript_pdf": "manuscript/main.pdf",
+  "manuscript_pdf_sha256": "783f123d6587790842a335cb1d6e31100f80d900f24f76522e9d8971dc3afa26",
+  "claims": [
+    {
+      "number": "1.1",
+      "label": "thm:barrier-730",
+      "title": "Barrier from typical equilibrium states",
+      "manuscript_source": "manuscript/sections/01-introduction.tex",
+      "source_line": 113,
+      "statement_latex": "[Barrier from typical equilibrium states]\\label{thm:barrier-730}\nFor every fixed $\\beta>1$ there exists $A_\\beta>0$ such that, for every\nfixed $\\tau\\in(0,1/2)$,\n\\begin{align}\n \\PP_{J,\\,X_0\\sim\\pi^J}\n   \\bigl\\{d^J\\bigl(X_0,e^{A_\\beta n^{7/30}}\\bigr)>\\tau\\bigr\\}\n   &\\longrightarrow1,\\label{eq:barrier-730-continuous}\\\\\n \\PP_{J,\\,X_0\\sim\\pi^J}\n   \\bigl\\{d^J_{\\mathrm{disc}}\\bigl(X_0,\\lfloor e^{A_\\beta n^{7/30}}\\rfloor\\bigr)>\\tau\\bigr\\}\n   &\\longrightarrow1.\\label{eq:barrier-730-discrete}\n\\end{align}",
+      "comparator_theorems": [
+        "LowerUpperBounds.theorem_1_1"
+      ],
+      "proof_facade_theorems": [
+        "SKBarriers2.mainStatementSevenThirty"
+      ],
+      "literature_premise": null,
+      "qualification": "Both continuous time (site rate one) and discrete single-site attempts. For each fixed beta > 1, one A_beta > 0 is chosen before every fixed 0 < tau < 1/2 and serves both clocks. The two joint bad-start masses tend to one. Strong quantitative, almost-sure, other-dynamics, and relaxation-time forms are outside this claim."
+    },
+    {
+      "number": "1.2",
+      "label": "b:cor:subcritical",
+      "title": "Unit coefficient below the exponent 7/30",
+      "manuscript_source": "manuscript/sections/01-introduction.tex",
+      "source_line": 168,
+      "statement_latex": "[Unit coefficient below the exponent $7/30$]\\label{b:cor:subcritical}\nFor every fixed $\\beta>1$, every fixed $\\kappa\\in(0,7/30)$, and every\nfixed $\\tau\\in(0,1/2)$,\n\\[\n \\PP_{J,\\,X_0\\sim\\pi^J}\\bigl\\{d^J\\bigl(X_0,e^{n^\\kappa}\\bigr)>\\tau\\bigr\\}\n   \\longrightarrow1,\\qquad\n \\PP_{J,\\,X_0\\sim\\pi^J}\n   \\bigl\\{d^J_{\\mathrm{disc}}\\bigl(X_0,\\lfloor e^{n^\\kappa}\\rfloor\\bigr)>\\tau\\bigr\\}\n   \\longrightarrow1.\n\\]",
+      "comparator_theorems": [
+        "LowerUpperBounds.corollary_1_2"
+      ],
+      "proof_facade_theorems": [
+        "SKBarriers2.subcriticalStatementSevenThirty"
+      ],
+      "literature_premise": null,
+      "qualification": "Coefficient one for every fixed 0 < kappa < 7/30 and 0 < tau < 1/2, in both clocks. This does not assert coefficient one at kappa = 7/30."
+    },
+    {
+      "number": "1.3",
+      "label": "thm:upper",
+      "title": "Mixing from typical equilibrium states",
+      "manuscript_source": "manuscript/sections/01-introduction.tex",
+      "source_line": 203,
+      "statement_latex": "[Mixing from typical equilibrium states]\\label{thm:upper}\nFor every fixed $\\beta>1$ and every fixed $\\omega\\in(0,1/4)$,\n\\[\n \\PP_{J,\\,X_0\\sim\\pi^J}\\bigl\\{d^J\\bigl(X_0,e^{n^{1-\\omega}}\\bigr)\\le 1/4\\bigr\\}\\longrightarrow1;\n \\quad\\text{equivalently}\\quad\n \\PP_{J,\\,X_0\\sim\\pi^J}\\bigl\\{T^J(X_0)\\le e^{n^{1-\\omega}}\\bigr\\}\\longrightarrow1 .\n\\]",
+      "comparator_theorems": [
+        "LowerUpperBounds.theorem_1_3"
+      ],
+      "proof_facade_theorems": [
+        "SKConstants.Completion.Main.optimizedSKTypicalStartStatement_holds"
+      ],
+      "literature_premise": null,
+      "qualification": "Continuous-time statement only, each site at rate one, for every fixed beta > 1 and 0 < c < 1/4 (c is manuscript omega). The formal statement is the complementary joint probability of distance > 1/4 tending to zero. Its completed GOE diagonal cancels from Gibbs probabilities and rates. The initial Gibbs spin is sampled once and held fixed before total variation is formed. Corollaries 1.4 and 1.5 and the endpoint c = 1/4 are outside this claim."
+    },
+    {
+      "number": "1.6",
+      "label": "f:main",
+      "title": "Fluctuation scale (OpenAI, Theorem 1.1)",
+      "manuscript_source": "manuscript/sections/01-introduction.tex",
+      "source_line": 268,
+      "statement_latex": "[{\\cite[Theorem~1.1]{oai-fluctuations}}]\\label{f:main}\nFor every fixed $\\beta>1$ and every $\\eta>0$, there exists $n_0(\\beta,\\eta)$\nsuch that, for all $n\\ge n_0$,\n\\begin{align}\n n^{1/6-\\eta}&\\le\\sqrt{\\Var(F_n)}\\le n^{1/6+\\eta},\\label{f:sd}\\\\\n n^{1/3-\\eta}&\\le\\Var(F_n)\\le n^{1/3+\\eta}.\\label{f:variance}\n\\end{align}\nMoreover, for every $\\eta>0$,\n\\begin{equation}\\label{f:typical}\n \\PP\\bigl\\{n^{1/6-\\eta}\\le\\abs{F_n-\\E F_n}\\le n^{1/6+\\eta}\\bigr\\}\n \\longrightarrow1.\n\\end{equation}",
+      "comparator_theorems": [
+        "LowerUpperBounds.theorem_1_6"
+      ],
+      "proof_facade_theorems": [
+        "OAI.SKFluctuations.LaplaceWindowFormalization.main_fluctuation_statement_unconditional_original_q"
+      ],
+      "literature_premise": null,
+      "qualification": "All three clauses: standard-deviation exponent 1/6, variance exponent 1/3, and typical centered-fluctuation exponent 1/6, with every positive slack. Separate eventual thresholds for standard deviation and variance can be replaced by their maximum. The formal free energy subtracts n log 2, preserving centered fluctuations and variance. The positive Laplace window is proved internally. OpenAI proved the mathematical theorem; no limiting law or positive variance prefactor is claimed."
+    },
+    {
+      "number": "1.7",
+      "label": "cor:mean-bias",
+      "title": "Mean bias",
+      "manuscript_source": "manuscript/sections/01-introduction.tex",
+      "source_line": 306,
+      "statement_latex": "[Mean bias]\\label{cor:mean-bias}\nFor every fixed $\\beta>1$ and every $\\varepsilon>0$, there exist\n$c_{\\beta,\\varepsilon}>0$ and $n_0(\\beta,\\varepsilon)$ such that\n\\begin{equation}\\label{eq:mean-bias-lower}\n \\Delta_{n,\\beta}\\ge c_{\\beta,\\varepsilon}n^{-5/6-\\varepsilon}\n \\qquad(n\\ge n_0(\\beta,\\varepsilon)).\n\\end{equation}\nEquivalently, $nP_\\beta-\\E F_n\\ge c_{\\beta,\\varepsilon}n^{1/6-\\varepsilon}$ for\n$n\\ge n_0(\\beta,\\varepsilon)$.",
+      "comparator_theorems": [
+        "LowerUpperBounds.corollary_1_7"
+      ],
+      "proof_facade_theorems": [
+        "OAI.SKFluctuations.LaplaceWindowFormalization.mean_bias_lower_bound_unconditional"
+      ],
+      "literature_premise": null,
+      "qualification": "The counting-measure mean-pressure bias relative to its actual thermodynamic limit is at least c n^(-5/6-epsilon), with c > 0 and an eventual threshold, for every fixed beta > 1 and epsilon > 0. The displayed extensive form is its algebraic reformulation. The pressure limit and the variance-bias inequality are proved in the retained development. A bound with epsilon = 0 is outside this claim."
+    }
+  ]
+}

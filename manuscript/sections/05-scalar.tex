@@ -1,0 +1,712 @@
+\chapter{The scalar Parisi problem on the support}\label{sec:scalar}
+
+In this section, we collect the properties of the scalar Parisi equation used
+in the barrier argument. Recall from \cref{sec:inputs} the solution
+$\Phi_\alpha$ of the Parisi equation for a distribution function $\alpha$,
+its spatial derivatives $u$, $\chi$, and $w$, the scalar diffusion $Y_t$,
+and the function $\Gamma(t)=\E u(t,Y_t)^2$. We first prove two statements
+that hold for every distribution function. In \cref{lem:sc-derivatives}, we
+bound each positive spatial derivative of $\Phi_\alpha$ by a constant that
+depends only on $\beta$ and on the order of the derivative. In
+\cref{lem:sc-ito}, we record the stochastic differential equations that these
+derivatives satisfy along $Y$. We then specialize to the Parisi distribution
+function $\alpha_\beta$ on the interval $(0,q_\beta)$, where $\Gamma(t)=t$.
+In \cref{b:lem:os-scalar-jets}, we prove the two stationarity identities
+$\beta^2\E\chi(t,Y_t)^2=1$ and $\E w(t,Y_t)^2=2\alpha(t)\E\chi(t,Y_t)^3$,
+the formula $\alpha=\E w^2/(2\E\chi^3)$, smoothness and a Lipschitz bound for
+$\alpha$, and bounds on mixed derivatives of $\Phi$ on compact subintervals.
+The positive constant $m_\beta$ of \eqref{b:eq:main-analytic-constants} is
+defined in \cref{cor:sc-mbeta}.
+
+We use three external inputs: \cref{inp:ob-scalar}, on the regularity and
+stability of the scalar equation; \cref{inp:full-rsb}, which states that the
+support of $\mu_\beta$ is $[0,q_\beta]$; and the identity
+\eqref{b:eq:identity-interval}, which states that $\Gamma(t)=t$ for
+$0<t<q_\beta$. The derivative bounds are used in
+\cref{sec:flow,sec:cubic,sec:fractional}. The stationarity identities enter
+the coefficient computation of \cref{sec:cubic}, and the constant $m_\beta$
+enters the cubic pressure deficit there and, through it, the choice of
+parameters in \cref{sec:fractional,sec:references,sec:barrier-proof}.
+
+The statements of this section are known, some of them in a slightly
+different form. We include proofs because the later sections need them with
+explicit uniformity. For each fixed distribution function, bounds on all
+positive spatial derivatives, and their convergence when the profile is
+approximated, were proved by Auffinger and Chen
+\cite[Propositions~1--2]{auffinger-chen-2015} (see also
+\cite[Proposition~2.4]{full-rsb}). The bounds of order at most three, the
+martingale identity \eqref{b:eq:u-martingale}, and the expectation of
+\eqref{b:eq:chi-evolution} are proved in \cite[Lemma~3.1]{oai-barriers}. Our
+proof of \cref{lem:sc-derivatives} extends the Feynman--Kac argument given
+there to every order. The identities \eqref{b:eq:os-jet-generator} with
+$j\le3$ and the first two identities of \eqref{eq:sc-moments} appear in
+\cite[Lemma~2.5, (2.12)--(2.16)]{full-rsb}; the formulas for $\Gamma'$
+given there are stochastic versions of the differentiation formulas of
+\cite[Proposition~3]{auffinger-chen-2015}. The identity $\Gamma(q)=q$ at
+points of the support goes back to Talagrand
+\cite{talagrand-2006-parisi-measures} (see
+\cite[Theorem~5 and its proof]{auffinger-chen-2015}); it is part of the
+characterization of Parisi measures by Chen \cite[Proposition~1]{chen-2017}
+and by Jagannath and Tobasco \cite[Proposition~1.1]{jagannath-tobasco-2017},
+and we use it in the form proved in \cite[Proposition~3.2]{oai-barriers}.
+Since $\supp\mu_\beta=[0,q_\beta]$ \cite[Theorem~1.1]{full-rsb}, the identity holds on
+all of $(0,q_\beta)$. In the proof
+of \cite[Theorem~2(ii)]{auffinger-chen-2015}, Auffinger and Chen derive the
+quotient formula for $\alpha$ and use an induction to prove its smoothness.
+The same quotient argument, including the passage from almost every point
+to every point, was carried out near $t=0$ in
+\cite[proof of Lemma~7.2, Step~3, (7.8)--(7.12)]{quantitative-parisi}, in a
+rescaled normalization. The smoothness of $\alpha_\beta$ on
+$(0,q_\beta)$ is also part of \cref{inp:full-rsb} (see
+\cref{cor:inp-identity}). The use of the second stationarity identity in the
+covariance expansion of \cref{sec:cubic} is new.
+% CHECK: Auffinger--Chen arXiv:1303.3573v1 read: Propositions 1--3 (Sections 2--3),
+% Theorem 5 (Section 3; its proof credits Talagrand, Parisi measures, Prop. 3.2),
+% Theorem 2(ii) with proof in Section 4.2, quotient (40); Lopatto arXiv:2607.11756v3, Proposition 2.4 and
+% Lemma 2.5, (2.12)--(2.16), pp. 5--7; Aronow--Lopatto arXiv:2609.09103v1,
+% proof of Lemma 7.2, Step 3, (7.8)--(7.12), pp. 63--64.
+
+\paragraph{Notation.} Throughout this section, $\beta>1$ is fixed and
+$b=\beta^2$. We use the conventions of \cref{b:sec:scalar}. A distribution
+function is a nondecreasing, right-continuous function
+$\alpha\colon[0,1]\to[0,1]$ with $\alpha(1)=1$; equivalently,
+$\alpha(t)=\mu([0,t])$ for a probability measure $\mu$ on $[0,1]$. Let
+$\alpha$ be a step distribution function, with breakpoints
+$0=t_0<t_1<\dots<t_p=1$ and $\alpha=m_i$ on $[t_{i-1},t_i)$. Then
+$\Phi_\alpha(1,z)=\log(2\cosh z)$, and the Gaussian recursion
+\eqref{eq:inp-scalar-recursion} reads
+\begin{equation}\label{eq:sc-recursion}
+ \Phi_\alpha(t,z)=\frac1{m_i}\log\E\exp\Bigl(m_i\,
+   \Phi_\alpha\bigl(t_i,z+\beta\sqrt{t_i-t}\,Z\bigr)\Bigr),
+ \qquad t_{i-1}\le t<t_i,
+\end{equation}
+where $Z$ is a standard Gaussian variable, and where the right side is read
+as $\E\Phi_\alpha(t_i,z+\beta\sqrt{t_i-t}\,Z)$ when $m_i=0$. For a
+general distribution function $\alpha$, the function $\Phi_\alpha$ is the
+uniform limit of $\Phi_{\alpha_N}$ along any sequence of step distribution
+functions with $\norm{\alpha_N-\alpha}_{L^1}\to0$ (\cref{inp:ob-scalar}\,(i)). We
+write
+\[
+ f_0=\Phi_\alpha,\qquad f_j=f_j^\alpha=\partial_z^j\Phi_\alpha\quad(j\ge1),
+\]
+so that $f_1=u$, $f_2=\chi$, and $f_3=w$. For $(t,z)\in[0,1]\times\R$, let
+$(Y^{t,z}_r)_{t\le r\le1}$ be the solution of
+\[
+ \dd Y^{t,z}_r=\beta\dd B_r+b\,\alpha(r)\,u(r,Y^{t,z}_r)\dd r,\qquad
+ Y^{t,z}_t=z,
+\]
+where $B$ is a standard Brownian motion. This equation has a unique strong
+solution (\cref{inp:ob-scalar}\,(iii) and (v)), and the scalar diffusion of
+\cref{sec:inputs} is $Y=Y^{0,0}$. We write $\norm{\cdot}_\infty$ for the
+supremum over $[0,1]\times\R$, or over $\R$ for a function of $z$ alone.
+From \cref{inp:ob-scalar}, we use the bounds $\abs u\le1$ and $0<\chi\le1$
+(the proof of \cite[Lemma~3.1]{oai-barriers} gives the sharper bound
+$\chi\le1-u^2$, which we do not need), the joint continuity of $\Phi_\alpha$,
+$u$, and $\chi$, the well-posedness of the scalar diffusion, and the
+stability estimate in part (ii) there,
+\[
+ \sup_{t,z}\bigl(\abs{\Phi_\alpha-\Phi_{\tilde\alpha}}
+   +\abs{u_\alpha-u_{\tilde\alpha}}+\abs{\chi_\alpha-\chi_{\tilde\alpha}}\bigr)
+ \le C_\beta\norm{\alpha-\tilde\alpha}_{L^1},
+\]
+which holds for all distribution functions $\alpha$ and $\tilde\alpha$.
+
+\section{Bounds on spatial derivatives}\label{sec:sc-derivatives}
+
+The derivative bounds below are uniform over all distribution functions. We
+need this uniformity because the later sections apply the bounds to step
+approximations and to profiles other than $\alpha_\beta$, such as
+$\max\{\alpha_\beta,3s\}$ with $0\le s\le1/3$. The constants are defined by $C_1=C_2=1$ and, for
+$j\ge3$,
+\begin{equation}\label{eq:sc-constants}
+ C_j=e^{jb}\Bigl(\norm{\partial_z^j\log(2\cosh z)}_\infty
+   +\frac b2\sum_{a=2}^{j-2}\binom ja C_{a+1}C_{j+1-a}\Bigr).
+\end{equation}
+The sum is empty for $j=3$, and it involves only $C_3,\dots,C_{j-1}$. Every
+derivative of positive order of $\log(2\cosh z)$ is a polynomial in
+$\tanh z$ and is bounded.
+
+\begin{lemma}[Bounds on spatial derivatives]\label{lem:sc-derivatives}
+Let $\alpha$ be a distribution function. For all $j\ge1$, the derivative
+$f_j=\partial_z^j\Phi_\alpha$ exists and is continuous on $[0,1]\times\R$,
+and
+\begin{equation}\label{eq:sc-derivative-bounds}
+ \sup_{(t,z)\in[0,1]\times\R}\abs{\partial_z^j\Phi_\alpha(t,z)}\le C_j.
+\end{equation}
+Moreover, the following hold.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item If $\alpha_N$ are distribution functions such that
+  $\norm{\alpha_N-\alpha}_{L^1}\to0$, then
+  $\norm{\partial_z^j\Phi_{\alpha_N}-\partial_z^j\Phi_\alpha}_\infty\to0$ for
+  all $j\ge1$.
+\item For all $j\ge0$, $t\in[0,1]$, and $z\in\R$,
+  \begin{equation}\label{eq:sc-integrated-pde}
+   f_j(t,z)=\partial_z^j\log(2\cosh z)
+     +\frac b2\int_t^1\bigl(f_{j+2}+\alpha\,\partial_z^j(u^2)\bigr)(r,z)\dd r,
+  \end{equation}
+  where
+  $\partial_z^j(u^2)=\sum_{a=0}^j\binom ja f_{a+1}f_{j+1-a}$.
+\end{enumerate}
+\end{lemma}
+
+The bounds concern derivatives of positive order only; the function
+$\Phi_\alpha$ itself grows linearly in $z$. By \eqref{eq:sc-integrated-pde},
+the Parisi equation and its spatial derivatives hold for almost every $t$,
+and at every $t$ at which $\alpha$ is continuous.
+
+\begin{proof}
+We first recall why, for a fixed step distribution function, all spatial
+derivatives exist and are bounded, with bounds that may depend on the steps.
+We then write the equation for $f_j$ as a linear equation and use its
+Feynman--Kac representation to obtain bounds independent of the steps.
+Finally, we pass to general distribution functions by a forward difference
+argument and prove \eqref{eq:sc-integrated-pde}.
+
+\paragraph{Step 1: a fixed step distribution function.}
+Let $\alpha$ be a step distribution function as in \eqref{eq:sc-recursion},
+fix $i$, and let $\phi=\Phi_\alpha(t_i,\cdot)$. Suppose that $\phi$ is
+smooth, that all its derivatives of positive order are bounded, and that
+$\abs{\phi(z)}\le c(1+\abs z)$ for some $c$. These properties hold for
+$\phi(z)=\log(2\cosh z)$, which is the case $i=p$. For
+$t_{i-1}\le t\le t_i$, the function $\Phi_\alpha(t,\cdot)$ is $1/m_i$ times
+the logarithm of the convolution of $e^{m_i\phi}$ with the centered Gaussian
+density of variance $b(t_i-t)$, or the convolution of $\phi$ itself when
+$m_i=0$. The linear growth of $\phi$ justifies differentiation under the
+integral. We find that, for $j\ge1$, $f_j(t,z)$ is a polynomial, with
+coefficients depending only on $j$ and $m_i$, in expectations of products of
+$\phi'(z+\sigma Z),\dots,\phi^{(j)}(z+\sigma Z)$ under the probability
+measure with density proportional to $e^{m_i\phi(z+\sigma Z)}$, where
+$\sigma=\beta\sqrt{t_i-t}$. In particular, $f_j$ is bounded and
+continuous on $[t_{i-1},t_i]\times\R$. For $t<t_i$, the Gaussian
+convolution is smooth in $(t,z)$, and $e^{m_i\Phi_\alpha}$ (or
+$\Phi_\alpha$ itself, when $m_i=0$) solves the backward heat equation
+$-\partial_tv=(b/2)\partial_{zz}v$. It follows that
+$\Phi_\alpha$ is smooth on $[t_{i-1},t_i)\times\R$, where it satisfies
+\[
+ -\partial_t\Phi_\alpha=\frac b2\bigl(\partial_{zz}\Phi_\alpha
+   +m_i(\partial_z\Phi_\alpha)^2\bigr).
+\]
+The function $\Phi_\alpha(t_{i-1},\cdot)$ has the three properties assumed for
+$\phi$ (it grows at most linearly because $\abs u\le1$). Proceeding backward
+through the steps, we obtain these properties on every strip; this argument
+is recorded in the proof of \cite[Lemma~3.1]{oai-barriers}. The bounds it gives depend on the number and
+the location of the steps, and the next two steps remove this dependence.
+
+\paragraph{Step 2: the differentiated equation.}
+Differentiating the equation $j$ times in $z$ on each strip
+$[t_{i-1},t_i)\times\R$, we find that
+\begin{equation}\label{eq:sc-differentiated}
+ -\partial_tf_j=\frac b2\bigl(f_{j+2}+\alpha\,\partial_z^j(u^2)\bigr)
+ \qquad(j\ge0),
+\end{equation}
+with $\partial_z^j(u^2)$ as in \eqref{eq:sc-integrated-pde}. Let $j\ge3$. In
+the sum defining $\partial_z^j(u^2)$, the terms with $a\in\{0,j\}$ add up to
+$2uf_{j+1}$, and the terms with $a\in\{1,j-1\}$ add up to $2j\chi f_j$.
+Then \eqref{eq:sc-differentiated} becomes
+\begin{equation}\label{eq:sc-linear}
+ -\partial_tf_j=\frac b2\partial_{zz}f_j+b\alpha u\,\partial_zf_j
+   +jb\alpha\chi f_j+\mathcal Q_j,\qquad
+ \mathcal Q_j=\frac{b\alpha}2\sum_{a=2}^{j-2}\binom ja f_{a+1}f_{j+1-a}.
+\end{equation}
+The sum defining $\mathcal Q_j$ is empty for $j=3$, and its factors are derivatives of
+orders between $3$ and $j-1$. We regard \eqref{eq:sc-linear} as a linear
+equation for $f_j$, with coefficients $u$ and $\chi$ and source term $\mathcal Q_j$.
+
+\paragraph{Step 3: bounds independent of the steps.}
+We prove \eqref{eq:sc-derivative-bounds} for step distribution functions by
+induction on $j$. For $j\in\{1,2\}$, it is the bound $\abs u\le1$,
+$0<\chi\le1$ of \cref{inp:ob-scalar}. Let $j\ge3$, and suppose that
+$\norm{f_l}_\infty\le C_l$ for $1\le l\le j-1$. Since $0\le\alpha\le1$, we
+have
+\[
+ \norm{\mathcal Q_j}_\infty\le\frac b2\sum_{a=2}^{j-2}\binom ja C_{a+1}C_{j+1-a}.
+\]
+Fix $(t,z)\in[0,1)\times\R$ and let $Y_r=Y^{t,z}_r$. We abbreviate
+\[
+ \Xi_r=jb\int_t^r\alpha(r')\chi(r',Y_{r'})\dd r',\qquad t\le r\le1,
+\]
+so that $0\le\Xi_r\le jb$. By \eqref{eq:sc-linear}, the drift of
+$f_j(r,Y_r)$ in It\^o's formula is
+\[
+ \partial_rf_j+b\alpha u\,\partial_zf_j+\frac b2\partial_{zz}f_j
+ =-jb\alpha\chi f_j-\mathcal Q_j,
+\]
+evaluated at $(r,Y_r)$. On each interval $[t_{i-1},t_i)\cap[t,1]$, we then
+have
+\[
+ \dd\bigl(e^{\Xi_r}f_j(r,Y_r)\bigr)
+ =-e^{\Xi_r}\mathcal Q_j(r,Y_r)\dd r
+   +\beta e^{\Xi_r}f_{j+1}(r,Y_r)\dd B_r.
+\]
+Recall from Step~1 that the functions $f_j$ and $f_{j+1}$ are bounded and
+continuous on $[0,1]\times\R$. The process
+\[
+ e^{\Xi_r}f_j(r,Y_r)
+   +\int_t^re^{\Xi_{r'}}\mathcal Q_j(r',Y_{r'})\dd r',\qquad t\le r\le1,
+\]
+is therefore continuous, and it is a martingale. Comparing its expectations
+at $r=t$ and $r=1$, we obtain
+\[
+ f_j(t,z)=\E\Bigl[e^{\Xi_1}\,\partial_z^j\log(2\cosh z)\big|_{z=Y_1}
+   +\int_t^1e^{\Xi_r}\mathcal Q_j(r,Y_r)\dd r\Bigr].
+\]
+Since $0\le\Xi_r\le jb$ for $t\le r\le1$, we have
+\[
+ \abs{f_j(t,z)}\le e^{jb}\bigl(\norm{\partial_z^j\log(2\cosh z)}_\infty
+   +\norm{\mathcal Q_j}_\infty\bigr)\le C_j.
+\]
+The same bound holds at $t=1$, which completes the induction. The
+elapsed time is at most one, and the only property of $\alpha$ we used is
+$0\le\alpha\le1$, so the constants depend neither on the number
+nor on the location of the steps.
+
+\paragraph{Step 4: general distribution functions.}
+Let $\alpha$ be a distribution function, and let $\alpha_N$ be step
+distribution functions such that $\norm{\alpha_N-\alpha}_{L^1}\to0$; for
+instance, $\alpha_N(t)=\alpha((k+1)/N)$ for $k/N\le t<(k+1)/N$ and
+$\alpha_N(1)=1$, which converges to $\alpha$ pointwise by right continuity.
+We write $f_j^N=f_j^{\alpha_N}$. The stability estimate of
+\cref{inp:ob-scalar} implies that $\Phi_{\alpha_N}$, $f_1^N$, and $f_2^N$
+converge uniformly to $\Phi_\alpha$, $u$, and $\chi$. Let $j\ge3$, and suppose that
+$f_{j-1}^N$ converges uniformly to $f_{j-1}=\partial_z^{j-1}\Phi_\alpha$,
+which is continuous. For $\zeta>0$, Taylor's theorem and Step~3 imply
+that
+\[
+ \Bigl|f_j^N(t,z)-\frac{f_{j-1}^N(t,z+\zeta)-f_{j-1}^N(t,z)}\zeta\Bigr|
+ \le\frac{C_{j+1}\zeta}2,
+\]
+and that
+\[
+ \norm{f_j^N-f_j^M}_\infty
+ \le\frac2\zeta\norm{f_{j-1}^N-f_{j-1}^M}_\infty+C_{j+1}\zeta.
+\]
+Given $\eps>0$, we first choose $\zeta$ with $C_{j+1}\zeta<\eps/2$, and then
+$N_0$
+such that the first term is less than $\eps/2$ for $N,M\ge N_0$. Then
+$f_j^N$ converges uniformly to a continuous function $\widehat f_j$ with
+$\norm{\widehat f_j}_\infty\le C_j$. Letting $N\to\infty$ in
+$f_{j-1}^N(t,z)=f_{j-1}^N(t,0)+\int_0^zf_j^N(t,y)\dd y$, we find that
+$\partial_zf_{j-1}$ exists and equals $\widehat f_j$. By induction on $j$, this proves
+the existence and continuity of $f_j$, the bound
+\eqref{eq:sc-derivative-bounds}, and the uniform convergence
+$f_j^N\to f_j$ for all $j\ge1$. Now that \eqref{eq:sc-derivative-bounds}
+holds for all distribution functions, the same argument applies to any
+sequence of distribution functions $\alpha_N$ with
+$\norm{\alpha_N-\alpha}_{L^1}\to0$, step functions or not. This proves (i).
+
+\paragraph{Step 5: the integrated equation.}
+Let $\alpha$ be a step distribution function and $j\ge0$. For fixed $z$, the
+function $t\mapsto f_j(t,z)$ is continuous on $[0,1]$ by Step~1, and
+continuously differentiable on each interval $[t_{i-1},t_i)$, with derivative
+given by \eqref{eq:sc-differentiated}. Integrating over the steps, we obtain
+\eqref{eq:sc-integrated-pde}. For a general $\alpha$, we choose $\alpha_N$ as
+in Step~4 and write $u_N=f_1^N$. Then $\Phi_{\alpha_N}\to\Phi_\alpha$ and
+$f_l^N\to f_l$ uniformly for all $l\ge1$, and
+\[
+ \Bigl|\int_t^1\bigl(\alpha_N\partial_z^j(u_N^2)-\alpha\,\partial_z^j(u^2)\bigr)
+   (r,z)\dd r\Bigr|
+ \le\norm{\alpha_N-\alpha}_{L^1}\norm{\partial_z^j(u_N^2)}_\infty
+   +\norm{\partial_z^j(u_N^2)-\partial_z^j(u^2)}_\infty.
+\]
+The right side tends to zero by \eqref{eq:sc-derivative-bounds} and the
+uniform convergence. Letting $N\to\infty$ in \eqref{eq:sc-integrated-pde}
+for $\alpha_N$ yields \eqref{eq:sc-integrated-pde} for $\alpha$, which
+completes the proof.
+\end{proof}
+
+\section{Stochastic identities along the scalar diffusion}
+\label{sec:sc-ito}
+
+We now record the equations satisfied by the spatial derivatives of
+$\Phi_\alpha$ along the scalar diffusion. As usual, a differential identity
+such as \eqref{b:eq:os-jet-generator} below means that the corresponding
+integrated identity holds almost surely, simultaneously for all
+$0\le s\le t\le1$. For a polynomial $\Theta$ in the variables
+$x_1,\dots,x_k$, we define the polynomials in $x_1,\dots,x_{k+1}$
+\begin{equation}\label{eq:sc-generator}
+ \Theta^0=\frac b2\sum_{i,l=1}^kx_{i+1}x_{l+1}\,\partial_i\partial_l\Theta,
+ \qquad
+ \Theta^1=-b\sum_{i=1}^k\partial_i\Theta
+   \sum_{a=1}^{i-1}\binom{i-1}ax_{a+1}x_{i+1-a},
+\end{equation}
+where $\partial_i$ is the derivative in $x_i$. We write
+$\Theta_t=\Theta(f_1(t,Y_t),\dots,f_k(t,Y_t))$, and $\Theta^0_t$ and
+$\Theta^1_t$ for the analogous expressions with $k+1$ arguments.
+
+\begin{lemma}[Stochastic identities along the scalar diffusion]
+\label{lem:sc-ito}
+Let $\alpha$ be a distribution function, and let $Y=Y^{0,0}$. Write
+$u_t=u(t,Y_t)$, $\chi_t=\chi(t,Y_t)$, and $w_t=w(t,Y_t)$.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For all $j\ge1$,
+  \begin{equation}\label{b:eq:os-jet-generator}
+   \dd f_j(t,Y_t)=\beta f_{j+1}(t,Y_t)\dd B_t
+     -b\,\alpha(t)\sum_{a=1}^{j-1}\binom{j-1}a
+       f_{a+1}(t,Y_t)f_{j+1-a}(t,Y_t)\dd t.
+  \end{equation}
+  In particular,
+  \begin{align}
+   \dd u_t&=\beta\chi_t\dd B_t,\label{b:eq:u-martingale}\\
+   \dd\chi_t&=\beta w_t\dd B_t-b\,\alpha(t)\chi_t^2\dd t.
+     \label{b:eq:chi-evolution}
+  \end{align}
+\item Let $\Theta$ be a polynomial in $x_1,\dots,x_k$. Then
+  $t\mapsto\E\Theta_t$ is Lipschitz on $[0,1]$, and for
+  $0\le s\le t\le1$,
+  \begin{equation}\label{eq:sc-moment-identity}
+   \E\Theta_t-\E\Theta_s
+   =\int_s^t\bigl(\E\Theta^0_r+\alpha(r)\E\Theta^1_r\bigr)\dd r.
+  \end{equation}
+\item For $0\le s\le t\le1$,
+  \begin{equation}\label{eq:sc-moments}
+  \begin{aligned}
+   \Gamma(t)-\Gamma(s)&=b\int_s^t\E\chi_r^2\dd r,\\
+   \E\chi_t^2-\E\chi_s^2
+     &=b\int_s^t\bigl(\E w_r^2-2\alpha(r)\E\chi_r^3\bigr)\dd r,\\
+   \E w_t^2-\E w_s^2
+     &=b\int_s^t\E\bigl(f_4(r,Y_r)^2-6\alpha(r)\chi_rw_r^2\bigr)\dd r,\\
+   \E\chi_t^3-\E\chi_s^3
+     &=3b\int_s^t\E\bigl(\chi_rw_r^2-\alpha(r)\chi_r^4\bigr)\dd r.
+  \end{aligned}
+  \end{equation}
+  In particular, $\Gamma$ is continuously differentiable with
+  $\Gamma'(t)=b\E\chi_t^2$. The function $t\mapsto\E\chi_t^2$ has a right
+  derivative at every $t\in[0,1)$, and a derivative at every point of
+  continuity of $\alpha$, given by
+  \begin{equation}\label{b:eq:contact-derivative}
+   \frac{\dd}{\dd t}\E\chi_t^2=b\bigl(\E w_t^2-2\alpha(t)\E\chi_t^3\bigr).
+  \end{equation}
+\end{enumerate}
+\end{lemma}
+
+Parts (i) and (ii) hold, with the same proof, for the diffusion $Y^{t,z}$
+started from any $(t,z)\in[0,1]\times\R$, on the time interval $[t,1]$.
+
+\begin{proof}
+We prove (i) first for step distribution functions, for which the equation
+holds classically between the breakpoints, and then pass to the limit along
+a coupling of the diffusions. Parts (ii) and (iii) then follow from It\^o's
+formula.
+
+\paragraph{Step 1: step distribution functions.}
+Let $\alpha$ be a step distribution function. By Step~1 of the proof of
+\cref{lem:sc-derivatives}, each $f_j$ is smooth on the strips
+$[t_{i-1},t_i)\times\R$, bounded, and continuous on $[0,1]\times\R$. On each
+strip, It\^o's formula shows that the martingale part of $f_j(t,Y_t)$ is
+$\beta f_{j+1}(t,Y_t)\dd B_t$. Using \eqref{eq:sc-differentiated}, we find
+that its drift is
+\[
+ \partial_tf_j+b\alpha u f_{j+1}+\frac b2f_{j+2}
+ =-\frac{b\alpha}2\sum_{a=0}^j\binom ja f_{a+1}f_{j+1-a}+b\alpha uf_{j+1}
+ =-\frac{b\alpha}2\sum_{a=1}^{j-1}\binom ja f_{a+1}f_{j+1-a},
+\]
+evaluated at $(t,Y_t)$. In the second equality, we used that the terms with
+$a\in\{0,j\}$ equal $2uf_{j+1}$. By Pascal's rule
+$\binom ja=\binom{j-1}a+\binom{j-1}{a-1}$ and the substitution
+$a\mapsto j-a$ in the sum containing $\binom{j-1}{a-1}$, we have
+\[
+ \sum_{a=1}^{j-1}\binom ja f_{a+1}f_{j+1-a}
+ =2\sum_{a=1}^{j-1}\binom{j-1}a f_{a+1}f_{j+1-a}.
+\]
+This proves \eqref{b:eq:os-jet-generator} on each interval $[t_{i-1},t_i)$.
+The process $f_j(t,Y_t)$ is continuous in $t$, and the integrated identities
+on the successive intervals add up to \eqref{b:eq:os-jet-generator} on
+$[0,1]$.
+
+\paragraph{Step 2: general distribution functions.}
+Let $\alpha$ be a distribution function, let $\alpha_N$ be step distribution
+functions such that $\norm{\alpha_N-\alpha}_{L^1}\to0$, and let $Y^N$ be the
+scalar diffusion of $\alpha_N$, driven by the same Brownian motion $B$ as
+$Y$. Let $u_N=f_1^{\alpha_N}$. Recall that $\abs{u_N}\le1$, and that $u$ is
+$1$-Lipschitz in $z$ because $\abs\chi\le1$. Then
+\[
+ \abs{Y^N_t-Y_t}\le b\int_0^t\abs{\alpha_N(r)-\alpha(r)}\dd r
+   +b\norm{u_N-u}_\infty+b\int_0^t\abs{Y^N_r-Y_r}\dd r ,
+\]
+and Gronwall's inequality yields
+\[
+ \sup_{0\le t\le1}\abs{Y^N_t-Y_t}
+ \le be^b\bigl(\norm{\alpha_N-\alpha}_{L^1}+\norm{u_N-u}_\infty\bigr)
+\]
+for every realization of $B$. The right side tends to zero by the stability
+estimate of \cref{inp:ob-scalar}. Using \cref{lem:sc-derivatives}, we find
+that, for each $l\ge1$,
+\[
+ \abs{f_l^{\alpha_N}(t,Y^N_t)-f_l(t,Y_t)}
+ \le\norm{f_l^{\alpha_N}-f_l}_\infty+C_{l+1}\abs{Y^N_t-Y_t},
+\]
+which tends to zero uniformly in $t$ and in the realization. We now let
+$N\to\infty$ in \eqref{b:eq:os-jet-generator} for $\alpha_N$, in its
+integrated form between fixed times $s\le t$. The terms $f_j(t,Y_t)$ and
+$f_j(s,Y_s)$ converge uniformly. The drift integrals also converge
+uniformly, because their integrands are bounded by
+\cref{lem:sc-derivatives} and converge uniformly, and
+$\norm{\alpha_N-\alpha}_{L^1}\to0$. By It\^o's isometry, the stochastic
+integrals converge in $L^2$. We conclude that \eqref{b:eq:os-jet-generator}
+holds almost surely for each fixed $s\le t$. Since both sides are continuous
+in $(s,t)$, it holds almost surely for all $s\le t$ simultaneously. The cases
+$j=1$ and $j=2$ are \eqref{b:eq:u-martingale} and
+\eqref{b:eq:chi-evolution}.
+
+\paragraph{Step 3: polynomial moments.}
+It follows from (i) that the processes $f_1(t,Y_t),\dots,f_{k+1}(t,Y_t)$ are
+continuous semimartingales with
+$\dd\langle f_i(\cdot,Y),f_l(\cdot,Y)\rangle_t
+ =b\,f_{i+1}(t,Y_t)f_{l+1}(t,Y_t)\dd t$. By It\^o's formula, we have
+\[
+ \dd\Theta_t=\bigl(\Theta^0_t+\alpha(t)\Theta^1_t\bigr)\dd t
+   +\beta\sum_{i=1}^k\partial_i\Theta\bigl(f_1(t,Y_t),\dots,f_k(t,Y_t)\bigr)
+     f_{i+1}(t,Y_t)\dd B_t.
+\]
+Here the second-order term of It\^o's formula produces $\Theta^0_t$, and the
+drifts in \eqref{b:eq:os-jet-generator} produce $\alpha(t)\Theta^1_t$. By
+\cref{lem:sc-derivatives}, the integrand of the stochastic integral is
+bounded. Taking expectations, we obtain \eqref{eq:sc-moment-identity}. The
+integrand in \eqref{eq:sc-moment-identity} is bounded by the supremum of
+$\abs{\Theta^0}+\abs{\Theta^1}$ over the box $\prod_{i\le k+1}[-C_i,C_i]$,
+which proves the Lipschitz bound.
+
+\paragraph{Step 4: four moments.}
+For $\Theta=x_1^2$, $x_2^2$, $x_3^2$, and $x_2^3$, the definition
+\eqref{eq:sc-generator} gives
+\[
+\begin{aligned}
+ (x_1^2)^0&=bx_2^2,&(x_1^2)^1&=0,\\
+ (x_2^2)^0&=bx_3^2,&(x_2^2)^1&=-2bx_2^3,\\
+ (x_3^2)^0&=bx_4^2,&(x_3^2)^1&=-6bx_2x_3^2,\\
+ (x_2^3)^0&=3bx_2x_3^2,&(x_2^3)^1&=-3bx_2^4.
+\end{aligned}
+\]
+For example, for $\Theta=x_3^2$ we have $\Theta^0=(b/2)\cdot2x_4^2$ and
+$\Theta^1=-b\cdot2x_3\bigl(\binom21x_2x_3+\binom22x_3x_2\bigr)$. Inserting
+these into \eqref{eq:sc-moment-identity}, we obtain \eqref{eq:sc-moments}.
+The integrand $\E\chi_r^2$ in the first identity is continuous in $r$ by
+(ii), and the first identity implies that $\Gamma$ is continuously
+differentiable with $\Gamma'=b\E\chi^2$. In the second identity, the
+functions $r\mapsto\E w_r^2$ and $r\mapsto\E\chi_r^3$ are continuous by (ii),
+and $\alpha$ is right-continuous. The integrand is therefore right-continuous,
+and it is continuous at every point of continuity of $\alpha$. The
+fundamental theorem of calculus now gives \eqref{b:eq:contact-derivative}.
+\end{proof}
+
+\section{The Parisi distribution function on \texorpdfstring{$(0,q_\beta)$}{(0,q)}}
+\label{sec:sc-support}
+
+From now on, $\alpha=\alpha_\beta$ is the Parisi distribution function, which
+is unique by \cref{inp:unique}, $\mu_\beta$ is the Parisi measure, $Y$ is the
+associated scalar diffusion, and $u_t$, $\chi_t$, $w_t$ are as in
+\cref{lem:sc-ito}. By \cref{inp:full-rsb}, $\supp\mu_\beta=[0,q_\beta]$ with
+$0<q_\beta<1$, and $\mu_\beta$ has an atom at $q_\beta$. We set
+\begin{equation}\label{eq:sc-lipschitz-constant}
+ K_\beta=\frac{\beta^5}2\bigl(C_4^2+12C_3^2+6\bigr),
+\end{equation}
+with $C_3$ and $C_4$ as in \eqref{eq:sc-constants}.
+
+\begin{lemma}[The Parisi distribution function on the support]
+\label{b:lem:os-scalar-jets}
+The following hold.
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item For all $t\in(0,q_\beta)$,
+  % NOTE: second label via the kernel \label saved by amsmath (amsmath forbids
+  % two \label's in one display); cleveref also records b:eq:os-contacts@cref.
+  \begin{equation}\label{b:eq:contacts}\csname ltx@label\endcsname{b:eq:os-contacts}
+   \beta^2\E\chi(t,Y_t)^2=1,\qquad
+   \E w(t,Y_t)^2=2\alpha(t)\E\chi(t,Y_t)^3.
+  \end{equation}
+\item For all $t\in(0,q_\beta)$, we have $\E\chi_t^3\ge\beta^{-3}$ and
+  \begin{equation}\label{eq:sc-quotient}
+   \alpha(t)=\frac{\E w_t^2}{2\E\chi_t^3}.
+  \end{equation}
+\item We have $\alpha(t)>0$ for all $t\in(0,1]$. For
+  $0<s\le t<q_\beta$,
+  \[
+   0\le\alpha(t)-\alpha(s)=\mu_\beta((s,t])\le K_\beta(t-s).
+  \]
+  In particular, $\mu_\beta$ has no atoms in $(0,q_\beta)$.
+\item The function $\alpha$ is infinitely differentiable on $(0,q_\beta)$.
+  For every polynomial $\Theta$, the function $t\mapsto\E\Theta_t$ of
+  \cref{lem:sc-ito} is infinitely differentiable on $(0,q_\beta)$. In
+  particular, $t\mapsto\E\chi_t^3$ and
+  $t\mapsto\alpha(t)^2\beta^6\E\chi_t^3$ are infinitely differentiable on
+  $(0,q_\beta)$.
+\item The function $\Phi_\alpha$ is infinitely differentiable on
+  $(0,q_\beta)\times\R$. For every compact interval $I\subset(0,q_\beta)$
+  and all integers $i,j\ge0$ with $i+j\ge1$, there exists
+  $C(\beta,I,i,j)<\infty$ such that
+  \[
+   \sup_{t\in I}\abs{\alpha^{(i)}(t)}
+   +\sup_{(t,z)\in I\times\R}\abs{\partial_t^i\partial_z^j\Phi_\alpha(t,z)}
+   \le C(\beta,I,i,j).
+  \]
+\end{enumerate}
+\end{lemma}
+
+The proof of (i) uses the identity $\Gamma(t)=t$, which is a property of
+$\alpha_\beta$ itself. The step distribution functions used in the proof of
+\cref{lem:sc-ito} do not satisfy it, and this is why we established the
+identities of \cref{lem:sc-ito} for every distribution function first.
+
+\begin{proof}
+We first obtain the two identities in (i): the first at every point, from
+$\Gamma(t)=t$, and the second at almost every point, from the constancy of
+$\E\chi_t^2$. Since $\alpha$ is right-continuous, the second identity then
+holds at every point, which gives the quotient formula
+\eqref{eq:sc-quotient}. Using the quotient formula and the Lipschitz bounds of
+\cref{lem:sc-ito}, we show that $\alpha$ is Lipschitz, and an induction on the
+order of differentiability gives its smoothness. The
+bounds on mixed derivatives then follow from the differentiated Parisi
+equation.
+
+\paragraph{Step 1: the first identity.}
+The first identity is also stated in \cref{cor:inp-identity}; we recall the
+argument. By \eqref{b:eq:identity-interval}, $\Gamma(t)=t$ for
+$0<t<q_\beta$. By \cref{lem:sc-ito}\,(iii), $\Gamma$ is continuously
+differentiable with $\Gamma'(t)=b\E\chi_t^2$. Differentiating, we find that
+$b\E\chi_t^2=\Gamma'(t)=1$ for all $t\in(0,q_\beta)$, which is the first
+identity in \eqref{b:eq:contacts}.
+
+\paragraph{Step 2: the second identity almost everywhere.}
+By Step~1, $\E\chi_t^2=\beta^{-2}$ is constant on $(0,q_\beta)$. The
+second identity in \eqref{eq:sc-moments} implies that, for $0<s<t<q_\beta$,
+\[
+ 0=\E\chi_t^2-\E\chi_s^2
+ =b\int_s^t\bigl(\E w_r^2-2\alpha(r)\E\chi_r^3\bigr)\dd r.
+\]
+The integral of the bounded function
+$r\mapsto\E w_r^2-2\alpha(r)\E\chi_r^3$ vanishes over every subinterval of
+$(0,q_\beta)$. Lebesgue's differentiation theorem then implies that
+$\E w_r^2=2\alpha(r)\E\chi_r^3$ for almost every $r\in(0,q_\beta)$.
+
+\paragraph{Step 3: the second identity at every point, and the quotient.}
+Let $t\in(0,q_\beta)$. By Step~2, there exist $r_n\downarrow t$ such that
+$\E w_{r_n}^2=2\alpha(r_n)\E\chi_{r_n}^3$ for all $n$. Recall from \cref{lem:sc-ito}\,(ii) that the
+functions $r\mapsto\E w_r^2$ and $r\mapsto\E\chi_r^3$ are continuous, and
+that $\alpha$ is right-continuous. Letting $n\to\infty$, we find that
+$\E w_t^2=2\alpha(t)\E\chi_t^3$. This proves (i). Since $\chi_t>0$ and
+$x\mapsto x^{3/2}$ is convex on $[0,\infty)$, Jensen's inequality and Step~1
+imply that
+\[
+ \E\chi_t^3=\E\bigl[(\chi_t^2)^{3/2}\bigr]\ge\bigl(\E\chi_t^2\bigr)^{3/2}
+ =\beta^{-3}.
+\]
+Dividing the second identity in \eqref{b:eq:contacts} by $2\E\chi_t^3$, we
+obtain \eqref{eq:sc-quotient}, which proves (ii).
+
+\paragraph{Step 4: positivity and the Lipschitz bound.}
+Since $0\in\supp\mu_\beta$, every interval $[0,t]$ with $t>0$ has
+positive $\mu_\beta$-mass, so $\alpha(t)>0$ for $t\in(0,1]$. By
+\cref{lem:sc-derivatives}, we have $0<\chi\le1$, $\abs w\le C_3$, and
+$\abs{f_4}\le C_4$. Inserting these bounds into the last two identities in
+\eqref{eq:sc-moments}, we find that, for all $s,t\in[0,1]$,
+\begin{equation}\label{eq:sc-moment-lipschitz}
+ \abs{\E w_t^2-\E w_s^2}\le b\bigl(C_4^2+6C_3^2\bigr)\abs{t-s},\qquad
+ \abs{\E\chi_t^3-\E\chi_s^3}\le3b\bigl(C_3^2+1\bigr)\abs{t-s}.
+\end{equation}
+Let $0<s\le t<q_\beta$. By \eqref{eq:sc-quotient} at $t$ and the identity
+$\E w_s^2=2\alpha(s)\E\chi_s^3$ at $s$, we have
+\[
+ \alpha(t)-\alpha(s)
+ =\frac{\E w_t^2-\E w_s^2}{2\E\chi_t^3}
+   -\alpha(s)\,\frac{\E\chi_t^3-\E\chi_s^3}{\E\chi_t^3}.
+\]
+Using \eqref{eq:sc-moment-lipschitz}, $\E\chi_t^3\ge\beta^{-3}$, and
+$0\le\alpha(s)\le1$, we conclude that
+\[
+ \abs{\alpha(t)-\alpha(s)}
+ \le\beta^3\Bigl(\frac{b}{2}\bigl(C_4^2+6C_3^2\bigr)
+   +3b\bigl(C_3^2+1\bigr)\Bigr)(t-s)=K_\beta(t-s).
+\]
+Since $\alpha$ is nondecreasing and $\alpha(t)-\alpha(s)=\mu_\beta((s,t])$,
+this proves (iii); the continuity of $\alpha$ on $(0,q_\beta)$ excludes
+atoms there.
+
+\paragraph{Step 5: smoothness of $\alpha$ and of the moments.}
+Let $I_0=(0,q_\beta)$. We prove by induction on $i\ge0$ that
+$\alpha\in C^i(I_0)$ and that $t\mapsto\E\Theta_t$ belongs to $C^{i+1}(I_0)$
+for every polynomial $\Theta$. By Step~4, $\alpha$ is continuous on $I_0$.
+Then the integrand $r\mapsto\E\Theta^0_r+\alpha(r)\E\Theta^1_r$ in
+\eqref{eq:sc-moment-identity} is continuous on $I_0$, and $\E\Theta_t$ is
+continuously differentiable on $I_0$ by the fundamental theorem of calculus,
+with
+\begin{equation}\label{eq:sc-moment-derivative}
+ \frac{\dd}{\dd t}\E\Theta_t=\E\Theta^0_t+\alpha(t)\E\Theta^1_t
+ \qquad(t\in I_0).
+\end{equation}
+This proves the claim for $i=0$. Suppose that it holds for some $i\ge0$.
+Since the moments $\E w_t^2$ and $\E\chi_t^3$ belong to $C^{i+1}(I_0)$ and
+$\E\chi_t^3\ge\beta^{-3}$, the formula \eqref{eq:sc-quotient} implies that
+$\alpha\in C^{i+1}(I_0)$. By the induction hypothesis, the moments
+$\E\Theta^0_t$ and $\E\Theta^1_t$ belong to $C^{i+1}(I_0)$. Then the right
+side of \eqref{eq:sc-moment-derivative} belongs to $C^{i+1}(I_0)$, and we
+obtain $\E\Theta_t\in C^{i+2}(I_0)$. This completes the induction and proves
+(iv).
+
+\paragraph{Step 6: mixed derivatives.}
+Let $j\ge0$. By \eqref{eq:sc-integrated-pde} and the continuity of $\alpha$
+on $I_0$, the function $t\mapsto f_j(t,z)$ is continuously differentiable on
+$I_0$ for every $z$, and
+\begin{equation}\label{eq:sc-time-derivative}
+ \partial_tf_j=-\frac b2\bigl(f_{j+2}+\alpha\,\partial_z^j(u^2)\bigr)
+ \qquad\text{on }I_0\times\R.
+\end{equation}
+The right side is a polynomial in $\alpha$ and $f_1,\dots,f_{j+2}$, and it is
+continuous on $I_0\times\R$. We claim that, for every $i\ge1$, the
+derivative $\partial_t^if_j$ exists on $I_0\times\R$ and is a polynomial,
+with coefficients depending only on $b$, $i$, and $j$, in
+$\alpha,\alpha',\dots,\alpha^{(i-1)}$ (evaluated at $t$) and
+$f_1,\dots,f_{j+2i}$ (evaluated at $(t,z)$). For $i=1$, this is
+\eqref{eq:sc-time-derivative}. If it holds for $i$, we differentiate the
+polynomial in $t$, using (iv) for the derivatives of $\alpha$ and
+\eqref{eq:sc-time-derivative} for the derivatives of $f_1,\dots,f_{j+2i}$,
+which gives the claim for $i+1$. Let $I\subset I_0$ be compact. On
+$I\times\R$, the functions $\alpha,\alpha',\dots,\alpha^{(i)}$ are bounded
+because they are continuous on $I$, and we have $\abs{f_l}\le C_l$ by
+\cref{lem:sc-derivatives}. We obtain the bound in (v), with a constant
+depending on $\beta$, $I$, $i$, and $j$. Finally, the right side of \eqref{eq:sc-time-derivative} for $j+1$
+is the $z$-derivative of the right side for $j$, because
+$\partial_z\partial_z^j(u^2)=\partial_z^{j+1}(u^2)$. This shows that
+$\partial_z\partial_tf_j=\partial_tf_{j+1}$, and by Schwarz's theorem and
+induction on $i$, we have $\partial_z\partial_t^if_j=\partial_t^if_{j+1}$.
+Every partial derivative of $\Phi_\alpha$, taken in any order, is therefore
+one of the continuous functions $\partial_t^i\partial_z^j\Phi_\alpha$, and
+$\Phi_\alpha$ is infinitely differentiable on $I_0\times\R$. This completes
+the proof.
+\end{proof}
+
+\begin{remark}\label{rem:sc-upper-atom}
+The second identity in \eqref{b:eq:contacts} does not extend to
+$t=q_\beta$. Indeed, $t\mapsto\E w_t^2$ and $t\mapsto\E\chi_t^3$ are
+continuous on $[0,1]$, and letting $t\uparrow q_\beta$ in
+\eqref{b:eq:contacts}, we find that
+$\E w_{q_\beta}^2=2\alpha(q_\beta-)\E\chi_{q_\beta}^3$. However,
+$\E\chi_{q_\beta}^3>0$, and
+$\alpha(q_\beta-)=1-\mu_\beta(\{q_\beta\})<1=\alpha(q_\beta)$ because
+$\mu_\beta$ has an atom at $q_\beta$. The barrier argument uses
+\eqref{b:eq:contacts} and \cref{b:lem:os-scalar-jets} only on compact
+subintervals of $(0,q_\beta)$.
+\end{remark}
+
+We conclude with the positive constant that enters the cubic pressure
+deficit. The quantity bounded below in \eqref{b:eq:main-analytic-constants} is
+the scalar factor of the cubic term in the expansion of
+\cref{b:prop:os-expansion}.
+
+\begin{corollary}[The constant $m_\beta$]\label{cor:sc-mbeta}
+Let $I_\beta\subset(0,q_\beta)$ be a nonempty compact interval, and set
+$m_\beta=\beta^3\alpha(\min I_\beta)^2$. Then $m_\beta>0$, and
+\begin{equation}\label{b:eq:main-analytic-constants}
+ m_\beta\le\inf_{r\in I_\beta}\alpha(r)^2\beta^6\E\chi(r,Y_r)^3.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+By \cref{b:lem:os-scalar-jets}\,(iii), we have $\alpha(\min I_\beta)>0$, so
+$m_\beta>0$. Let $r\in I_\beta$. Since $\alpha$ is nondecreasing, we have
+$\alpha(r)\ge\alpha(\min I_\beta)$, and \cref{b:lem:os-scalar-jets}\,(ii)
+gives $\E\chi(r,Y_r)^3\ge\beta^{-3}$. Multiplying these bounds, we find that
+$\alpha(r)^2\beta^6\E\chi(r,Y_r)^3\ge\beta^3\alpha(\min I_\beta)^2=m_\beta$.
+\end{proof}
+
+The constant $m_\beta$ depends only on $\beta$ and $I_\beta$. In the proof of
+\cref{thm:barrier-730}, the interval $I_\beta$ is fixed in \cref{sec:references},
+before any of the small parameters of the local comparison is chosen.

@@ -1,0 +1,482 @@
+\chapter{The Gaussian-query proposal on a growing mesh}\label{u:sec:proposal}
+
+In this section, we construct the proposal used in
+\cref{u:sec:fine,u:sec:coarse,u:sec:connections}. We first prove the
+Gaussian assembly and reconstruction identities in
+\cref{u:lem:assembly}. We then identify the law of the complete histories of the rows and prove the quadrature estimate in \cref{u:lem:quad}.
+Throughout, we use the scalar inputs of \cref{u:sec:scalar}.
+
+We follow the Gaussian-conditioning construction of
+\cite[Section~4]{oai-typical-upper}. Successive Gaussian revelations along
+orthogonalized directions occur in the iterative construction of
+Bolthausen~\cite{bolthausen-2014}. Montanari used related increments guided by the Parisi process in an
+incremental algorithm for approximate message
+passing~\cite{montanari-2021}. Here the durations of the cells grow with
+time, and the source and replay constructions retain all the auxiliary
+coordinates needed for the row identities.
+
+\section{Growing schedule and source law}\label{u:sec:proposal-schedule}
+
+For $T>0$, let $\mathcal C_T=C([0,T],\R)$. We use the path-space
+conventions of \cref{u:sec:setup}. We write $\mathrm{Br}_h$ for the law of a Brownian bridge of duration $h>0$,
+which is the image of Wiener measure under
+$b(u)\mapsto b(u)-(u/h)b(h)$.
+Fix $n$, $h>0$, and an integer $N<n$. We define
+\begin{equation}\label{u:eq:growing-schedule}
+ t_0=0,\qquad h_j=h e^{t_j/4},\qquad
+ t_{j+1}=t_j+h_j,\qquad V=t_{N+1}.
+\end{equation}
+Cell zero is auxiliary. Query $j\in\{1,\ldots,N\}$ uses
+\begin{equation}\label{u:eq:query-targets}
+ \begin{aligned}
+ s_j^2&=\int_{t_{j-1}}^{t_j}r(v)\dd v,&
+ \mathcal T_{j,i}&=\frac{m_i(t_j)-m_i(t_{j-1})}{s_j},\\
+ b_j&=\frac1{\sqrt{h_j}}\int_{t_j}^{t_{j+1}}\rho(v)p(v)\dd v.
+ \end{aligned}
+\end{equation}
+Here $m_i(t)=m(t,Y_i(t))$. The scalar reference $b_j$ should not be
+confused with the drift $b(v,y)$ of the scalar equation. We use the normalized
+inner product and norm
+\[
+ \ipn{u}{v}=n^{-1}u^{\mathsf T}v,\qquad
+ \normn{u}^2=\ipn{u}{u}.
+\]
+
+We define the unlinked source law $\mu^{\rm src}_0$ as the independent product
+of the laws of the following coordinates:
+\begin{itemize}
+\item $n$ Wiener paths $D_i$ through $V$ and auxiliary Wiener paths
+ $B_i^0$ of duration $h_0$;
+\item bridges $\mathrm{br}_{j,i}\sim\mathrm{Br}_{h_j}$ for
+ $1\le j\le N$ and $1\le i\le n$;
+\item independent $e_j,v_j\sim N(0,I_n)$ and $d_j\sim N(0,2/n)$
+ for $1\le j\le N$;
+\item a full primitive $g^0\sim\gamma_n$, with ambient matrix
+ $W_0=W(g^0)$, and a spin $x\sim\Unif_n$.
+\end{itemize}
+Unused bridges may be retained as independent ancillary coordinates;
+the estimates below do not depend on them. We write $\Omega^{\rm src}$
+for this product space. When we use primitive disorder, we adjoin the
+antisymmetric variable specified below, independently of the other inputs.
+
+On the auxiliary cell, $B_i=B_i^0$. For $j\ge1$, we append cell $j$ by
+\begin{equation}\label{u:eq:append-cell}
+ B_i(t_j+u)=B_i(t_j)+\frac{u}{\sqrt{h_j}}e_{j,i}
+                    +\mathrm{br}_{j,i}(u),\qquad 0\le u\le h_j.
+\end{equation}
+Almost surely, and simultaneously for all the cells and rows used here,
+a bridge is unchanged when we subtract the line through its two endpoints. We define $M_i=\int\rho\dd B_i+\int\sigma\dd D_i$ and solve the
+scalar equation of \cref{u:sec:scalar} in each coordinate. Since the weights in these integrals are deterministic and of bounded
+variation, the integrals have the causal path interpretation given
+there. In particular, we can evaluate the targets in
+\eqref{u:eq:query-targets} before we append \eqref{u:eq:append-cell}.
+
+Applying the Gram--Schmidt procedure to the $\mathcal T_j$ in chronological order,
+we obtain directions $u_j$ such that $\normn{u_j}=1$; when a residual vanishes,
+the choice of direction is deterministic and measurable. More precisely, let $E$ have
+rows that are Euclidean orthonormal and span the remaining subspace. If
+$E\mathcal T_j\ne0$, we normalize $E\mathcal T_j$; otherwise, we
+normalize the first nonzero column of $E$ in the fixed coordinate
+order. Let $q$ be the resulting vector, which has Euclidean norm one; the query
+direction is then $u_j=\sqrt n E^{\mathsf T}q$. We complete $q$ to an orthonormal basis
+by a fixed measurable rule, rotate $E$ by this basis, and retain all but
+its first row as the next remaining frame. We do this also when a
+residual vanishes.
+We define
+\[
+ U_j=\frac1n\sum_{l\le j}u_lu_l^{\mathsf T},\qquad
+ P_j=I-U_j,\qquad f_j=P_je_j.
+\]
+The assembled matrix and the completion vectors are defined by
+\begin{equation}\label{u:eq:assembled-matrix}
+ \begin{aligned}
+ W&=\frac1n\sum_{j=1}^N
+       (u_jf_j^{\mathsf T}+f_ju_j^{\mathsf T})
+       +\frac1n\sum_{j=1}^N d_ju_ju_j^{\mathsf T}+P_NW_0P_N,\\
+ C_j&=U_je_j+P_jv_j.
+ \end{aligned}
+\end{equation}
+Note that the scalar recursion uses none of $d_j$, $v_j$, $W_0$, or $x$.
+
+\begin{lemma}[Gaussian assembly, completion, and path reconstruction]
+\label{u:lem:assembly}
+Under $\mu^{\rm src}_0$, conditional on all initial data
+$(D,B^0,\mathrm{br})$, the joint law of $(W,(C_j)_j)$ is
+$\mathcal G_n\otimes N(0,I_n)^{\otimes N}$. This law does not depend
+on the initial data. The fixed-matrix replay endpoint
+\begin{equation}\label{u:eq:replay-endpoint}
+ e_j^{\rm rep}=P_jWu_j+U_jC_j
+\end{equation}
+equals $e_j$ on the source realization. The reconstructed $(B_i,D_i)$
+have the product of $n$ independent Wiener-pair laws through $V$.
+\end{lemma}
+
+\begin{proof}
+We first prove the conditional Gaussian law by induction on the
+remaining queries. We then expand the assembled matrix to identify the
+replay endpoints. Finally, we compute the covariance of each appended
+path to show that the reconstructed pairs have the Wiener law.
+
+\paragraph{Conditional Gaussian law.}
+For a fixed remaining frame, the column has Gaussian coordinates,
+consisting of a diagonal $N(0,2/n)$ entry and independent off-diagonal $N(0,1/n)$
+entries. The projection $P_je_j$ gives the off-diagonal column:
+when we multiply a Euclidean unit direction by $\sqrt n$ to obtain $u_j$,
+this cancels the $1/\sqrt n$ scale of the column. Conditional on the previously
+read $e$'s and the initial data, the next frame is fixed.
+
+We decompose the fresh $e_j,v_j$ along $U_j,P_j$. Since the projections are orthogonal, the four Gaussian components
+are independent. It follows that $U_je_j+P_jv_j$ is standard Gaussian and independent of $P_je_j$
+and $d_j$. By backward induction over the remaining queries, we find that the
+unrevealed block is a GOE compression on the remaining subspace, with
+the same $1/n$ normalization of the variance. It is independent of the
+part already read and of the later completion outputs. The base case is given by the independent
+ambient matrix $W_0$. Using orthogonal invariance as in \cref{u:sec:goe}, we assemble
+each column with this block. This proves the assertion on the joint law, including
+all later $C_j$, and that this law does not depend on the initial data.
+
+\paragraph{Replay endpoints.}
+Expanding \eqref{u:eq:assembled-matrix}, we find
+$P_jWu_j=P_je_j$. Indeed, the earlier terms lie in the range of $U_j$, and the later terms
+and the final compression annihilate $u_j$. We also have
+$U_jC_j=U_je_j$, so \eqref{u:eq:replay-endpoint} equals $e_j$.
+By induction, we conclude that every replay target and frame agrees
+pointwise with the source, as does every initial segment of the
+scalar paths.
+
+\paragraph{Pair paths.}
+On one cell, $(u/\sqrt h)e+\mathrm{br}(u)$ is a centered continuous
+Gaussian path, and its covariance at $u,v$ is
+\[
+ \frac{uv}{h}+\min(u,v)-\frac{uv}{h}=\min(u,v).
+\]
+So the path has the Wiener law on this cell. Concatenating independently over
+the deterministic cells, we obtain jointly Gaussian evaluations at
+any finite set of times, with covariance $\min(s,t)$, including across
+cells. Since evaluations at rational times determine a Borel law on
+continuous paths, this identifies the law of the concatenation. The resulting
+pairs are independent across rows, and the $B$ paths are independent
+of the $D$ paths. Since \eqref{u:eq:append-cell} preserves every earlier
+initial segment, we find by induction that the concatenation is the
+reconstructed terminal state. The assertions also hold when unused bridges
+are retained.
+\end{proof}
+
+\section{Spin laws, histories, and filtrations}\label{u:sec:proposal-laws}
+
+\begin{definition}[The two spin laws and the replay space]\label{u:def:laws}
+On the source, we define
+\begin{equation}\label{u:eq:spin-link}
+ L=\prod_{i=1}^n(1+x_i m_i(V)),\qquad
+ \Lambda^{\rm src}=L\mu^{\rm src}_0.
+\end{equation}
+The unlinked replay law $\mu^{\rm rep}_0$ is the product of
+$\mathcal G_n$, independent $C_j\sim N(0,I_n)$, all initial $B^0$
+paths and bridges, the $n$ independent $D$ paths, and $\Unif_n$.
+Its paths are calculated by \eqref{u:eq:replay-endpoint} and
+\eqref{u:eq:append-cell}. We define
+$\Lambda^{\rm rep}=L^{\rm rep}\mu^{\rm rep}_0$ using the terminal
+fields in replay. We write $\Omega^{\rm rep}$ for this product space,
+with the independent antisymmetric variable adjoined when using
+primitive disorder. The output law $Q_V$ is the $(g,x)$ marginal of
+$\Lambda^{\rm rep}$ on this primitive lift.
+\end{definition}
+
+For each fixed choice of all inputs except the spin, we have
+$2^{-n}\sum_x L=1$. This implies that both linked laws are probability measures,
+and that linking does not change the marginals obtained by forgetting the spin,
+including the marginal of the Gaussian matrix. Conditional on the paths,
+the terminal spins are independent with masses
+$(1+x_i m_i(V))/2$. Equivalently, we may draw the spins using independent
+uniform $[0,1]$ thresholds, with the same integrals in either
+realization.
+
+Let $\Omega^{\rm row}_V=\{-1,1\}\times\mathcal C_V^3$ be the
+canonical Borel space of histories of $(x,Y,B,D)$ for one row through
+$V$.
+We continue to write $\nu_V$ for the one-row law of
+\cref{u:sec:scalar} mapped into this space by the reflected pair and
+the Picard solution. From $(\Omega^{\rm row}_V)^n$ and independent
+ancillary coordinates, we reconstruct the source as follows. We
+restrict $B$ to cell zero and recover, for $j\ge1$,
+\begin{equation}\label{u:eq:history-reconstruction}
+ \begin{aligned}
+ e_{j,i}&=\frac{B_i(t_{j+1})-B_i(t_j)}{\sqrt{h_j}},\\
+ \mathrm{br}_{j,i}(u)&=B_i(t_j+u)-B_i(t_j)
+          -\frac{u}{h_j}\bigl(B_i(t_{j+1})-B_i(t_j)\bigr).
+ \end{aligned}
+\end{equation}
+The ancillary coordinates are $d_j,v_j,g^0$, the antisymmetric variable
+$A$ used in the final lift, and the unused bridges; they are independent, with law
+\begin{equation}\label{u:eq:ancillary-law}
+ \begin{aligned}
+ \mu^{\rm anc}={}&N(0,2/n)^{\otimes N}\otimes N(0,I_n)^{\otimes N}
+                  \otimes\gamma_n\otimes\gamma_n^{\rm anti}\\
+ &\hspace{12mm}\otimes
+       \bigotimes_{j\notin\{1,\ldots,N\}}
+                     \mathrm{Br}_{h_j}^{\otimes n}.
+ \end{aligned}
+\end{equation}
+The last factor is omitted if unused bridges are not retained, and
+$\gamma_n^{\rm anti}$ is specified below. We write $\mathcal A$ for
+the ancillary product space. Since $W_0=W(g^0)$, we retain the whole primitive matrix $g^0$,
+including its unused antisymmetric coordinates.
+
+The endpoints and bridges in \eqref{u:eq:history-reconstruction} are
+independent, since their evaluations at any finite set of times are jointly
+Gaussian with zero cross covariance. We have therefore identified
+the product law on the source space. Using the causal
+inverse of the reflected pair in \cref{u:sec:scalar}, we identify the
+innovation and the scalar field in this reconstruction. All these maps are Borel
+under the conventions of \cref{u:sec:setup}. Indeed, evaluations at finitely many times,
+restrictions of paths, integration against weights of bounded variation, and
+the Picard solution map are Borel,
+and the frame rule uses finitely many measurable zero tests and
+normalizations.
+
+We record the laws in the following diagram, in which every arrow except the
+density arrow denotes an equality of laws under a measurable pushforward. The same
+top arrows, applied before linking, identify the unlinked laws. The map $F$
+retains the initial data and $D$ and replaces the source noises by
+$(W,C)$ from \eqref{u:eq:assembled-matrix}.
+\begin{equation}\label{u:eq:law-diagram}
+ \begin{gathered}
+ \bigl((\Omega^{\rm row}_V)^n\times\mathcal A,
+       \nu_V^{\otimes n}\otimes\mu^{\rm anc}\bigr)
+ \xrightarrow{\ \operatorname{Rec}\ }
+       (\Omega^{\rm src},\Lambda^{\rm src})
+ \xrightarrow{\ F\ }
+       (\Omega^{\rm rep},\Lambda^{\rm rep})
+ \\[4pt]
+ \begin{array}{ccc}
+ (\Omega^{\rm rep},R_D=E_D\mu^{\rm rep}_0)
+ &\xrightarrow{\ d\Lambda^{\rm rep}/dR_D=L^{\rm rep}/E_D\ }&
+ (\Omega^{\rm rep},\Lambda^{\rm rep})\\
+ \downarrow\scriptstyle(g,x)&&\downarrow\scriptstyle(g,x)\\
+ (\R^{n\times n}\times\Sigma_n,\gamma_n\otimes\Unif_n)&&Q_V.
+ \end{array}
+ \end{gathered}
+\end{equation}
+Here $\operatorname{Rec}$ is the reconstruction just described,
+using \eqref{u:eq:history-reconstruction} and the reflected pair.
+Along the density arrow, we change measure on the same replay space; $E_D$
+and $R_D$ are constructed in \cref{u:sec:reference}. In particular,
+the top row implies the identity for the complete histories
+\begin{equation}\label{u:eq:row-history}
+ \bigl((x_i,Y_i,B_i,D_i)_{i=1}^n\bigr)_*\Lambda^{\rm rep}
+       =\nu_V^{\otimes n}.
+\end{equation}
+
+To check the linked identities, let $\nu_V^0$ be the canonical
+history law before the one-row link. By the factorization into
+endpoints and bridges and the inverse of the reflection, we have
+\[
+ \operatorname{Rec}_*\bigl((\nu_V^0)^{\otimes n}
+                          \otimes\mu^{\rm anc}\bigr)
+       =\mu^{\rm src}_0.
+\]
+On a supporting set of full measure, the recomputed field agrees with
+the given $Y$. For every bounded Borel test function $f$ on the source space, we have
+\[
+ \begin{aligned}
+ &\int f\bigl(\operatorname{Rec}(w,a)\bigr)
+      \prod_{i=1}^n\bigl(1+x_i m(V,Y_i(V))\bigr)
+      \dd\bigl((\nu_V^0)^{\otimes n}\otimes\mu^{\rm anc}\bigr)(w,a)\\
+ &\hspace{35mm}=\int fL\dd\mu^{\rm src}_0.
+ \end{aligned}
+\]
+This gives the law on the source space in the top row, with every
+ancillary coordinate retained. Repeating this calculation of densities and maps for $F$,
+and using the pointwise replay identity in \cref{u:lem:assembly}, we obtain the
+pushforward identity for the linked replay law. The matrix and completion vectors are computed
+from these rows and ancillary variables; they need not be independent
+of the rows.
+
+For the primitive $g$ in \eqref{u:eq:law-diagram}, we retain the
+antisymmetric Gaussian variable $A$, independently of all the other
+inputs.
+Its entries $A_{ij}$, $i<j$, are independent $N(0,1/2)$, with
+$A_{ji}=-A_{ij}$ and $A_{ii}=0$. We define
+\[
+ g=\sqrt{n/2}\,W+A.
+\]
+Then $g\sim\gamma_n$ and $W(g)=W$, as in \cref{u:sec:primitive}.
+Since replay reads only $W$, this gives the proposal with primitive input.
+The proposal and the target have the same conditional law of $A$ given
+$(W,x)$. Their joint relative entropy on primitive matrices equals
+their relative entropy on physical matrices. We use this lift whenever
+we condition on $g$.
+
+\paragraph{Filtrations.}
+Whether a Brownian assertion may be used depends on the law and on the
+information revealed at time zero. The following table records the
+distinctions needed in the later proofs. In the last row,
+$\xi_i(v)=x_i\chi(v,Y_i(v))/(1+x_i m(v,Y_i(v)))$, as in
+\cref{u:sec:reference}.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.14}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.29\textwidth}
+ >{\raggedright\arraybackslash}p{0.39\textwidth}
+ >{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\toprule
+Law and filtration & Brownian or independence assertion & Use \\
+\midrule
+Scalar Wiener pair, with the spin-free pair past
+& $(M,\widetilde M)$ and its deterministic orthogonal transform
+  $(B,D)$ are Wiener pairs.
+& Scalar martingales, brackets, and path estimates. \\[3pt]
+Unlinked row, with an independent uniform sign revealed initially
+& $(B,D)$ remains a Wiener pair in the filtration including this sign.
+& Signed integrals and fixed-sign It\^o identities. \\[3pt]
+Linked row $\nu_V$, with the sign revealed initially
+& The entire path marginal is unchanged; $B,D$ need not be Brownian
+  in the filtration including the sign.
+& Posterior moments, path-only estimates, and the previously defined
+  signed integrals. \\[3pt]
+Product of complete linked rows and independent ancillary variables
+& The complete rows are independent before conditioning on $W$.
+& Independent-row concentration estimates. \\[3pt]
+Unlinked replay, with $(W,C,B^0,\mathrm{br},x)$ revealed initially
+& $D$ is Brownian and independent of the static inputs. No Brownian
+  property for $B$ is asserted in this filtration.
+& Construction and normalization of $R_D$. \\[3pt]
+Linked source natural filtration, including $x$, excluding the final
+matrix and unused matrix noises
+& The compensated vectors
+  $B-\int\rho\xi\dd v$ and $D-\int\sigma\xi\dd v$ are Brownian.
+& The mean information identity by bounded-integrand Girsanov. \\
+\bottomrule
+\end{tabular}
+\end{center}
+Once the terminal sign or the assembled matrix is revealed, a Brownian
+assertion must be verified separately in the resulting filtration.
+We transport all scalar expectations at fixed $V$ and all Gram tails below
+by \eqref{u:eq:row-history}. We use the bound $L\le2^n$ only for
+null sets at fixed $n$ or for integral versions, as in \cref{u:sec:setup}.
+
+\section{Population entries}\label{u:sec:proposal-entries}
+
+For a single linked row, let
+$e_j=(B(t_{j+1})-B(t_j))/\sqrt{h_j}$ and
+$\mathcal T=(\mathcal T_j)_{j=1}^N$, $e=(e_j)_{j=1}^N$.
+By \cref{u:lem:cross}, the identities for the reflected pair in
+\cref{u:sec:scalar}, and posterior projection, we have
+\begin{equation}\label{u:eq:population-entries}
+ \begin{gathered}
+ \E\mathcal T\mathcal T^{\mathsf T}=I_N,\qquad
+ \E ee^{\mathsf T}=I_N,\qquad
+ \E\mathcal T x=s,\qquad \E ex=b,\\
+ H_0=\E\mathcal T e^{\mathsf T},\qquad
+ (H_0)_{ij}=0\quad(i\le j).
+ \end{gathered}
+\end{equation}
+Indeed, disjoint martingale increments are orthogonal.
+The identity $\E\mathcal T_jx=s_j$ follows from the variance identity
+in \cref{u:prop:scalar}, and the reflected cross moment gives
+$\E e_jx=b_j$. For $i\le j$, $\mathcal T_i$ is measurable before
+the fresh $B$ cell defining $e_j$, so the path-only moment is zero.
+We retain the entire lower block $H_0$. By Bessel's inequality in the
+$L^2$ space for one row, we have
+\begin{equation}\label{u:eq:population-bounds}
+ \norm{s},\norm{b},\norm{H_0}\le1,\qquad
+ 0\le e_h=s^{\mathsf T}b\le1.
+\end{equation}
+The row means vanish by zero-field symmetry. Note that these calculations do not use
+independence of the entries within a row.
+
+\begin{lemma}[Adjacent-cell quadrature and stopping]\label{u:lem:quad}
+If $\max_{j\le N}h_j\le1/8$, then
+\begin{equation}\label{u:eq:adjacent-quadrature}
+ |e_h-e(V)|\le C_\beta h.
+\end{equation}
+For $h=n^{-\ex a}$ and $\ex L>0$, define
+\[
+ N_{\ex L}+1=\min\{j:t_j\ge\ex L\log n\},\qquad
+ V_{\ex L}=t_{N_{\ex L}+1}.
+\]
+If $\ex a>\ex L/4$, then eventually
+\begin{equation}\label{u:eq:growing-stopping}
+ \begin{gathered}
+ N_{\ex L}+1\le8n^{\ex a},\qquad
+ \ex L\log n\le V_{\ex L}
+                \le\ex L\log n+n^{-\ex a+\ex L/4},\\
+ \max_{j<N_{\ex L}+1}h_j\le n^{-\ex a+\ex L/4}.
+ \end{gathered}
+\end{equation}
+There are $N_{\ex L}+1$ cells and exactly $N_{\ex L}$ matrix queries.
+If additionally $\ex a<1$, then eventually $N_{\ex L}+1\ge2$ and
+$N_{\ex L}<n$.
+\end{lemma}
+
+\begin{proof}
+We compare the normalization from the preceding cell with $r$ on the
+next cell. Using the relative variation bounds of \cref{u:prop:scalar}, we
+obtain an integrable quadrature error. For the stopping estimate, we
+sum the decrements of $e^{-t_j/4}$.
+
+For $v\in[t_j,t_{j+1}]$ and $u\in[t_{j-1},t_j]$, the relative
+variation bounds, monotonicity, and
+$h_j/h_{j-1}=e^{h_{j-1}/4}$ imply that
+\begin{equation}\label{u:eq:adjacent-ratio}
+ 1-h_j/8\le\frac{s_j}{\sqrt{h_jr(v)}}\le1+4h_j.
+\end{equation}
+For the upper bound, we have $r(v)\ge(1-4h_j)r(u)$ and
+$(1-4h_j)^{-1/2}\le1+4h_j$ for $h_j\le1/8$.
+For the lower bound, we use $r(u)\ge r(v)$ and
+$e^{-h_{j-1}/8}\ge1-h_j/8$. It follows that
+\[
+ \left|\frac{s_j}{\sqrt{h_j}}-\sqrt{r(v)}\right|
+       \le4h_j\sqrt{r(v)}.
+\]
+With $q_e(v)=\beta r(v)p(v)$, we obtain
+\begin{equation}\label{u:eq:quadrature-error}
+ |e_h-e(V)|\le h+4h\int_0^V e^{v/4}q_e(v)\dd v.
+\end{equation}
+The first term $h$ bounds the contribution of the omitted auxiliary cell. The integral is
+bounded uniformly in $V$. Indeed, on the finite interval before the endpoint of the support, we have
+$q_e\le\beta$, and after it, using $r\le p$ and \cref{u:lem:tails},
+we find that the integrand decays exponentially. This proves
+\eqref{u:eq:adjacent-quadrature}, with, for example,
+\[
+ C_\beta=1+4\beta\int_0^\infty e^{v/4}p(v)r(v)\dd v<\infty.
+\]
+
+For $h_j\le1$, we have $1-e^{-h_j/4}\ge h_j/8$, and hence
+\[
+ e^{-t_j/4}-e^{-t_{j+1}/4}\ge h/8.
+\]
+Summing up to the first reaching time gives
+$(N_{\ex L}+1)h\le8$. Every left endpoint that is used lies below
+$\ex L\log n$, which proves the bounds on the number of cells and on the overshoot in
+\eqref{u:eq:growing-stopping}. The reaching index exists because
+$t_j\ge jh$. Since $\ex L\log n>0$, it is at least one.
+If additionally $\ex a<1$, it is eventually at least two, because
+$t_1=n^{-\ex a}\to0<\ex L\log n$ and
+$\ex a>\ex L/4>0$. Further,
+\eqref{u:eq:growing-stopping} implies that
+\[
+ N_{\ex L}<N_{\ex L}+1\le8n^{\ex a}<n
+ \qquad\text{once }n^{1-\ex a}>8.
+\]
+In every fine or coarse use, the fine-energy conditions in
+\cref{u:prop:fine-kl} supply $0<\ex k_{\rm f}<1-\ex a$, so
+$\ex a<1$; in particular, $\ex a=1/2$ in the exponent table and
+the range family of \cref{u:sec:parameters,u:sec:budget}.
+We never use $\ex L=0$. All scalar references are
+evaluated at $V_{\ex L}$, including its overshoot. The estimate needs neither an extra cell nor a quadrature error
+bounded by the maximal duration of a cell.
+\end{proof}
+
+We use the same sequence \eqref{u:eq:growing-schedule} for both
+$\ex L=\ex b$ and $\ex L=\ex f$, where $0<\ex b<\ex f$,
+and the two replays use identical chronological inputs through
+$V_{\ex b}$. By induction on the queries, every scalar
+initial segment through $V_{\ex b}$ is the same in the two replays. The auxiliary cells agree. If the scalar paths agree through
+the preceding cell, then the targets agree, the same remaining frame
+and matrix give the same \eqref{u:eq:replay-endpoint}, and the same
+bridge appends the same next cell. This argument covers the
+deterministic fallback as well. At query $j$, the number of remaining queries
+is $N_{\ex L}-j$; this does not change the chronological schedule.
+The terminal spins drawn at the fine horizon are never fed back into
+the continuation.

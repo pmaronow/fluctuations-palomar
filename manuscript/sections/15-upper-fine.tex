@@ -1,0 +1,428 @@
+\chapter{Forward entropy at the fine horizon}\label{u:sec:fine}
+
+The goal of this section is to prove \cref{u:prop:fine-kl}, which bounds
+the relative entropy of the fine proposal with respect to $\Pi_n$.
+We use the source and replay laws of \cref{u:def:laws}, the scalar
+identities of \cref{u:prop:scalar,u:lem:cross}, and the quadrature estimate
+of \cref{u:lem:quad}. We use this bound at the two ends of the
+connecting sequence in \cref{u:sec:connections}.
+For the reference measure and the comparison of likelihoods, we follow
+\cite[Section~4, Proposition~5]{oai-typical-upper}. We then estimate the
+expected energy directly, including the outcomes on which the query uses
+the deterministic fallback.
+
+Throughout this section, $V=t_{N+1}$ is the terminal time of a proposal
+with $N<n$ queries. We write $m_i(t)=m(t,Y_i(t))$ and
+$\chi_i(t)=\chi(t,Y_i(t))$. Expectations with subscript $\Lambda$
+refer to the linked source or replay law, according to the space of
+the integrand; these laws agree on the complete row histories and on
+the output by \cref{u:sec:proposal-laws}.
+
+\section{The reference measure}
+\label{u:sec:reference}
+
+On the unlinked replay space, we regard $(W,C,B^0,\mathrm{br},x)$ as static.
+The $D_i$ are independent Brownian motions, independent of these
+static data. The replay field at time $t$ is a Borel function of these
+static data and $D_{[0,t]}$: each next query reads the field only at
+the left endpoint of its new cell. We define
+\begin{equation}\label{u:eq:reference-coefficient}
+ \xi_i(t)=\frac{x_i \chi(t,Y_i(t))}{1+x_i m(t,Y_i(t))},\qquad
+ |\xi_i(t)|\le2.
+\end{equation}
+The coefficient $\sigma(t)\xi_i(t)$ is continuous and predictable in this replay filtration.
+It vanishes before $v_*$; afterward it is $\sigma(t)(x_i-m_i(t))$.
+Under $\mu^{\rm rep}_0$, let
+\begin{equation}\label{u:eq:reference-density}
+ \begin{aligned}
+ \mathscr M_D&=\sum_i\int_0^V\sigma(t)\xi_i(t)\dd D_i(t),\\
+ \langle\mathscr M_D\rangle
+   &=\sum_i\int_0^V\sigma(t)^2\xi_i(t)^2\dd t\le4nV,\\
+ E_D&=e^{\mathscr M_D-\langle\mathscr M_D\rangle/2},\qquad
+ R_D=E_D\mu^{\rm rep}_0.
+ \end{aligned}
+\end{equation}
+We define $\mathscr M_D$ as the $L^2$ limit of the vector of
+predictable sums at the left endpoints of dyadic partitions. This
+definition, and not the normalization alone, is what identifies it
+with the sum of the row integrals below. We choose versions according to the
+conventions of \cref{u:sec:setup}.
+
+\trilogyneedspace{12\baselineskip}
+\begin{lemma}[The reference measure and the row integrals]
+\label{u:lem:reference}
+The measure $R_D$ is a probability measure, preserves the complete
+static marginal, and has output marginal $\gamma_n\otimes \Unif_n$ on $(g,x)$.
+For one unlinked row, let $\xi(t)=x\chi_t/(1+xm_t)$ and
+\[
+ \begin{aligned}
+ \mathscr M_D^{\rm row}
+   &=\int_0^V\sigma(t)\xi(t)\dd D(t),\\
+ \langle\mathscr M_D^{\rm row}\rangle
+   &=\int_0^V\sigma(t)^2\xi(t)^2\dd t.
+ \end{aligned}
+\]
+The integral denotes its unlinked $L^2$ left-sum version;
+we use the same Borel version under the equivalent linked row law.
+Moreover,
+\begin{equation}\label{u:eq:reference-ratio}
+ \begin{aligned}
+ \frac{\dd\Lambda^{\rm rep}}{\dd R_D}&=L/E_D,\qquad
+ I^{(n)}=\log(L/E_D)=\sum_{i=1}^n I_{V,i},\\
+ I_V&=\log(1+x m_V)-\mathscr M_D^{\rm row}
+                   +\tfrac12\langle\mathscr M_D^{\rm row}\rangle,
+ \end{aligned}
+\end{equation}
+Here $I_{V,i}$ is $I_V$ evaluated on row $i$.
+The row histories are independent with law $\nu_V$ of
+\cref{u:sec:scalar}, so the summands are independent with
+common law $(I_V)_*\nu_V$.
+Finally,
+\begin{equation}\label{u:eq:reference-mean}
+ \E_{\Lambda^{\rm rep}}I^{(n)}=n j(V).
+\end{equation}
+\end{lemma}
+\begin{proof}
+We first normalize the exponential conditional on the static data.
+We then transport its defining left sums to the source row space and
+compute the mean in the source natural filtration.
+
+\paragraph{Normalization.}
+Fix the static data and a deterministic grid for the left sums. The last
+increment of $D$ is Gaussian and independent of the earlier ones, and
+integrating it out shows that its factor in the exponential, together with
+the compensator, has conditional mean one. Iterating over the increments, we find
+that the exponential of the left sums has mean one. Since the predictable
+coefficients are bounded and continuous, their left approximants
+converge in $L^2(\dd t\,\dd\mu^{\rm rep}_0)$. By isometry, the sums
+then converge to the integral defining $\mathscr M_D$. The exponentials are uniformly
+integrable, because the same Gaussian identity at twice the coefficient
+bounds their second moments by $e^{4nV}$. Testing against a bounded
+function of the complete static data before taking the limit, we
+conclude that the limiting exponential has conditional mean one given
+these data.
+This proves that $R_D$ is normalized and that it preserves the
+complete static marginal, including the output marginal.
+
+With the Borel versions fixed above, and after a modification on a null set,
+$E_D$ is positive and finite everywhere.
+Since $L>0$, multiplying the densities gives
+$R_D\cdot(L/E_D)=\mu^{\rm rep}_0\cdot L=\Lambda^{\rm rep}$.
+
+\paragraph{Identification of the row integrals.}
+To identify the integral, we use the diagram of laws and the history
+identity in \cref{u:sec:proposal-laws} for the unlinked laws. At every
+finite dyadic level, the pullback of the vector sum on the replay
+space equals the sum of the corresponding functions of the row
+histories $(x,Y,B,D)$. On the unlinked
+row space, $D$ is a Brownian motion in the filtration generated by the two original
+drivers and by the independent uniform sign, which is revealed at time zero. The
+coefficient $\sigma\xi_i$ from \eqref{u:eq:reference-coefficient} is bounded and
+predictable, so the same sums converge in $L^2$ to its integral. The law identity and the
+Cauchy--Schwarz inequality for finite sums imply that the sum of the row limits
+converges in $L^2$ on the replay space. By uniqueness of the limit, $\mathscr M_D$ is
+the sum of the row integrals. By Fubini's theorem in the time variable,
+the brackets split in the same way.
+This proves \eqref{u:eq:reference-ratio} almost everywhere under the
+unlinked law. The linked and unlinked laws are equivalent, which implies that the
+identity also holds almost everywhere under the linked law. Here the transported variables are the complete histories, and the
+versions are fixed at the given $n,V$.
+
+\paragraph{The mean.}
+To compute the mean, we work in the natural filtration of the unlinked source,
+$\mathcal F_t=\sigma(x,(B_i,D_i)_{[0,t]}:i\le n)$, which does not contain $W$,
+$d_j$, and $W_0$. By \cref{u:lem:cross}, we have
+$\dd m_i=\chi_i(\rho\dd B_i+\sigma\dd D_i)$. Using It\^o's formula,
+localized where $1+x_i m_i\ge1/l$ and then letting $l\to\infty$, we find
+\[
+ \log L=\sum_i\int_0^V\xi_i(\rho\dd B_i+\sigma\dd D_i)
+                         -\tfrac12\sum_i\int_0^V\xi_i^2\dd t.
+\]
+The localization can be removed because $|\xi_i|\le2$ and the denominator is
+strictly positive on every finite continuous sample path.
+The integral against $D$ is the pullback identified above, so
+\begin{equation}\label{u:eq:information-brownian}
+ I^{(n)}=\sum_i\int_0^V\rho\xi_i\dd B_i
+                        -\tfrac12\sum_i\int_0^V\rho^2\xi_i^2\dd t.
+\end{equation}
+The process $L_t=\prod_i(1+x_i m_i(t))$ is the positive bounded
+martingale that defines the terminal link, with $L_0=1$.
+The expectation in Novikov's condition is at most $e^{2nV}$.
+By Girsanov's theorem for bounded integrands
+\cite[Theorem~3.5.1]{karatzas-shreve-1991}, under $\Lambda^{\rm src}$
+the processes
+\[
+ B_i^\Lambda=B_i-\int_0^\cdot\rho\xi_i\dd t,\qquad
+ D_i^\Lambda=D_i-\int_0^\cdot\sigma\xi_i\dd t
+\]
+form a Brownian vector in this natural filtration.
+It follows from \eqref{u:eq:information-brownian} that
+\[
+ \E_\Lambda I^{(n)}
+   =\frac12\sum_i\E_\Lambda\int_0^V\rho^2\xi_i^2\dd t.
+\]
+Given the past of the spin-free pair at time $t$, the linked spin probabilities
+are $(1+x m_t)/2$, and therefore
+\[
+ \sum_{x=\pm1}\frac{1+x m_t}{2}
+       \frac{\chi_t^2}{(1+x m_t)^2}=\frac{\chi_t^2}{1-m_t^2}.
+\]
+The spin-free paths keep their original law. Since the integrands
+are bounded, we may exchange the expectation and the time integral. Using the definition of $j$ in \cref{u:prop:scalar}, we obtain
+\eqref{u:eq:reference-mean}.
+
+\paragraph{Integrability.}
+All signed quantities used here are integrable under the indicated
+laws. By isometry, we have $\mathscr M_D\in L^2(\mu^{\rm rep}_0)$; also
+$\langle\mathscr M_D\rangle\le4nV$.
+For fixed $n$, the bound $L\le2^n$ transfers this $L^2$ integrability to
+$\Lambda$. Also, $\log L\in L^2(\Lambda)$, since $t(\log t)^2$ is bounded
+on $0<t\le2$ and all other spin factors average to one.
+After compensation in \eqref{u:eq:information-brownian}, we obtain the bound
+$\E_\Lambda(I^{(n)})^2\le8nV+8n^2V^2$.
+The calculation with conditional exponentials above also proves the case of
+Girsanov's theorem with bounded integrands, by exponential tilting of
+finitely many Gaussian steps and passage to the limit in $L^2$. Throughout,
+the filtration does not contain the final matrix.
+\end{proof}
+
+\begin{lemma}[Forward relative entropy]\label{u:lem:forward-kl}
+For the output $Q_V$ of \cref{u:def:laws},
+\begin{equation}\label{u:eq:forward-kl}
+ \KL(Q_V\Vert \Pi_n)\le n j(V)-n\log2+\E_{\gamma_n}F^c
+                               -\beta\E_\Lambda H^c_g(x).
+\end{equation}
+\end{lemma}
+\begin{proof}
+On the replay space, we define
+$\dd\widehat P=2^n e^{\beta H^c_g(x)-F^c(g)}\dd R_D$.
+Its total mass is one, since $R_D$ projects to $\gamma_n\otimes\Unif_n$;
+its output law is $\Pi_n$. Further,
+\[
+ \log\frac{\dd\Lambda}{\dd\widehat P}
+      = I^{(n)}-n\log2+F^c(g)-\beta H^c_g(x).
+\]
+Averaging pointwise over the spins, we see that the matrix marginal
+of the linked law is the GOE law. In particular, with $H_*(W)=\max_x|x^{\mathsf T}Wx/2|$,
+\begin{equation}\label{u:eq:energy-integrability}
+ \E_\Lambda H_*^2\le\frac{n^2}{4}\E_{\mathcal G_n}\|W\|_F^2
+                =\frac{n^2(n+1)}4.
+\end{equation}
+Also $|F^c|\le n\log2+|\beta|H_*$. These bounds and \cref{u:lem:reference}
+justify the finite KL calculation. The data processing inequality for the output
+map and \eqref{u:eq:reference-mean} imply \eqref{u:eq:forward-kl}.
+\end{proof}
+
+\section{Fine energy}
+\label{u:sec:fine-energy}
+
+We now estimate the expected energy, one query at a time.
+Let $\mathcal F_{t_j}^{\rm paths}$ be the natural filtration of the
+spin-free pair of drivers in the source, through time $t_j$.
+Under the linked law, the marginal law of these paths is unchanged. The
+conditional laws of the future rows and of the signs factor across
+coordinates, because the unlinked rows factor, their pasts factor, and
+the link is a product. We obtain their conditional densities by
+integrating the terminal link of each row over its independent future.
+In particular, the pairs $(e_{j,i},x_i)$
+are conditionally independent across $i$ and satisfy
+\begin{equation}\label{u:eq:fine-conditional-correlation}
+ \begin{aligned}
+ \E[e_{j,i}\mid\mathcal F_{t_j}^{\rm paths}]&=0,\qquad
+ \E[x_i\mid\mathcal F_{t_j}^{\rm paths}]=m_i(t_j),\\
+ \psi_i=\E[e_{j,i}x_i\mid\mathcal F_{t_j}^{\rm paths}]
+   &=\frac1{\sqrt{h_j}}\int_{t_j}^{t_{j+1}}\rho(v)
+            \E[\chi_i(v)\mid\mathcal F_{t_j}^{\rm paths}]\dd v.
+ \end{aligned}
+\end{equation}
+The last identity is the cross-moment identity of \cref{u:sec:scalar}
+tested against functions of the past. Here we condition on the past of
+the original drivers, not on $W$. The Picard map with fresh future
+drivers gives a Borel version of $\psi_i$ that depends only on the past of
+its own row, in accordance with the conventions on versions in \cref{u:sec:setup}.
+If $h_{j-1},h_j\le1/8$, then the relative variation
+estimates of \cref{u:prop:scalar} and the growth of the schedule imply that
+\begin{equation}\label{u:eq:fine-correlation-bound}
+ 0\le\psi_i\le\beta\sqrt{h_jr(t_j)}\le2\beta s_j,
+ \qquad \E\overline\psi=b_j,\quad
+ \overline\psi=n^{-1}\sum_i\psi_i.
+\end{equation}
+The factor two accounts for the different durations of the previous
+and current cells.
+
+In this section, we write $\varrho_j=\normn{P_{j-1}\mathcal T_j}$ for the
+residual norm. Whether the query is normalized or uses the fallback, we have
+$\ipn{u_j}{m(t_j)}=s_j\varrho_j$, because
+$m(t_j)=\sum_{l\le j}s_l\mathcal T_l$ and each $\mathcal T_l$ belongs to the span
+of the first $l$ queries. Also $P_jm(t_j)=0$.
+
+\trilogyneedspace{12\baselineskip}
+\begin{lemma}[Exact one-query conditional identity]\label{u:lem:onequery}
+With $c_j=\ipn{u_j}x$,
+\begin{equation}\label{u:eq:onequery}
+ \begin{aligned}
+ &\E[c_j\ipn{x}{P_je_j}\mid\mathcal F_{t_j}^{\rm paths}]\\
+ &\qquad=s_j\varrho_j\frac1n\sum_i(P_j)_{ii}\psi_i
+       -\frac2{n^2}\sum_i u_{j,i}(P_j)_{ii}\psi_i m_i(t_j).
+ \end{aligned}
+\end{equation}
+\end{lemma}
+\begin{proof}
+We expand $(n^{-1}\sum_i u_i x_i)(n^{-1}\sum_{k,l}x_k P_{kl}e_l)$.
+Since the row pairs are conditionally independent and $x_i^2=1$, the mixed
+third moment is
+\[
+ \E[x_i x_k e_l\mid\mathrm{past}]
+ =\mathbf1_{l=i}\psi_i m_k+\mathbf1_{l=k}m_i\psi_k
+                  -2\mathbf1_{i=k=l}m_i\psi_i.
+\]
+For $i=k$ it is zero by Gaussian centering. For $i\ne k$, it follows
+from independence, also when $l$ differs from both indices. The
+first contraction contains $P_jm(t_j)=0$, and the second contains
+$\ipn{u_j}{m(t_j)}=s_j\varrho_j$.
+In more detail, given the past of a row, a fresh seed for the row consists
+of the current $B$ bridge, the future $B$ path after that cell,
+the future $D$ increments, and a terminal uniform threshold.
+It is independent of the standard Gaussian endpoint $e_{j,i}$;
+these seeds and endpoints are independent across coordinates.
+Since the Picard solution is causal, the terminal sign is a Borel
+function of its own endpoint and seed. These conditional product laws justify the
+third-moment calculation above.
+All terms are integrable, since the signs are bounded and Gaussian
+first moments are finite.
+\end{proof}
+
+\begin{lemma}[Expected energy at the fine horizon]\label{u:lem:fine-energy}
+For $V=t_{N+1}$, $\max h_j\le1/8$,
+\begin{equation}\label{u:eq:fine-energy}
+ \E_\Lambda\frac{H^c_g(x)}n\ge e(V)-C_\beta\left[
+ h+\frac{(N+1)(1+V)+\sqrt N}{n}
+                         +\frac{(N+1)^2VR_V}{n^2}\right].
+\end{equation}
+\end{lemma}
+\begin{proof}
+We first estimate the expectation in \cref{u:lem:onequery}, including
+the residual norm and the projection diagonals. We then sum over the
+queries and use the quadrature estimate of \cref{u:lem:quad}.
+
+\paragraph{The residual norm.}
+Since $\sum_i|u_{j,i}|\le n$, the correction in \eqref{u:eq:onequery} is at
+most $4\beta s_j/n$ in absolute value. Removing the projection diagonals
+from its first term costs at most $2\beta s_j^2j \varrho_j/n$, and
+$\E \varrho_j\le\sqrt{\E\normn{\mathcal T_j}^2}=1$.
+For this calculation, we write
+$Q=\normn{\mathcal T_j}^2$, $Y=\normn{U_{j-1}\mathcal T_j}^2$, $X=\varrho_j^2=Q-Y$.
+For $X\ge0$,
+\begin{equation}\label{u:eq:residual-square-root}
+ \sqrt X\ge1+(X-1)/2-(X-1)^2/2.
+\end{equation}
+Indeed, the remainder in the tangent-line identity for the square root
+is $(\sqrt X-1)^2/2\le(X-1)^2/2$.
+Since the row pairs $(\psi_i,\mathcal T_{j,i})$ are independent and identically distributed, we have
+\begin{equation}\label{u:eq:residual-covariance}
+ \E[\overline\psi(Q-1)]
+       =n^{-1}\operatorname{Cov}(\psi_i,\mathcal T_{j,i}^2)
+       \ge-2\beta s_j/n.
+\end{equation}
+Here we used that $\E \mathcal T_{j,i}^2=1$ and $\psi_i\ge0$.
+
+Let $h_-=h_{j-1}$. Conditional on the past of the original pair up to time
+$t_{j-1}$, the coordinates of the new vector $\mathcal T_j$
+are independent, centered martingale increments, with conditional
+second moment at most $h_-/s_j^2$ and fourth moment at most
+$3h_-^2/s_j^4$. The bound on the fourth moment follows from It\^o's formula, applied to
+the fourth power of an increment with coefficient $\chi\le1$, and the
+bound on the second moment. The rank-$(j-1)$ projection $U_{j-1}$
+is measurable at this time. Expanding its quadratic form using
+conditional centering and independence, we obtain
+\begin{equation}\label{u:eq:residual-projection-moments}
+ \E Y\le\frac{j h_-}{ns_j^2},\qquad
+ \E Y^2\le\frac{3(j^2+j)h_-^2}{n^2s_j^4}.
+\end{equation}
+For the unconditional fourth moment, we use the elementary bound
+$\E Z_T^4\le144\E\langle Z\rangle_T^2$ for a martingale starting at
+zero. Indeed, by It\^o's formula, we have
+\[
+ \E Z_T^4\le6(\E\sup|Z|^4)^{1/2}
+                 (\E\langle Z\rangle_T^2)^{1/2}.
+\]
+Doob's fourth-moment inequality then implies the stated bound with
+constant $144$.
+Since $\langle\Delta m\rangle\le h_-$ and its expectation is $s_j^2$, we have
+\begin{equation}\label{u:eq:residual-fourth-moments}
+ \E \mathcal T_{j,i}^4\le144h_-/s_j^2,\qquad
+ \E(Q-1)^2\le144h_-/(ns_j^2).
+\end{equation}
+All conditional statements here refer only to the pasts of the original drivers.
+
+\paragraph{Summation of the query energies.}
+We multiply \eqref{u:eq:residual-square-root} by $s_j\overline\psi\ge0$ and use \eqref{u:eq:fine-correlation-bound}, \eqref{u:eq:residual-covariance}--\eqref{u:eq:residual-fourth-moments},
+and $(X-1)^2\le2(Q-1)^2+2Y^2$. Inserting the result into \eqref{u:eq:onequery}, we obtain
+\begin{equation}\label{u:eq:onequery-energy-bound}
+ \begin{aligned}
+ \E[c_j\ipn{x}{P_je_j}]\ge s_jb_j-C_\beta\biggl[
+ &\frac{(j+1)s_j^2+s_j+(j+1)h_-}{n}\\
+ &+\frac{(j^2+j)h_-^2}{n^2s_j^2}\biggr].
+ \end{aligned}
+\end{equation}
+This derivation also covers a vanishing residual, $\varrho_j=0$.
+When summing over the queries, we use $\sum s_j^2\le1$, $\sum s_j\le\sqrt N$,
+$s_j^2\ge h_-/R_V$, and $\sum h_-\le V$.
+
+Expanding the assembled matrix of \cref{u:sec:proposal-schedule},
+we have, on every outcome of the source,
+\begin{equation}\label{u:eq:fine-energy-decomposition}
+ \begin{aligned}
+ \frac{H^c_g(x)}n&=E_{\rm qry}+Z,\qquad
+ E_{\rm qry}=\sum_j c_j\ipn{x}{P_je_j},\\
+ Z&=\frac12\sum_j c_j^2d_j
+       +\frac1{2n}(P_Nx)^{\mathsf T}W_0(P_Nx).
+ \end{aligned}
+\end{equation}
+Under the linked law, the unused variables $d_j,W_0$ are independent of
+the complete scalar paths and the spins, because the link does not depend on them.
+Thus $\E[Z\mid\text{complete scalar paths and spins}]=0$.
+The required integrability follows from the Gaussian moments of these variables and \eqref{u:eq:energy-integrability}.
+Summing \eqref{u:eq:onequery-energy-bound} and using
+\cref{u:lem:quad} proves \eqref{u:eq:fine-energy}.
+\end{proof}
+
+\trilogyneedspace{12\baselineskip}
+\begin{proposition}[Forward entropy at the fine horizon]\label{u:prop:fine-kl}
+Let $h=n^{-\ex a}$, $V=V_{\ex f}$ as in \cref{u:lem:quad}, with
+\begin{equation}\label{u:eq:fine-parameters}
+ \ex a>\ex f/4,\quad \ex a+\ex f/2<1,\quad0<\ex k_{\rm f}<\min(\ex a,\ex f,1-\ex a).
+\end{equation}
+For the primitive fine output $Q_F$,
+\begin{equation}\label{u:eq:fine-kl}
+ \KL(Q_F\Vert \Pi_n)\le C_\beta n^{1-\ex k_{\rm f}}.
+\end{equation}
+The disorder and spin marginals of $Q_F$ are $\gamma_n$ and
+$\Unif_n$, respectively.
+\end{proposition}
+\begin{proof}
+Combining the entropy--energy identity of \cref{u:prop:scalar}, proved in
+\cite[Lemma~4]{oai-typical-upper}, with
+\eqref{u:eq:forward-kl} and \eqref{u:eq:fine-energy}, we find
+\begin{equation}\label{u:eq:fine-kl-budget}
+ \begin{aligned}
+ \KL(Q_F\Vert\Pi_n)\le C_\beta\biggl[
+ &nh+ne^{-V}+(N+1)(1+V)+\sqrt N\\
+ &+\frac{(N+1)^2VR_V}{n}\biggr].
+ \end{aligned}
+\end{equation}
+Here we also used $\E_{\gamma_n}F^c\le nP_\beta$ and
+$p(V)^2\le C_\beta e^{-V}$. By \cref{u:lem:quad,u:lem:tails},
+the powers of the five terms, up to fixed logarithmic factors, are
+$1-\ex a$, $1-\ex f$, $\ex a$, $\ex a/2$, and $2\ex a+\ex f/2-1$.
+The inequality $\ex a+\ex f/2<1$ implies that the last power is
+smaller than $\ex a$.
+Since the inequalities in \eqref{u:eq:fine-parameters} are strict, they absorb the constants and logarithmic factors.
+For the affine family of \cref{u:sec:budget}, these powers are $1/2,1/2,1/2,1/4,1/4$, and the claimed
+bound is $C_\beta n^{1/2+2\varepsilon_\omega}$. The energy estimate holds without restriction to a Gram event,
+including every outcome on which a query uses the fallback. The disorder
+marginal follows from averaging over the spins. The spin
+marginal is $\Unif_n$ because the linked scalar rows are independent
+and, by symmetry, $\E m_V=0$ in each row.
+\end{proof}
+

@@ -1,0 +1,347 @@
+\chapter{Stable overlap constraints along a trajectory}\label{sec:induction}
+
+This section contains the deterministic part of the dynamical argument. We fix the disorder, the families of reference configurations constructed in \cref{sec:references}, an array of thresholds, and a sequence of configurations with small overlap increments that avoids the exceptional set $V$ of \cref{sec:references}. From these data, an explicit algorithm (\cref{def:ind-algorithm}) selects one reference at each level and finds one crossing time at each level, searching backward from the previous crossing. The main result is \cref{prop:ind-induction}: if the overlap of the sequence with its first reference becomes nonpositive, then every crossing exists, and the errors in all overlap constraints stay of order $\varepsilon_n$. \Cref{cor:ind-witness} extracts the consequence used in \cref{sec:barrier-proof}: at one common time, the overlap of the sequence with the first reference of every block lies within a fixed multiple of $\varepsilon_n$ of the corresponding threshold. In \cref{sec:barrier-proof}, the thresholds are made random, and we show by a counting bound that this cannot happen before the time in \cref{thm:barrier-730}.
+
+We use the four properties of the families of reference configurations proved in \cref{lem:ref-families}, which we recall as (P1)--(P4) in \cref{sec:ind-setting}, and elementary geometry of overlaps. No probability is used in this section.
+
+The construction is that of \cite[Sections~8.3 and~8.4]{oai-barriers}. There, references are selected from fixed lists of Gibbs samples inside cells determined by the earlier references of the current block. The cells are reset to the whole space at the start of each block, references with a large overlap with the new reference are deleted, and each crossing time is found by a backward search from the previous one. It is also proved in \cite[Section~8.4]{oai-barriers} that the deleted references form a final segment, with at most $H$ elements, of the retained references ordered by level, and that older blocks are protected by the complete block that precedes each reset; we give these arguments in \cref{lem:ind-deletion}. What is new is the form of the induction hypothesis. In \cite[(8.19)--(8.20)]{oai-barriers}, after $j$ levels, the overlaps of every retained reference with the current target and with the later references are controlled within $6j\varepsilon$, where $\varepsilon=\rho^{20}$ is the scale of the narrow overlap constraints there. These errors accumulate over the levels, and the final count of \cite[(8.29)]{oai-barriers} requires $N_{\rm lev}\varepsilon$ to be much smaller than $\rho$ for $N_{\rm lev}$ levels. Here we compare each retained reference with the next retained reference. This comparison changes only when a deletion removes the next retained reference, which happens at most once for each reference. The error of every constraint stays bounded by a fixed multiple of $\varepsilon$ at every level (\cref{def:ind-invariant}). The argument uses that the first two levels of every block are never deleted, which follows from the same protection argument. As a result, $\varepsilon_n=E\rho_n$ with a fixed $E>0$ is allowed.
+
+\section{Standing assumptions and the threshold geometry}\label{sec:ind-setting}
+
+Throughout this section and \cref{sec:barrier-proof}, $\beta>1$ is fixed, $n$ is large, and the disorder $J$ is fixed; we write $\pi=\pi^J$. We use the parameters of \cref{sec:references}, which are listed in \cref{tab:ref-parameters}. The overlap $q_*\in(0,1)$ is that of the overlap-neighborhood mass bound, \cref{b:lem:coverage-extension}. The signed-overlap cutoffs $0<b_2<b_1<1$ and the level $t_0>0$ satisfy \eqref{b:dyn:fixed-cutoffs}, and in particular
+\[
+ 4t_0<\min\{q_*,b_2,b_1^2/2\}.
+\]
+This implies that $3t_0<b_1^2/2<b_1$, since $b_1<1$. The compact interval $J_\beta$ of \eqref{eq:ref-intervals} contains $[t_0,2t_0]$ in its interior. The integer $H=\lceil2/b_1^2\rceil$ is that of \eqref{b:dyn:BH}, and $B\ge H+2$ is a fixed integer, the number of levels in a block; it is chosen in \cref{sec:barrier-proof}. The scales of \eqref{b:dyn:scales} are
+\[
+ \rho=\rho_n=Rn^{-\lambda},\qquad \varepsilon=\varepsilon_n=E\rho_n,\qquad \eta_n=n^{-\xi},
+\]
+where $R>0$ and $E=1/100$ are fixed, and the exponents satisfy $0<\lambda<\xi<1/4$ by \eqref{eq:ref-exponents}. \Cref{thm:barrier-730} uses $\lambda=7/30$ and $\xi=5/21$. In \cref{sec:bp-strong} we use $\eta_n=\rho_n/1000$ in place of $\eta_n=n^{-\xi}$ with $\xi>\lambda$; this is why the hypotheses below allow a positive limit of $\eta_n/\rho_n$. We suppress $n$ from $\rho_n$ and $\varepsilon_n$, and we abbreviate
+\[
+ \zeta=2\eta_n,
+\]
+which is the tolerance of the overlap comparisons in \cref{lem:ref-families}. For the deterministic induction in this section, the asymptotic scale assumptions needed are $\varepsilon=E\rho$ and
+\begin{equation}\label{eq:ind-scales}
+ \rho\to0,\qquad \frac{\eta_n}{\rho}\to E',\qquad \frac1{n\rho}\to0,
+\end{equation}
+where $E'\in[0,E/10]$ is fixed. For \cref{thm:barrier-730}, these hold with $E'=0$ because $0<\lambda<\xi$ and $\lambda<1$; at $\lambda=7/30$ and $\xi=5/21$, we have $\eta_n/\rho_n=n^{-1/210}/R$. In \cref{sec:bp-strong}, they hold with $E'=E/10=1/1000$. The counting estimate in \cref{sec:barrier-proof} also retains $\rho_n=Rn^{-\lambda}$; the additional static scale conditions for \cref{sec:bp-strong} are checked there.
+
+\paragraph{Reference families.} The levels are the integers $0\le i<N_{\rm lev}$, where $N_{\rm lev}=MB$ and $M$ is defined in \eqref{b:dyn:threshold-intervals} below. As in \cref{sec:ref-families}, level $i$ belongs to the block ${\ell}(i)=\lfloor i/B\rfloor$; we say that it is the first level of its block if $i=B\ell(i)$. A family of reference configurations consists of an ordered list $\mathcal F_i$ of configurations for each level $i$, whose coordinates are called the entries of $\mathcal F_i$, together with a set $V\subseteq\Sigma_n$. We call a configuration $\sigma y$, where $y$ is an entry of $\mathcal F_i$ and $\sigma\in\{-1,1\}$, a signed entry of level $i$; the set of signed entries of level $i$ is $\mathcal F_i^\pm$. For a finite tuple $T$ of configurations, the cell $S_T$ is the set of $x\in\Sigma_n$ with $|R(y,x)|\le3t_0$ for every $y$ in $T$, as in \eqref{eq:ref-cell}, and $S_T=\Sigma_n$ for the empty tuple. Reversing the sign of an element of $T$ does not change $S_T$.
+
+By \cref{lem:ref-families}, applied with the logarithmic time scale $L_n=An^\lambda$ of \cref{sec:barrier-proof} and with $N_{\rm lev}\le e^{L_n}$, for all sufficiently large $n$ and every disorder in the event $\mathcal G_n$ of \eqref{eq:ref-good-event}, there exists a family with $\pi(V)\le3e^{-4L_n}$ and with the following four properties. They are consequences of properties (i)--(iv) of \cref{lem:ref-families}, as we explain after the list.
+\begin{enumerate}[label=(P\arabic*)]
+\item \emph{Overlap neighborhoods in every cell.} Let $j$ be a level, let $T$ be a tuple consisting of one signed entry of each earlier level of the block of $j$, and let $x\in S_T\setminus V$. Then there exists an entry $y$ of $\mathcal F_j$ with $y\in S_T$ and $|R(x,y)|\ge q_*$.
+\item \emph{Comparison across the overlap $q_*$.} Let $x\notin V$, and let $v$ and ${\widetilde v}$ be signed entries of two distinct levels. If $R(x,{\widetilde v})\ge q_*$, $|R(v,x)|\le b_1$, and $|R(v,{\widetilde v})|\le b_1$, then $|R(v,x)-R(v,{\widetilde v})|\le\zeta$.
+\item \emph{Comparison across the overlap $b_1$.} Let $v$, $y$, and ${\widetilde v}$ be signed entries of three distinct levels. If $|R(y,{\widetilde v})|\ge b_1$, $|R(v,y)|\le b_2$, and $|R(v,{\widetilde v})|\le b_2$, then $\bigl||R(v,y)|-|R(v,{\widetilde v})|\bigr|\le\zeta$.
+\item \emph{No narrow triples.} Let $x\notin V$, and let $v$ and ${\widetilde v}$ be signed entries of two distinct levels. Let $r=(R(v,x)+R(v,{\widetilde v}))/2$ and $\delta=(R(v,x)-R(v,{\widetilde v}))/2$. Then it is not the case that
+\[
+ r\in J_\beta,\qquad \varepsilon\le|\delta|\le2\varepsilon,\qquad R({\widetilde v},x)\ge r+\rho;
+\]
+that is, the triple $(v,x,{\widetilde v})$ does not belong to the set $\mathcal N_n$ of narrow triples defined after \eqref{b:dyn:narrow-coordinates}.
+\end{enumerate}
+Property (P1) is the case of property (i) in which the tuple has one entry at each earlier level of the block of $j$; here we used that the cell of a tuple of signed entries equals the cell of the corresponding tuple of entries. Properties (P2) and (P4) are properties (ii) and (iv), and (P3) is the last assertion of property (iii). Properties (P2) and (P3) say that, across a large overlap between $x$ and ${\widetilde v}$ (or between $y$ and ${\widetilde v}$), a small overlap with $v$ is transferred from one configuration to the other with error at most $\zeta$. The family and $V$ do not depend on any path or threshold, and the four properties are deterministic statements about them (see \cref{rem:ref-every-path}).
+
+\paragraph{Paths.} We call a finite sequence $x_0,\dots,x_m$ in $\Sigma_n$ a path if
+\begin{equation}\label{eq:ind-jump}
+ |R(y,x_{k+1})-R(y,x_k)|\le2/n\qquad\text{for all }y\in\Sigma_n\text{ and }0\le k<m.
+\end{equation}
+We say that a path avoids $V$ if $x_k\notin V$ for $0\le k\le m$. If $x_{k+1}$ and $x_k$ differ in at most one coordinate, then \eqref{eq:ind-jump} holds; in particular, every trajectory of the discrete heat-bath chain is a path.
+
+\paragraph{Thresholds.} We set
+\begin{equation}\label{b:dyn:threshold-intervals}
+ M=\Bigl\lfloor\frac{t_0}{3B\rho}\Bigr\rfloor,\qquad N_{\rm lev}=MB,\qquad
+ I_i=\bigl[t_0+3i\rho,\ t_0+(3i+1)\rho\bigr]\quad(0\le i<N_{\rm lev}).
+\end{equation}
+For all sufficiently large $n$, we have $M\ge1$. Each interval $I_i$ has length $\rho$ and lies in $[t_0,2t_0]$, since $t_0+(3(N_{\rm lev}-1)+1)\rho\le t_0+3MB\rho\le2t_0$. We call a vector $\mathbf r=(r_0,\dots,r_{N_{\rm lev}-1})$ such that $r_i\in I_i$ for every $i$ a threshold array. For every threshold array and all levels $i<a$, we have
+\begin{equation}\label{b:dyn:geometry}
+ r_a-r_i\ge\bigl(3(a-i)-1\bigr)\rho\ge2\rho.
+\end{equation}
+
+\paragraph{Radii and margins.} We define
+\begin{equation}\label{b:dyn:radii}
+ \begin{aligned}
+ \psi_0&=\zeta+\frac2n, & \psi_1&=2\varepsilon+2\zeta+\frac2n,\\
+ \Psi_0&=\psi_0+2\varepsilon=2\varepsilon+\zeta+\frac2n,\qquad &
+ \Psi_1&=\psi_1+2\varepsilon=4\varepsilon+2\zeta+\frac2n,\qquad
+ \Psi_2=\Psi_1+\zeta.
+ \end{aligned}
+\end{equation}
+In the induction, $\psi_0$ and $\psi_1$ bound the error, relative to the threshold, of the overlap of a retained reference with its next retained reference; $\Psi_0$ and $\Psi_1$ bound the corresponding error for the overlap with the current target; and $\Psi_2$ bounds it for the overlaps between retained references. We use the following inequalities:
+\begin{equation}\label{b:dyn:finite-margins}
+ \begin{gathered}
+ \zeta<2\varepsilon,\qquad \frac1n\le\varepsilon,\qquad
+ 2t_0+\Psi_2<\min\{3t_0,b_2\},\qquad 2t_0+\Psi_1<q_*,\\
+ 2\Psi_2+\zeta<2\rho,\qquad 5\varepsilon+3\zeta+\frac7n\le\rho,
+ \end{gathered}
+\end{equation}
+and the closed neighborhood of $[t_0,2t_0]$ of radius $3\varepsilon+2\zeta+3/n$ is contained in $J_\beta$.
+
+\begin{lemma}[The margins hold for large $n$]\label{lem:ind-margins}
+Assume \eqref{eq:ind-scales}. There exists $n_0$, depending only on the fixed parameters $q_*$, $b_2$, $t_0$, $J_\beta$, $R$, $E$, $E'$, and the sequences $(\rho_n)$ and $(\eta_n)$, such that \eqref{b:dyn:finite-margins} and the inclusion of the neighborhood in $J_\beta$ hold for all $n\ge n_0$.
+\end{lemma}
+
+\begin{proof}
+By \eqref{b:dyn:radii}, we have
+\[
+ \frac{\zeta}{\rho}\to2E',\qquad
+ \frac{2\Psi_2+\zeta}{\rho}=8E+\frac{7\zeta}{\rho}+\frac4{n\rho}\to8E+14E',\qquad
+ \frac{5\varepsilon+3\zeta+7/n}{\rho}\to5E+6E',
+\]
+where we used \eqref{eq:ind-scales} and $\varepsilon=E\rho$. Since $E'\le E/10$ and $E=1/100$, the three limits are at most $E/5<2E$, $9.4E<2$, and $5.6E<1$, respectively. The inequalities in the second line of \eqref{b:dyn:finite-margins} hold for large $n$, and so do $\zeta<2\varepsilon$ and $1/n\le\varepsilon$. The radii $\Psi_2$ and $\Psi_1$ tend to zero, while $2t_0<3t_0$, $2t_0<b_2$, and $2t_0<q_*$ by \eqref{b:dyn:fixed-cutoffs}. This gives the remaining two inequalities. Finally, the compact set $[t_0,2t_0]$ lies in the interior of $J_\beta$ and has positive distance from its complement, while the radius $3\varepsilon+2\zeta+3/n$ tends to zero.
+\end{proof}
+
+We record three consequences of \eqref{b:dyn:finite-margins} that are used repeatedly. First, we have $\Psi_1<\Psi_2<t_0$, and every overlap within $\Psi_2$ of a threshold $r_i\in[t_0,2t_0]$ is positive and has absolute value less than $2t_0+\Psi_2<3t_0$. Second, such an overlap has absolute value less than $b_2<b_1$, because $2t_0+\Psi_2<b_2$. Third, every threshold is smaller than $q_*$, because $r_i\le2t_0<q_*$.
+
+\section{The selection and crossing algorithm}\label{sec:ind-algorithm}
+
+We now define the references and the crossing times. The algorithm is that of \cite[Section~8.4]{oai-barriers}, including its conventions on failure, with zero-based levels.
+
+\begin{definition}[Selection and crossing algorithm]\label{def:ind-algorithm}
+Fix a family of reference configurations, a path $x_0,\dots,x_m$, and a threshold array $\mathbf r$.
+\begin{enumerate}[label=(\roman*)]
+\item \emph{Level $0$.} If some entry $y$ of $\mathcal F_0$ satisfies $|R(y,x_0)|\ge q_*$, let $y$ be the first such entry and set $v_0=\sigma y$, where $\sigma$ is the sign of $R(y,x_0)$, so that $R(v_0,x_0)\ge q_*$. If the set $\{0\le k\le m:R(v_0,x_k)\le r_0\}$ is also nonempty, let $k_0$ be its smallest element and set $\mathcal R_0=\{0\}$; level $0$ then succeeds. If no entry qualifies, let $v_0$ be the first entry of $\mathcal F_0$; level $0$ then fails, as it does when $v_0$ is selected but the set defining $k_0$ is empty.
+\item \emph{Level $j\ge1$, when levels $0,\dots,j-1$ have succeeded.} Write ${\bar k}=k_{j-1}$, let $T_j$ be the tuple $(v_l)$ over the levels $l<j$ of the block of $j$ (empty if $j$ is the first level of its block), and write $S_j=S_{T_j}$.
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Selection.} If some entry $y$ of $\mathcal F_j$ satisfies $y\in S_j$ and $|R(y,x_{\bar k})|\ge q_*$, let $y$ be the first such entry and set $v_j=\sigma y$, where $\sigma$ is the sign of $R(y,x_{\bar k})$, so that $R(v_j,x_{\bar k})\ge q_*$. Otherwise let $v_j$ be the first entry of $\mathcal F_j$; level $j$ then fails.
+\item \emph{Deletion.} The conflicts at level $j$ are the elements of $\mathcal D_j=\{i\in\mathcal R_{j-1}:|R(v_i,v_j)|>b_1\}$, and we set $\mathcal R_j=(\mathcal R_{j-1}\setminus \mathcal D_j)\cup\{j\}$. The elements of $\mathcal R_{j-1}\setminus \mathcal D_j$ are called compatible.
+\item \emph{Crossing.} If the set $\{0\le k\le {\bar k}:R(v_j,x_k)\le r_j\}$ is nonempty, let $k_j$ be its largest element; level $j$ then succeeds. Otherwise level $j$ fails, and $v_j$ is kept as the reference of level $j$.
+\end{enumerate}
+\item \emph{After a failure.} If some level fails, the algorithm stops, and for every later level $i$ we let $v_i$ be the first entry of $\mathcal F_i$, without a change of sign.
+\end{enumerate}
+We say that the algorithm succeeds through level $j$ if levels $0,\dots,j$ all succeed. We write $v(x_0)$ for the reference $v_0$ of level $0$.
+\end{definition}
+
+The reference $v(x_0)$ depends only on $x_0$ and $\mathcal F_0$. The set $\mathcal R_j$ is the set of retained levels after level $j$, and the references $v_i$ with $i\in\mathcal R_j$ are the retained references. We order $\mathcal R_j$ increasingly; its largest element is $j$, the level of the newest reference. The crossing time at level $0$ is the first time $k$ with $R(v_0,x_k)\le r_0$, and the crossing time at level $j\ge1$ is the last time $k\le k_{j-1}$ with $R(v_j,x_k)\le r_j$; in particular $k_0\ge k_1\ge\cdots$. These crossing times are not stopping times of the path, and nothing below requires them to be.
+
+The convention in (ii)(c), that a selected reference whose crossing fails is kept, matters for the following lemma. If $v_j$ were replaced by a default after its crossing failed, it would depend on its own threshold $r_j$.
+
+\begin{lemma}[References depend only on earlier thresholds]\label{lem:ind-predictable}
+Fix the family and the path. For every level $i$, the reference $v_i$ is a function of $(r_0,\dots,r_{i-1})$ alone, with finitely many values, each taken on a Borel set; the reference $v_0=v(x_0)$ does not depend on $\mathbf r$.
+\end{lemma}
+
+\begin{proof}
+Let $\mathrm{ok}_j$ be the indicator that the algorithm succeeds through level $j$. We show by induction on $j$ that $v_j$ is a finite-valued Borel function of $(r_0,\dots,r_{j-1})$, that $\mathrm{ok}_j$ is a Borel function of $(r_0,\dots,r_j)$, and that $k_j$ and $\mathcal R_j$, restricted to $\{\mathrm{ok}_j=1\}$, are finite-valued Borel functions of $(r_0,\dots,r_j)$. For $j=0$, the selection uses only $x_0$ and $\mathcal F_0$, and $v_0$ is constant. If no entry qualifies, then $\mathrm{ok}_0=0$ identically. Otherwise $v_0$ is fixed, and the event $\{\mathrm{ok}_0=1,k_0=k\}$ is described by the finitely many inequalities $R(v_0,x_l)>r_0$ for $l<k$ and $R(v_0,x_k)\le r_0$; on it, $\mathcal R_0=\{0\}$. For $j\ge1$, on $\{\mathrm{ok}_{j-1}=0\}$ the reference $v_j$ is the fixed default and $\mathrm{ok}_j=0$. On $\{\mathrm{ok}_{j-1}=1\}$, the cell $S_j$, the target $x_{k_{j-1}}$, and therefore the selection, depend only on $v_0,\dots,v_{j-1}$ and $k_{j-1}$, which are Borel functions of $(r_0,\dots,r_{j-1})$ there by the induction hypothesis. The threshold $r_j$ enters only through the crossing, which does not change $v_j$, and for fixed earlier data the event $\{\mathrm{ok}_j=1,k_j=k\}$ is described by finitely many inequalities between $r_j$ and the overlaps $R(v_j,x_l)$. On $\{\mathrm{ok}_j=1\}$, the set $\mathcal R_j$ is determined by $\mathcal R_{j-1}$ and $v_0,\dots,v_j$.
+\end{proof}
+
+\paragraph{Next retained references.} Suppose that the algorithm succeeds through level $j-1$ and that the selection at level $j$ succeeds, so that $\mathcal R_j$ is defined (for $j=0$, suppose that level $0$ succeeds). For $i\in\mathcal R_j\setminus\{j\}$, the index of the next retained reference of $i$ after level $j$ is
+\[
+ a_j(i)=\min\{a\in\mathcal R_j:a>i\},
+\]
+the next retained reference of $i$ is $v_{a_j(i)}$, and we write $c_j(i)=R(v_i,v_{a_j(i)})$. We say that the next retained reference of $i$ is unchanged if $a_j(i)=i+1$, and replaced otherwise. In \cref{def:ind-invariant} below, the overlap $c_j(i)$ is the center around which the overlaps of $v_i$ with the configurations of the path are controlled.
+
+\begin{definition}[The invariant after level $j$]\label{def:ind-invariant}
+Suppose that the algorithm succeeds through level $j$. The invariant $\mathbf I(j)$ consists of the following five statements.
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Blocks.} Every level of the block of $j$ that is at most $j$ belongs to $\mathcal R_j$. For every block ${\ell}<{\ell}(j)$, the set of levels of block ${\ell}$ that belong to $\mathcal R_j$ is $\{{\ell}B,{\ell}B+1,\dots,{\ell}B+B-d-1\}$ for some $0\le d\le H$.
+\item \emph{The newest reference.} We have
+\begin{equation}\label{b:dyn:newest-band}
+ R(v_j,x_{k_j})\in[r_j-2/n,\,r_j].
+\end{equation}
+\item \emph{Centers.} For every $i\in\mathcal R_j\setminus\{j\}$, we have $|c_j(i)-r_i|\le\psi_0$ if the next retained reference of $i$ is unchanged. Otherwise $|c_j(i)-r_i|\le\psi_1$, and $a_j(i)=B({\ell}(i)+1)$ is the first level of the block that follows the block of $i$.
+\item \emph{Windows.} For every $i\in\mathcal R_j\setminus\{j\}$, we have
+\begin{equation}\label{b:dyn:anchor-invariant}
+ |R(v_i,x_{k_j})-c_j(i)|<2\varepsilon.
+\end{equation}
+\item \emph{Pairs.} For all $i<a$ in $\mathcal R_j$, we have
+\begin{equation}\label{b:dyn:pair-invariant}
+ |R(v_i,v_a)-r_i|\le\Psi_2.
+\end{equation}
+\end{enumerate}
+\end{definition}
+
+Statement (a) implies that $0\in\mathcal R_j$: level $0$ is the first level of block $0$, and since $B-H\ge2$, the first two levels of every earlier block ${\ell}<{\ell}(j)$ are retained. Combining (c) and (d), we find that every $i\in\mathcal R_j\setminus\{j\}$ satisfies
+\begin{equation}\label{eq:ind-target-error}
+ |R(v_i,x_{k_j})-r_i|<
+ \begin{cases}
+ \Psi_0&\text{if the next retained reference of $i$ is unchanged},\\
+ \Psi_1&\text{if it is replaced}.
+ \end{cases}
+\end{equation}
+
+\section{One level of the algorithm}\label{b:sec:dyn-anchors}
+
+The following five lemmas carry out one step of the induction. They share these hypotheses, which we call $(\mathrm H_j)$: the inequalities \eqref{b:dyn:finite-margins} and the inclusion of the neighborhood in $J_\beta$ hold; the family satisfies (P1)--(P4); the path $x_0,\dots,x_m$ avoids $V$; $\mathbf r$ is a threshold array; $1\le j<N_{\rm lev}$; the algorithm succeeds through level $j-1$; and $\mathbf I(j-1)$ holds. We write ${\bar k}=k_{j-1}$ for the previous crossing time and call $x_{\bar k}$ the target of level $j$. Statements (a), (c), and (e) of $\mathbf I(j)$ concern only the set $\mathcal R_j$ and the references; in the lemmas below we use them as soon as $\mathcal R_j$ is defined, before the crossing at level $j$ is known to exist.
+
+\begin{lemma}[Selection and transfer]\label{lem:ind-transfer}
+Assume $(\mathrm H_j)$.
+\begin{enumerate}[label=(\alph*)]
+\item For every $i\in\mathcal R_{j-1}$, we have $|R(v_i,x_{\bar k})-r_i|\le\Psi_1$. More precisely, the error is at most $2/n$ if $i=j-1$, and less than $\Psi_0$ if $i<j-1$ and the next retained reference of $i$ after level $j-1$ is unchanged.
+\item The selection at level $j$ succeeds, and $R(v_j,x_{\bar k})\ge q_*$.
+\item For every compatible $i\in\mathcal R_{j-1}$, we have
+\begin{equation}\label{b:dyn:target-transfer}
+ |R(v_i,v_j)-R(v_i,x_{\bar k})|\le\zeta,\qquad |R(v_i,v_j)-r_i|\le\Psi_2.
+\end{equation}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Part (a) is \eqref{b:dyn:newest-band} at level $j-1$ for $i=j-1$, and \eqref{eq:ind-target-error} at level $j-1$ otherwise; note that $2/n\le\Psi_0<\Psi_1$.
+
+For part (b), if the tuple $T_j$ is nonempty, then $j$ is not the first level of its block, the block of $j$ is the block of $j-1$, and every level $l$ in $T_j$ belongs to $\mathcal R_{j-1}$ by $\mathbf I(j-1)$(a). Using part (a) and \eqref{b:dyn:finite-margins}, we find $|R(v_l,x_{\bar k})|\le r_l+\Psi_1\le2t_0+\Psi_1<3t_0$ for every such $l$. Therefore $x_{\bar k}\in S_j$. Since also $x_{\bar k}\notin V$, property (P1), applied with the tuple $T_j$, gives an entry $y$ of $\mathcal F_j$ with $y\in S_j$ and $|R(y,x_{\bar k})|\ge q_*$, and the selection succeeds.
+
+For part (c), let $i\in\mathcal R_{j-1}$ be compatible, which means that $|R(v_i,v_j)|\le b_1$. By part (a) and \eqref{b:dyn:finite-margins}, we have $|R(v_i,x_{\bar k})|\le2t_0+\Psi_1<b_1$. Further, $R(x_{\bar k},v_j)\ge q_*$ by part (b), and $v_i$ and $v_j$ are signed entries of the distinct levels $i<j$. Property (P2), applied with $x=x_{\bar k}$, $v=v_i$, and ${\widetilde v}=v_j$, implies the first inequality in \eqref{b:dyn:target-transfer}. The second follows from the first and part (a), since $\zeta+\Psi_1=\Psi_2$.
+\end{proof}
+
+\begin{lemma}[Deletion and protection of initial segments]\label{lem:ind-deletion}
+Assume $(\mathrm H_j)$.
+\begin{enumerate}[label=(\alph*)]
+\item The set $\mathcal D_j$ of conflicts is a final segment of $\mathcal R_{j-1}$: if $i<a$ belong to $\mathcal R_{j-1}$ and $i\in \mathcal D_j$, then $a\in \mathcal D_j$.
+\item We have $|\mathcal D_j|<2/b_1^2\le H$.
+\item If $j$ is not the first level of its block, then $\mathcal D_j=\emptyset$.
+\item If $j$ is the first level of its block, then $\mathcal D_j$ consists of the last $d$ levels of the block ${\ell}(j)-1$, for some $0\le d\le H$. In particular, the first $B-H\ge2$ levels of the block ${\ell}(j)-1$ belong to $\mathcal R_j$, and no level of a block ${\ell}<{\ell}(j)-1$ is deleted.
+\end{enumerate}
+As a consequence, $\mathbf I(j)$(a) holds.
+\end{lemma}
+
+\begin{proof}
+For part (a), suppose to the contrary that $i<a$ belong to $\mathcal R_{j-1}$, that $i\in \mathcal D_j$ (that is, $|R(v_i,v_j)|>b_1$), and that $a$ is compatible. By \eqref{b:dyn:pair-invariant} at level $j-1$, we have $|R(v_i,v_a)-r_i|\le\Psi_2$, and by \eqref{b:dyn:target-transfer}, we have $|R(v_a,v_j)-r_a|\le\Psi_2$. By the consequences of \eqref{b:dyn:finite-margins} recorded after \cref{lem:ind-margins}, both overlaps are positive and have absolute value less than $b_2$. Since $v_a$, $v_i$, and $v_j$ are signed entries of the three distinct levels $a$, $i$, and $j$, property (P3), applied with $v=v_a$, $y=v_i$, and ${\widetilde v}=v_j$, gives $|R(v_a,v_j)|-|R(v_a,v_i)|\le\zeta$. On the other hand, using \eqref{b:dyn:geometry} and \eqref{b:dyn:finite-margins}, we have
+\[
+ |R(v_a,v_j)|-|R(v_a,v_i)|=R(v_a,v_j)-R(v_i,v_a)\ge(r_a-\Psi_2)-(r_i+\Psi_2)\ge2\rho-2\Psi_2>\zeta,
+\]
+which is a contradiction.
+
+For part (b), we may assume that $d=|\mathcal D_j|\ge1$. For $i\in \mathcal D_j$, let $\sigma_i$ be the sign of $R(v_i,v_j)$, and consider the unit vectors $\mathbf e=v_j/\sqrt n$ and $\mathbf e_i=\sigma_iv_i/\sqrt n$ in $\R^n$. Then $\langle\mathbf e_i,\mathbf e\rangle=|R(v_i,v_j)|>b_1$, and for distinct $i,i'\in \mathcal D_j$, \eqref{b:dyn:pair-invariant} at level $j-1$ and the consequences of \eqref{b:dyn:finite-margins} recorded after \cref{lem:ind-margins} give $|\langle\mathbf e_i,\mathbf e_{i'}\rangle|=|R(v_i,v_{i'})|<3t_0$. By the Cauchy--Schwarz inequality,
+\[
+ d^2b_1^2<\Bigl\langle\sum_{i\in \mathcal D_j}\mathbf e_i,\mathbf e\Bigr\rangle^2\le\Bigl\|\sum_{i\in \mathcal D_j}\mathbf e_i\Bigr\|^2
+ =d+\sum_{i\neq i'}\langle\mathbf e_i,\mathbf e_{i'}\rangle\le d+3t_0d(d-1).
+\]
+Dividing by $d$, we obtain $d(b_1^2-3t_0)<1-3t_0$. Since $3t_0<b_1^2/2$, this implies
+\[
+ d<\frac{1-3t_0}{b_1^2-3t_0}<\frac2{b_1^2}\le H,
+\]
+where the middle inequality is equivalent to $3t_0(2-b_1^2)<b_1^2$.
+
+For part (c), the level $j-1$ belongs to the block of $j$. Then $v_{j-1}$ is an element of $T_j$, and since $v_j\in S_j$, we have $|R(v_{j-1},v_j)|\le3t_0<b_1$. In other words, the largest element $j-1$ of $\mathcal R_{j-1}$ is compatible, and the final segment $\mathcal D_j$ is empty by part (a).
+
+For part (d), let $j={\ell}B$ with ${\ell}\ge1$. The level $j-1$ is the last level of block ${\ell}-1$, which is the block of $j-1$. By $\mathbf I(j-1)$(a), all $B$ levels of block ${\ell}-1$ belong to $\mathcal R_{j-1}$, and they are its $B$ largest elements. By parts (a) and (b), $\mathcal D_j$ is a final segment of $\mathcal R_{j-1}$ with fewer than $H<B$ elements. It therefore consists of the last $d=|\mathcal D_j|\le H$ levels of block ${\ell}-1$.
+
+Finally, we verify $\mathbf I(j)$(a). If $j$ is not the first level of its block, nothing is deleted by part (c), and $\mathcal R_j=\mathcal R_{j-1}\cup\{j\}$; statement (a) at level $j-1$ gives statement (a) at level $j$. If $j$ is the first level of its block, the block of $j$ meets $\mathcal R_j$ in $\{j\}$, the retained levels of block ${\ell}(j)-1$ form an initial segment of length $B-d$ with $d\le H$ by part (d), and the earlier blocks are unchanged.
+\end{proof}
+
+Part (d) is the protection of initial segments: once the reset at the first level of block ${\ell}+1$ has occurred, the retained levels of block ${\ell}$ form an initial segment of length at least $B-H\ge2$ that is never changed afterward. Indeed, a later deletion removes only levels of the block immediately preceding the current reset, and that block is complete when the reset occurs. This is proved by induction along the run of the algorithm, using only $\mathbf I(j-1)$.
+
+\begin{lemma}[Next retained references after a deletion]\label{lem:ind-successor}
+Assume $(\mathrm H_j)$, so that $\mathcal R_j$ is defined by \cref{lem:ind-transfer}(b).
+\begin{enumerate}[label=(\alph*)]
+\item Let $i\in\mathcal R_j\setminus\{j\}$ with $i\neq j-1$. If $a_j(i)\neq a_{j-1}(i)$, then $j$ is the first level of its block, $\mathcal D_j\neq\emptyset$, $i$ is the largest element of $\mathcal R_{j-1}\setminus \mathcal D_j$ and lies in block ${\ell}(j)-1$, $a_{j-1}(i)=i+1$, and $a_j(i)=j$.
+\item For every $i\in\mathcal R_j\setminus\{j\}$, the bounds of $\mathbf I(j)$(c) hold, and $|R(v_i,x_{\bar k})-c_j(i)|<2\varepsilon$.
+\item The statement $\mathbf I(j)$(e) holds.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For part (a), note that $i$ is not the largest element $j-1$ of $\mathcal R_{j-1}$, and that $a_{j-1}(i)$ is defined. Since $\mathcal R_j$ is obtained from $\mathcal R_{j-1}$ by removing $\mathcal D_j$ and adding $j$, which exceeds every element of $\mathcal R_{j-1}$, the next retained reference of $i$ changes only if $a_{j-1}(i)\in \mathcal D_j$. Then $\mathcal D_j\neq\emptyset$, and by \cref{lem:ind-deletion}(c), $j$ is the first level of its block. Since $\mathcal D_j$ is a final segment of $\mathcal R_{j-1}$ by \cref{lem:ind-deletion}(a), every element of $\mathcal R_{j-1}$ larger than $i$ lies in $\mathcal D_j$. This means that $i$ is the largest element of $\mathcal R_{j-1}\setminus \mathcal D_j$ and that $a_j(i)=j$. By \cref{lem:ind-deletion}(d), the first $B-H$ levels of block ${\ell}(j)-1$ survive, and $i$ lies in this block. Since this block was complete in $\mathcal R_{j-1}$, we have $a_{j-1}(i)=i+1$.
+
+For part (b), there are three cases.
+\emph{Case 1: $i\neq j-1$ and $a_j(i)=a_{j-1}(i)$.} Then $c_j(i)=c_{j-1}(i)$, the next retained reference of $i$ is unchanged after level $j$ if and only if it is unchanged after level $j-1$, and the claims are $\mathbf I(j-1)$(c) and (d).
+\emph{Case 2: $i=j-1$.} Then $a_j(i)=j=i+1$, and the next retained reference of $i$ is unchanged. Using \eqref{b:dyn:target-transfer} and \eqref{b:dyn:newest-band} at level $j-1$, we find
+\[
+ |c_j(i)-R(v_i,x_{\bar k})|\le\zeta,\qquad |c_j(i)-r_i|\le\zeta+\frac2n=\psi_0,
+\]
+and $|R(v_i,x_{\bar k})-c_j(i)|\le\zeta<2\varepsilon$ by \eqref{b:dyn:finite-margins}.
+\emph{Case 3: $i\neq j-1$ and $a_j(i)\neq a_{j-1}(i)$.} By part (a), $a_{j-1}(i)=i+1$ and $a_j(i)=j=B({\ell}(i)+1)$, which is the first level of the block that follows the block of $i$. Since $i+1\in \mathcal D_j$, we have $j\neq i+1$, and the next retained reference of $i$ is replaced. Before the deletion, we have $|c_{j-1}(i)-r_i|\le\psi_0$ and $|R(v_i,x_{\bar k})-c_{j-1}(i)|<2\varepsilon$ by $\mathbf I(j-1)$(c) and (d). By \eqref{b:dyn:target-transfer}, $|c_j(i)-R(v_i,x_{\bar k})|\le\zeta$. Combining these three bounds, we obtain
+\[
+ |c_j(i)-r_i|<\zeta+2\varepsilon+\psi_0=\psi_1,
+\]
+and $|R(v_i,x_{\bar k})-c_j(i)|\le\zeta<2\varepsilon$.
+
+For part (c), a pair $i<a$ of elements of $\mathcal R_j$ with $a<j$ is a pair of elements of $\mathcal R_{j-1}$, and \eqref{b:dyn:pair-invariant} at level $j-1$ applies. If $a=j$, then $i$ is compatible, and \eqref{b:dyn:target-transfer} gives $|R(v_i,v_j)-r_i|\le\Psi_2$.
+\end{proof}
+
+The next lemma treats the backward search for the crossing at level $j$. Its main point is that the windows of all old references are preserved simultaneously. To show this, we take the largest index at which some window fails, for all references together. At that index every window is still almost preserved, and in particular so is the window of the next retained reference of the failing reference. This gives the lower bound on the overlap $q$ in part (b) of the lemma.
+
+\begin{lemma}[The backward search]\label{lem:ind-search}
+Assume $(\mathrm H_j)$. Let $\underline k=k_j$ if the set defining $k_j$ in \cref{def:ind-algorithm}(ii)(c) is nonempty, and $\underline k=0$ otherwise.
+\begin{enumerate}[label=(\alph*)]
+\item For every $k$ with $\underline k\le k\le {\bar k}$, we have $R(v_j,x_k)\ge r_j-2/n$. If the crossing exists, then $k_j<{\bar k}$.
+\item Suppose that $|R(v_i,x_k)-c_j(i)|\ge2\varepsilon$ for some $k\in[\underline k,{\bar k}]$ and some $i\in\mathcal R_j\setminus\{j\}$. Let $k$ be the largest such index, let $i$ be such that the inequality holds at $k$, write $a=a_j(i)$, and set
+\[
+ r=\frac{R(v_i,x_k)+c_j(i)}2,\qquad \delta=\frac{R(v_i,x_k)-c_j(i)}2,\qquad q=R(v_a,x_k).
+\]
+Then
+\begin{equation}\label{b:dyn:first-exit-gap}
+ \varepsilon\le|\delta|\le2\varepsilon,\qquad
+ |r-r_i|\le3\varepsilon+2\zeta+\frac3n,\qquad
+ q-r\ge2\rho-5\varepsilon-3\zeta-\frac7n\ge\rho,
+\end{equation}
+so that $(v_i,x_k,v_a)$ is a narrow triple in the sense of (P4).
+\item For every $k$ with $\underline k\le k\le {\bar k}$ and every $i\in\mathcal R_j\setminus\{j\}$, we have $|R(v_i,x_k)-c_j(i)|<2\varepsilon$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For part (a), suppose first that the crossing exists. By the definition of $k_j$ as a largest element, we have $R(v_j,x_k)>r_j$ for $k_j<k\le {\bar k}$. By \cref{lem:ind-transfer}(b), we have $R(v_j,x_{\bar k})\ge q_*>r_j$, which implies that $k_j<{\bar k}$. Then \eqref{eq:ind-jump} gives $R(v_j,x_{k_j})\ge R(v_j,x_{k_j+1})-2/n>r_j-2/n$. If the crossing does not exist, then $R(v_j,x_k)>r_j$ for every $0\le k\le {\bar k}$.
+
+For part (b), the windows hold at $k={\bar k}$ by \cref{lem:ind-successor}(b). This implies that $k<{\bar k}$ and $k+1\in[\underline k,{\bar k}]$. By the maximality of $k$, every window holds strictly at $k+1$, and \eqref{eq:ind-jump} gives
+\begin{equation}\label{eq:ind-almost}
+ |R(v_{i'},x_k)-c_j(i')|<2\varepsilon+\frac2n\qquad\text{for every }i'\in\mathcal R_j\setminus\{j\}.
+\end{equation}
+For the chosen $i$, this means that $2\varepsilon\le2|\delta|<2\varepsilon+2/n$, and \eqref{b:dyn:finite-margins} implies that $\varepsilon\le|\delta|<\varepsilon+1/n\le2\varepsilon$. We have $|r-r_i|\le|c_j(i)-r_i|+|\delta|$, and the bounds on the centers in $\mathbf I(j)$(c), which hold by \cref{lem:ind-successor}(b), give
+\[
+ |r-r_i|<
+ \begin{cases}
+ \psi_0+\varepsilon+1/n=\varepsilon+\zeta+3/n&\text{if $a=i+1$},\\
+ \psi_1+\varepsilon+1/n=3\varepsilon+2\zeta+3/n&\text{otherwise}.
+ \end{cases}
+\]
+We now bound $q$ from below, distinguishing three cases.
+\emph{Case 1: $a=j$.} By part (a), $q=R(v_j,x_k)\ge r_j-2/n$.
+\emph{Case 2: $a<j$ and $a=i+1$.} Then $a\in\mathcal R_j\setminus\{j\}$. Using \eqref{eq:ind-almost} for $i'=a$ and $|c_j(a)-r_a|\le\psi_1$, we find
+\[
+ q>c_j(a)-2\varepsilon-\frac2n\ge r_a-\psi_1-2\varepsilon-\frac2n=r_a-4\varepsilon-2\zeta-\frac4n.
+\]
+\emph{Case 3: $a<j$ and $a\neq i+1$.} By $\mathbf I(j)$(c), $a$ is the first level of a block. The level $a+1$ belongs to the same block and satisfies $a+1\le j$. If this block is the block of $j$, then $a+1\in\mathcal R_j$ by $\mathbf I(j)$(a); otherwise $a+1\in\mathcal R_j$ because the retained initial segment of the block has length at least $B-H\ge2$. The next retained reference of $a$ is then unchanged, and $|c_j(a)-r_a|\le\psi_0$. By \eqref{eq:ind-almost} for $i'=a$, we have
+\[
+ q>r_a-\psi_0-2\varepsilon-\frac2n=r_a-2\varepsilon-\zeta-\frac4n.
+\]
+In Case 2 we use the first bound on $|r-r_i|$, and in Cases 1 and 3 the second. In all three cases, we obtain
+\[
+ q-r\ge r_a-r_i-5\varepsilon-3\zeta-\frac7n\ge2\rho-5\varepsilon-3\zeta-\frac7n\ge\rho,
+\]
+where we used \eqref{b:dyn:geometry} and the last inequality in \eqref{b:dyn:finite-margins}. This proves \eqref{b:dyn:first-exit-gap}. Further, $r_i\in[t_0,2t_0]$, and the bound on $|r-r_i|$ together with the inclusion of the neighborhood of $[t_0,2t_0]$ in $J_\beta$ implies that $r\in J_\beta$. Finally, $R(v_i,x_k)=r+\delta$, $R(v_i,v_a)=c_j(i)=r-\delta$, and $R(v_a,x_k)=q\ge r+\rho$, which are the conditions in (P4) for the triple $(v_i,x_k,v_a)$.
+
+For part (c), suppose that the conclusion fails. Then part (b) produces a narrow triple $(v_i,x_k,v_a)$ in which $x_k\notin V$, because the path avoids $V$, and $v_i$ and $v_a$ are signed entries of the distinct levels $i<a$. This contradicts (P4).
+\end{proof}
+
+\begin{lemma}[The crossing exists]\label{lem:ind-crossing}
+Assume $(\mathrm H_j)$. Then the crossing at level $j$ exists, the algorithm succeeds through level $j$, and \eqref{b:dyn:newest-band} holds at level $j$.
+\end{lemma}
+
+\begin{proof}
+Suppose that the set defining $k_j$ is empty, so that $\underline k=0$ in \cref{lem:ind-search}. The level $0$ belongs to $\mathcal R_j$ by \cref{lem:ind-deletion}, and $0\neq j$. By \cref{lem:ind-search}(c) at $k=0$ and by $\mathbf I(j)$(c),
+\[
+ R(v_0,x_0)<c_j(0)+2\varepsilon\le r_0+\psi_1+2\varepsilon=r_0+\Psi_1\le2t_0+\Psi_1<q_*,
+\]
+where the last inequality is \eqref{b:dyn:finite-margins}. Recall that the selection of $v_0$ at level $0$ gives $R(v_0,x_0)\ge q_*$. This contradiction shows that the crossing exists. By \cref{lem:ind-search}(a), $R(v_j,x_{k_j})\ge r_j-2/n$, and $R(v_j,x_{k_j})\le r_j$ by the definition of $k_j$.
+\end{proof}
+
+\section{The induction}\label{sec:ind-induction}
+
+\begin{proposition}[Overlap constraints along a path]\label{prop:ind-induction}
+Assume that \eqref{b:dyn:finite-margins} and the inclusion of the neighborhood in $J_\beta$ hold, and that the family of reference configurations satisfies (P1)--(P4). Let $x_0,\dots,x_m$ be a path that avoids $V$, let $\mathbf r$ be a threshold array, and run the algorithm of \cref{def:ind-algorithm}. If
+\[
+ R\bigl(v(x_0),x_m\bigr)\le0,
+\]
+then the algorithm succeeds through level $N_{\rm lev}-1$, and $\mathbf I(j)$ holds for every $0\le j<N_{\rm lev}$. Moreover, the next retained reference of every reference is replaced at most once: if $i\in\mathcal R_j\setminus\{j\}$ and $a_j(i)\neq i+1$, then $i\in\mathcal R_{j'}$ and $a_{j'}(i)=a_j(i)$ for every $j'$ with $j\le j'<N_{\rm lev}$.
+\end{proposition}
+
+\begin{proof}
+We first treat level $0$. Since $x_0\notin V$, property (P1), applied with $j=0$ and the empty tuple, gives an entry $y$ of $\mathcal F_0$ with $|R(y,x_0)|\ge q_*$. Then $v_0=v(x_0)$ is selected, and $R(v_0,x_0)\ge q_*>r_0$. Since $R(v_0,x_m)\le0<r_0$, the set defining $k_0$ is nonempty, and $k_0\ge1$. The minimality of $k_0$ gives $R(v_0,x_{k_0-1})>r_0$, and \eqref{eq:ind-jump} then implies that $R(v_0,x_{k_0})\in[r_0-2/n,r_0]$. Level $0$ succeeds, and $\mathbf I(0)$ holds: $\mathcal R_0=\{0\}$, statement (b) was just shown, and statements (c)--(e) are empty.
+
+Suppose that $1\le j<N_{\rm lev}$, that the algorithm succeeds through level $j-1$, and that $\mathbf I(j-1)$ holds; these are the hypotheses $(\mathrm H_j)$. By \cref{lem:ind-transfer}(b), the selection at level $j$ succeeds, and by \cref{lem:ind-crossing}, so does the crossing, with \eqref{b:dyn:newest-band} at level $j$. Statement $\mathbf I(j)$(a) holds by \cref{lem:ind-deletion}, statements (c) and (e) hold by \cref{lem:ind-successor}, and statement (d) is \cref{lem:ind-search}(c) at $k=k_j$, which lies in $[\underline k,{\bar k}]$ with $\underline k=k_j$. This completes the induction.
+
+For the last assertion, let $a=a_j(i)\neq i+1$. By $\mathbf I(j)$(c), $a=B({\ell}(i)+1)$ is the first level of the block that follows the block of $i$, and $a\le j$ since $a\in\mathcal R_j$. Let $j'>j$. If $j'$ is not the first level of its block, no deletion occurs at level $j'$ by \cref{lem:ind-deletion}(c). Otherwise $j'$ and $a$ are distinct first levels of blocks with $j'>a$, so that ${\ell}(j')-1\ge {\ell}(a)>{\ell}(i)$. By \cref{lem:ind-deletion}(d), a deletion at level $j'$ can remove only levels of the block ${\ell}(j')-1$ other than its first $B-H$ levels. It follows that $i$ is never deleted, and $a$, which is the first level of its block, is never deleted either. The levels strictly between $i$ and $a$ do not belong to $\mathcal R_j$, and they never belong to a later set $\mathcal R_{j'}$, since the levels added after level $j$ are larger than $j$. We conclude that $a_{j'}(i)=a$ for every $j'\ge j$.
+\end{proof}
+
+The windows of the replaced references are needed inside the induction, because the corresponding references carry constraints through later backward searches; for the count in \cref{sec:barrier-proof}, only the first level of each block is used.
+
+\begin{corollary}[A common time with $M$ narrow windows]\label{cor:ind-witness}
+Under the hypotheses of \cref{prop:ind-induction}, let $k_*=k_{N_{\rm lev}-1}$. Then $0\le k_*\le m$ and
+\[
+ |R(v_{{\ell}B},x_{k_*})-r_{{\ell}B}|<\Psi_0\qquad\text{for every }{\ell}\in\{0,1,\dots,M-1\}.
+\]
+\end{corollary}
+
+\begin{proof}
+Let $j=N_{\rm lev}-1=MB-1$, the last level of block $M-1$. Let ${\ell}\le M-1$. If ${\ell}<M-1$, then by $\mathbf I(j)$(a) the retained levels of block ${\ell}$ form an initial segment of length at least $B-H\ge2$, so that ${\ell}B$ and ${\ell}B+1$ belong to $\mathcal R_j$. If ${\ell}=M-1$, then all levels of block $M-1$ belong to $\mathcal R_j$, and ${\ell}B+1\le j$ since $B\ge2$. In both cases ${\ell}B\in\mathcal R_j\setminus\{j\}$ and $a_j({\ell}B)={\ell}B+1$; that is, the next retained reference of ${\ell}B$ is unchanged. By statements (c) and (d) of $\mathbf I(j)$, we conclude that $|R(v_{{\ell}B},x_{k_*})-r_{{\ell}B}|<\psi_0+2\varepsilon=\Psi_0$.
+\end{proof}

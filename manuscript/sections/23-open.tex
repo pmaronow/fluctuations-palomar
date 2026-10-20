@@ -1,0 +1,147 @@
+\chapter{Open problems}\label{sec:open}
+
+We collect some questions that this paper leaves open. The first four concern
+the dynamics, and the last two concern the law of $F_n$ and the mean bias.
+We use the mixing times from a fixed configuration with threshold $1/4$
+defined in \eqref{eq:model-mixing-time}.
+
+\paragraph{The exponent of the typical mixing time.}
+By \cref{cor:two-sided}, for every fixed $\beta>1$ and every fixed
+$\omega\in(0,1/4)$, the realized initial configuration $X_0\sim\pi^J$
+satisfies $e^{A_\beta n^{7/30}}<T^J(X_0)\le e^{n^{1-\omega}}$ with
+probability tending to one. The same bounds hold in discrete time, with
+the integer parts of the two time horizons. We do not know whether there
+exists an exponent $\zeta$ such that $\log T^J(X_0)=n^{\zeta+o_\PP(1)}$, in
+the sense of \cref{sec:model-asymptotics}. If it exists, then
+$7/30\le\zeta\le3/4$. The numerical and analytical work cited in
+\cref{sec:intro-dynamics} suggests that $\zeta=1/3$
+\cite{kinzelbach-horner-1991,billoire-marinari-2001,monthus-garel-2009,billoire-2010}.
+Billoire also studied the distribution of the logarithm of the relaxation
+time over samples of the disorder~\cite{billoire-2010}. In the same way, one
+may ask for the fluctuations of $\log T^J(X_0)$ over $J$ and $X_0$.
+
+\paragraph{The limits of the present argument.}
+In the proof of \cref{thm:barrier-730}, the upper bound on the mean bias is
+used to make the cubic deficit, of order $\rho^3$ at the scale
+$\rho=Rn^{-\lambda}$, dominate $\Delta_{n,\beta}$. Suppose more generally that
+$\Delta_{n,\beta}\le C_\beta n^{-\gamma}$ for some fixed $\gamma>0$, and retain the
+variance bound $\Var(F_n)\le C_v n^{7/15}$. We set the tolerance of the
+overlap constraints at fixed scales to $\eta_n=n^{-\xi}$, where the exponents
+$(\lambda,\xi)$ satisfy \eqref{eq:ref-exponents} and $3\lambda\le \gamma$; that is,
+\[
+ 0<\lambda\le \gamma/3,\qquad \lambda<1/4,\qquad \lambda<\xi<\min\{1/4,3\lambda/2\}.
+\]
+We check that the conditions on the scales in the proof of
+\cref{thm:barrier-730} still hold. Indeed, the
+interval for $\xi$ is nonempty; it ensures that $\eta_n=o(\rho)$,
+$\rho^3=o(\eta_n^2)$, and $n\rho^4/\log n,\,n\eta_n^4/\log n\to\infty$; and the
+Chebyshev bound for the denominator vanishes since $\lambda<1/4<23/90$.
+Choosing $R$ with a fixed margin when $3\lambda=\gamma$, we obtain the time
+$\exp(An^{\lambda})$ for some $A>0$. The barrier exponent is therefore one third of
+the exponent of the upper bound on the mean bias, as long as this third is
+below $1/4$: the case $0<\gamma<3/4$ permits $\lambda=\gamma/3$, while $\gamma\ge3/4$ permits
+every fixed $\lambda<1/4$. In the latter case, choosing a slightly larger
+admissible power and using the contraction of total variation also gives the
+time $\exp(n^\lambda)$ with coefficient one. The upper bound $n^{-7/10}$
+of~\cite[Theorem~1.1]{hexagon-bias} is the case $\gamma=7/10$, and we obtain the
+exponent $\lambda=7/30$ of \cref{thm:barrier-730}. The exponent $1/4$ itself
+is not reached: at $\rho=Rn^{-1/4}$, the quantity $n\rho^4$ is bounded, and
+the union bound over polynomially many constrained partition functions in the
+disorder event fails. The prediction $\Delta_{n,\beta}\approx n^{-3/4}$ of
+Franz, Parisi, and Ricci-Tersenghi~\cite{franz-parisi-ricci-2026} lies exactly
+at this threshold. We expect that the exponent $1/4$, and the value $1/3$
+suggested by physics, can be reached only with new ideas, such as overlap
+constraints with a larger pressure deficit or bounds on constrained partition
+functions that hold simultaneously without a union over constraints.
+
+For the upper bound, the sufficient conditions of \cref{u:prop:range}
+require
+\[
+ \omega<\ex{q}<\ex{s}_{\rm b}<\ex{s}_{\rm seq}<\ex{e}
+ <\ex{u}_{\rm E}<\ex{k}_{\rm f}/2\le1/4.
+\]
+Both arguments stop at the exponent $1/4$. We do not know whether this
+coincidence has a common explanation.
+
+\paragraph{Dependence on the temperature.}
+The coefficient $A_\beta$ depends on $\beta$ through the scalar Parisi
+problem, through the constant in the upper bound on the mean bias
+of~\cite{hexagon-bias}, and through the constant in the upper bound on the
+variance of~\cite{quantitative-parisi}. The estimates used here do not control
+these constants uniformly as $\beta\downarrow1$ or $\beta\to\infty$.
+At $\beta=1$, the mixing time is
+$n^{2/3+o(1)}$~\cite[Theorem~1.1]{oai-critical-mixing}. Billoire's
+simulations with binary couplings suggest an approximate collapse of the
+centered variable $\log\tau_J-\overline{\log\tau}$ after division by
+$n^{1/3}(\beta-1)$, with visible corrections near the
+transition~\cite[equation~(6), Figure~3 and the following discussion]{billoire-2010}.
+Here $\tau_J$ is an equilibrium autocorrelation time that depends on the
+disorder sample, and $\overline{\log\tau}$ is the disorder average of
+$\log\tau_J$.
+We ask for a description of the crossover between the two regimes in a window
+of temperatures around $\beta=1$, and for bounds that remain effective as
+$\beta\to\infty$.
+
+\paragraph{Worst-case and typical initial configurations.}
+Sellke proved that the mixing time from the worst initial configuration is
+exponential in $n$ when $\beta$ exceeds an absolute
+constant~\cite[Theorem~1.1]{sellke-2025}. By \cref{thm:upper}, the mixing
+time from a typical equilibrium configuration is at most
+$\exp(n^{1-\omega})$ for every fixed $\omega\in(0,1/4)$, with joint
+probability tending to one, whereas Sellke's worst-start bound is
+exponential in $n$ at sufficiently large $\beta$. For every $\beta>1$,
+\cref{thm:barrier-strong} implies that, with probability tending to one, the
+relaxation time of the heat-bath and Metropolis dynamics is at least
+$e^{An^{7/30}}/(Cn^{7/30})$, so that their spectral gaps are at most
+$Cn^{7/30}e^{-An^{7/30}}$. Is the spectral gap exponentially small in $n$ for
+every $\beta>1$, and is the mixing time from the worst initial configuration
+exponential in $n$? The sufficient hypotheses
+of~\cite[Theorem~1.9]{ben-arous-jagannath-2018} include the vanishing of the
+second derivative at zero of the covariance function, and exclude
+the quadratic covariance of SK. Their general overlap-barrier
+criterion~\cite[Theorem~1.3]{ben-arous-jagannath-2018} remains available if
+its barrier hypothesis can be verified. A second question concerns the size
+of the distance. By \cref{thm:barrier-strong}, the distance from equilibrium
+of the chain started from most initial configurations is at least
+$1/2-Ce^{-cn^{7/30}}$ at every time $t\le e^{An^{7/30}}$. The value $1/2$
+comes from spin-flip symmetry, which gives Gibbs mass at least $1/2$ to every
+half-space $\{y:R(v,y)\le0\}$, and it is the limit of the argument. Does the
+conclusion of \cref{thm:barrier-730} hold for every fixed $\tau<1$?
+
+\paragraph{The limiting law of $F_n$.}
+\Cref{f:main} identifies the exponent of the fluctuations but not their law.
+OpenAI states that $n^{-1/3}\Var(F_n)$ converges to a positive constant
+$a_2(\beta)$, and that $(F_n-\E F_n)/\sqrt{\Var(F_n)}$ converges in law to a
+nondegenerate limit $\nu_\beta$~\cite[Theorems~1.1 and~1.2]{oai-limiting-law}.
+We do not use these statements. The limit $\nu_\beta$ is not identified
+with a known distribution. Parisi and Rizzo predicted upward deviations of
+$F_n/n$ with speed $n$ and power $6/5$, and downward deviations with speed
+$n^2$ and power $12/5$~\cite[equations~(12)--(15)]{parisi-rizzo-2010}. If
+these tails match the typical fluctuations, the right and left tails of
+$\nu_\beta$ should be of the forms $\exp(-cx^{6/5})$ and $\exp(-cx^{12/5})$.
+On the rigorous side, \cite[Theorem~1.5]{quantitative-parisi} gives two-sided
+bounds with the power $6/5$ on the probability that $F_n/n$ exceeds
+$P_\beta+x$, for $x$ in a range $C_\beta n^{-2/3}\le x\le x_\beta$. The lower
+end of this range is of the order of the upper bound on the mean bias
+in~\cite[Theorem~1.4]{quantitative-parisi}. Bounds of this type for
+deviations from $\E F_n/n$, down to the fluctuation scale $n^{-5/6}$, would
+make the matching argument of Parisi and Rizzo rigorous for upward
+deviations.
+
+\paragraph{The exponent of the mean bias.}
+By \cref{cor:mean-bias}, we have
+$\Delta_{n,\beta}\ge c_{\beta,\varepsilon}n^{-5/6-\varepsilon}$ for every
+fixed $\varepsilon>0$, and by~\cite[Theorem~1.1]{hexagon-bias}, we have
+$\Delta_{n,\beta}\le C_b n^{-7/10}$. If
+$\Delta_{n,\beta}=n^{-a+o(1)}$ for some $a$, then $7/10\le a\le5/6$. Franz,
+Parisi, and Ricci-Tersenghi predict $a=3/4$, possibly with logarithmic
+corrections~\cite{franz-parisi-ricci-2026}. The lower bound
+cannot be improved by the variance--bias inequality
+\eqref{eq:intro-variance-deficit} alone. Since $\Var(F_n)=n^{1/3+o(1)}$, this
+inequality gives no lower bound with an exponent smaller than $5/6$, and such
+a bound would require a different argument. On the upper side, the
+discussion in~\cite[Section~1.4]{hexagon-bias} explains which features of the
+proof of~\cite[Theorem~1.1]{hexagon-bias} account for the difference between
+$7/10$ and $3/4$. The estimates there do not control the
+constants uniformly as $\beta\to\infty$, so the corresponding question for the
+ground-state energy is also open.
