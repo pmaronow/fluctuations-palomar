@@ -50,9 +50,10 @@ Licenses and source notices are retained in `NOTICE`, `LICENSES/`, and the
 vendor directories. [Provenance](PROVENANCE.json) records source identities,
 module counts, adaptations, and the status of final file hashes. The
 [claim map](submission/claims.json) connects the manuscript statements to the
-five compared declarations and their proof endpoints. Verification of this
-content snapshot is pending; the records commit will add the dated
-[verification record](verification/README.md) after the full protected replay. Historical manuscript
+five compared declarations and their proof endpoints. The dated
+[verification record](verification/README.md) records the build check,
+strict audit, and full protected three-kernel replay of the public content commit.
+Historical manuscript
 verification records concern the source revisions they name; they do not
 certify this assembled package. No registry acceptance is asserted.
 

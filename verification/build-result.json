@@ -1,0 +1,62 @@
+{
+  "started_at": "2026-10-20T00:09:33.425655+00:00",
+  "finished_at": "2026-10-20T00:09:58.226800+00:00",
+  "cwd": "/home/ubuntu/validation/pkg-release",
+  "command": [
+    "lake",
+    "build"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 24.801,
+  "log": "/home/ubuntu/work/reports/pkg/PKG3/receipts/build.log",
+  "source_commit": "5551e62264a270fd5dcd396f36389eaf77eddebc",
+  "environment": {
+    "MATHLIB_CACHE_DIR": "/home/ubuntu/validation/mathlib-cache",
+    "TMPDIR": "/home/ubuntu/validation/tmp",
+    "LEAN_NUM_THREADS": "unset"
+  },
+  "recorded_at": "2026-10-20T00:09:58.226800+00:00",
+  "status": "PASS",
+  "jobs": 19626,
+  "freshly_compiled_package_olean_files": 0,
+  "reused_package_olean_files": 10694,
+  "rebuilt_package_modules": 0,
+  "artifact_reuse_check": {
+    "recorded_at": "2026-10-20T00:09:58.875311+00:00",
+    "source_commit": "5551e62264a270fd5dcd396f36389eaf77eddebc",
+    "exit_code": 0,
+    "before_package_oleans": 10694,
+    "after_package_oleans": 10694,
+    "rebuilt_package_modules": 0,
+    "changed": [],
+    "added": [],
+    "removed": [],
+    "successful_jobs": 19626,
+    "before_snapshot_sha256": "454fa82be3df0810e6843f215e35866f88ae5b8a780fca31210d5c0ae44dcf5c",
+    "log_sha256": "f8725d8a464e30d7c51b6ef391a14855d8abe3d691eda5bf10d78f995050adc8"
+  },
+  "source_manifest": {
+    "path": "verification/source-checks.json",
+    "sha256": "8c74a7f728b82fc5d6067a752c8e97e327cd29a69ba944a43ea6dd75c47ef8b1"
+  },
+  "log_sha256": "f8725d8a464e30d7c51b6ef391a14855d8abe3d691eda5bf10d78f995050adc8",
+  "warning_count": 6483,
+  "scope": "Plain default lake build on the public content commit using existing package objects. All 10,694 non-Challenge Lean files and four controls are unchanged from the previous clean build. Object sizes and mtimes confirm zero rebuilt package modules; strict Audit and the full protected Comparator are rerun separately.",
+  "prior_clean_build": {
+    "recorded_at": "2026-10-19T23:12:39.073144+00:00",
+    "exit_code": 0,
+    "jobs": 19626,
+    "package_olean_files": 10694,
+    "build_receipt_sha256": "39934fd6491330c8199c8ef48ab129fa5de032c37cf745821342b130da6bb268",
+    "build_log_sha256": "d170409a91cab149ce9073db58fef3e44474882cf82780df16780291aa6f9eba",
+    "source_receipt_sha256": "4c82fea28a021f7f8ba75744358e0e3a5665adcc7262c0ccbe9323d225f03206",
+    "challenge_sha256": "f4d2c6444591c6a33e1367d47b9f956ead148895e3ac8e31edb8885c63b90e2e",
+    "solution_sha256": "ede030b0c4b9528ac6146b47a20ed31c48724408eb83a0fa3b868137054348fa"
+  },
+  "prior_cache_get": {
+    "exit_code": 0,
+    "log_sha256": "8986007f2dd43e3739499ccb6661d2fd8568e92cf432a30025ffb9b4dbc6687e",
+    "cached_files_decompressed": 8723,
+    "scope": "Historical standalone cache retrieval; the current protected replay performs its own official trusted-cache phase."
+  }
+}

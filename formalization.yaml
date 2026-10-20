@@ -149,8 +149,8 @@ status:
     Theorem 1.6 proves exponents with arbitrary positive slack; Corollary 1.7
     proves the n^(-5/6-epsilon) bound. Challenge has five deliberate independent
     theorem placeholders; these are excluded from the proof-hole counts.
-    Verification of this content snapshot is pending. A reused-build check,
-    strict Audit, and full protected three-kernel Comparator replay are required.
+    The build check, strict Audit, and full protected three-kernel
+    Comparator replay passed for the public content commit recorded in verification/.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -191,7 +191,7 @@ fidelity:
     local remainder sufficient for the stated endpoint, rather than the
     manuscript's sharper local expansion. See the manuscript's formal chapter.
 review:
-  status: agent-reviewed; verification of this content snapshot pending
+  status: agent-reviewed; build check, strict audit, and full protected three-kernel replay passed
   reviewers:
   - AI mathematical, statement-correspondence, and source-integration reviewers
   notes: >-
@@ -199,7 +199,7 @@ review:
     their named revisions. Documentation checks verify the five-claim map,
     manuscript source inventory and supplied PDF identity, and official metadata
     loading. Historical manuscript build receipts concern their staged sources.
-    Fresh package kernel evidence will be recorded after the pending replay. No Palomar
+    Fresh protected kernel evidence is recorded in verification/README.md. No Palomar
     registration, acceptance, or independent human proof-review claim is made.
 limitations:
 - Corollaries 1.4 and 1.5 are not separately formalized or Comparator claims.

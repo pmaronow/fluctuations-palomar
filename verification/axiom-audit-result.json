@@ -1,0 +1,41 @@
+{
+  "started_at": "2026-10-20T00:09:58.906466+00:00",
+  "finished_at": "2026-10-20T00:10:04.946530+00:00",
+  "cwd": "/home/ubuntu/validation/pkg-release",
+  "command": [
+    "lake",
+    "env",
+    "lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "Audit.lean"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 6.04,
+  "log": "verification/axiom-audit.log",
+  "source_commit": "5551e62264a270fd5dcd396f36389eaf77eddebc",
+  "environment": {
+    "MATHLIB_CACHE_DIR": "/home/ubuntu/validation/mathlib-cache",
+    "TMPDIR": "/home/ubuntu/validation/tmp",
+    "LEAN_NUM_THREADS": "unset"
+  },
+  "recorded_at": "2026-10-20T00:10:04.946530+00:00",
+  "status": "PASS",
+  "selected_theorem_exports": 5,
+  "manuscript_namespace_declarations": 5,
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "warnings": 0,
+  "errors": 0,
+  "source_manifest": {
+    "path": "verification/source-checks.json",
+    "sha256": "8c74a7f728b82fc5d6067a752c8e97e327cd29a69ba944a43ea6dd75c47ef8b1"
+  },
+  "audit_source_sha256": "423626952fd8636b6ae7d0c2136b26dd78dc446fb2762096d53616ece8e57acc",
+  "external_log": "/home/ubuntu/work/reports/pkg/PKG3/receipts/axiom-audit.log",
+  "log_sha256": "6b4a39902491331530794e00bd8e6e11e960d81ada478d6178e2546d61ede03e"
+}
