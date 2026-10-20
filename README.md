@@ -126,10 +126,10 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -no-shell-escape main.tex
 `manuscript/main.pdf` is the PDF of the accompanying revised manuscript. The
 source includes the bibliography and a `.bbl`; TeX build byproducts are ignored.
 The supplied authors' note and funding acknowledgement are preserved. The
-formal-verification chapter records the strengthened Corollary 1.7 interface's
-completed local build and strict audit, with historical protected checks scoped
-to their named source revisions. Current protected-replay status is maintained
-in the repository's verification records.
+formal-verification chapter describes the formalized results and their axiom
+dependencies, with historical protected checks scoped to their named source
+revisions. Source revisions and detailed validation status are maintained in
+the repository's verification records.
 
 The repository retains the verified proof-source commit
 `5551e62264a270fd5dcd396f36389eaf77eddebc`, verification-records commit

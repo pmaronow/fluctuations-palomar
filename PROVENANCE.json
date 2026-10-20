@@ -181,7 +181,7 @@
       "formal-status.tex": "12e193f8fe18b39b03af0f35e72ce465aca2e89725e3eec33795354d992d5961",
       "macros.tex": "4e25be2f1d1a771cd1b14cf0e5327b6399dece6c6e6892869cd7acf587516fde",
       "main.bbl": "aa56b907b589d03855d1050466e7c7419c3e6526e7fa2f3b58644196f4dbbc74",
-      "main.pdf": "02660a566f83f17800b4fd53c911de4ecc1fda0d4afa46467f5e981cc2bb4598",
+      "main.pdf": "c22c06cc28646343f026bd5872ddbfe2f6cd67d4047443d6df07b00d912887af",
       "main.tex": "53b1f1e15c8be8783908456dcca17b650538cc7b0a733b5ce63fb37b1ce788fb",
       "refs.bib": "0023338b0fa8fc0c56f75e3c2ff0af1eb25f6310bac5e6b633670ba565ccf93e",
       "sections/01-introduction.tex": "176e0ac619e5bc7b6c15ea3c39e18f900e500f1498a0d2776b7f1403a45f6e6c",
@@ -205,7 +205,7 @@
       "sections/19-upper-proof.tex": "1581f1ddfbf595ddce5cacde15fc58b4189ae9abcbe209cbc855f95a507d1b87",
       "sections/20-fluctuations.tex": "58696edf416f6069aa9b80b939a63aad93e343cbf904c48ee1c6164d6638f50a",
       "sections/21-mean-bias.tex": "c59c6dcff924e5904408be71cf72d086a3af9b154bb3129e97668f1d6aeb2148",
-      "sections/22-formal.tex": "b9ca21549058104fd9abff4bbd990e6b616e37ecc82746ef4253eaf1d4791640",
+      "sections/22-formal.tex": "75ccdd91a045526380d3480f318e2a0123b27146ac46a2f9f4eb12332a14dabc",
       "sections/23-open.tex": "cd17b5ec8fd17084f5abbb3ea0888c3e452980a452665e0d363369dda727531d"
     },
     "changes_from_reviewed_manuscript": [
@@ -219,29 +219,29 @@
       "source_bytes_identical_to_imported_record": false,
       "tex_build": {
         "result": "PASS",
-        "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -no-shell-escape -outdir=/workspace/work/cor17-validation-env/manuscript-status-build main.tex",
+        "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -no-shell-escape -outdir=/workspace/work/cor17-validation-env/manuscript-prose-cleanup-build main.tex",
         "build_date_utc": "2026-10-20",
         "output": "manuscript/main.pdf",
         "pages": 347,
         "bibtex_output_byte_identical_to_reviewed_manuscript": true,
-        "scope": "TeX rebuild of the formal-verification status exposition after local build completion and the strict Lake-setup audit. The numbered mathematical statements, equations and citations are unchanged; fresh protected canonical Comparator and three-kernel replay remain pending.",
+        "scope": "TeX rebuild after removing operational run details from the formal-verification exposition. Mathematical statements, equations, citations, Lean proofs, and the overview remain unchanged; technical validation evidence remains in repository verification records.",
         "reproduction_command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -no-shell-escape main.tex",
         "exit_code": 0
       },
-      "pdf_sha256": "02660a566f83f17800b4fd53c911de4ecc1fda0d4afa46467f5e981cc2bb4598",
+      "pdf_sha256": "c22c06cc28646343f026bd5872ddbfe2f6cd67d4047443d6df07b00d912887af",
       "hash_scope": "Current hashes describe exactly the 30 included manuscript files; the historical imported-source record above retains the original supplied hashes and the scope of its old checks.",
       "local_verification_status_update": {
         "tested_proof_source_commit": "2fd7036fa3435aaacef2801c35ae95082d3f6806",
-        "pdf_sha256": "02660a566f83f17800b4fd53c911de4ecc1fda0d4afa46467f5e981cc2bb4598",
+        "pdf_sha256": "c22c06cc28646343f026bd5872ddbfe2f6cd67d4047443d6df07b00d912887af",
         "tex_build_exit_code": 0,
         "pdf_pages": 347,
         "text_comparison": "Only PDF pages 322 through 331 changed; the first 321 pages and bibliography are unchanged.",
-        "scope": "Formal-verification exposition reflects the recorded local results; no new mathematical theorem, proof source, or protected-replay acceptance is asserted."
+        "scope": "The manuscript gives a concise verification statement and a link to the technical records. No mathematical statement, proof source, or protected-replay claim was changed."
       }
     }
   },
   "claim_map": "submission/claims.json",
-  "claim_map_sha256": "24a7d83662dc344b0f3f73af534602d52c07fd7e75686883a9634d79f350480e",
+  "claim_map_sha256": "08bf630fa2a3154ee6483f874ef9375e27b24a91bd53b68dc512e5dc9891d7b2",
   "verifier": {
     "repository": "https://github.com/PalomarRegistry/PalomarSubmission",
     "commit": "d4e41c1d5b0d114c4859e6e5831dc6d3ad1d0d44",

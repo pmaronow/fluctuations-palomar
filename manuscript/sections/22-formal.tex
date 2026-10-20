@@ -21,17 +21,12 @@ of the finite-volume counting pressures to the defined limiting pressure.
 Only \path{Challenge.lean} and \path{Solution.lean} change in the Lean
 sources; the other four compared statements, the retained proof
 development, and the four build/comparison controls are unchanged.
-A fresh build of the strengthened interface at proof-source commit
-\path{2fd7036fa3435aaacef2801c35ae95082d3f6806} completed successfully
-on 20 October 2026, using Lean \texttt{v4.35.0-rc2} and Mathlib at
-\path{065356127b1dc0016f66b7283ce0ce2c4055aa55}.
-A strict audit using Lake's generated import manifest, with
-\texttt{autoImplicit=false} and \texttt{warningAsError=true}, accepted
-all five exports with only \path{propext}, \path{Quot.sound}, and
-\path{Classical.choice}. The revised interface and these checks are recorded in
+The five exported results, including the strengthened mean-bias statement,
+have been checked in Lean. Their transitive axiom dependencies consist only
+of \path{propext}, \path{Classical.choice}, and \path{Quot.sound}.
+The revised interface and verification records are available at
 \url{https://github.com/pmaronow/fluctuations-palomar/blob/main/verification/corollary-1-7-convergence.md}.
-The historical Comparator and three-kernel receipts remain scoped to their
-named source snapshot. The source-package checks below, including the
+The source-package checks below, including the
 historical 47-claim upper-bound check, retain their original scope.
 
 In this section, we describe formal proofs of the four results
@@ -87,7 +82,7 @@ To prove this bound, we follow the proof of \cref{cor:mean-bias} in \cref{sec:bi
 \]
 for every $n\ge1$ and every $\beta\ge\beta_0$. Since $\Var(F_n/\beta)+1/2=\beta^{-2}(\Var(F_n)+\beta^2/2)$, at a fixed $\beta$ this is \eqref{eq:mean-bias-variance-deficit} with $c_\beta=c\beta^{-3/2}$. The module \path{SKProof.MeanBiasBridge} proves the identities that connect the two developments: their disorder laws and Hamiltonians coincide, their expected pressures agree, and OpenAI's log partition function is $F_n-n\log2$, so that its variance is $\Var(F_n)$. As in \cref{sec:bias-proof}, the lower bound on the variance in \cref{f:main}, with $\eta=4\eps/5$, then gives the exponent $-5/6-\eps$.
 
-\paragraph{Axioms and the independent check.} The four original source-package theorems use only the three standard axioms \path{propext}, \path{Classical.choice}, and \path{Quot.sound} of Lean's logic. Since they also have no hypotheses, every result that their proofs use is proved in Lean, in the two packages or in their dependencies. The upper bounds on the mean bias and on the variance in \cref{inp:hb-rate,inp:qp-rate} and the variance--bias inequality enter the formal proofs as Lean theorems. The first and the last of these come from \cite{hexagon-bias-lean}. The strengthened combined interface passed the strict five-export axiom audit described at the start of this section.
+\paragraph{Axioms and the independent check.} The four original source-package theorems use only the three standard axioms \path{propext}, \path{Classical.choice}, and \path{Quot.sound} of Lean's logic. Since they also have no hypotheses, every result that their proofs use is proved in Lean, in the two packages or in their dependencies. The upper bounds on the mean bias and on the variance in \cref{inp:hb-rate,inp:qp-rate} and the variance--bias inequality enter the formal proofs as Lean theorems. The first and the last of these come from \cite{hexagon-bias-lean}.
 
 In their source packages, the four theorems also passed an independent check, which has three parts. First, we wrote out their statements a second time, with every definition that they involve, in separate files that import only Mathlib and none of our proofs. For the barrier, these are the definitions of the disorder law, the Hamiltonian, the Gibbs measure, the heat-bath kernels, the total variation distances, and the two quantities displayed above. For the fluctuations and the mean bias, they are the definitions on which \path{MainFluctuationStatement} rests, copied from OpenAI's sources at the commit cited above, and the definitions of the pressures $p_n(\beta)$ and of their limit. A comparison confirmed that each proved theorem has exactly the statement written out in this way. Second, the same comparison confirmed that the proofs use no axioms other than the three above. Third, the statements and proofs of the theorems were exported from the compiled packages, with every declaration on which they depend, including the proofs of all lemmas that they use. This export was checked again by three type checkers for Lean's logic: Lean's own kernel and the external checkers nanoda and con-ron. All three accepted the barrier statements and, in a separate comparison, both the fluctuation theorem and the mean-bias corollary. Declarations of the packages that these proofs do not use are not part of the check.
 
@@ -130,7 +125,7 @@ The successive comparisons follow one of the two covariance alternatives of \cit
 
 \section{Scope and availability}\label{sec:formal-scope}
 
-The combined submission selects the five final statements described above, including the strengthened mean-bias export checked by the fresh build and strict audit above; the historical source-package checks of \cref{sec:formal-statements} concern the four original lower-bound and fluctuation results described there. Intermediate results in their proofs, such as \cref{f:window}, are checked only as parts of these proofs. The quantitative and almost-sure forms in \cref{thm:barrier-strong} are not formally verified. These are the bounds on the probability of the exceptional disorders and on the Gibbs mass of the exceptional initial states, the lower bounds on the distance that tend to $1/2$, the extension to the Metropolis dynamics and to other single-site dynamics with bounded rates, the bound on the relaxation time, and the almost-sure statements for arbitrary couplings of the disorders across system sizes. The sharper local expansion of \cref{b:prop:os-expansion} is not formally verified either; see \cref{sec:formal-barrier}. The proposition \path{MainFluctuationStatement} concerns exponents only, and the limit law and the positive variance prefactor claimed in \cite{oai-limiting-law} are not part of it. The proposition \path{LowerBoundStatement} contains the loss $n^{-\eps}$ for an arbitrary $\eps>0$, and the bound \eqref{eq:mean-bias-prefactor-target}, which would follow from a positive variance prefactor, is not part of it.
+The combined submission selects the five final statements described above; the historical source-package checks of \cref{sec:formal-statements} concern the four original lower-bound and fluctuation results described there. Intermediate results in their proofs, such as \cref{f:window}, are checked only as parts of these proofs. The quantitative and almost-sure forms in \cref{thm:barrier-strong} are not formally verified. These are the bounds on the probability of the exceptional disorders and on the Gibbs mass of the exceptional initial states, the lower bounds on the distance that tend to $1/2$, the extension to the Metropolis dynamics and to other single-site dynamics with bounded rates, the bound on the relaxation time, and the almost-sure statements for arbitrary couplings of the disorders across system sizes. The sharper local expansion of \cref{b:prop:os-expansion} is not formally verified either; see \cref{sec:formal-barrier}. The proposition \path{MainFluctuationStatement} concerns exponents only, and the limit law and the positive variance prefactor claimed in \cite{oai-limiting-law} are not part of it. The proposition \path{LowerBoundStatement} contains the loss $n^{-\eps}$ for an arbitrary $\eps>0$, and the bound \eqref{eq:mean-bias-prefactor-target}, which would follow from a positive variance prefactor, is not part of it.
 
 \statusFormalUpperScope
 
